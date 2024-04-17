@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+
+//   /* لون الخلفية للشريط */
+// ::-webkit-scrollbar {
+//   width: 12px;
+// }
+
+// /* لون الشريط نفسه */
+// ::-webkit-scrollbar-thumb {
+//   background-color: #3c6486;
+// }
+
+// /* لون الخلفية للشريط عند تحريك المحتوى */
+// ::-webkit-scrollbar-track {
+//   background-color: #dced01;
+// }
+
+// /* تغيير شكل السهم عند الوصول لأعلى أو أسفل */
+// ::-webkit-scrollbar-button {
+//   background-color: #33d1f9;
+// }
+
+ body { margin: 0;
+       font-family: system-ui;
+    }
+
+    *{
+        font-family: system-ui;
+    }
+
+ /* شريط التمرير العمودي */
+::-webkit-scrollbar {
+    width: 10px; /* عرض شريط التمرير */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #979797; /* لون القسم القابل للتحريك */
+    border-radius: 5px; /* جعل طرفي شريط التمرير مستديرين */
+
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+.btn-primary:hover{
+    background-color: white;
+    border: 1 px solid ;
+    color: #0d6efd;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1); /* إضافة ظل من الأسفل */
+    transform: translateY(-4px); /* تحريك الزر لأعلى بمقدار 5 بكسل */
+   
+   }

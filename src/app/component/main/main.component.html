@@ -1,0 +1,52 @@
+<body style="background-color: #f6f6f6;" dir="{{textDir}}">
+  <ngx-spinner type="square-jelly-box">
+
+    <h1 style="font-family: system-ui;margin-top: 100px;font-size: 50px;color: white;">Welcome to SoftGo</h1>
+  </ngx-spinner>
+
+
+    <app-nav></app-nav>
+    <div>
+     <!-- <app-side-menu></app-side-menu> -->
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
+</body>
+
+
+
+
+  <!-- <ng-container>
+    <mat-toolbar class="mat-elevation-z3">
+      <button mat-icon-button (click)="toggleCollapse()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-sidenav-container>
+      <mat-sidenav opened mode="side" [style.width.px]="collapsed ? 65 : 250">
+       <app-custom-sidenav></app-custom-sidenav>
+      </mat-sidenav>
+  
+      <mat-sidenav-content class="content" [style.margin-left.px]="collapsed ? 65 : 250">
+        hello
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </ng-container> -->
+
+  <!-- <mat-toolbar class="mat-elevation-z3" >
+    <button mat-icon-button (click)="toggleCollapse()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container >
+    <mat-sidenav opened mode="side" [style.width.px]="collapsed ? 65 : 250">
+     <app-custom-sidenav></app-custom-sidenav>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content" [style.margin-right.px]="collapsed ? 65 : 250">
+      hello
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container> 
+ -->

@@ -1,0 +1,577 @@
+<div class="container-fluid">
+
+    <div class="d-flex p-3 rounded shadow-sm" style="background-color: white; justify-content: end;">
+        <h1 style="margin: inherit;">مرحبا بك في نظام الإصناف <i class="fa-solid fa-hand-holding-heart"></i></h1>
+    </div>
+
+    <div class="example-button-row">
+        <div class="example-flex-container">
+          <div class="example-button-container">
+            <button mat-mini-fab color="primary" (click)="getLastRowData()" aria-label="Example icon button with a menu icon">
+                <i class="fas fa-step-backward"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button mat-mini-fab color="primary" (click)="getPrevRowData()" [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
+                <i class="fas fa-caret-left"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button mat-mini-fab color="primary" (click)="getNextRowData()" [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
+                <i class="fas fa-caret-right"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button mat-mini-fab color="primary" (click)="getFirstRowData()" aria-label="Example icon button with a menu icon">
+                <i class="fas fa-step-forward"></i>
+            </button>
+          </div>
+
+        </div>
+    </div>
+
+     
+
+    <div style="margin-bottom: 50px;">
+        <form [formGroup]="itemForm" (ngSubmit)="onSumbit()">
+            <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-coins custom-icon"></i>
+                        بيانات أساسية
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top" style="display: none;">
+                            <div class="form-floating">
+                                <input type="number" formControlName="ItemCardId" class="form-control"
+                                    placeholder="name@example.com">
+                                <label for="floatingInput">الكود </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                          
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> الكود  </mat-label>
+                                <input matInput formControlName="ItemCode" type="number" >
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                           
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> الكود الضريبى </mat-label>
+                                <input matInput  type="number" >
+                            </mat-form-field>
+
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                          
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> الإسم بالعربى </mat-label>
+                                <input matInput formControlName="itemDescA" type="text" >
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                           
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> الإسم بالإنجليزى </mat-label>
+                                <input matInput formControlName="itemDescE" type="text" >
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>فئات الاصناف</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>مخزن</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>طبيعة الصنف</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">الوحده</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">التكلفة</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">الكمية دفتريا</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">الكمية الفعلية</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">التكلفة/الفرع</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">محجوز للبيع</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">تكلفة قبل الإخير</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">أخر سعر شراء</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">أخر سعر بيع</label>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="blue">صنف تجميع</mat-checkbox>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="blue">صنف ذو أبعاد</mat-checkbox>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="blue">صنف ذو خصائص</mat-checkbox>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="blue">أرقام مسلسلة</mat-checkbox>
+                        </div>
+
+                        <!-- 
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary">ارقام مسلسه</mat-slide-toggle>
+
+                        </div> -->
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                                <div class="form-floating ang-maturial-select">
+                                    <input type="date" class="form-control" placeholder="name@example.com">
+                                    <label for="floatingInput"> <i class="fas fa-clock"></i> تاريخ أخر شراء</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                                <div class="form-floating ang-maturial-select">
+                                    <input type="date" class="form-control" placeholder="name@example.com">
+                                    <label for="floatingInput"> <i class="fas fa-clock"></i> مده الضمان </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">حد الصنف</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">Prefix</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="blue">تواريخ صلاحية</mat-checkbox>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="blue">استخدام الوحده المعادلة</mat-checkbox>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="blue">الوحده المعادلة اجباري</mat-checkbox>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="blue">ايقاف بيع الصنف</mat-checkbox>
+                        </div>
+
+
+
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-plus-circle custom-icon"></i>
+                        بيانات إضافية
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <textarea class="form-control" style="height: 100px" placeholder="Leave a comment here"
+                                    id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">معلومه تظهر عند استخدام الصنف فى المستندات
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <textarea class="form-control" style="height: 100px" placeholder="Leave a comment here"
+                                    id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">الملاحظــات
+
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-dollar-sign custom-icon"></i>
+                        سياسات التسعير
+                    </ng-template>
+
+
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">الكمية الإولى</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">الكمية الثانية</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">الكمية الثالثة</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">الكمية الرابعة</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 1</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 2</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 3</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 4</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 5</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 6</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 7</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 8</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 9</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">سعر 10</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fab fa-unity custom-icon"></i>
+                        وحدت و أسعار
+                    </ng-template>
+
+                    <div class="row p-3">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>وحده القياس</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-tab>
+
+
+
+                <mat-tab label="صور">
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-images custom-icon"></i>
+                        صور
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <label for="formFileLg" class="form-label">اختر صوره</label>
+                            <input class="form-control form-control-lg" formControlName="Image" id="formFileLg"
+                                type="file" (change)="onFileSelected($event)" accept=".png, .jpg , .jpeg">
+
+                            <div class="form-floating mt-3">
+                                <textarea class="form-control" formControlName="ImgDesc1" style="height: 100px"
+                                    placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">وصف الصوره بالعربى
+                                </label>
+                            </div>
+
+                            <div class="form-floating mt-3">
+                                <textarea class="form-control" formControlName="ImgDesc2" style="height: 100px"
+                                    placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">وصف الصوره بالإنجليزى
+
+                                </label>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top">
+                           
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top">
+                            <img [src]="selectedImage" *ngIf="selectedImage" alt="Selected Image" style="width: 100%;"
+                                class="img-fluid">
+
+                        </div>
+
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-sync-alt custom-icon"></i>
+                        بدائل الصنف
+                    </ng-template>
+                    Content 3
+                </mat-tab>
+
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-sitemap custom-icon"></i>
+                        صنف مجمع
+                    </ng-template>
+                    Content 3
+
+                </mat-tab>
+
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-question-circle custom-icon"></i>
+                        خصائص الصنف
+                    </ng-template>
+                    Content 3
+
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-gift custom-icon"></i>
+                        عروض
+                    </ng-template>
+                    Content 3
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-file-invoice-dollar custom-icon"></i>
+                        مصروفات التصنيع
+                    </ng-template>
+                    Content 3
+                </mat-tab>
+
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-users custom-icon"></i>
+                        الموردين
+                    </ng-template>
+
+                    <div class="row p-3">
+                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top">
+                            <button [disabled]="itemForm.invalid" class="w-100 btn btn-lg btn-primary mt-3" type="submit">حفظ</button>  
+
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </form>
+    </div>
+
+
+     <mat-card style="margin-bottom: 100px;">
+        <mat-card-header class="justify-content-center">
+            <mat-form-field  style="width: 100%;" appearance="outline"  dir="rtl">
+                <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث  </mat-label>
+                <input matInput (keyup)="Filterchange($event)" />
+            </mat-form-field>
+        </mat-card-header>
+        <mat-card-content>
+
+
+            <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="table-header-font-size"> الكود </th>
+                    <td mat-cell *matCellDef="let element"> {{element.itemCardId}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell  *matHeaderCellDef class="table-header-font-size"> الإسم </th>
+                    <td mat-cell *matCellDef="let element"> {{element.itemDescA}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
+            </table>
+
+        </mat-card-content>
+
+        <mat-card-footer>
+
+            <mat-paginator [pageSizeOptions]="[20,50,100,200]" showFirstLastButtons></mat-paginator>
+
+        </mat-card-footer>
+    </mat-card> 
+
+</div>

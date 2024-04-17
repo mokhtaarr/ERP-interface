@@ -1,0 +1,161 @@
+<div id="mySidenav" class="sidenav" >
+    <a id="blog"  style="cursor: pointer;direction: ltr;" onclick="openNavBasket()">
+      
+       <img  src="../../../assets/images/logo3.png"  style="height: 50px;width: 60px;margin: 0; padding: 0; font-size: 30px;" aria-hidden="true"/> 
+        <!-- {{'menu'|translate}}  
+        <i class="fa fa-bars" aria-hidden="true"></i>   -->
+        
+
+    </a>
+</div>
+
+<ng-container *ngIf="currentCulture == 'ar'">
+  <div id="mySidebarBasket" class="sidebar shadow-sm" style="right: 0;">
+    
+    <!-- <div style="display: flex;justify-content: end;background-color: #3c6486;" >
+     <a href="javascript:void(0)"  class="btn-close2" style="color: #dced01;" onclick="closeNavBasket()" >
+       X
+     </a>
+
+    </div>
+     -->
+
+   <div class="dropdown">
+     <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#home-collapse">
+       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+         hiiiiiiiiiiiii {{'who are we'|translate}}
+       </button>
+
+       <span style="padding: 3%;">
+         <i class="dropdown-toggle"></i>
+       </span>
+
+
+     </div>
+       <div class="collapse" id="home-collapse" >
+           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+               <li><a href="#" class="rounded">{{'Our branches'|translate}}</a></li>
+               <li><a href="#" class="rounded">{{'To communicate'|translate}}</a></li>
+           </ul>
+       </div>
+   </div>
+
+   <div class="dropdown">
+     <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#definition">
+       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#definition" aria-expanded="false">
+         <i class="fa fa-eercast" aria-hidden="true"></i>
+         {{'the definition'|translate}}
+      </button>
+
+
+      <span style="padding: 3%;">
+       <i class="dropdown-toggle"></i>
+     </span>
+     
+     </div>
+
+   
+   <div class="collapse" id="definition" >
+       <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+           <li><a href="#" class="rounded">{{'Branches'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Item categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Classification units'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customer categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customer types'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Movement book'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Types of suppliers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Suppliers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'employees'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Jobs'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'The administrative structure'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'the cities'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Types of vehicles'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Vehicle shapes'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{"Machinery and equipment"|translate}}</a></li>
+       </ul>
+   </div>
+   </div>
+
+   
+
+ 
+</div>
+</ng-container>
+
+<ng-container *ngIf="currentCulture == 'en'" style="direction: ltr;">
+  <div id="mySidebarBasket" class="sidebar shadow-sm" style="left: 0;">
+    
+    <!-- <div style="display: flex;justify-content: end;background-color: #3c6486;" >
+     <a href="javascript:void(0)"  class="btn-close2" style="color: #dced01;" onclick="closeNavBasket()" >
+       X
+     </a>
+
+    </div> -->
+   <div class="dropdown">
+     <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#home-collapse">
+       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+         hiiiiii {{'who are we'|translate}}
+       </button>
+
+       <span style="padding: 3%;">
+         <i class="dropdown-toggle"></i>
+       </span>
+
+
+     </div>
+       <div class="collapse" id="home-collapse" >
+           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+               <li><a href="#" class="rounded">{{'Our branches'|translate}}</a></li>
+               <li><a href="#" class="rounded">{{'To communicate'|translate}}</a></li>
+           </ul>
+       </div>
+   </div>
+
+   <div class="dropdown">
+     <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#definition">
+       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#definition" aria-expanded="false">
+         <i class="fa fa-eercast" aria-hidden="true"></i>
+         {{'the definition'|translate}}
+      </button>
+
+
+      <span style="padding: 3%;">
+       <i class="dropdown-toggle"></i>
+     </span>
+     
+     </div>
+
+   
+   <div class="collapse" id="definition" >
+       <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+           <li><a href="#" class="rounded">{{'Branches'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Item categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Classification units'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customer categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customer types'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Movement book'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Types of suppliers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Suppliers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'employees'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Jobs'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'The administrative structure'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'the cities'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Types of vehicles'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Vehicle shapes'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{"Machinery and equipment"|translate}}</a></li>
+       </ul>
+   </div>
+   </div>
+
+   
+
+ 
+</div>
+</ng-container>
+

@@ -1,0 +1,181 @@
+
+
+<footer class="footer text-end border-top shadow-sm mt-5" style="background-color: #052940;z-index: 1;margin-top: 50px;" *ngIf="currentCulture == 'ar'"  >
+    <div>
+        <img id="blog" class="p-2"  src="../../../assets/images/logo3.png" onclick="openNavBasket()" width="52" height="50" class="rounded-circle"/>
+    </div>
+ </footer>
+
+ <footer class="footer  text-start border-top mt-5" style="background-color:#052940;z-index: 1;margin-top: 200px;" *ngIf="currentCulture == 'en'" >
+  <div>
+      <img id="blog"  src="../../../assets/images/logo3.png" onclick="openNavBasket()" width="52" height="50" class="rounded-circle"/>
+  </div>
+</footer>
+
+
+
+ <ng-container *ngIf="currentCulture == 'ar'">
+  <div id="mySidebarBasket" class="sidebar shadow-sm" style="right: 0;">
+    
+    <!-- <div style="display: flex;justify-content: end;background-color: #3c6486;" >
+     <a href="javascript:void(0)"  class="btn-close2" style="color: #dced01;" onclick="closeNavBasket()" >
+       X
+     </a>
+
+    </div> -->
+    <div class="dropdown" style="border-top: none" routerLink="/main/home">
+      <div style="display: flex; justify-content: space-between;cursor: pointer;" >
+        <button class="btn btn-toggle align-items-center rounded collapsed" >
+          <i class="fas fa-home"></i>
+          الرئيسية
+        </button>
+ 
+        
+ 
+ 
+      </div>
+  
+    </div>
+
+
+   <div class="dropdown" style="border-top: none">
+     <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#home-collapse">
+       <button class="btn btn-toggle align-items-center rounded collapsed" 
+       data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+         {{'who are we'|translate}}
+       </button>
+
+       <span style="padding: 3%;">
+         <i class="dropdown-toggle"></i>
+       </span>
+
+
+     </div>
+       <div class="collapse" id="home-collapse" >
+           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+               <li><a  class="rounded" routerLink="/main/home/Company-Branches">{{'Our branches'|translate}}</a></li>
+               <li><a  class="rounded" routerLink="/main/home/Contact-Us">{{'To communicate'|translate}}</a></li>
+           </ul>
+       </div>
+   </div>
+
+   <div class="dropdown">
+     <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#definition">
+       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#definition" aria-expanded="false">
+         <i class="fa fa-eercast" aria-hidden="true"></i>
+         {{'the definition'|translate}}
+      </button>
+
+
+      <span style="padding: 3%;">
+       <i class="dropdown-toggle"></i>
+     </span>
+     
+     </div>
+
+   
+   <div class="collapse" id="definition" >
+       <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+           <li><a href="#" class="rounded" routerLink="/main/definition/branchs">{{'Branches'|translate}}</a></li>
+           <li><a href="#" class="rounded" routerLink="/main/definition/items">{{'Categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Item categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Classification units'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customer categories'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customer types'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Movement book'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Customers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Types of suppliers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Suppliers'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'employees'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Jobs'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'The administrative structure'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'the cities'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Types of vehicles'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{'Vehicle shapes'|translate}}</a></li>
+           <li><a href="#" class="rounded">{{"Machinery and equipment"|translate}}</a></li>
+       </ul>
+   </div>
+   </div>
+
+   
+
+ 
+</div>
+</ng-container>
+
+<ng-container *ngIf="currentCulture == 'en'">
+  <div id="mySidebarBasket" class="sidebar shadow-sm" style="direction: ltr;left: 0;">
+    
+    <!-- <div style="display: flex;justify-content: end;background-color: #3c6486;" >
+     <a href="javascript:void(0)"  class="btn-close2" style="color: #dced01;" onclick="closeNavBasket()" >
+       X
+     </a>
+
+    </div> -->
+
+    
+   <div class="dropdown">
+     <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#home-collapse">
+       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+         {{'who are we'|translate}}
+       </button>
+
+       <span style="padding: 3%;">
+         <i class="dropdown-toggle"></i>
+       </span>
+
+
+     </div>
+       <div class="collapse" id="home-collapse" >
+           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+               <li><a  class="rounded" routerLink="/main/Company-Branches">{{'Our branches'|translate}}</a></li>
+               <li><a  class="rounded">{{'To communicate'|translate}}</a></li>
+           </ul>
+       </div>
+   </div>
+
+   <div class="dropdown">
+     <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#definition">
+       <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#definition" aria-expanded="false">
+         <i class="fa fa-eercast" aria-hidden="true"></i>
+         {{'the definition'|translate}}
+      </button>
+
+
+      <span style="padding: 3%;">
+       <i class="dropdown-toggle"></i>
+     </span>
+     
+     </div>
+
+   
+   <div class="collapse" id="definition" >
+       <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+           <li><a  class="rounded">{{'Branches'|translate}}</a></li>
+           <li><a  class="rounded">{{'Categories'|translate}}</a></li>
+           <li><a  class="rounded">{{'Item categories'|translate}}</a></li>
+           <li><a  class="rounded">{{'Classification units'|translate}}</a></li>
+           <li><a  class="rounded">{{'Customer categories'|translate}}</a></li>
+           <li><a  class="rounded">{{'Customer types'|translate}}</a></li>
+           <li><a  class="rounded">{{'Movement book'|translate}}</a></li>
+           <li><a  class="rounded">{{'Customers'|translate}}</a></li>
+           <li><a  class="rounded">{{'Types of suppliers'|translate}}</a></li>
+           <li><a  class="rounded">{{'Suppliers'|translate}}</a></li>
+           <li><a  class="rounded">{{'employees'|translate}}</a></li>
+           <li><a  class="rounded">{{'Jobs'|translate}}</a></li>
+           <li><a  class="rounded">{{'The administrative structure'|translate}}</a></li>
+           <li><a  class="rounded">{{'the cities'|translate}}</a></li>
+           <li><a  class="rounded">{{'Types of vehicles'|translate}}</a></li>
+           <li><a  class="rounded">{{'Vehicle shapes'|translate}}</a></li>
+           <li><a  class="rounded">{{"Machinery and equipment"|translate}}</a></li>
+       </ul>
+   </div>
+   </div>
+
+   
+
+ 
+</div>
+</ng-container>

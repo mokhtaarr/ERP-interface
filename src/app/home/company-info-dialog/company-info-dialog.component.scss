@@ -1,0 +1,25 @@
+:host {
+    display: block;
+    background: #0d6efd;
+    color: white;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 600px;
+    animation: custom-dialog-enter 1.5s ease;
+  }
+  
+  @keyframes custom-dialog-enter {
+    from {
+      transform: scale(0) rotate(360deg);
+    }
+  
+    to {
+      transform: none;
+    }
+  }
+
+  p{
+    font-family: system-ui;
+    font-size: large;
+    line-height: 170%;
+  }

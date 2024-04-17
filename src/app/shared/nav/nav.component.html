@@ -1,0 +1,81 @@
+<header class="p-2 mb-3 border-bottom shadow-sm" style="background-color: white;height: 60px;">
+  <div class="d-flex justify-content-between">
+    <div style="display: flex;">
+      <div class="dropdown" class="m-2">
+        <a href="#" class="d-block text-decoration-none" style="color: white;" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <img src="../../../assets/images/Earth2.png" alt="mdo" width="20" height="20" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small text-center">
+          <li><a class="dropdown-item" style="cursor: pointer;" (click)="changeCurrentLanguage('ar')">عربي <img
+                src="../../../assets/images/Egypt.png" alt="mdo" width="15" height="15" class="rounded-circle"></a></li>
+          <li><a class="dropdown-item" style="cursor: pointer;" (click)="changeCurrentLanguage('en')">ُEnglish <img
+                src="../../../assets/images/Uns.png" alt="mdo" width="20" height="20" class="rounded-circle"></a></li>
+        </ul>
+      </div>
+
+      <div class="dropdown" class="m-2">
+        <a href="#" class="d-block text-decoration-none" style="color: white;" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <i class="fa fa-bell-o" aria-hidden="true" style="color: #212121 ;"></i>
+        </a>
+        <ul class="dropdown-menu text-small text-center" style="width: 250px;max-height: 300px; overflow-y: auto;">
+          <li class="bell-notification"> الإشعارات <i class="fas fa-bell"></i> </li>
+
+          <li>notification 1</li>
+          <li>notification 2</li>
+          <li>notification 2</li>
+          <li>notification 3</li>
+          <li><button type="button" class="btn btn-primary mt-2" style="width: 95%;">اقراء الجميع</button>
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="dropdown" class="m-2">
+        <a href="#" class="d-block text-decoration-none" style="color: white;" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <i class="fas fa-user-edit" style="color: black;"></i>
+        </a>
+        <ul class="dropdown-menu text-small text-center" style="width: 300px;max-height: 300px; overflow-y: auto;">
+          <li class="bell-notification"> المهام <i class="fas fa-user-edit"></i>
+
+          <li>notification 1</li>
+          <li>notification 2</li>
+          <li>notification 2</li>
+          <li>notification 3</li>
+          <li><button type="button" class="btn btn-primary mt-2" style="width: 95%;">اقراء الجميع</button>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- <div>
+      <form class="d-flex" role="search">
+        <button class="btn btn-secondary" type="submit" style="margin-left: 5px;margin-right: 5px;"><i class="fas fa-search"></i></button>
+        <input class="form-control me-2 text-end" style="background-color: #fafafa;width: 400px;" type="search" placeholder="بحث" aria-label="بحث">
+      </form>
+    </div> -->
+
+
+    <div style="display: flex;">
+      <!-- <img id="blog" class="p-2" style="cursor: pointer;"  src="../../../assets/images/logo3.png" onclick="openNavBasket()" width="70" height="70" class="rounded-circle"/> -->
+
+      <h3 style="margin-right: 5px;cursor: pointer;" routerLink="/main/home">
+        <span style="color: rgb(49 209 249);font-size: 40px;"> {{"Soft"|translate}}</span>
+        <span style="color: rgb(220 237 1);font-size: 40px;"> {{"Go"|translate}} </span>
+      </h3>
+
+      <!-- <img src="../../../assets/images/logo3.png" width="40" height="40" class="rounded-circle"/> -->
+
+    </div>
+
+  </div>
+</header>
+
+
+<!--         الهيدر  color 1 #f5f5f5         -->
+<!--     الجسم     color 2 #fafafa         -->
+<!--        ال slide  color 2 #ffffff   والخط كان            -->
+<!-- #212121 الخط كان  -->

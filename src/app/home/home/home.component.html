@@ -1,0 +1,309 @@
+<!-- 
+<div class="drag-drop-container">
+    <div class="pending">
+        <h3>
+            Lesson to watch:
+        </h3>
+
+        <div CdkDropList class="lessons-list" CdkDrag>
+            <div class="lesson" *ngFor="let Lesson of lessons">
+                {{Lesson.description}}
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="container" id="icon-grid">
+
+  <div class="d-flex  p-3 rounded shadow-sm" style="background-color: white; justify-content: end;">
+  
+    <h1 style="margin: inherit;" class="custom-font">  مرحبـا بك فى نظام تخطيط الموارد <i class="fa-solid fa-hand-holding-heart"></i>
+    </h1>
+
+    <!-- <app-dialog></app-dialog> -->
+  </div>
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5 mb-5">
+
+    
+    <div class="col d-flex align-items-start">
+      <div class="example-box2 bg-1" cdkDrag>
+        <div class="Module-Content" routerLink="/main/home/purchases">
+          <a class="cardText-color">
+            مشتريات
+            <!-- <i class="fas fa-hand-holding-usd"></i> -->
+            <i class="fas fa-shopping-cart"></i>
+           </a>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #39b3fe">
+        <div class="Module-Content" routerLink="/main/home/stores">
+          <a class="cardText-color">
+            المخازن
+            <i class="fas fa-store-alt"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #1cba1c">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color">
+            التعريف
+            <i class="fas fa-info-circle"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="col d-flex align-items-start">
+      <!-- <div class="example-box2" cdkDrag style="background-color: #1cba1c">
+
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a>
+           من نحن
+           <i class="fas fa-question"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div> -->
+      <app-dialog></app-dialog>
+    </div>
+
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #387adf">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color">
+            أدوات البرنامج
+            <!-- <i class="fas fa-hand-holding-usd"></i> -->
+            <i class="fas fa-cog"></i>
+           </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #39b3fe">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color">
+            البنـوك
+            <!-- <i class="fas fa-hand-holding-usd"></i> -->
+            <i class="fas fa-university"></i>
+           </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #1cba1c">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color">
+            الحسابات
+            <i class="fas fa-calculator"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #0d6efd">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color"> 
+            مبيعات
+            <i class="fas fa-dollar-sign"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    
+   
+   
+  
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #387adf">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color">
+            الجوابات
+            <i class="far fa-file"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #39b3fe">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color">
+            الإصول الثابتة
+            <i class="fas fa-file-invoice"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #1cba1c">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color">
+            الإدوات
+            <!-- <i class="fas fa-hand-holding-usd"></i> -->
+            <i class="fas fa-tools"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="col d-flex align-items-start">
+      <div class="example-box2" cdkDrag style="background-color: #0d6efd">
+        <div class="Module-Content" routerLink="/main/home/definition">
+          <a class="cardText-color">
+            التقارير
+            <!-- <i class="fas fa-hand-holding-usd"></i> -->
+            <i class="far fa-file-alt"></i>
+          </a>
+        </div>
+        <div class="example-handle2" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!-- 
+    <div class="col-lg-4 three-dimensional-div">
+      <canvas id="pochart"></canvas>
+    </div>
+
+    <div class="col-lg-8 three-dimensional-div">
+      <canvas id="piechart"></canvas>
+    </div> -->
+
+    <!-- <div class="col-lg-6">
+      <div cdkDropList class="example-list mt-5" (click)="sayHello()" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let movie of movies" cdkDrag>
+          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+          {{ movie }}
+        </div>
+      </div>
+    </div> -->
+
+    <!-- <div class="col-6 d-flex align-items-start">
+      <div cdkDropList class="example-list mt-5" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let movie of movies" cdkDrag>
+          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+          {{ movie }}
+        </div>
+      </div>      
+
+    </div> -->
+
+
+  </div>
+
+ 
+</div>
+
+
+
+
+<!-- 
+<div class="container">
+  <div class="row">
+       
+    <div class="col-lg-4 three-dimensional-div">
+      <canvas id="pochart"></canvas>
+   </div>
+
+      <div class="col-lg-7 three-dimensional-div">
+          <canvas id="piechart"></canvas>
+      </div>     
+  </div>
+</div> -->
