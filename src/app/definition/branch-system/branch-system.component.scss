@@ -3,8 +3,7 @@
   }
 
 .ang-maturial-select{
-    width: 355px;
-    margin: 4px;
+    width: 100%;
 }  
 
 .select-margin-bottom{
@@ -40,4 +39,23 @@
     justify-content: center;
     width: 50px;
   }
+
+  th.mat-sort-header-sorted {
+    color: black;
+  }
   
+  td{
+    font-size: large;
+  }
+
+  th{
+    font-size: large;
+  }
+
+
+  .custom-icon{
+    font-size: larger;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+

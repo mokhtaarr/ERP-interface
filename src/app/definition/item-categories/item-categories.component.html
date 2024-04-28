@@ -51,7 +51,7 @@
     </div>
   
   
-    <div>
+    <div style="margin-bottom: 50px;">
       <form>
         <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
           <mat-tab>
@@ -123,4 +123,46 @@
         </mat-tab-group>
       </form>
     </div>
+
+    <mat-card style="margin-bottom: 100px;">
+      <mat-card-header class="justify-content-center">
+        <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+          <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+          <input matInput />
+        </mat-form-field>
+      </mat-card-header> <mat-card-content>
+  
+        <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+  
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+  
+      </mat-card-content>
+      <mat-card-footer>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </mat-card-footer>
+    </mat-card>
+  
   </div>

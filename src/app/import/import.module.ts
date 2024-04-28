@@ -20,6 +20,7 @@ import {MatCardModule} from "@angular/material/card"
 import { MatButtonModule } from '@angular/material/button';
 import {MatTreeModule} from '@angular/material/tree';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatDialogModule} from "@angular/material/dialog"
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatCardModule,
     MatButtonModule,
     MatTreeModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
   ],
   exports:[
     MatTabsModule,
@@ -64,9 +66,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatCardModule,
     MatButtonModule,
     MatTreeModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
     
-
   ]
 })
 export class ImportModule { }

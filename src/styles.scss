@@ -53,3 +53,13 @@ html {
     transform: translateY(-4px); /* تحريك الزر لأعلى بمقدار 5 بكسل */
    
    }
+
+
+.mdc-text-field--disabled {
+   background-color:#3f51b5;
+   cursor: not-allowed !important;
+   mat-label{
+    color: white;
+   }
+   
+  }

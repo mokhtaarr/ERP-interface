@@ -1,0 +1,170 @@
+<div class="container-fluid">
+
+  <div class="example-button-row">
+    <div class="example-flex-container">
+
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-step-backward"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-caret-left"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-caret-right"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-step-forward"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div style="margin-bottom: 50px;">
+    <form>
+      <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <h1 style="margin-bottom: auto;">
+              <i class="fas fa-user-edit custom-icon"></i>
+
+
+              أنواع العملاء
+            </h1>
+          </ng-template>
+
+
+          <div class="row p-3">
+            <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+              <mat-label>كود نوع العميل</mat-label>
+              <input matInput type="number">
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label> الإسم بالعربى </mat-label>
+              <input matInput type="text">
+            </mat-form-field>
+
+
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label> الإسم بالإنجليزى </mat-label>
+              <input matInput type="text">
+            </mat-form-field>
+
+            <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+              <mat-form-field class="ang-maturial-select" appearance="outline">
+                <mat-label>النوع الرئيسى</mat-label>
+                <mat-select>
+                  <mat-option value="one">First option</mat-option>
+                  <mat-option value="two">Second option</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label>المستوى</mat-label>
+              <input matInput type="number">
+            </mat-form-field>
+
+            <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+              <mat-form-field class="ang-maturial-select" appearance="outline">
+                <mat-label>نوع المستوى</mat-label>
+                <mat-select>
+                  <mat-option value="one">First option</mat-option>
+                  <mat-option value="two">Second option</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+
+            </div>
+
+
+            <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+              <mat-label>ملاحظات</mat-label>
+              <textarea matInput></textarea>
+            </mat-form-field>
+
+
+          </div>
+
+        </mat-tab>
+
+      </mat-tab-group>
+    </form>
+  </div>
+
+  <mat-card style="margin-bottom: 100px;">
+    <mat-card-header class="justify-content-center">
+      <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+        <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+        <input matInput />
+      </mat-form-field>
+    </mat-card-header> <mat-card-content>
+
+      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </mat-card-footer>
+  </mat-card>
+
+</div>

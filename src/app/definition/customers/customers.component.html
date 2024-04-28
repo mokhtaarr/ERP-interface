@@ -1,304 +1,863 @@
 <div class="container-fluid">
 
     <div class="example-button-row">
-      <div class="example-flex-container">
-  
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-step-backward"></i>
-          </button>
+        <div class="example-flex-container">
+
+
+            <div class="example-button-container">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+            </div>
+
+            <div class="example-button-container">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                    <i class="fas fa-caret-left"></i>
+                </button>
+            </div>
+
+            <div class="example-button-container">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                    <i class="fas fa-caret-right"></i>
+                </button>
+            </div>
+
+            <div class="example-button-container">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+            </div>
+
+            <div class="example-button-container">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                    <i class="fas fa-save"></i>
+                </button>
+            </div>
+
+
+            <div class="example-button-container">
+                <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+
+            <div class="example-button-container">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
         </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-caret-left"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-caret-right"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-step-forward"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-save"></i>
-          </button>
-        </div>
-  
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-  
-      </div>
     </div>
-  
-  
-    <div>
-      <form>
-        <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
-          <mat-tab>
-            <ng-template mat-tab-label>
-                <i class="fab fa-unity"></i>
-                بيانات اساسية
-            </ng-template>
-           
-            <div class="row p-3">
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top" style="display: none;">
-                    <div class="form-floating">
-                        <input type="number"  class="form-control"
-                            placeholder="name@example.com">
-                        <label for="floatingInput">الكود </label>
+
+    <div class="d-flex p-3 rounded shadow-sm" style="background-color: white; justify-content: center;">
+        <h1 style="margin: inherit;">العملاء <i class="fas fa-users custom-icon"></i></h1>
+    </div>
+
+    <div style="margin-bottom: 50px;">
+        <form>
+            <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-database custom-icon"></i>
+                        بيانات اساسية
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top" style="display: none;">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">الكود </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> الكود </mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>نوع العميل</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>مركز التكلفة</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>مندوب</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> الإسم بالعربى </mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> الإسم بالإنجليزى </mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب </mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الفئة</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>العملة</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>المحافظة</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الجنسية</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">فتره الإئتمان</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حدود العاملات الأجلة</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تليفون 1</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تليفون 2</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تليفون 3</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>فاكس</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>عنوان 1</mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>عنوان 2</mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                  
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label> الكود  </mat-label>
-                        <input matInput  type="number" >
-                    </mat-form-field>
+                </mat-tab>
 
-                </div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-balance-scale-right custom-icon"></i>
+                        الأرصدة
+                    </ng-template>
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>نوع العميل</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                    <div class="row p-3">
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>مركز التكلفة</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد افتتاحى</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركة الحالية</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الأرصده</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
 
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>مندوب</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-plus-circle custom-icon"></i>
+                        بيانات اضافية
+                    </ng-template>
+
+                    <div class="row p-3">
+                       
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">تاريخ الميلاد</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>مكان اصدار جواز السفر</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">تاريخ اصدار رخصة السير</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">تاريخ انتهاء رخصة السير</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">تاريخ تجديد السجل</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>رقم البطاقة الشخصية</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>جواز السفر</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>عنوان 3</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>عنوان 4</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>رخصة سير</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>مكان أصدار رخصة السير</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">تاريخ اصدار جواز السفر </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">تاريخ انتهاء جواز السفر</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <label for="floatingInput">تاريخ اصدار سجل تجارى</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حقل اضافى 1</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حقل اضافى 2</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حقل اضافى 3</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </mat-tab>
+
+                
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-sitemap custom-icon"></i>
+
+                        الفروع
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>كود الفرع</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإسم 1</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإسم 2</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>عنوان</mat-label>
+                                <input matInput >
+                            </mat-form-field>
+                        </div>
 
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                  
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label> الإسم بالعربى </mat-label>
-                        <input matInput type="text" >
-                    </mat-form-field>
+                        <div class="col-lg-3 col-md-6 col-sm-12" >
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>ملاحظات</mat-label>
+                                <textarea matInput></textarea>
+                              </mat-form-field>
+                        </div>
 
-                </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                   
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label> الإسم بالإنجليزى </mat-label>
-                        <input matInput  type="text" >
-                    </mat-form-field>
+                    </div>
 
-                </div>
+                </mat-tab>
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>حساب </mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-dollar-sign custom-icon"></i>
+                        سياسات التسعير
+                    </ng-template>
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>الفئة</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                    <div class="row p-3">
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>العملة</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>خصم أساسى</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>المحافظة</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>خصم للتقارير</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الاول</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الثانى</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="primary">خصم على مستوى الصنف </mat-checkbox>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="primary">خصم نسبة</mat-checkbox>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-checkbox color="primary">اعفاء ضريبي</mat-checkbox>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-users custom-icon"></i>
+                        المستخدمين
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>كود المستخدم</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>اسم المستخدم</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإسم الأول</mat-label>
+                                <input matInput type="text">
+                            </mat-form-field>
+                        </div>
+                       
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-phone-alt custom-icon"></i>
+                        جهات الإتصال
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>كود الجهه</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>اسم الجهه 1</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>اسم الجهه 2</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+                        
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>رقم البطاقة الشخصية</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>جواز السفر</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>عنوان 1</mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>عنوان 2</mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تليفون 1</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تليفون 2</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                       
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تليفون 3</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تليفون 4</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تليفون 5</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-file-invoice custom-icon"></i>
+                        حسابات
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 1</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 2</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 3</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 4</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 5</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 6</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 7</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 8</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 9</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حساب إضافى 10</mat-label>
+                                <mat-select>
+                                    <mat-option value="one">First option</mat-option>
+                                    <mat-option value="two">Second option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fas fa-unlink custom-icon"></i>
+                        مرفقات
+                    </ng-template>
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد افتتاحى</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركة الحالية</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الأرصده</mat-label>
+                                <input matInput type="number">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+            </mat-tab-group>
+        </form>
+    </div>
+
     
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label> الجنسية  </mat-label>
-                        <input matInput  type="text" >
-                    </mat-form-field>
-
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                    <div class="form-floating">
-                        <input type="date" class="form-control" placeholder="name@example.com">
-                        <label for="floatingInput">فتره الإئتمان</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label> حدود العاملات الأجلة  </mat-label>
-                        <input matInput  type="text" >
-                    </mat-form-field>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" placeholder="name@example.com">
-                        <label for="floatingInput">تليفون 1</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" placeholder="name@example.com">
-                        <label for="floatingInput">تليفون 2</label>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" placeholder="name@example.com">
-                        <label for="floatingInput">تليفون 3</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" placeholder="name@example.com">
-                        <label for="floatingInput">فاكس</label>
-                    </div>
-                </div>
-
-                
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" placeholder="name@example.com">
-                        <label for="floatingInput">عنوان 1</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" placeholder="name@example.com">
-                        <label for="floatingInput">عنوان 2</label>
-                    </div>
-                </div>
-            </div>
-            
-          </mat-tab>
-  
-          <mat-tab>
-            <ng-template mat-tab-label>
-                <i class="fas fa-plus-circle custom-icon"></i>
-                الأرصدة
-            </ng-template>
-
-            <div class="row p-3">
-                
-                <div class="col-lg-3 col-md-6 col-sm-12 ">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>الرصيد افتتاحى</mat-label>
-                        <input matInput type="number" >
-                    </mat-form-field>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>الحركة الحالية</mat-label>
-                        <input matInput type="number" >
-                    </mat-form-field>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>الإجمالى</mat-label>
-                        <input matInput type="number" >
-                    </mat-form-field>
-                </div>
-
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>الأرصده</mat-label>
-                        <input matInput type="number" >
-                    </mat-form-field>
-                </div>
-
-            </div>
-
-        </mat-tab>
-
-
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <i class="fas fa-plus-circle custom-icon"></i>
-                بيانات اضافية
-            </ng-template>
-
-            <div class="row p-3">
-                <div class="col-lg-3 col-md-6 col-sm-12 ">
-                    <mat-form-field class="ang-maturial-select" appearance="outline">
-                        <mat-label>الرصيد افتتاحى</mat-label>
-                        <input matInput type="number" >
-                    </mat-form-field>
-                </div>
-
-            </div>
-
-        </mat-tab>
-        </mat-tab-group>
-      </form>
-    </div>
-  </div>
+    <mat-card style="margin-bottom: 100px;">
+        <mat-card-header class="justify-content-center">
+          <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+            <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </mat-card-header> <mat-card-content>
+    
+          <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+    
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+    
+        </mat-card-content>
+        <mat-card-footer>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+          </mat-paginator>
+        </mat-card-footer>
+      </mat-card>
+</div>
