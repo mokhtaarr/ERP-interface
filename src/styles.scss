@@ -63,3 +63,8 @@ html {
    }
    
   }
+
+  input[readonly] {
+    cursor: not-allowed;
+  }
+  

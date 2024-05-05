@@ -1,0 +1,14 @@
+<div>
+    <h2 mat-dialog-title class="text-center" style="font-size: xx-large;">حذف</h2>
+    <mat-dialog-content class="text-center" style="font-size: large;">
+        هل متاكد من حذف هذه البيانات ؟
+    </mat-dialog-content>
+    <mat-dialog-actions>
+
+        <button (click)="closepopup()" mat-button mat-dialog-close>إلغاء</button>
+
+        <a mat-raised-button color="warn" (click)="deleteConfirm()">تأكيد</a>
+
+    </mat-dialog-actions>
+
+</div>

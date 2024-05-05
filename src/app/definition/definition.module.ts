@@ -22,6 +22,7 @@ import { TypesOfVehiclesComponent } from './types-of-vehicles/types-of-vehicles.
 import { VehicleShapesComponent } from './vehicle-shapes/vehicle-shapes.component';
 import { PartitionPopupComponent } from './partition-popup/partition-popup.component';
 import { AddPartitionPopupComponent } from './add-partition-popup/add-partition-popup.component';
+import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { AddPartitionPopupComponent } from './add-partition-popup/add-partition-
     TypesOfVehiclesComponent,
     VehicleShapesComponent,
     PartitionPopupComponent,
-    AddPartitionPopupComponent
+    AddPartitionPopupComponent,
+    DeleteConfirmComponent
   ],
   imports: [
     CommonModule,
