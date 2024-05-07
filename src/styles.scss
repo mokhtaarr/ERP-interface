@@ -56,12 +56,13 @@ html {
 
 
 .mdc-text-field--disabled {
-   background-color:#3f51b5;
+   background-color:#3f51b5e3;
    cursor: not-allowed !important;
    mat-label{
     color: white;
+    background-color: #052940;
    }
-   
+   color: white;
   }
 
   input[readonly] {

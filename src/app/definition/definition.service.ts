@@ -181,8 +181,56 @@ export class DefinitionService {
       );
   }
 
+  // السيرفسيس الخاصه بفئات الإصناف
 
   GetAllItemCategory(){
     return this.http.get<any>(environment.apiUrl +'ItemCategory/GetAllItemCategory')
   }
+
+  AddItemCategory(values:any){
+    return this.http.post<any>(environment.apiUrl+'ItemCategory/AddItemCategory',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+
+        return res;
+      })
+    );
+  }
+
+  UpdateItemCategory(Values:any){
+    return this.http.post<any>(environment.apiUrl+'ItemCategory/UpdateItemCategory',Values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+
+        return res;
+      })
+    );
+  }
+
+  DeleteItemCategory(ItemCategoryId:any){
+    return this.http.delete<any>(`${environment.apiUrl}ItemCategory/DeleteItemCategory?ItemCategoryId=${ItemCategoryId}`)
+    .pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) this.toastr.success(message);
+
+        if (res.status == false) this.toastr.error(message);
+
+        return res.status;
+      })
+    );
+}
+
 }
