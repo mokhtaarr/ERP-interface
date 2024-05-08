@@ -4,25 +4,25 @@
         <div class="col-sm-6 d-flex justify-content-center m-auto">
   
           <div class="form-signin" style="width: 80%;">
-            <form>
+            <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" >
               <div class="d-flex justify-content-center">
                 <img class="mb-4" src="../../../assets/images/logo3.png" alt="" width="130" height="120">
               </div>
-  
+
               <div class="form-floating mt-2">
-                <input type="text" class="form-control" id="floatingInput" placeholder="name@.com" fdprocessedid="lm2lwq">
+                <input type="text" class="form-control" id="floatingInput" formControlName="firstName" placeholder="name@.com" fdprocessedid="lm2lwq">
                 <label for="floatingInput" >User Name</label>
               </div>
   
               <div class="form-floating mt-2">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" fdprocessedid="9oxjsj">
+                <input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Password" fdprocessedid="9oxjsj">
                 <label for="floatingPassword">Password</label>
               </div>
   
              
   
               
-              <button class="w-100 btn btn-lg btn-primary mt-5" type="submit" (click)="onSubmit()" style="background-color: #19b8e1;" fdprocessedid="infldq">Submit</button>
+              <button class="w-100 btn btn-lg btn-primary mt-5" type="submit" [disabled]="accountForm.invalid" style="background-color: #19b8e1;" fdprocessedid="infldq">Submit</button>
              
   
              

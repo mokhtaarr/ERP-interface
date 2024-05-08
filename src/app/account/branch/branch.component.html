@@ -4,7 +4,7 @@
       <div class="col-sm-6 d-flex justify-content-center m-auto">
 
         <div class="form-signin" style="width: 80%;">
-          <form  >
+          <form  [formGroup]="branchForm" (ngSubmit)="onSubmit()">
             <div class="d-flex justify-content-center">
               <img class="mb-4" src="../../../assets/images/logo3.png" alt="" width="130" height="120">
             </div>
@@ -12,7 +12,7 @@
            
             <p style="color: #2dd3f4;">Company</p>
             <div class="mt-2">
-              <select class="form-select" aria-label="Default select example" style="height: 50px; color: #2c698d;">
+              <select class="form-select" formControlName="branch" aria-label="Default select example" style="height: 50px; color: #2c698d;">
                 <option disabled selected>select</option>
                 <option value="1">Company One</option>
                 <option value="2">Company Two</option>
@@ -21,7 +21,7 @@
             </div>
 
             
-            <button class="w-100 btn btn-lg btn-primary mt-5" type="submit" (click)="onSubmit()" style="background-color: #19b8e1;" fdprocessedid="infldq">Submit</button>
+            <button class="w-100 btn btn-lg btn-primary mt-5" type="submit" [disabled]="branchForm.invalid" style="background-color: #19b8e1;" fdprocessedid="infldq">Submit</button>
            
 
            

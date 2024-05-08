@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DefinitionService } from '../definition.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 
@@ -30,11 +29,12 @@ export class ItemCategoriesComponent implements OnInit{
   lastRow: boolean = false;
   DeleteDisable :boolean = true;
   SaveDisable : boolean = true;
-  UpdateDisable : boolean = false;
+  UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
   reloadDisabled : boolean = true;
-
+  UndoDisabled : boolean = true;
+  undoIndex !: number
 
   constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
 
@@ -65,11 +65,7 @@ export class ItemCategoriesComponent implements OnInit{
       this.dataSource.sort = this.sort;
     })
 
-    this.DisabledNextButton = true;
-    this.DisabledPrevButton = true;
-    this.lastRow = true;
-    this.firstRow = true;
-    this.UpdateDisable = true;
+   
   }
 
  
@@ -88,6 +84,7 @@ export class ItemCategoriesComponent implements OnInit{
       });
       this.UpdateDisable = false;
       this.DeleteDisable = false;
+      this.UndoDisabled = true;
       window.scrollTo({ top: 30, behavior: 'smooth' });
 
     }
@@ -95,6 +92,10 @@ export class ItemCategoriesComponent implements OnInit{
 
   New(){
     this.itemCategoryForm.enable();
+
+    this.AllItemCategory = this.dataSource.filteredData;
+    this.undoIndex = this.AllItemCategory.findIndex(p=>p.itemCategoryId == this.itemCategoryForm.value.itemCategoryId);
+
     this.itemCategoryForm.setValue({
       itemCategoryId: null,
       itemCatCode: null,
@@ -112,7 +113,9 @@ export class ItemCategoriesComponent implements OnInit{
     this.UpdateDisable = true;
     this.SaveDisable = false;
     this.EditReadonly = false;
-    this.reloadDisabled = false;
+    this.reloadDisabled = true;
+    this.DeleteDisable = true;
+    this.UndoDisabled = false;
   }
 
   Filterchange(data: Event) {
@@ -137,6 +140,7 @@ export class ItemCategoriesComponent implements OnInit{
 
     this.firstRow = true;
     this.lastRow = false;
+    this.DisabledPrevButton = true;
 
   }
 
@@ -157,6 +161,9 @@ export class ItemCategoriesComponent implements OnInit{
 
     this.firstRow = false;
     this.lastRow = true;
+    this.DisabledPrevButton = false;
+    this.DisabledNextButton = true;
+
 
   }
 
@@ -231,15 +238,18 @@ export class ItemCategoriesComponent implements OnInit{
 
   updateItemCategory(){
     this.itemCategoryForm.enable()
-    this.DeleteDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
+    this.DeleteDisable = true;
+    this.DisabledNextButton = true;
+    this.DisabledPrevButton = true;
+    this.lastRow = true;
+    this.firstRow = true;
     this.SaveDisable = false;
     this.EditReadonly = true;
-
-  
+    this.reloadDisabled = false;
+    this.UpdateDisable = true;
+    this.UndoDisabled = false;
+    this.AllItemCategory = this.dataSource.filteredData;
+    this.undoIndex = this.AllItemCategory.findIndex(p=>p.itemCategoryId == this.itemCategoryForm.value.itemCategoryId);
   }
  
   onSumbit(){
@@ -247,6 +257,11 @@ export class ItemCategoriesComponent implements OnInit{
     this.definitionService.AddItemCategory(this.itemCategoryForm.value).subscribe(res=>{
       if(res){
         this.getAllItemCategory();
+        this.itemCategoryForm.disable();
+        this.DisabledNextButton = false;
+        this.DisabledPrevButton = false;
+        this.lastRow = false;
+        this.firstRow = false;
       }
     })
   }
@@ -282,6 +297,34 @@ export class ItemCategoriesComponent implements OnInit{
         })
       }
     });
+  }
+
+  undo(){
+    console.log('this.undoIndex',this.undoIndex)
+    if(this.undoIndex != -1){
+      const undoItem = this.AllItemCategory[this.undoIndex]
+      this.itemCategoryForm.setValue({
+        itemCategoryId: undoItem.itemCategoryId,
+        itemCatCode: undoItem.itemCatCode,
+        itemCatDescA: undoItem.itemCatDescA,
+        itemCatDescE: undoItem.itemCatDescE,
+        parentItemCategoryId: undoItem.parentItemCategoryId,
+        itemCategoryType: undoItem.itemCategoryType,
+        remarks: undoItem.remarks,
+        imagePath: null
+      });
+     
+    }
+    this.itemCategoryForm.disable();
+    this.UpdateDisable = false;
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
+
   }
 
 }

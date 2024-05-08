@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +11,19 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent {
 
-  constructor(private router : Router , private toastr : ToastrService){ }
+  constructor(private router : Router , private fb : FormBuilder , private accountService : AccountService){ }
+
+  accountForm = this.fb.group({
+    firstName : ['',Validators.required],
+    password : ['',Validators.required]
+  })
+
 
   onSubmit(){
-    this.toastr.success("تم تسجيل الدخول بنجاح");
-     this.router.navigateByUrl('/main/home');
+    this.accountService.login(this.accountForm.value).subscribe(res=>{
+      if(res){
+          this.router.navigateByUrl('/main/home');
+      }
+    })
   }
 }

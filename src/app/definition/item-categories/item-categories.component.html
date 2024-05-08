@@ -36,7 +36,7 @@
 
           <div class="example-button-container">
             <button type="button" mat-mini-fab color="primary" (click)="getAllItemCategory()" [disabled]="reloadDisabled"  aria-label="Example icon button with a menu icon">
-              <i class="fas fa-redo-alt"></i>
+              <i class="fas fa-sync"></i>
             </button>
           </div>
         
@@ -49,6 +49,12 @@
           <div class="example-button-container">
             <button type="button" mat-mini-fab color="warn" (click)="Open_delete_confirm()" [disabled]="DeleteDisable || itemCategoryForm.invalid" aria-label="Example icon button with a menu icon">
               <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"  aria-label="Example icon button with a menu icon">
+              <i class="fas fa-undo"></i>
             </button>
           </div>
 
@@ -69,7 +75,7 @@
       </div>
 
 
-      <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
+      <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;">
         <mat-tab>
           <ng-template mat-tab-label>
             <h1 style="margin-bottom: auto;">
@@ -98,7 +104,7 @@
 
 
             <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
-              <mat-label> الإسم بالإنجليزى </mat-label>
+              <mat-label calss="inputText"> الإسم بالإنجليزى </mat-label>
               <input matInput type="text" formControlName="itemCatDescE">
             </mat-form-field>
 
@@ -126,7 +132,7 @@
            
 
             <div class="col-lg-3 col-md-6 col-sm-12 mt-2" appearance="outline">
-              <input class="form-control" formControlName="imagePath" id="formFileLg" type="file" accept=".png, .jpg , .jpeg">
+              <!-- <input class="form-control" formControlName="imagePath" id="formFileLg" type="file" accept=".png, .jpg , .jpeg"> -->
 
             </div>
 

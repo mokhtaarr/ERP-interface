@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BranchComponent } from './branch/branch.component';
 import { LoginComponent } from './login/login.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ImportModule } from '../import/import.module';
 
 
 
@@ -13,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   imports: [
     CommonModule,
+    ImportModule
   ],
   exports:[
     BranchComponent,
