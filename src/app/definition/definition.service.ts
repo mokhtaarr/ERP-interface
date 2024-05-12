@@ -233,4 +233,10 @@ export class DefinitionService {
     );
 }
 
+
+// customer Category Services
+
+ getAllCustomerCategory(){
+  return this.http.get<any>(environment.apiUrl+'CustomerCategory/GetAllCustomerCategory')
+ }
 }

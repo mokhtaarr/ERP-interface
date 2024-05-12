@@ -1,138 +1,286 @@
 <div class="container-fluid">
 
-    <div class="example-button-row">
-      <div class="example-flex-container">
-  
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-step-backward"></i>
-          </button>
+
+
+
+  <div style="margin-bottom: 50px;">
+    <form [formGroup]="CustomerCategoryForm" (ngSubmit)="onSmbit()">
+
+      <div class="example-button-row">
+        <div class="example-flex-container">
+
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
+              aria-label="Example icon button with a menu icon">
+              <i class="fas fa-step-backward"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
+              [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
+              <i class="fas fa-caret-left"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
+              [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
+              <i class="fas fa-caret-right"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
+              aria-label="Example icon button with a menu icon">
+              <i class="fas fa-step-forward"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab color="primary" (click)="getAllCustomerCategory()"
+              [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
+              <i class="fas fa-sync"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || CustomerCategoryForm.invalid"
+              aria-label="Example icon button with a menu icon">
+              <i class="fas fa-save"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab color="warn" (click)="Open_delete_confirm()"
+              [disabled]="DeleteDisable || CustomerCategoryForm.invalid" aria-label="Example icon button with a menu icon">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
+              aria-label="Example icon button with a menu icon">
+              <i class="fas fa-undo"></i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab (click)="updateCustomerCategory()" [disabled]="UpdateDisable" color="primary"
+              aria-label="Example icon button with a menu icon">
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+
+
+          <div class="example-button-container">
+            <button type="button" (click)="New()" mat-mini-fab color="primary"
+              aria-label="Example icon button with a menu icon">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+
         </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-caret-left"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-caret-right"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-step-forward"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-save"></i>
-          </button>
-        </div>
-  
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-  
       </div>
-    </div>
-  
-  
-    <div style="margin-bottom: 50px;">
-      <form>
-        <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <h1 style="margin-bottom: auto;">
-                <i class="fas fa-user-tag "></i>  
-                فئات العملاء
-              </h1>
-            </ng-template>
-           
 
-            <div class="row p-3">
-                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>الكود</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
-
-                  <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
-                    <mat-label> الإسم بالعربى </mat-label>
-                    <input matInput type="text" >
-                </mat-form-field>
-
-                
-                <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
-                    <mat-label> الإسم بالإنجليزى </mat-label>
-                    <input matInput  type="text" >
-                </mat-form-field>
+      <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <h1 style="margin-bottom: auto;">
+              <i class="fas fa-user-tag "></i>
+              فئات العملاء
+            </h1>
+          </ng-template>
 
 
-                <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
-                    <mat-label>ملاحظات</mat-label>
-                    <textarea matInput></textarea>
-                  </mat-form-field>
+          <div class="row p-3">
+            <mat-form-field appearance="outline" style="display: none;" class="col-lg-3 col-md-6 col-sm-12">
+              <mat-label>customerCatId</mat-label>
+              <input matInput type="number" formControlName="customerCatId">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+              <mat-label>الكود</mat-label>
+              <input matInput type="text" formControlName="catCode">
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label> الإسم بالعربى </mat-label>
+              <input matInput type="text" formControlName="catDescA">
+            </mat-form-field>
+
+
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label> الإسم بالإنجليزى </mat-label>
+              <input matInput type="text" formControlName="catDescE">
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label>خصم أساسى</mat-label>
+              <input matInput type="number" formControlName="defaultDisc">
+            </mat-form-field> 
+
+            
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label>خصم تقارير</mat-label>
+              <input matInput type="number" formControlName="reportDiscValu">
+            </mat-form-field> 
+
+            
             
 
-            </div>
-  
-          </mat-tab>
-  
-        </mat-tab-group>
-      </form>
-    </div>
+            <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+              <mat-label>سعر البيع</mat-label>
+              <mat-select formControlName="salPrice">
+                <mat-option [value]="1">سعر بيع 1</mat-option>
+                <mat-option [value]="2">سعر بيع 2</mat-option>
+                <mat-option [value]="3">سعر بيع 3</mat-option>
+                <mat-option [value]="4">سعر بيع 4</mat-option>
+                <mat-option [value]="5">سعر بيع 5</mat-option>
+                <mat-option [value]="6">سعر بيع 6</mat-option>
+                <mat-option [value]="7">سعر بيع 7</mat-option>
+                <mat-option [value]="8">سعر بيع 8</mat-option>
+                <mat-option [value]="9">سعر بيع 9</mat-option>
+                <mat-option [value]="10">سعر بيع 10</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-    <mat-card style="margin-bottom: 100px;">
-      <mat-card-header class="justify-content-center">
-        <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
-          <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-          <input matInput />
-        </mat-form-field>
-      </mat-card-header> <mat-card-content>
-  
-        <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
-  
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-  
-      </mat-card-content>
-      <mat-card-footer>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-        </mat-paginator>
-      </mat-card-footer>
-    </mat-card>
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label>فترة الائتمان</mat-label>
+              <input matInput type="number" formControlName="creditPeriod">
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+              <mat-label>حدود العاملات الأجلة</mat-label>
+              <input matInput type="number" formControlName="creditLimit">
+            </mat-form-field>
+
+
+            <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+              <mat-label>ملاحظات</mat-label>
+              <textarea matInput formControlName="remarks"></textarea>
+            </mat-form-field>
+
+            <div class="col-lg-2 col-md-6 col-sm-12">
+              <h3><mat-slide-toggle color="primary" formControlName="isDealer">وسيط</mat-slide-toggle></h3>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-sm-12">
+              <h3><mat-slide-toggle color="primary" formControlName="discPercentOrVal">خصم نسبة</mat-slide-toggle></h3>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-sm-12">
+              <h3><mat-slide-toggle color="primary" formControlName="isTaxExempted">اعفاء ضريبى</mat-slide-toggle></h3>
+            </div>
+
+            <div class="col-lg-2 col-md-6 col-sm-12">
+              <h3><mat-slide-toggle color="primary" formControlName="isDiscountByItem">خصم على مستوى الصنف</mat-slide-toggle></h3>
+            </div>
+
+          </div>
+
+        </mat-tab>
+
+      </mat-tab-group>
+    </form>
   </div>
+
+  <mat-card style="margin-bottom: 100px;">
+    <mat-card-header class="justify-content-center">
+      <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+        <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+        <input matInput (keyup)="Filterchange($event)" />
+      </mat-form-field>
+    </mat-card-header> <mat-card-content>
+
+      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+
+        <ng-container matColumnDef="customerCatId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;"> customerCatId </th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.customerCatId}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="catCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> الكود </th>
+          <td mat-cell *matCellDef="let element"> {{element.catCode}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="catDescA">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> الإسم بالعربى </th>
+          <td mat-cell *matCellDef="let element"> {{element.catDescA}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="catDescE">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> الإسم بالإنجليزى </th>
+          <td mat-cell *matCellDef="let element"> {{element.catDescE}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="remarks">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element.remarks;else noData">
+              {{element.remarks}}
+            </ng-container>
+            <ng-template #noData>
+              لايوجد ملاحظات لهذه الفئة
+            </ng-template>
+          </td>
+        </ng-container>
+<!-- 
+        <ng-container matColumnDef="defaultDisc">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">خصم اساسى</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.defaultDisc}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reportDiscValu">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">خصم تقارير</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.reportDiscValu}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="discPercentOrVal">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">خصم نسبة</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.discPercentOrVal}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isDiscountByItem">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">خصم على مستوى الصنف</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.isDiscountByItem}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isTaxExempted">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">اعفاء ضريبى</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.isTaxExempted}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="creditPeriod">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">فتره الائتمان</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.creditPeriod}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="creditLimit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">حدود العاملات الاجلة</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.creditLimit}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isDealer">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">وسيط</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.isDealer}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="salPrice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;">السعر</th>
+          <td mat-cell *matCellDef="let element" style="display: none;"> {{element.salPrice}} </td>
+        </ng-container> -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
+      </table>
+
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </mat-card-footer>
+  </mat-card>
+</div>

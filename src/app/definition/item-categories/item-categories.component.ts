@@ -141,6 +141,8 @@ export class ItemCategoriesComponent implements OnInit{
     this.firstRow = true;
     this.lastRow = false;
     this.DisabledPrevButton = true;
+    this.DisabledNextButton = false;
+    this.UpdateDisable = false;
 
   }
 
@@ -163,7 +165,7 @@ export class ItemCategoriesComponent implements OnInit{
     this.lastRow = true;
     this.DisabledPrevButton = false;
     this.DisabledNextButton = true;
-
+    this.UpdateDisable = false;
 
   }
 
@@ -187,6 +189,7 @@ export class ItemCategoriesComponent implements OnInit{
       })
       
       this.firstRow = false;
+      this.UpdateDisable = false;
 
       const LastItem = this.AllItemCategory.findIndex(p=>p.itemCategoryId == this.itemCategoryForm.value.itemCategoryId);
 
@@ -222,6 +225,8 @@ export class ItemCategoriesComponent implements OnInit{
       
       this.firstRow = false;
       this.lastRow = false;
+      this.UpdateDisable = false;
+
 
       const firstItem = this.AllItemCategory.findIndex(p=>p.itemCategoryId == this.itemCategoryForm.value.itemCategoryId);
 
@@ -300,30 +305,35 @@ export class ItemCategoriesComponent implements OnInit{
   }
 
   undo(){
-    console.log('this.undoIndex',this.undoIndex)
+    this.itemCategoryForm.disable();
     if(this.undoIndex != -1){
       const undoItem = this.AllItemCategory[this.undoIndex]
-      this.itemCategoryForm.setValue({
-        itemCategoryId: undoItem.itemCategoryId,
-        itemCatCode: undoItem.itemCatCode,
-        itemCatDescA: undoItem.itemCatDescA,
-        itemCatDescE: undoItem.itemCatDescE,
-        parentItemCategoryId: undoItem.parentItemCategoryId,
-        itemCategoryType: undoItem.itemCategoryType,
-        remarks: undoItem.remarks,
-        imagePath: null
-      });
+      if(undoItem){
+        this.itemCategoryForm.setValue({
+          itemCategoryId: undoItem.itemCategoryId,
+          itemCatCode: undoItem.itemCatCode,
+          itemCatDescA: undoItem.itemCatDescA,
+          itemCatDescE: undoItem.itemCatDescE,
+          parentItemCategoryId: undoItem.parentItemCategoryId,
+          itemCategoryType: undoItem.itemCategoryType,
+          remarks: undoItem.remarks,
+          imagePath: null
+        });
+       
+      }
+      this.UpdateDisable = false;
+      this.DisabledNextButton = false;
+      this.DisabledPrevButton = false;
+      this.lastRow = false;
+      this.firstRow = false;
+      this.reloadDisabled = false;
+      this.SaveDisable = true;
+      this.UndoDisabled = true;
+      this.DeleteDisable = false;
+  
+      }
      
-    }
-    this.itemCategoryForm.disable();
-    this.UpdateDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
-    this.reloadDisabled = false;
-    this.SaveDisable = true;
-    this.UndoDisabled = true;
+      this.SaveDisable = true;
 
   }
 
