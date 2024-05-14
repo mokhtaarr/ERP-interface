@@ -231,6 +231,7 @@ export class DefinitionService {
         return res.status;
       })
     );
+
 }
 
 
@@ -239,4 +240,108 @@ export class DefinitionService {
  getAllCustomerCategory(){
   return this.http.get<any>(environment.apiUrl+'CustomerCategory/GetAllCustomerCategory')
  }
+
+ AddCustomerCategory(values:any){
+  return this.http.post<any>(environment.apiUrl+'CustomerCategory/AddCustomerCategory',values)
+  .pipe(
+    map((res)=>{
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+
+      if (res.status == false) this.toastr.error(message);
+
+      return res.status;
+    })
+  )
+ }
+
+ DeleteCustomerCategory(customerCatId:any){
+  return this.http.delete<any>(`${environment.apiUrl}CustomerCategory/DeleteCustomerCategory?CustomerCatId=${customerCatId}`)
+  .pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+
+      if (res.status == false) this.toastr.error(message);
+
+      return res.status;
+    })
+  );
+ }
+
+
+ // Vendor Type  انواع الموردين
+
+ GetAllVandorType(){
+  return this.http.get<any>(environment.apiUrl + 'VendorType/GetAllVendorType');
+ }
+
+ AddVendorType(values:any){
+  return this.http.post<any>(environment.apiUrl + 'VendorType/AddVendorType',values)
+  .pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+
+      if (res.status == false) this.toastr.error(message);
+
+      return res.status;
+    })
+  );
+ }
+ 
+ DeleteVendorType(vendorTypeId:any){
+  return this.http.delete<any>(`${environment.apiUrl}VendorType/DeleteVendorType?vendorTypeId=${vendorTypeId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+ }
+
+ //customer type  انواع العملاء
+
+ GetAllCustomerType(){
+  return this.http.get<any>(environment.apiUrl+'CustomerType/GetAllCustomerType')
+}
+
+AddCustomerType(values:any){
+  return this.http.post<any>(environment.apiUrl+'CustomerType/AddCustomerType',values)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+DeleteCustomerType(customerTypeId:any){
+  return this.http.delete<any>(`${environment.apiUrl}CustomerType/DeleteCustomerType?customerTypeId=${customerTypeId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
 }

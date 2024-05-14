@@ -143,6 +143,7 @@ export class ItemCategoriesComponent implements OnInit{
     this.DisabledPrevButton = true;
     this.DisabledNextButton = false;
     this.UpdateDisable = false;
+    this.DeleteDisable = false;
 
   }
 
@@ -161,6 +162,7 @@ export class ItemCategoriesComponent implements OnInit{
       imagePath: null
     })   
 
+    this.DeleteDisable = false;
     this.firstRow = false;
     this.lastRow = true;
     this.DisabledPrevButton = false;
@@ -190,6 +192,7 @@ export class ItemCategoriesComponent implements OnInit{
       
       this.firstRow = false;
       this.UpdateDisable = false;
+      this.DeleteDisable = false;
 
       const LastItem = this.AllItemCategory.findIndex(p=>p.itemCategoryId == this.itemCategoryForm.value.itemCategoryId);
 
@@ -226,6 +229,7 @@ export class ItemCategoriesComponent implements OnInit{
       this.firstRow = false;
       this.lastRow = false;
       this.UpdateDisable = false;
+      this.DeleteDisable = false;
 
 
       const firstItem = this.AllItemCategory.findIndex(p=>p.itemCategoryId == this.itemCategoryForm.value.itemCategoryId);
@@ -267,6 +271,9 @@ export class ItemCategoriesComponent implements OnInit{
         this.DisabledPrevButton = false;
         this.lastRow = false;
         this.firstRow = false;
+        this.SaveDisable = true;
+        this.UpdateDisable = false;
+        this.UndoDisabled = true;
       }
     })
   }

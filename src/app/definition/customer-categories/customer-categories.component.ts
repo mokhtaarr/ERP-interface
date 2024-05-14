@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DefinitionService } from '../definition.service';
+import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 
 @Component({
   selector: 'app-customer-categories',
@@ -88,7 +89,6 @@ export class CustomerCategoriesComponent implements OnInit{
         isDealer: row.isDealer
       });
 
-
       this.UpdateDisable = false;
       this.DeleteDisable = false;
       this.UndoDisabled = true;
@@ -97,7 +97,18 @@ export class CustomerCategoriesComponent implements OnInit{
   }
   
   onSmbit() {
-    throw new Error('Method not implemented.');
+    this.definitionService.AddCustomerCategory(this.CustomerCategoryForm.value).subscribe(res=>{
+      if(res){
+        this.getAllCustomerCategory();
+        this.CustomerCategoryForm.disable();
+        this.DisabledNextButton = false;
+        this.DisabledPrevButton = false;
+        this.lastRow = false;
+        this.firstRow = false;
+        this.SaveDisable=true;
+        this.UpdateDisable = false;
+      }
+    })
     }
 
 
@@ -105,7 +116,37 @@ export class CustomerCategoriesComponent implements OnInit{
    
 
     Open_delete_confirm() {
-    throw new Error('Method not implemented.');
+      var _popup = this.dialog.open(DeleteConfirmComponent, {
+        width: '30%',
+        enterAnimationDuration: '1000ms',
+        exitAnimationDuration: '1000ms',
+      });
+  
+      _popup.afterClosed().subscribe((response) => {
+        if (response) {
+          this.definitionService.DeleteCustomerCategory(this.CustomerCategoryForm.value.customerCatId).subscribe(res=>{
+            if(res){
+              this.getAllCustomerCategory();
+              this.CustomerCategoryForm.setValue({
+                customerCatId: null,
+                catCode: null,
+                catDescA: null,
+                catDescE: null,
+                remarks: null,
+                defaultDisc: null,
+                reportDiscValu: null,
+                discPercentOrVal: null,
+                isDiscountByItem: null,
+                isTaxExempted: null,
+                creditPeriod: null,
+                creditLimit: null,
+                isDealer: null,
+                salPrice: null
+              })
+            }
+          })
+        }
+      });
     }
 
     undo() {
@@ -152,7 +193,7 @@ export class CustomerCategoriesComponent implements OnInit{
     }
 
     updateCustomerCategory() {
-      this.CustomerCategoryForm.enable()
+      this.CustomerCategoryForm.enable();
       this.DeleteDisable = true;
       this.DisabledNextButton = true;
       this.DisabledPrevButton = true;
@@ -232,6 +273,7 @@ export class CustomerCategoriesComponent implements OnInit{
         
         this.firstRow = false;
         this.UpdateDisable = false;
+        this.DeleteDisable = false;
 
         const LastItem = this.customerCategory.findIndex(p=>p.customerCatId == this.CustomerCategoryForm.value.customerCatId);
   
@@ -275,6 +317,8 @@ export class CustomerCategoriesComponent implements OnInit{
       this.firstRow = false;
       this.lastRow = false;
       this.UpdateDisable = false;
+      this.DeleteDisable = false;
+
 
       const firstItem = this.customerCategory.findIndex(p=>p.customerCatId == this.CustomerCategoryForm.value.customerCatId);
 
@@ -315,6 +359,7 @@ export class CustomerCategoriesComponent implements OnInit{
       this.DisabledPrevButton = false;
       this.DisabledNextButton = true;
       this.UpdateDisable = false;
+      this.DeleteDisable = false;
 
       }
     }
@@ -345,6 +390,7 @@ export class CustomerCategoriesComponent implements OnInit{
         this.DisabledPrevButton = true;
         this.DisabledNextButton = false;
         this.UpdateDisable = false;
+        this.DeleteDisable = false;
 
         }
     }
