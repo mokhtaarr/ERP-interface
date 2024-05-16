@@ -70,7 +70,7 @@ undoIndex!: number;
    })
   }
 
-  onSmbit(){
+  onSumbit(){
     this.definitionService.AddCustomerType(this.customerTypeForm.value).subscribe(res=>{
       if(res){
         this.GetAllCustomerType();
@@ -82,6 +82,8 @@ undoIndex!: number;
         this.SaveDisable=true;
         this.UpdateDisable = false;
         this.UndoDisabled = true;
+        this.DeleteDisable=false;
+
       }
     })
   }
@@ -254,6 +256,10 @@ undoIndex!: number;
               customerTypeLevelType: null,
               remarks: null
             })
+
+            this.DeleteDisable = true;
+            this.UpdateDisable = true;
+            
           }
         })
            

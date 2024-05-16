@@ -32,6 +32,11 @@ export class BranchSystemComponent implements OnInit {
   EditDisable : boolean = true;
   SaveDisable : boolean = true;
   DeleteDisable : boolean = true;
+  reloadDisabled : boolean = true;
+  UndoDisabled : boolean = true;
+  firstRow: boolean = false;
+  lastRow: boolean = false;
+  undoIndex!: number;
 
   AllPartition: partition[] = [];
   selectedBranchId: any;
@@ -55,6 +60,7 @@ export class BranchSystemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.branchForm.disable();
     this.getAllBranches();
     this.updateDisabledState();
   }
@@ -74,7 +80,6 @@ export class BranchSystemComponent implements OnInit {
   updateDisabledState() {
     if (this.Disabled_field) {
       this.branchForm.disable();
-      this.branchForm.get('storeCode')?.enable();
     } else {
       this.branchForm.enable();
     }
@@ -87,7 +92,6 @@ export class BranchSystemComponent implements OnInit {
   }
 
   getBranch(storeId: number) {
-    this.branchForm.enable();
     this.readonly_field = true;
     this.definitionService.getBranch(storeId).subscribe((res: Branches) => {
       this.branchForm.setValue({
@@ -178,6 +182,8 @@ export class BranchSystemComponent implements OnInit {
   New() {
     this.Disabled_field = false;
     this.readonly_field = false;
+    this.undoIndex = this.AllBranches.findIndex(p=>p.storeId == this.branchForm.value.storeId);
+
     this.branchForm.setValue({
       storeId: null,
       storeCode: null,
@@ -190,26 +196,56 @@ export class BranchSystemComponent implements OnInit {
       main: null,
     });
     this.updateDisabledState();
-    this.SaveDisable = false;
+
+    this.Disable_Left_button = true;
+    this.Disable_Left_button = true;
+    this.lastRow = true;
+    this.firstRow = true;
     this.EditDisable = true;
+    this.SaveDisable = false;
+    this.readonly_field = false;
+    this.reloadDisabled = true;
     this.DeleteDisable = true;
+    this.UndoDisabled = false;
 
   }
 
   onSumbit() {
-    console.log(this.branchForm.value)
     this.definitionService.AddBranch(this.branchForm.value).subscribe(res=>{
-      this.getAllBranches();
-
+      if(res){
+        this.getAllBranches();
+        this.Disable_Left_button = false;
+        this.Disable_right_button = false;
+        this.lastRow = false;
+        this.firstRow = false;
+        this.SaveDisable=true;
+        this.EditDisable = false;
+        this.UndoDisabled = true;
+      }
     });
   }
 
-  updateBranch() {
-    this.definitionService
-      .UpdateBranch(this.branchForm.value)
-      .subscribe((res) => {
-        this.getAllBranches();
-      });
+  // updateBranch() {
+  //   this.definitionService
+  //     .UpdateBranch(this.branchForm.value)
+  //     .subscribe((res) => {
+  //       this.getAllBranches();
+  //     });
+  // }
+
+  updateBranch(){
+    this.branchForm.enable();
+    this.DeleteDisable = true;
+    this.Disable_right_button = true;
+    this.Disable_Left_button = true;
+    this.lastRow = true;
+    this.firstRow = true;
+    this.SaveDisable = false;
+    this.readonly_field = true;
+    this.reloadDisabled = false;
+    this.EditDisable = true;
+    this.UndoDisabled = false;
+    this.undoIndex = this.AllBranches.findIndex(p=>p.storeId == this.branchForm.value.storeId);
   }
 
   Open_delete_confirm() {
@@ -269,7 +305,6 @@ export class BranchSystemComponent implements OnInit {
               (item: any) => item.partCode === partCode
             );
             if (row) {
-              console.log(row.isHidden);
               row.isHidden = true; // Set isHidden to true to hide the row
             }
           });
@@ -280,7 +315,6 @@ export class BranchSystemComponent implements OnInit {
   getLastBranch() {
     const LastBranch = this.AllBranches[this.AllBranches.length - 1];
     if (LastBranch) {
-      this.branchForm.enable();
       this.branchForm.setValue({
         storeId: LastBranch.storeId,
         storeCode: LastBranch.storeCode,
@@ -296,18 +330,21 @@ export class BranchSystemComponent implements OnInit {
       this.getPartition_of_StoreId(LastBranch.storeId);
       this.Disable_Left_button = false ;
       this.Disable_right_button = true ;
-      this.readonly_field = true;
 
       this.EditDisable = false;
       this.DeleteDisable = false;
-      
+      this.firstRow = false;
+      this.lastRow = true;
+
+   
+      this.DeleteDisable = false;
+  
     }
   }
 
   getFirstBranch() {
     const firstBranch = this.AllBranches[0];
     if (firstBranch) {
-      this.branchForm.enable();
       this.branchForm.setValue({
         storeId: firstBranch.storeId,
         storeCode: firstBranch.storeCode,
@@ -324,10 +361,14 @@ export class BranchSystemComponent implements OnInit {
 
       this.Disable_Left_button = true ;
       this.Disable_right_button = false;
-      this.readonly_field = true;
 
       this.EditDisable = false;
       this.DeleteDisable = false;
+
+      this.firstRow = true;
+      this.lastRow = false;
+   
+  
     }
   }
 
@@ -337,7 +378,6 @@ export class BranchSystemComponent implements OnInit {
     );
     const nextItem = this.AllBranches[index + 1];
     if (nextItem) {
-      this.branchForm.enable();
       this.branchForm.setValue({
         storeId: nextItem.storeId,
         storeCode: nextItem.storeCode,
@@ -353,8 +393,9 @@ export class BranchSystemComponent implements OnInit {
       this.getPartition_of_StoreId(nextItem.storeId);
 
       this.Disable_Left_button = false;
-      this.readonly_field = true;
-
+      this.firstRow = false;
+      this.EditDisable = false;
+      this.DeleteDisable = false;
 
       const Last_index = this.AllBranches.findIndex(
         (p) => p.storeId == this.branchForm.value.storeId
@@ -362,10 +403,10 @@ export class BranchSystemComponent implements OnInit {
   
       if (Last_index === this.AllBranches.length - 1) {
         this.Disable_right_button = true;
+        this.lastRow = true;
       }
 
-      this.EditDisable = false;
-      this.DeleteDisable = false;
+  
     }
 
     
@@ -377,7 +418,6 @@ export class BranchSystemComponent implements OnInit {
     );
     const prevItem = this.AllBranches[index - 1];
     if (prevItem) {
-      this.branchForm.enable();
       this.branchForm.setValue({
         storeId: prevItem.storeId,
         storeCode: prevItem.storeCode,
@@ -390,7 +430,10 @@ export class BranchSystemComponent implements OnInit {
         main: null,
       });
 
-      this.readonly_field = true;
+      this.firstRow = false;
+      this.lastRow = false;
+      this.EditDisable = false;
+      this.DeleteDisable = false;
 
       this.getPartition_of_StoreId(prevItem.storeId);
 
@@ -401,10 +444,42 @@ export class BranchSystemComponent implements OnInit {
 
       if (first_index === 0) {
         this.Disable_Left_button = true;
+        this.firstRow = true;
       }
 
+      
+    }
+  }
+
+  undo(){
+    this.branchForm.disable();
+    if(this.undoIndex != -1){
+      const undoItem = this.AllBranches[this.undoIndex]
+
+      if(undoItem){
+       this.branchForm.setValue({
+         storeId: undoItem.storeId,
+         storeCode: undoItem.storeCode,
+         storeDescA: undoItem.storeDescA,
+         storeDescE: undoItem.storeDescE,
+         branch_offical: null,
+         phone: null,
+         Treasury: null,
+         branch_location: null,
+         main: null
+       })
+
       this.EditDisable = false;
+      this.Disable_right_button = false;
+      this.Disable_Left_button = false;
+      this.lastRow = false;
+      this.firstRow = false;
+      this.reloadDisabled = false;
+      this.SaveDisable = true;
+      this.UndoDisabled = true;
       this.DeleteDisable = false;
+   
+     }
     }
   }
 }

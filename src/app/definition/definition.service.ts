@@ -115,7 +115,7 @@ export class DefinitionService {
 
           if (res.status == false) this.toastr.error(message);
 
-          return res;
+          return res.status;
         })
       );
   }
@@ -344,4 +344,50 @@ DeleteCustomerType(customerTypeId:any){
   }))
 }
 
+
+// hr jobs السيرفسيس الخاصه با ال hr jobs
+
+GEtAllHrJobs(){
+  return this.http.get<any>(environment.apiUrl +'HrJobs/GetAllHrJobs')
+}
+
+
+
+
+
+
+// HrDepartment  السيرفسيس الخاصه با
+
+getAllHrDepartments(){
+  return this.http.get<any>(environment.apiUrl + 'HrDepartments/GetAllHrDepartments')
+}
+
+AddHrDepartment(values:any){
+  return this.http.post<any>(environment.apiUrl+'HrDepartments/AddHrDepartment',values)
+  .pipe(map(res=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+
+DeleteHrDepartment(departId : any){
+  return this.http.delete<any>(`${environment.apiUrl}HrDepartments/DeleteHrDepartment?departMentId=${departId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
 }

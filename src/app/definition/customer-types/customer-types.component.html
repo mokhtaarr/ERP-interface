@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
   <div style="margin-bottom: 50px;">
-    <form [formGroup]="customerTypeForm" (ngSubmit)="onSmbit()">
+    <form [formGroup]="customerTypeForm" (ngSubmit)="onSumbit()">
       <div class="example-button-row">
         <div class="example-flex-container">
 
@@ -101,7 +101,7 @@
 
             <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
               <mat-label>كود نوع العميل</mat-label>
-              <input matInput type="text" formControlName="customerTypeCode">
+              <input matInput type="text" formControlName="customerTypeCode" [readonly]="EditReadonly">
             </mat-form-field>
 
             <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">

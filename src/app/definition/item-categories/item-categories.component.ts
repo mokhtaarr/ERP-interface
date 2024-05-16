@@ -305,6 +305,9 @@ export class ItemCategoriesComponent implements OnInit{
               remarks: null,
               imagePath: null
             })
+
+            this.DeleteDisable = true;
+            this.UpdateDisable = true;
           }
         })
       }

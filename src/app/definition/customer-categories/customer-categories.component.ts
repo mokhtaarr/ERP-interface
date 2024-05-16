@@ -143,6 +143,9 @@ export class CustomerCategoriesComponent implements OnInit{
                 isDealer: null,
                 salPrice: null
               })
+
+              this.DeleteDisable = true;
+              this.UpdateDisable = true;
             }
           })
         }

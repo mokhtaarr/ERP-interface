@@ -1,45 +1,359 @@
+import { FlatTreeControl } from '@angular/cdk/tree';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { noop } from 'rxjs';
+import { ExampleFlatNode, ExampleFlatNode2, FoodNode } from 'src/app/shared/models/tree';
+import { DefinitionService } from '../definition.service';
+import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 
 @Component({
   selector: 'app-structure-administrative',
   templateUrl: './structure-administrative.component.html',
   styleUrls: ['./structure-administrative.component.scss']
 })
-export class StructureAdministrativeComponent implements OnInit ,AfterViewInit {
+
+export class StructureAdministrativeComponent implements OnInit {
 
   dataSource: any;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  @ViewChild(MatPaginator) paginator !: MatPaginator;
-  @ViewChild(MatSort) sort !: MatSort;
+  AllHrDepartment : any[] = [];
 
-   ELEMENT_DATA: any[] = [
-    {position: 1, name: 'Aydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'belium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'cithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'deryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'eoron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'farbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'gitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'hxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'rluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-    {position: 11, name: 'momo', weight: 20.1797, symbol: 'Ne'},
-  ];
+  private _transformer = (node: any, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      level: level,
+      name: node.name,
+      departMentId : node.departMentId,
+      departCode : node.departCode,
+      departName2: node.departName2,
+      departTask:node.departTask,
+      remarks : node.remarks,
+      parentId : node.parentId
+    };
+  };
 
+
+  treeControl = new FlatTreeControl<ExampleFlatNode2>(
+    node => node.level,
+    node => node.expandable,
+    
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => node.children,
+    
+  );
+
+
+  DisabledPrevButton: boolean = false;
+  DisabledNextButton: boolean = false;
+  firstRow: boolean = false;
+  lastRow: boolean = false;
+  DeleteDisable :boolean = true;
+  SaveDisable : boolean = true;
+  UpdateDisable : boolean = true;
+
+  EditReadonly : boolean = false;
+  reloadDisabled : boolean = true;
+  UndoDisabled : boolean = true;
+
+
+undoIndex!: number;
+
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+   
+  }
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<any>(this.ELEMENT_DATA);
+    this.HrDepartmentsForm.disable();
+   this.getAllHrDepartments();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+
+  HrDepartmentsForm = this.fb.group({
+    departMentId : [],
+    departCode:['',Validators.required],
+    name:['',Validators.required],
+    departName2:['',Validators.required],
+    departTask:[''],
+    remarks:[''],
+    parentId:[]
+    
+  });
+
+
+  handleNodeClick(node:any){
+    if(node){
+      this.HrDepartmentsForm.setValue({
+        departMentId: node.departMentId,
+        departCode: node.departCode,
+        name: node.name,
+        departName2: node.departName2,
+        departTask: node.departTask,
+        remarks: node.remarks,
+        parentId:node.parentId
+      });
+      this.UpdateDisable = false;
+      this.DeleteDisable = false;
+      this.UndoDisabled = true;
+    }
+  }
+
+
+  onSmbit(){
+    this.definitionService.AddHrDepartment(this.HrDepartmentsForm.value).subscribe(res=>{
+      if(res){
+        this.getAllHrDepartments();
+        this.HrDepartmentsForm.disable();
+        this.DisabledNextButton = false;
+        this.DisabledPrevButton = false;
+        this.lastRow = false;
+        this.firstRow = false;
+        this.SaveDisable=true;
+        this.UpdateDisable = false;
+        this.UndoDisabled = true;
+        this.DeleteDisable=false;
+      }
+    })
+  }
+
+  getAllHrDepartments(){
+    this.definitionService.getAllHrDepartments().subscribe(res=>{
+      this.AllHrDepartment = res;
+      this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+      this.dataSource.data = this.AllHrDepartment;
+    })
+  }
+
+
+  getFirstRowData(){
+    const FirstItem = this.AllHrDepartment[0];
+      if(FirstItem){
+     this.HrDepartmentsForm.setValue({
+       departMentId: FirstItem.departMentId,
+       departCode: FirstItem.departCode,
+       name: FirstItem.name,
+       departName2: FirstItem.departName2,
+       departTask: FirstItem.departTask,
+       remarks: FirstItem.remarks,
+       parentId: FirstItem.parentId
+     });
+  
+      this.firstRow = true;
+      this.lastRow = false;
+      this.DisabledPrevButton = true;
+      this.DisabledNextButton = false;
+      this.UpdateDisable = false;
+      this.DeleteDisable = false;
+
+      }
 
   }
 
+  getLastRowData(){
+    const LastItem = this.AllHrDepartment[this.AllHrDepartment.length-1];
+    if(LastItem){
+      this.HrDepartmentsForm.setValue({
+        departMentId: LastItem.departMentId,
+        departCode: LastItem.departCode,
+        name: LastItem.name,
+        departName2: LastItem.departName2,
+        departTask: LastItem.departTask,
+        remarks: LastItem.remarks,
+        parentId: LastItem.parentId
+      });
+
+    this.firstRow = false;
+    this.lastRow = true;
+    this.DisabledPrevButton = false;
+    this.DisabledNextButton = true;
+    this.UpdateDisable = false;
+    this.DeleteDisable = false;
+
+    }
+  }
+
+  getPrevRowData(){
+
+      const index = this.AllHrDepartment.findIndex(p=>p.departMentId == this.HrDepartmentsForm.value.departMentId);
+  
+      const PrevItem = this.AllHrDepartment[index - 1];
+  
+      if(PrevItem){
+        this.HrDepartmentsForm.setValue({
+          departMentId: PrevItem.departMentId,
+          departCode: PrevItem.departCode,
+          name: PrevItem.name,
+          departName2: PrevItem.departName2,
+          departTask: PrevItem.departTask,
+          remarks: PrevItem.remarks,
+          parentId: PrevItem.parentId
+        });
+
+        this.firstRow = false;
+        this.lastRow = false;
+        this.UpdateDisable = false;
+        this.DeleteDisable = false;
+  
+  
+        const firstItem = this.AllHrDepartment.findIndex(p=>p.departMentId == this.HrDepartmentsForm.value.departMentId);
+  
+         if(firstItem === 0){
+              this.DisabledPrevButton = true;
+              this.firstRow = true;
+         }
+         
+       
+        this.DisabledNextButton = false;
+  
+      }
+  }
+
+
+  getNextRowData(){
+      const index = this.AllHrDepartment.findIndex(p=>p.departMentId == this.HrDepartmentsForm.value.departMentId);
+  
+      const nextItem = this.AllHrDepartment[index + 1];
+  
+      if(nextItem){
+        this.HrDepartmentsForm.setValue({
+          departMentId: nextItem.departMentId,
+          departCode: nextItem.departCode,
+          name: nextItem.name,
+          departName2: nextItem.departName2,
+          departTask: nextItem.departTask,
+          remarks: nextItem.remarks,
+          parentId: nextItem.parentId
+        });
+
+        
+        this.firstRow = false;
+        this.UpdateDisable = false;
+        this.DeleteDisable = false;
+
+        const LastItem = this.AllHrDepartment.findIndex(p=>p.departMentId == this.HrDepartmentsForm.value.departMentId);
+  
+        if(this.AllHrDepartment.length -1 === LastItem){
+          this.DisabledNextButton = true;
+          this.lastRow = true;
+  
+        }
+  
+        this.DisabledPrevButton = false;
+  
+      }
+  }
+
+
+  Open_delete_confirm(){
+    var _popup = this.dialog.open(DeleteConfirmComponent, {
+      width: '30%',
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+    });
+    _popup.afterClosed().subscribe((response) => {
+      if (response) {
+        this.definitionService.DeleteHrDepartment(this.HrDepartmentsForm.value.departMentId).subscribe(res=>{
+          if(res){
+            this.getAllHrDepartments();
+            this.HrDepartmentsForm.setValue({
+              departMentId: null,
+              departCode: null,
+              name: null,
+              departName2: null,
+              departTask: null,
+              remarks: null,
+              parentId: null
+            })
+            this.DeleteDisable = true;
+            this.UpdateDisable = true;
+          }
+        })
+           
+      }
+    });
+  }
+
+  undo(){
+    this.HrDepartmentsForm.disable();
+
+    if(this.undoIndex != -1){
+      const undoItem = this.AllHrDepartment[this.undoIndex]
+
+      if(undoItem){
+        this.HrDepartmentsForm.setValue({
+          departMentId: undoItem.departMentId,
+          departCode: undoItem.departCode,
+          name: undoItem.name,
+          departName2: undoItem.departName2,
+          departTask: undoItem.departTask,
+          remarks: undoItem.remarks,
+          parentId: undoItem.parentId
+        });
+
+      this.UpdateDisable = false;
+      this.DisabledNextButton = false;
+      this.DisabledPrevButton = false;
+      this.lastRow = false;
+      this.firstRow = false;
+      this.reloadDisabled = false;
+      this.SaveDisable = true;
+      this.UndoDisabled = true;
+      this.DeleteDisable = false;
+   
+     }
+    }
+  }
 
   
+  updateHrDepartment(){
+    this.HrDepartmentsForm.enable();
+    this.DeleteDisable = true;
+    this.DisabledNextButton = true;
+    this.DisabledPrevButton = true;
+    this.lastRow = true;
+    this.firstRow = true;
+    this.SaveDisable = false;
+    this.EditReadonly = true;
+    this.reloadDisabled = false;
+    this.UpdateDisable = true;
+    this.UndoDisabled = false;
+    this.undoIndex = this.AllHrDepartment.findIndex(p=>p.departMentId == this.HrDepartmentsForm.value.departMentId);
+  }
  
+  
+  New(){
+    this.HrDepartmentsForm.enable();
+    this.undoIndex = this.AllHrDepartment.findIndex(p=>p.departMentId == this.HrDepartmentsForm.value.departMentId);
+   this.HrDepartmentsForm.setValue({
+     departMentId: null,
+     departCode: null,
+     name: null,
+     departName2: null,
+     departTask: null,
+     remarks: null,
+     parentId: null
+   })
+  
+    this.DisabledNextButton = true;
+    this.DisabledPrevButton = true;
+    this.lastRow = true;
+    this.firstRow = true;
+    this.UpdateDisable = true;
+    this.SaveDisable = false;
+    this.EditReadonly = false;
+    this.reloadDisabled = true;
+    this.DeleteDisable = true;
+    this.UndoDisabled = false;
+  }
+  
+
 }

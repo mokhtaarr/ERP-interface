@@ -136,6 +136,9 @@ constructor(private definitionService: DefinitionService , private fb:FormBuilde
               vendorTypeLevelType: null,
               remarks: null
             })
+
+            this.DeleteDisable = true;
+            this.UpdateDisable = true;
           }
         })
            

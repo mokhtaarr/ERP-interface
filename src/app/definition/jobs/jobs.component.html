@@ -1,202 +1,246 @@
 <div class="container-fluid">
 
-    <div class="example-button-row">
-      <div class="example-flex-container">
-  
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-step-backward"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-caret-left"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-caret-right"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-step-forward"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-save"></i>
-          </button>
-        </div>
-  
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-  
+  <div class="example-button-row">
+    <div class="example-flex-container">
+
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-step-backward"></i>
+        </button>
       </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-caret-left"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-caret-right"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-step-forward"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+
     </div>
-  
-  
-    <div style="margin-bottom: 50px;">
-      <form>
-        <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <h1 style="margin-bottom: auto;">
-                <i class="fas fa-info-circle custom-icon"></i>
-
-                الوظائف
-              </h1>
-            </ng-template>
-           
-
-            <div class="row p-3">
-                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>الكود</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
-
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>النوع</mat-label>
-                    <mat-select>
-                      <mat-option value="one">First option</mat-option>
-                      <mat-option value="two">Second option</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>الإسم بالعربى</mat-label>
-                    <input matInput type="text">
-                  </mat-form-field>
-
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>الإسم بالإنجليزى</mat-label>
-                    <input matInput type="text">
-                  </mat-form-field>
+  </div>
 
 
-                <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
-                    <mat-label>واجبات الوظيفة</mat-label>
-                    <textarea matInput></textarea>
-                  </mat-form-field>
+  <div style="margin-bottom: 50px;">
+    <form>
+      <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <h1 style="margin-bottom: auto;">
+              <i class="fas fa-info-circle custom-icon"></i>
 
+              الوظائف
+            </h1>
+          </ng-template>
+
+          <div class="row">
+            <div class="col-2">
+              <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                  <button mat-icon-button disabled><i class="far fa-folder-open" style="font-size: 20px;color: #ecd9a6;"></i></button>
+                    {{node.name}}
                   
-                <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
-                    <mat-label>مؤهلات الوظيفة</mat-label>
-                    <textarea matInput></textarea>
-                  </mat-form-field>
-            
-                  
-                <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
-                    <mat-label>مسئوليات الوظيفة</mat-label>
-                    <textarea matInput></textarea>
-                  </mat-form-field>
+                   <div>
+                    
+                   </div>
 
-                  <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
-                    <mat-label>الوصف</mat-label>
-                    <textarea matInput></textarea>
-                  </mat-form-field>
-                  
-                  <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
-                    <mat-label>الملاحظات</mat-label>
-                    <textarea matInput></textarea>
-                  </mat-form-field>
+                  </mat-tree-node>
 
-                  <hr>
+                <mat-tree-node *matTreeNodeDef="let node;when: hasChild"  matTreeNodePadding >
+                  <button type="button" mat-icon-button matTreeNodeToggle
+                          [attr.aria-label]="'Toggle ' + node.name ">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                      {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+                    {{node.name}} 
+                    
+                </mat-tree-node>
+              </mat-tree> -->
 
-            
+              <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="handleNodeClick(node)">
+                  <button mat-icon-button disabled><i class="far fa-folder-open" style="font-size: 20px;color: #ecd9a6;"></i></button>
+                  {{node.name}}
+                </mat-tree-node>
+              
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="handleNodeClick(node)">
+                  <button type="button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                      {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+                  {{node.name}}
+                </mat-tree-node>
+              </mat-tree>
+              
+              
+            </div>
+            <div class="row col-10 p-3">
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>الكود</mat-label>
+                <input matInput type="number">
+              </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>متوسط الاجر الشهري</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>النوع</mat-label>
+                <mat-select>
+                  <mat-option value="one">First option</mat-option>
+                  <mat-option value="two">Second option</mat-option>
+                </mat-select>
+              </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>متوسط الاجر اليومي</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>الإسم بالعربى</mat-label>
+                <input matInput type="text">
+              </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>متوسط اجر الساعة</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>الإسم بالإنجليزى</mat-label>
+                <input matInput type="text">
+              </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>عدد ايام الاجازات الشهرية</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>متوسط عدد ساعات العمل اليومي</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
+              <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+                <mat-label>واجبات الوظيفة</mat-label>
+                <textarea matInput></textarea>
+              </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
-                    <mat-label>العدد المتاح</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
+
+              <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+                <mat-label>مؤهلات الوظيفة</mat-label>
+                <textarea matInput></textarea>
+              </mat-form-field>
+
+
+              <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+                <mat-label>مسئوليات الوظيفة</mat-label>
+                <textarea matInput></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+                <mat-label>الوصف</mat-label>
+                <textarea matInput></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+                <mat-label>الملاحظات</mat-label>
+                <textarea matInput></textarea>
+              </mat-form-field>
+
+              <hr>
+
+
+
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>متوسط الاجر الشهري</mat-label>
+                <input matInput type="number">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>متوسط الاجر اليومي</mat-label>
+                <input matInput type="number">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>متوسط اجر الساعة</mat-label>
+                <input matInput type="number">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>عدد ايام الاجازات الشهرية</mat-label>
+                <input matInput type="number">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>متوسط عدد ساعات العمل اليومي</mat-label>
+                <input matInput type="number">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                <mat-label>العدد المتاح</mat-label>
+                <input matInput type="number">
+              </mat-form-field>
 
             </div>
-  
-          </mat-tab>
-  
-        </mat-tab-group>
-      </form>
-    </div>
+          </div>
 
-    <mat-card style="margin-bottom: 100px;">
-      <mat-card-header class="justify-content-center">
-        <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
-          <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-          <input matInput />
-        </mat-form-field>
-      </mat-card-header> <mat-card-content>
-  
-        <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
-  
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-  
-      </mat-card-content>
-      <mat-card-footer>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-        </mat-paginator>
-      </mat-card-footer>
-    </mat-card>
-  
+
+        </mat-tab>
+
+      </mat-tab-group>
+    </form>
   </div>
+
+  <!-- <mat-card style="margin-bottom: 100px;">
+    <mat-card-header class="justify-content-center">
+      <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+        <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+        <input matInput />
+      </mat-form-field>
+    </mat-card-header> <mat-card-content>
+
+      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </mat-card-footer>
+  </mat-card> -->
+
+</div>
