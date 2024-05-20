@@ -27,3 +27,25 @@ export  interface ExampleFlatNode {
     remarks : string;
     parentId : number;
   }
+
+  export interface JobTree {
+    expandable: boolean;
+    level: number;
+    jobId : number;
+    departMentId : number;
+    parentId : number;
+    jcode : string;
+    jname1: string;
+    jname2: string;
+    remarks : string;
+    jresponsibilities:string;
+    jqualifications:string;
+    jdesc:string;
+    jduties:string;
+    standardMonthlyWage:number;
+    standardHolyDays:number;
+    standardDailyWage:number;
+    standardDailyWorkHours:number;
+    standardHourlyWage:number;
+    numberAvailable:number;
+  }

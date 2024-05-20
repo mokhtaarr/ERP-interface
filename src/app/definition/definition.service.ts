@@ -351,7 +351,40 @@ GEtAllHrJobs(){
   return this.http.get<any>(environment.apiUrl +'HrJobs/GetAllHrJobs')
 }
 
+GEtAllHrJobsForJobs(){
+  return this.http.get<any>(environment.apiUrl +'HrJobs/GetAllHrJobForSelect')
+}
 
+
+
+AddHrJob(values : any){
+  return this.http.post<any>(environment.apiUrl +'HrJobs/AddHrJob',values)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+  
+    if (res.status == true) this.toastr.success(message);
+  
+    if (res.status == false) this.toastr.error(message);
+  
+    return res;
+  }))
+  
+}
+
+DeleteHrJob(jobId:any){
+return this.http.delete<any>(`${environment.apiUrl}HrJobs/DeleteHrJob?JobId=${jobId}`)
+.pipe(map((res)=>{
+  var message = res.message;
+  var messageEn = res.messageEn;
+
+  if (res.status == true) this.toastr.success(message);
+
+  if (res.status == false) this.toastr.error(message);
+
+  return res.status;
+}))
+}
 
 
 
@@ -379,6 +412,41 @@ AddHrDepartment(values:any){
 
 DeleteHrDepartment(departId : any){
   return this.http.delete<any>(`${environment.apiUrl}HrDepartments/DeleteHrDepartment?departMentId=${departId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+// أشكال المركبات
+
+GetAllVehicleShapes(){
+  return this.http.get<any>(environment.apiUrl+'VehicleShapes/GetAllVehicleShapes')
+}
+
+AddVehicleShape(values : any){
+  return this.http.post<any>(environment.apiUrl +'VehicleShapes/AddVehicleShapes',values)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+  
+    if (res.status == true) this.toastr.success(message);
+  
+    if (res.status == false) this.toastr.error(message);
+  
+    return res;
+  }))
+  
+}
+
+DeleteVehicleShapes(VehicleShapeId : any){
+  return this.http.delete<any>(`${environment.apiUrl}VehicleShapes/DeleteVehicleShape?VehicleShapeId=${VehicleShapeId}`)
   .pipe(map((res)=>{
     var message = res.message;
     var messageEn = res.messageEn;

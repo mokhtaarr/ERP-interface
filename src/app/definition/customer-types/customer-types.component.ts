@@ -35,9 +35,7 @@ export class CustomerTypesComponent implements OnInit{
   EditReadonly : boolean = false;
   reloadDisabled : boolean = true;
   UndoDisabled : boolean = true;
-
-
-undoIndex!: number;
+  undoIndex!: number;
 
   constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
   }
@@ -129,9 +127,7 @@ undoIndex!: number;
       this.DisabledNextButton = false;
       this.UpdateDisable = false;
       this.DeleteDisable = false;
-
       }
-
   }
 
 

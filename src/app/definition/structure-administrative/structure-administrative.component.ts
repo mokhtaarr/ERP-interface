@@ -63,9 +63,7 @@ export class StructureAdministrativeComponent implements OnInit {
   EditReadonly : boolean = false;
   reloadDisabled : boolean = true;
   UndoDisabled : boolean = true;
-
-
-undoIndex!: number;
+  undoIndex!: number;
 
   constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
    
@@ -182,11 +180,8 @@ undoIndex!: number;
   }
 
   getPrevRowData(){
-
       const index = this.AllHrDepartment.findIndex(p=>p.departMentId == this.HrDepartmentsForm.value.departMentId);
-  
       const PrevItem = this.AllHrDepartment[index - 1];
-  
       if(PrevItem){
         this.HrDepartmentsForm.setValue({
           departMentId: PrevItem.departMentId,

@@ -1,59 +1,87 @@
 <div class="container-fluid">
 
-    <div class="example-button-row">
-        <div class="example-flex-container">
-
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-step-backward"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-caret-left"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-caret-right"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-step-forward"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-save"></i>
-                </button>
-            </div>
-
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-
-        </div>
-    </div>
-
-
     <div style="margin-bottom: 50px;">
-        <form>
-            <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
+        <form [formGroup]="VehicleShapesForm" (ngSubmit)="onSumbit()">
+            <div class="example-button-row">
+                <div class="example-flex-container">
+        
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-step-backward"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
+                      [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-caret-left"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
+                      [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-caret-right"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-step-forward"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary"  (click)="GetAllVehicleShapes()"
+                      [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-sync"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || VehicleShapesForm.invalid" 
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-save"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || VehicleShapesForm.invalid" (click)="Open_delete_confirm()"
+                      
+                       aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-undo"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateVehicleShapes()" color="primary"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </div>
+        
+        
+                  <div class="example-button-container">
+                    <button type="button" (click)="New()" mat-mini-fab color="primary"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+        
+                </div>
+              </div>
+    
+            <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;">
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <h1 style="margin-bottom: auto;">
@@ -65,20 +93,25 @@
 
 
                     <div class="row p-3">
+                        <mat-form-field appearance="outline" style="display:none" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>id</mat-label>
+                            <input matInput type="number" formControlName="vehicleShapeId">
+                        </mat-form-field>
+
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>الكود</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="text" formControlName="shapeCode">
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>الإسم بالعربى</mat-label>
-                            <input matInput type="text">
+                            <input matInput type="text"  formControlName="name1">
                         </mat-form-field>
 
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>الإسم بالإنجليزى</mat-label>
-                            <input matInput type="text">
+                            <input matInput type="text" formControlName="name2" >
                         </mat-form-field>
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
@@ -86,11 +119,8 @@
 
                         <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
                             <mat-label>الملاحظات</mat-label>
-                            <textarea matInput></textarea>
+                            <textarea matInput formControlName="remark" ></textarea>
                         </mat-form-field>
-
-
-
                     </div>
 
                 </mat-tab>
@@ -109,28 +139,28 @@
     
           <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
     
-            <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            <ng-container matColumnDef="shapeCode">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>الكود</th>
+              <td mat-cell *matCellDef="let element"> {{element.shapeCode}} </td>
             </ng-container>
     
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <ng-container matColumnDef="name1">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>الإسم بالعربى</th>
+              <td mat-cell *matCellDef="let element"> {{element.name1}} </td>
             </ng-container>
     
-            <ng-container matColumnDef="weight">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            <ng-container matColumnDef="name2">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>الإسم بالإنجليزى</th>
+              <td mat-cell *matCellDef="let element"> {{element.name2}} </td>
             </ng-container>
     
-            <ng-container matColumnDef="symbol">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
-              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            <ng-container matColumnDef="remark">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات </th>
+              <td mat-cell *matCellDef="let element"> {{element.remark}} </td>
             </ng-container>
     
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
           </table>
     
         </mat-card-content>

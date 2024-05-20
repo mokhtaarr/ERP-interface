@@ -42,19 +42,16 @@
   font-size: 20px; /* حجم الرموز */
 }
 
+/* تحسين استايل mat-tree-node */
 .mat-tree-node {
-  font-weight: bold; /* نص غامق */
-  border-radius: 5px; /* حواف مستديرة */
+  color: #3f51b5;
+  font-weight: bold;
   cursor: pointer;
 }
 
-.mat-tree-node {
-  font-weight: bold; /* نص غامق */
-  border-radius: 5px; /* حواف مستديرة */
-}
-
-mat-form-field{
- height: 30px;
+/* تحسين استايل mat-tree */
+.mat-tree {
+  background-color: #f8f8fc;
 }
 
 
