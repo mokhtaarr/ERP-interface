@@ -70,9 +70,10 @@ export class CustomerTypesComponent implements OnInit{
 
   onSumbit(){
     this.definitionService.AddCustomerType(this.customerTypeForm.value).subscribe(res=>{
-      if(res){
+      if(res.status){
         this.GetAllCustomerType();
         this.customerTypeForm.disable();
+        this.customerTypeForm.get('customerTypeId')?.setValue(res.id)
         this.DisabledNextButton = false;
         this.DisabledPrevButton = false;
         this.lastRow = false;
@@ -339,7 +340,10 @@ export class CustomerTypesComponent implements OnInit{
     this.UndoDisabled = false;
   }
   
-  
+  Filterchange(data: Event) {
+    const value = (data.target as HTMLInputElement).value;
+    this.dataSource.filter = value;
+  }
  
 }
 

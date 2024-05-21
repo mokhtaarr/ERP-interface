@@ -100,7 +100,7 @@
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>الكود</mat-label>
-                            <input matInput type="text" formControlName="shapeCode">
+                            <input matInput type="text" formControlName="shapeCode" [readonly]="EditReadonly">
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
@@ -133,7 +133,7 @@
         <mat-card-header class="justify-content-center">
           <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
             <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-            <input matInput />
+            <input matInput (keyup)="Filterchange($event)"  />
           </mat-form-field>
         </mat-card-header> <mat-card-content>
     

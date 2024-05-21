@@ -165,7 +165,7 @@
     <mat-card-header class="justify-content-center">
       <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
         <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-        <input matInput />
+        <input matInput (keyup)="Filterchange($event)" />
       </mat-form-field>
     </mat-card-header> <mat-card-content>
 

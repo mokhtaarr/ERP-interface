@@ -71,7 +71,6 @@ onSumbit(){
       this.GetAllVehicleShapes();
       this.VehicleShapesForm.disable();
       this.VehicleShapesForm.get('vehicleShapeId')?.setValue(res.id)
-      console.log(res,res.id)
       this.DisabledNextButton = false;
       this.DisabledPrevButton = false;
       this.lastRow = false;
@@ -95,6 +94,10 @@ fillForm(row:any){
       remark: row.remark
     })
 
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
     this.UpdateDisable = false;
     this.DeleteDisable = false;
     this.UndoDisabled = true;
@@ -283,6 +286,9 @@ undo(){
  
    }
   }
+
+  this.SaveDisable = true;
+
 }
 
 
@@ -312,6 +318,9 @@ New(){
 }
 
 
-
+Filterchange(data: Event) {
+  const value = (data.target as HTMLInputElement).value;
+  this.dataSource.filter = value;
+}
 
 }

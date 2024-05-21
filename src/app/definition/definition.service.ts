@@ -326,7 +326,7 @@ AddCustomerType(values:any){
 
     if (res.status == false) this.toastr.error(message);
 
-    return res.status;
+    return res;
   }))
 }
 
@@ -458,4 +458,73 @@ DeleteVehicleShapes(VehicleShapeId : any){
     return res.status;
   }))
 }
+
+
+// Cities services
+GetAllCities(){
+  return this.http.get<any>(environment.apiUrl +'City/GetAllCities')
+}
+
+AddCity(Values:any){
+  return this.http.post<any>(environment.apiUrl+'City/AddCity',Values)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res;
+  }))
+}
+
+DeleteCity(cityId : any){
+  return this.http.delete<any>(`${environment.apiUrl}City/DeleteCity?CityId=${cityId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+
+//vehicle Type  أنواع المركبات 
+GetAllVehicleTypes(){
+  return this.http.get<any>(environment.apiUrl+'VehicleTypes/GetAllVehicleType')
+}
+
+AddVehicleType(Values:any){
+  return this.http.post<any>(environment.apiUrl+'VehicleTypes/AddVehicleType',Values)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res;
+  }))
+}
+
+DeleteVehicleType(VehicleTypId : any){
+  return this.http.delete<any>(`${environment.apiUrl}VehicleTypes/DeleteVehicleType?VehicleTypId=${VehicleTypId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
 }
