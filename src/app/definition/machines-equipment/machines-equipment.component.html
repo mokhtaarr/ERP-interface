@@ -1,58 +1,86 @@
 <div class="container-fluid">
 
-    <div class="example-button-row">
-        <div class="example-flex-container">
-
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-step-backward"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-caret-left"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-caret-right"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-step-forward"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-save"></i>
-                </button>
-            </div>
-
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-
-            <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-
-        </div>
-    </div>
-
-
     <div style="margin-bottom: 50px;">
-        <form>
+        <form [formGroup]="ProdEquipmentsForm" (ngSubmit)="onSumbit()">
+            <div class="example-button-row">
+                <div class="example-flex-container">
+        
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-step-backward"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
+                      [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-caret-left"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
+                      [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-caret-right"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-step-forward"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary"  (click)="getAllProdEquipments()"
+                      [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-sync"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || ProdEquipmentsForm.invalid" 
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-save"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || ProdEquipmentsForm.invalid" (click)="Open_delete_confirm()"
+                      
+                       aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-undo"></i>
+                    </button>
+                  </div>
+        
+                  <div class="example-button-container">
+                    <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateProdEquipment()" color="primary"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </div>
+        
+        
+                  <div class="example-button-container">
+                    <button type="button" (click)="New()" mat-mini-fab color="primary"
+                      aria-label="Example icon button with a menu icon">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+        
+                </div>
+              </div>
+
             <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
                 <mat-tab>
                     <ng-template mat-tab-label>
@@ -65,86 +93,99 @@
 
 
                     <div class="row p-3">
+                        <mat-form-field appearance="outline" style="display: none;" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>id</mat-label>
+                            <input matInput type="number" formControlName="equipId" >
+                        </mat-form-field>
+
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>الكود</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="text" formControlName="equipCode" [readonly]="EditReadonly"  >
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>الإسم بالعربى</mat-label>
-                            <input matInput type="text">
+                            <input matInput type="text" formControlName="equipName1" >
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>الإسم بالإنجليزى</mat-label>
-                            <input matInput type="text">
+                            <input matInput type="text"  formControlName="equipName2" >
                         </mat-form-field>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" formControlName="isScaleBoolean" >ميزان</mat-slide-toggle>
+                        </div>
+
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>اقصي وزن</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="maxWeight">
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>ادني وزن</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="minWeight" >
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>معدل الوقت بالمتر</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="timeRate" >
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>متوسط الاجر الشهري</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="standardMonthlyCost" >
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>عدد ايام الاجازات الشهرية
                             </mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="standardHolyDays">
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>متوسط الاجر اليومي</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="standardDailyCost" >
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>متوسط عدد ساعات العمل اليومي</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="standardDailyWorkHours">
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>متوسط اجر الساعه</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="standardHourlyCost" >
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label>العدد المتاح</mat-label>
-                            <input matInput type="number">
+                            <input matInput type="number" formControlName="numberAvailable"  >
                         </mat-form-field>
 
-                     
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                        </div>
+
+
 
                         <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
                             <mat-label>الوصف</mat-label>
-                            <textarea matInput></textarea>
+                            <textarea matInput formControlName="jdesc" ></textarea>
                         </mat-form-field>
 
 
                         <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
                             <mat-label>الملاحظات</mat-label>
-                            <textarea matInput></textarea>
+                            <textarea matInput  formControlName="remarks" ></textarea>
                         </mat-form-field>
 
 
-                        
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="primary">ميزان</mat-checkbox>
-                        </div>
 
+                     
                     </div>
 
                 </mat-tab>
@@ -155,43 +196,93 @@
 
     <mat-card style="margin-bottom: 100px;">
         <mat-card-header class="justify-content-center">
-          <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
-            <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-            <input matInput />
-          </mat-form-field>
-        </mat-card-header> <mat-card-content>
-    
-          <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
-    
-            <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="weight">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="symbol">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
-              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-            </ng-container>
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-    
+            <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+                <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+                <input matInput (keyup)="Filterchange($event)" />
+            </mat-form-field>
+        </mat-card-header> 
+        <mat-card-content style="overflow-x: auto;">
+
+            <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+
+                <ng-container matColumnDef="equipCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>الكود</th>
+                    <td mat-cell *matCellDef="let element"> {{element.equipCode}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="equipName1">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> الإسم بالعربى </th>
+                    <td mat-cell *matCellDef="let element"> {{element.equipName1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="equipName2">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>الإسم بالإنجليزى</th>
+                    <td mat-cell *matCellDef="let element"> {{element.equipName2}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="jdesc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> الوصف </th>
+                    <td mat-cell *matCellDef="let element"> {{element.jdesc}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="remarks">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>الملاحظات</th>
+                    <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="timeRate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>معدل الوقت بالمتر</th>
+                    <td mat-cell *matCellDef="let element"> {{element.timeRate}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="standardMonthlyCost">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> متوسط الاجر الشهري </th>
+                    <td mat-cell *matCellDef="let element"> {{element.standardMonthlyCost}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="standardHolyDays">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>عدد ايام الاجازات الشهرية</th>
+                    <td mat-cell *matCellDef="let element"> {{element.standardHolyDays}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="standardDailyCost">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> متوسط الاجر اليومي </th>
+                    <td mat-cell *matCellDef="let element"> {{element.standardDailyCost}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="standardDailyWorkHours">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>متوسط عدد ساعات العمل اليومي</th>
+                    <td mat-cell *matCellDef="let element"> {{element.standardDailyWorkHours}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="standardHourlyCost">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>متوسط اجر الساعه</th>
+                    <td mat-cell *matCellDef="let element"> {{element.standardHourlyCost}} </td>
+                </ng-container>
+
+
+
+                <ng-container matColumnDef="numberAvailable">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>العدد المتاح</th>
+                    <td mat-cell *matCellDef="let element"> {{element.numberAvailable}} </td>
+                </ng-container> -->
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
+            </table>
+
         </mat-card-content>
         <mat-card-footer>
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-          </mat-paginator>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
         </mat-card-footer>
-      </mat-card>
-    
+    </mat-card>
+
 </div>

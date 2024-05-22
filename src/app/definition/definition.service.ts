@@ -527,4 +527,43 @@ DeleteVehicleType(VehicleTypId : any){
   }))
 }
 
+
+// الماكينات و المعدات 
+GetAllProdEquipments(){
+  return this.http.get<any>(environment.apiUrl+'ProdEquipments/GetAllProdEquipments')
+}
+
+AddProdEquipment(values:any){
+  return this.http.post<any>(environment.apiUrl+'ProdEquipments/AddProdEquipment',values).pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res;
+  }))
+}
+
+DeleteProdEquipment(EquipId : any){
+  return this.http.delete<any>(`${environment.apiUrl}ProdEquipments/DeleteProdEquipment?EquipId=${EquipId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+
+// SysBooks   دفتر الحركات
+GetAllSysBooks(){
+  return this.http.get<any>(environment.apiUrl+'SysBooks/GetAllSysBooks')
+}
+
 }

@@ -1,45 +1,63 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DefinitionService } from '../definition.service';
 
 @Component({
   selector: 'app-movement-book',
   templateUrl: './movement-book.component.html',
   styleUrls: ['./movement-book.component.scss']
 })
-export class MovementBookComponent implements OnInit ,AfterViewInit {
+export class MovementBookComponent implements OnInit{
 
   dataSource: any;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['prefixCode', 'bookNameAr', 'bookNameEn', 'termType','startNum','endNum'];
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
-   ELEMENT_DATA: any[] = [
-    {position: 1, name: 'Aydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'belium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'cithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'deryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'eoron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'farbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'gitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'hxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'rluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-    {position: 11, name: 'momo', weight: 20.1797, symbol: 'Ne'},
-  ];
+  AllSysBooks:any[] = [];
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  }
+   
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<any>(this.ELEMENT_DATA);
+    this.GetAllSysBooks();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  SysBooksForm = this.fb.group({
+    bookId:[],
+    prefixCode:[''],
+    bookNameAr:[''],
+    bookNameEn:[''],
+    termType:[],
+    // bookNameEn:[''],
+    // bookNameEn:[''],
+    // bookNameEn:[''],
+    // bookNameEn:[''],
+    // bookNameEn:[''],
+    // bookNameEn:[''],
+  })
 
+  GetAllSysBooks(){
+    this.definitionService.GetAllSysBooks().subscribe(res=>{
+      this.AllSysBooks = res;
+      this.dataSource = new MatTableDataSource<any>(this.AllSysBooks);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+  
+    })
   }
 
 
+  fillForm(row:any){
+    console.log(row);
+    if(row){
+
+    }
+  }
   
  
 }
