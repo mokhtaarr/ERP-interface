@@ -53,21 +53,6 @@ h1{
     margin-right: 3px;
 }
 
-table {
-    width: 100%;
-    margin-bottom: 100px;
-  }
-
-.table-header-font-size{
-    font-weight: bold;
-}
-
-.mat-mdc-table .mdc-data-table__row:hover{
-    background-color: #dfdfdf; 
-    cursor: pointer;
-
-  }
-  
 
  
   .example-button-row {
@@ -89,5 +74,21 @@ table {
     display: flex;
     justify-content: center;
     width: 50px;
+  }
+  
+
+  .mat-mdc-table .mdc-data-table__row:hover{
+    background-color: #dfdfdf; 
+    cursor: pointer;
+  
+  }
+  
+  
+  .table-header-font-size{
+  font-weight: bold;
+  }
+  
+  td{
+  font-size: large;
   }
   

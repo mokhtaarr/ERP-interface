@@ -103,7 +103,6 @@ export class CustomerTypesComponent implements OnInit{
       this.DeleteDisable = false;
       this.UndoDisabled = true;
       window.scrollTo({ top: 30, behavior: 'smooth' });
-
     }
   }
 

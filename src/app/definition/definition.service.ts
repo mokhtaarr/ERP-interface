@@ -566,4 +566,180 @@ GetAllSysBooks(){
   return this.http.get<any>(environment.apiUrl+'SysBooks/GetAllSysBooks')
 }
 
+GetAllTermType(){
+  return this.http.get<any>(environment.apiUrl+'SysBooks/GetAllSysTermType')
+}
+
+GetAllUsers(){
+  return this.http.get<any>(environment.apiUrl+'SysBooks/GetAllUsers')
+}
+
+
+GetAllBranches(){
+  return this.http.get<any>(environment.apiUrl+'SysBooks/GetAllBranch')
+}
+
+AddSysBooks(values:any){
+  return this.http.post<any>(environment.apiUrl+'SysBooks/AddSysBook',values).pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res;
+  })) 
+}
+
+DeleteSysBook(BookId:any){
+  return this.http.delete<any>(`${environment.apiUrl}SysBooks/DeleteCity?BookId=${BookId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+//Basics Unit وحدات الاصناف
+
+GetAlBasicUnits(){
+return this.http.get<any>(environment.apiUrl+'BasicUnits/GetAlBasicUnits')
+}
+
+
+AddBasicUnit(values:any){
+  return this.http.post<any>(environment.apiUrl+'BasicUnits/AddBasicUnit',values).pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res;
+  })) 
+}
+
+DeleteBasicUnit(unitId:any){
+  return this.http.delete<any>(`${environment.apiUrl}BasicUnits/DeleteBasicUnit?BasUnitId=${unitId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+
+// customers  العملاء
+GetAllCustomers(){
+  return this.http.get<any>(environment.apiUrl+'Customers/GetAllCustomers')
+}
+
+GetCustomersType(){
+  return this.http.get<any>(environment.apiUrl+'Customers/GetAllCustomersTypes')
+}
+
+GetAllCalCostCenter(){
+  return this.http.get<any>(environment.apiUrl+'Customers/GetAllCostCenter')
+}
+
+GetAllHrEmployees(){
+  return this.http.get<any>(environment.apiUrl+'Customers/GetAllHrEmployees')
+}
+
+GetAll_CustomerCategory(){
+  return this.http.get<any>(environment.apiUrl+'Customers/GetAllCustomerCategory')
+}
+
+GetAllCurrency(){
+  return this.http.get<any>(environment.apiUrl+'Customers/GetAllCurrency')
+}
+
+GetAllCalAccountChart(){
+  return this.http.get<any>(environment.apiUrl+'Customers/GetAllCalAccountChart')
+}
+
+GetCustomerCities(){
+  return this.http.get<any>(environment.apiUrl+'Customers/GetAllCities')
+}
+
+
+AddCustomer(values:any){
+  return this.http.post<any>(environment.apiUrl+'Customers/AddCustomer',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+DeleteCustomer(customerId:any){
+  return this.http.delete<any>(`${environment.apiUrl}Customers/DeleteCustomer?customerId=${customerId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+ 
+AddCustomerBranch(values:any){
+  return this.http.post<any>(environment.apiUrl+'Customers/AddCustomerBranch',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+GetCustomerBranches(customerId : any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAllCustomerBranches?customerId=${customerId}`)
+}
+
+DeleteCustomerBranch(custBranchId : any){
+  return this.http.delete<any>(`${environment.apiUrl}Customers/DeleteCustomerBranch?custBranchId=${custBranchId}`).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+
+
+
 }

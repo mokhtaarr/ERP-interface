@@ -1,98 +1,121 @@
-<div class="container-fluid">
-
-    <div class="example-button-row">
-      <div class="example-flex-container">
-  
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-step-backward"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-caret-left"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-caret-right"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-step-forward"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-save"></i>
-          </button>
-        </div>
-  
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </div>
-  
-        <div class="example-button-container">
-          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-  
-      </div>
-    </div>
-  
-  
+<div class="container-fluid">  
     <div style="margin-bottom: 50px;">
-      <form>
+      <form [formGroup]="SysBooksForm"  (ngSubmit)="onSmbit()">
+        <div class="example-button-row">
+          <div class="example-flex-container">
+  
+  
+            <div class="example-button-container">
+              <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
+                aria-label="Example icon button with a menu icon">
+                <i class="fas fa-step-backward"></i>
+              </button>
+            </div>
+  
+            <div class="example-button-container">
+              <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
+                [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
+                <i class="fas fa-caret-left"></i>
+              </button>
+            </div>
+  
+            <div class="example-button-container">
+              <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
+                [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
+                <i class="fas fa-caret-right"></i>
+              </button>
+            </div>
+  
+            <div class="example-button-container">
+              <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
+                aria-label="Example icon button with a menu icon">
+                <i class="fas fa-step-forward"></i>
+              </button>
+            </div>
+  
+            <div class="example-button-container">
+              <button type="button" mat-mini-fab color="primary"  (click)="GetAllSysBooks()"
+                [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
+                <i class="fas fa-sync"></i>
+              </button>
+            </div>
+  
+            <div class="example-button-container">
+              <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || SysBooksForm.invalid" 
+                aria-label="Example icon button with a menu icon">
+                <i class="fas fa-save"></i>
+              </button>
+            </div>
+  
+            <div class="example-button-container">
+              <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || SysBooksForm.invalid" (click)="Open_delete_confirm()"
+                
+                 aria-label="Example icon button with a menu icon">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+  
+            <div class="example-button-container">
+              <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
+                aria-label="Example icon button with a menu icon">
+                <i class="fas fa-undo"></i>
+              </button>
+            </div>
+  
+            <div class="example-button-container">
+              <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateSysBook()" color="primary"
+                aria-label="Example icon button with a menu icon">
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+  
+  
+            <div class="example-button-container">
+              <button type="button" (click)="New()" mat-mini-fab color="primary"
+                aria-label="Example icon button with a menu icon">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+  
+          </div>
+        </div>
         <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
           <mat-tab>
             <ng-template mat-tab-label>
               <h1 style="margin-bottom: auto;">
                 <i class="fas fa-file-signature custom-icon"></i>
-
-                
                 دفتر الحركات
               </h1>
             </ng-template>
            
 
             <div class="row p-3">
-              <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+              <mat-form-field appearance="outline" style="display: none;" class="col-lg-3 col-md-6 col-sm-12">
                 <mat-label>id</mat-label>
-                <input matInput type="number">
+                <input matInput type="number"  formControlName="bookId" >
               </mat-form-field>
 
                 <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                     <mat-label>كود الدفتر</mat-label>
-                    <input matInput type="text">
+                    <input matInput type="text" formControlName="prefixCode" [readOnly]="EditReadonly" >
                   </mat-form-field>
 
                   <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
                     <mat-label> الإسم بالعربى </mat-label>
-                    <input matInput type="text" >
+                    <input matInput type="text" formControlName="bookNameAr" >
                 </mat-form-field>
 
                 
                 <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
                     <mat-label> الإسم بالإنجليزى </mat-label>
-                    <input matInput  type="text" >
+                    <input matInput  type="text" formControlName="bookNameEn" >
                 </mat-form-field>
 
                 <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                     <mat-form-field class="ang-maturial-select" appearance="outline">
                         <mat-label>نوع المستند</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
+                        <mat-select formControlName="termType">
+                            <mat-option [value]="term.termType" *ngFor="let term of AllTermType">{{term.termTypeNameAr}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -101,9 +124,8 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                     <mat-form-field class="ang-maturial-select" appearance="outline">
                         <mat-label>الفرع</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
+                        <mat-select formControlName="storeId">
+                            <mat-option [value]="branch.storeId" *ngFor="let branch of AllBranches" >{{branch.storeDescA}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -111,10 +133,9 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                     <mat-form-field class="ang-maturial-select" appearance="outline">
                         <mat-label>المستخدمين</mat-label>
-                        <mat-select>
-                            <mat-option value="one">First option</mat-option>
-                            <mat-option value="two">Second option</mat-option>
-                        </mat-select>
+                        <mat-select formControlName="userId">
+                            <mat-option [value]="user.userId" *ngFor="let user of AllUser">{{user.firstName}}</mat-option>
+                         </mat-select>
                     </mat-form-field>
                 </div>
 
@@ -124,28 +145,37 @@
                     <input matInput  type="number" >
                 </mat-form-field>
 
-                <div class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
-                  <mat-slide-toggle color="primary">غير مرحل</mat-slide-toggle>
-                  <mat-slide-toggle color="primary">مع الحفظ</mat-slide-toggle>
-                </div>
+             
 
                 <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
                     <mat-label>رقم البداية</mat-label>
-                    <input matInput  type="number" >
+                    <input matInput  type="number" formControlName="startNum">
                 </mat-form-field>
 
                 <mat-form-field class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
                     <mat-label>رقم النهاية</mat-label>
-                    <input matInput  type="number" >
+                    <input matInput  type="number" formControlName="endNum" >
                 </mat-form-field>
-         
-                <div class="col-lg-6 col-md-6 col-sm-12" appearance="outline">
-                  <mat-slide-toggle color="primary">تسلسل تلقائى</mat-slide-toggle>
-                  <mat-slide-toggle color="primary">الدفتر الرئيسى</mat-slide-toggle>
-                  <mat-slide-toggle color="primary">للمستندات المصدره تلقائيا فقط</mat-slide-toggle>
 
+                <div class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+                  <mat-slide-toggle color="primary">غير مرحل</mat-slide-toggle>
                 </div>
 
+                <div class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+                  <mat-slide-toggle color="primary">مع الحفظ</mat-slide-toggle>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+                  <mat-slide-toggle color="primary"formControlName="autoSerial" >تسلسل تلقائى</mat-slide-toggle>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+                  <mat-slide-toggle color="primary"formControlName="isDefault" >الدفتر الرئيسى</mat-slide-toggle>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12" appearance="outline">
+                  <mat-slide-toggle color="primary"formControlName="systemIssuedOnly" >للمستندات المصدره تلقائيا فقط</mat-slide-toggle>
+                </div>
             </div>
   
           </mat-tab>
@@ -158,7 +188,7 @@
       <mat-card-header class="justify-content-center">
         <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
           <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-          <input matInput />
+          <input matInput (keyup)="Filterchange($event)" />
         </mat-form-field>
       </mat-card-header> <mat-card-content>
   
