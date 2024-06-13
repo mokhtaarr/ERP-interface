@@ -24,6 +24,9 @@ import { PartitionPopupComponent } from './partition-popup/partition-popup.compo
 import { AddPartitionPopupComponent } from './add-partition-popup/add-partition-popup.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 import { CustomerBranchesComponent } from './customer-branches/customer-branches.component';
+import { CustomerContactComponent } from './customer-contact/customer-contact.component';
+import { AddVendorBranchComponent } from './add-vendor-branch/add-vendor-branch.component';
+import { VendorContactComponent } from './vendor-contact/vendor-contact.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { CustomerBranchesComponent } from './customer-branches/customer-branches
     PartitionPopupComponent,
     AddPartitionPopupComponent,
     DeleteConfirmComponent,
-    CustomerBranchesComponent
+    CustomerBranchesComponent,
+    CustomerContactComponent,
+    AddVendorBranchComponent,
+    VendorContactComponent
   ],
   imports: [
     CommonModule,

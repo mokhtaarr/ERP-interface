@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Branches } from '../definition-models/Branches';
 import { DefinitionService } from '../definition.service';
@@ -30,8 +30,8 @@ export class AddPartitionPopupComponent implements OnInit {
 
   PartitionForm = this.fb.group({
     storeId:[],
-    partCode: [''], 
-    partDescA: [''], 
+    partCode: ['',Validators.required], 
+    partDescA: ['',Validators.required], 
     partDescE: [''], 
     remarks: [''], 
   })

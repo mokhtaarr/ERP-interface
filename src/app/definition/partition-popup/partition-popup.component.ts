@@ -31,8 +31,8 @@ export class PartitionPopupComponent implements OnInit {
 
   PartitionForm = this.fb.group({
     storeId:[],
-    partCode: [''], 
-    partDescA: [''], 
+    partCode: ['',Validators.required], 
+    partDescA: ['',Validators.required], 
     partDescE: [''], 
     remarks: [''], 
   })

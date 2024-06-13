@@ -8,6 +8,8 @@ import { DefinitionService } from '../definition.service';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 import { CustomerBranchesComponent } from '../customer-branches/customer-branches.component';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { CustomerContactComponent } from '../customer-contact/customer-contact.component';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-customers',
@@ -44,6 +46,35 @@ export class CustomersComponent implements OnInit{
   undoIndex!: number;
 
   AllCustomerBranches : any[] = [];
+  AllCustomerContact : any[] = [];
+
+  MainAccountId : any;
+
+  originalPrimaryAccountValue: any;
+  originalAddAccount1Value: any;
+  originalAddAccount2Value: any;
+  originalAddAccount3Value: any;
+  originalAddAccount4Value: any;
+  originalAddAccount5Value: any;
+  originalAddAccount6Value: any;
+  originalAddAccount7Value: any;
+  originalAddAccount8Value: any;
+  originalAddAccount9Value: any;
+  originalAddAccount10Value: any;
+
+  isPrimaryAccountChanged = false;
+  isAddAccount1Changed = false;
+  isAddAccount2Changed = false;
+  isAddAccount3Changed = false;
+  isAddAccount4Changed = false;
+  isAddAccount5Changed = false;
+  isAddAccount6Changed = false;
+  isAddAccount7Changed = false;
+  isAddAccount8Changed = false;
+  isAddAccount9Changed = false;
+  isAddAccount10Changed = false;
+  IsPrimaryAccountChangedForm: any;
+
 
   constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
   }
@@ -64,12 +95,12 @@ export class CustomersComponent implements OnInit{
     customerId:[],
     customerCode:['',Validators.required],
     customerDescA:['',Validators.required],
-    customerDescE:['',Validators.required],
+    customerDescE:[''],
     customerTypeId:[],
     costCenterId:[],
     empId:[],
     customerCatId :[],
-    currencyId:[],
+    currencyId:[,Validators.required],
     tel:[''],
     tel2:[''],
     tel3:[''],
@@ -102,6 +133,44 @@ export class CustomersComponent implements OnInit{
     addField3:[''],
     addField4:[''],
     addField5:[''],
+    accountId:[],
+    addAccount1:[],
+    addAccount2:[],
+    addAccount3:[],
+    addAccount4:[],
+    addAccount5:[],
+    addAccount6:[],
+    addAccount7:[],
+    addAccount8:[],
+    addAccount9:[],
+    addAccount10:[],
+    IsPrimaryAccountChangedForm:[false],
+    isAddAccount1ChangedForm:[false],
+    isAddAccount2ChangedForm:[false],
+    isAddAccount3ChangedForm:[false],
+    isAddAccount4ChangedForm:[false],
+    isAddAccount5ChangedForm:[false],
+    isAddAccount6ChangedForm:[false],
+    isAddAccount7ChangedForm:[false],
+    isAddAccount8ChangedForm:[false],
+    isAddAccount9ChangedForm:[false],
+    isAddAccount10ChangedForm:[false],
+    openningBalanceDepit:[],
+    openningBalanceCredit:[],
+    accCurrTrancDepit:[],
+    accCurrTrancCredit:[],
+    accTotalDebit:[],
+    accTotaCredit:[],
+    balanceDebitLocal:[],
+    balanceCreditLocal:[],
+    openningBalanceDepitCurncy:[],
+    openningBalanceCreditCurncy:[],
+    accCurrTrancDepitCurncy:[],
+    accCurrTrancCreditCurncy:[],
+    accTotalDebitCurncy:[],
+    accTotaCreditCurncy:[],
+    balanceDebitCurncy:[],
+    balanceCreditCurncy:[]
   })
 
   GetAllCustomers(){
@@ -112,6 +181,7 @@ export class CustomersComponent implements OnInit{
     this.dataSource.sort = this.sort;
   })
   }
+
 
   GetAllCuatomersType(){
     this.definitionService.GetCustomersType().subscribe(res=>{
@@ -148,6 +218,9 @@ export class CustomersComponent implements OnInit{
     this.AllCalAccountChart = res
   })
  }
+
+
+ 
  
  GetAllCities(){
   this.definitionService.GetCustomerCities().subscribe(res=>{
@@ -221,7 +294,45 @@ export class CustomersComponent implements OnInit{
          addField2: undoItem.addField2,
          addField3: undoItem.addField3,
          addField4: undoItem.addField4,
-         addField5: undoItem.addField5
+         addField5: undoItem.addField5,
+         accountId: null,
+         addAccount1: null,
+         addAccount2: null,
+         addAccount3: null,
+         addAccount4: null,
+         addAccount5: null,
+         addAccount6: null,
+         addAccount7: null,
+         addAccount8: null,
+         addAccount9: null,
+         addAccount10: null,
+         isAddAccount1ChangedForm: null,
+         isAddAccount2ChangedForm: null,
+         isAddAccount3ChangedForm: null,
+         isAddAccount4ChangedForm: null,
+         isAddAccount5ChangedForm: null,
+         isAddAccount6ChangedForm: null,
+         isAddAccount7ChangedForm: null,
+         isAddAccount8ChangedForm: null,
+         isAddAccount9ChangedForm: null,
+         isAddAccount10ChangedForm: null,
+         openningBalanceDepit: null,
+         openningBalanceCredit: null,
+         accCurrTrancDepit: null,
+         accCurrTrancCredit: null,
+         accTotalDebit: null,
+         accTotaCredit: null,
+         balanceDebitLocal: null,
+         balanceCreditLocal: null,
+         openningBalanceDepitCurncy: null,
+         openningBalanceCreditCurncy: null,
+         accCurrTrancDepitCurncy: null,
+         accCurrTrancCreditCurncy: null,
+         accTotalDebitCurncy: null,
+         accTotaCreditCurncy: null,
+         balanceDebitCurncy: null,
+         balanceCreditCurncy: null,
+         IsPrimaryAccountChangedForm: null
        })
 
       this.UpdateDisable = false;
@@ -239,57 +350,107 @@ export class CustomersComponent implements OnInit{
  }
 
  fillForm(row:any){
-  if(row){
-    this.CustomerForm.setValue({
-      customerId: row.customerId,
-         customerCode: row.customerCode,
-         customerDescA: row.customerDescA,
-         customerDescE: row.customerDescE,
-         customerTypeId: row.customerTypeId,
-         costCenterId: row.costCenterId,
-         empId: row.empId,
-         customerCatId: row.customerCatId,
-         currencyId: row.currencyId,
-         tel: row.tel,
-         tel2: row.tel2,
-         tel3: row.tel3,
-         tel4: row.tel4,
-         tel5: row.tel5,
-         fax: row.fax,
-         address1: row.address1,
-         address2: row.address2,
-         isActive: row.isActive,
-         forAdjustOnly: row.forAdjustOnly,
-         nationality: row.nationality,
-         creditPeriod: row.creditPeriod,
-         creditLimit: row.creditLimit,
-         dateOfBirth: row.dateOfBirth,
-         cityId: row.cityId,
-         passPortIssuePlace: row.passPortIssuePlace,
-         carLicenseIssueDate: row.carLicenseIssueDate,
-         carLicenseExpiryDate: row.carLicenseExpiryDate,
-         dtRegRenew: row.dtRegRenew,
-         custId: row.custId,
-         passPortNo: row.passPortNo,
-         carLicenseNo: row.carLicenseNo,
-         carLicenseIssuePlace: row.carLicenseIssuePlace,
-         passPortIssueDate: row.passPortIssueDate,
-         passPortExpiryDate: row.passPortExpiryDate,
-         address3: row.address3,
-         dtReg: row.dtReg,
-         addField1: row.addField1,
-         addField2: row.addField2,
-         addField3: row.addField3,
-         addField4: row.addField4,
-         addField5: row.addField5
-    });
-    this.UpdateDisable = false;
-    this.DeleteDisable = false;
-    this.UndoDisabled = true;
-    window.scrollTo({ top: 30, behavior: 'smooth' });
+   this.definitionService.GetMainChartAccount(row.customerId).subscribe({
+    next: res => {
+      this.MainAccountId = res;
+      this.originalPrimaryAccountValue = this.CustomerForm.get('accountId')?.value;
 
-  }
-
+    },
+    error: err => {
+      console.error('Error fetching main account:', err);
+    },
+    complete: () => {
+      if(row){
+        this.CustomerForm.setValue({
+          customerId: row.customerId,
+          customerCode: row.customerCode,
+          customerDescA: row.customerDescA,
+          customerDescE: row.customerDescE,
+          customerTypeId: row.customerTypeId,
+          costCenterId: row.costCenterId,
+          empId: row.empId,
+          customerCatId: row.customerCatId,
+          currencyId: row.currencyId,
+          tel: row.tel,
+          tel2: row.tel2,
+          tel3: row.tel3,
+          tel4: row.tel4,
+          tel5: row.tel5,
+          fax: row.fax,
+          address1: row.address1,
+          address2: row.address2,
+          isActive: row.isActive,
+          forAdjustOnly: row.forAdjustOnly,
+          nationality: row.nationality,
+          creditPeriod: row.creditPeriod,
+          creditLimit: row.creditLimit,
+          dateOfBirth: row.dateOfBirth,
+          cityId: row.cityId,
+          passPortIssuePlace: row.passPortIssuePlace,
+          carLicenseIssueDate: row.carLicenseIssueDate,
+          carLicenseExpiryDate: row.carLicenseExpiryDate,
+          dtRegRenew: row.dtRegRenew,
+          custId: row.custId,
+          passPortNo: row.passPortNo,
+          carLicenseNo: row.carLicenseNo,
+          carLicenseIssuePlace: row.carLicenseIssuePlace,
+          passPortIssueDate: row.passPortIssueDate,
+          passPortExpiryDate: row.passPortExpiryDate,
+          address3: row.address3,
+          dtReg: row.dtReg,
+          addField1: row.addField1,
+          addField2: row.addField2,
+          addField3: row.addField3,
+          addField4: row.addField4,
+          addField5: row.addField5,
+          accountId: this.MainAccountId,
+          addAccount1: null,
+          addAccount2: null,
+          addAccount3: null,
+          addAccount4: null,
+          addAccount5: null,
+          addAccount6: null,
+          addAccount7: null,
+          addAccount8: null,
+          addAccount9: null,
+          addAccount10: null,
+          isAddAccount1ChangedForm: null,
+          isAddAccount2ChangedForm: null,
+          isAddAccount3ChangedForm: null,
+          isAddAccount4ChangedForm: null,
+          isAddAccount5ChangedForm: null,
+          isAddAccount6ChangedForm: null,
+          isAddAccount7ChangedForm: null,
+          isAddAccount8ChangedForm: null,
+          isAddAccount9ChangedForm: null,
+          isAddAccount10ChangedForm: null,
+          openningBalanceDepit: null,
+          openningBalanceCredit: null,
+          accCurrTrancDepit: null,
+          accCurrTrancCredit: null,
+          accTotalDebit: null,
+          accTotaCredit: null,
+          balanceDebitLocal: null,
+          balanceCreditLocal: null,
+          openningBalanceDepitCurncy: null,
+          openningBalanceCreditCurncy: null,
+          accCurrTrancDepitCurncy: null,
+          accCurrTrancCreditCurncy: null,
+          accTotalDebitCurncy: null,
+          accTotaCreditCurncy: null,
+          balanceDebitCurncy: null,
+          balanceCreditCurncy: null,
+          IsPrimaryAccountChangedForm: null
+        });
+    
+        this.UpdateDisable = false;
+        this.DeleteDisable = false;
+        this.UndoDisabled = true;
+        window.scrollTo({ top: 30, behavior: 'smooth' });
+      }
+     
+    }
+   })
  }
 
 
@@ -302,47 +463,85 @@ export class CustomersComponent implements OnInit{
 
     if(PrevItem){
    this.CustomerForm.setValue({
-    customerId: PrevItem.customerId,
-    customerCode: PrevItem.customerCode,
-    customerDescA: PrevItem.customerDescA,
-    customerDescE: PrevItem.customerDescE,
-    customerTypeId: PrevItem.customerTypeId,
-    costCenterId: PrevItem.costCenterId,
-    empId: PrevItem.empId,
-    customerCatId: PrevItem.customerCatId,
-    currencyId: PrevItem.currencyId,
-    tel: PrevItem.tel,
-    tel2: PrevItem.tel2,
-    tel3: PrevItem.tel3,
-    tel4: PrevItem.tel4,
-    tel5: PrevItem.tel5,
-    fax: PrevItem.fax,
-    address1: PrevItem.address1,
-    address2: PrevItem.address2,
-    isActive: PrevItem.isActive,
-    forAdjustOnly: PrevItem.forAdjustOnly,
-    nationality: PrevItem.nationality,
-    creditPeriod: PrevItem.creditPeriod,
-    creditLimit: PrevItem.creditLimit,
-    dateOfBirth: PrevItem.dateOfBirth,
-    cityId: PrevItem.cityId,
-    passPortIssuePlace: PrevItem.passPortIssuePlace,
-    carLicenseIssueDate: PrevItem.carLicenseIssueDate,
-    carLicenseExpiryDate: PrevItem.carLicenseExpiryDate,
-    dtRegRenew: PrevItem.dtRegRenew,
-    custId: PrevItem.custId,
-    passPortNo: PrevItem.passPortNo,
-    carLicenseNo: PrevItem.carLicenseNo,
-    carLicenseIssuePlace: PrevItem.carLicenseIssuePlace,
-    passPortIssueDate: PrevItem.passPortIssueDate,
-    passPortExpiryDate: PrevItem.passPortExpiryDate,
-    address3: PrevItem.address3,
-    dtReg: PrevItem.dtReg,
-    addField1: PrevItem.addField1,
-    addField2: PrevItem.addField2,
-    addField3: PrevItem.addField3,
-    addField4: PrevItem.addField4,
-    addField5: PrevItem.addField5
+     customerId: PrevItem.customerId,
+     customerCode: PrevItem.customerCode,
+     customerDescA: PrevItem.customerDescA,
+     customerDescE: PrevItem.customerDescE,
+     customerTypeId: PrevItem.customerTypeId,
+     costCenterId: PrevItem.costCenterId,
+     empId: PrevItem.empId,
+     customerCatId: PrevItem.customerCatId,
+     currencyId: PrevItem.currencyId,
+     tel: PrevItem.tel,
+     tel2: PrevItem.tel2,
+     tel3: PrevItem.tel3,
+     tel4: PrevItem.tel4,
+     tel5: PrevItem.tel5,
+     fax: PrevItem.fax,
+     address1: PrevItem.address1,
+     address2: PrevItem.address2,
+     isActive: PrevItem.isActive,
+     forAdjustOnly: PrevItem.forAdjustOnly,
+     nationality: PrevItem.nationality,
+     creditPeriod: PrevItem.creditPeriod,
+     creditLimit: PrevItem.creditLimit,
+     dateOfBirth: PrevItem.dateOfBirth,
+     cityId: PrevItem.cityId,
+     passPortIssuePlace: PrevItem.passPortIssuePlace,
+     carLicenseIssueDate: PrevItem.carLicenseIssueDate,
+     carLicenseExpiryDate: PrevItem.carLicenseExpiryDate,
+     dtRegRenew: PrevItem.dtRegRenew,
+     custId: PrevItem.custId,
+     passPortNo: PrevItem.passPortNo,
+     carLicenseNo: PrevItem.carLicenseNo,
+     carLicenseIssuePlace: PrevItem.carLicenseIssuePlace,
+     passPortIssueDate: PrevItem.passPortIssueDate,
+     passPortExpiryDate: PrevItem.passPortExpiryDate,
+     address3: PrevItem.address3,
+     dtReg: PrevItem.dtReg,
+     addField1: PrevItem.addField1,
+     addField2: PrevItem.addField2,
+     addField3: PrevItem.addField3,
+     addField4: PrevItem.addField4,
+     addField5: PrevItem.addField5,
+     accountId: null,
+     addAccount1: null,
+     addAccount2: null,
+     addAccount3: null,
+     addAccount4: null,
+     addAccount5: null,
+     addAccount6: null,
+     addAccount7: null,
+     addAccount8: null,
+     addAccount9: null,
+     addAccount10: null,
+     isAddAccount1ChangedForm: null,
+     isAddAccount2ChangedForm: null,
+     isAddAccount3ChangedForm: null,
+     isAddAccount4ChangedForm: null,
+     isAddAccount5ChangedForm: null,
+     isAddAccount6ChangedForm: null,
+     isAddAccount7ChangedForm: null,
+     isAddAccount8ChangedForm: null,
+     isAddAccount9ChangedForm: null,
+     isAddAccount10ChangedForm: null,
+     openningBalanceDepit: null,
+     openningBalanceCredit: null,
+     accCurrTrancDepit: null,
+     accCurrTrancCredit: null,
+     accTotalDebit: null,
+     accTotaCredit: null,
+     balanceDebitLocal: null,
+     balanceCreditLocal: null,
+     openningBalanceDepitCurncy: null,
+     openningBalanceCreditCurncy: null,
+     accCurrTrancDepitCurncy: null,
+     accCurrTrancCreditCurncy: null,
+     accTotalDebitCurncy: null,
+     accTotaCreditCurncy: null,
+     balanceDebitCurncy: null,
+     balanceCreditCurncy: null,
+     IsPrimaryAccountChangedForm: null
    })
 
       this.firstRow = false;
@@ -374,47 +573,85 @@ export class CustomersComponent implements OnInit{
 
     if(nextItem){
      this.CustomerForm.setValue({
-      customerId: nextItem.customerId,
-      customerCode: nextItem.customerCode,
-      customerDescA: nextItem.customerDescA,
-      customerDescE: nextItem.customerDescE,
-      customerTypeId: nextItem.customerTypeId,
-      costCenterId: nextItem.costCenterId,
-      empId: nextItem.empId,
-      customerCatId: nextItem.customerCatId,
-      currencyId: nextItem.currencyId,
-      tel: nextItem.tel,
-      tel2: nextItem.tel2,
-      tel3: nextItem.tel3,
-      tel4: nextItem.tel4,
-      tel5: nextItem.tel5,
-      fax: nextItem.fax,
-      address1: nextItem.address1,
-      address2: nextItem.address2,
-      isActive: nextItem.isActive,
-      forAdjustOnly: nextItem.forAdjustOnly,
-      nationality: nextItem.nationality,
-      creditPeriod: nextItem.creditPeriod,
-      creditLimit: nextItem.creditLimit,
-      dateOfBirth: nextItem.dateOfBirth,
-      cityId: nextItem.cityId,
-      passPortIssuePlace: nextItem.passPortIssuePlace,
-      carLicenseIssueDate: nextItem.carLicenseIssueDate,
-      carLicenseExpiryDate: nextItem.carLicenseExpiryDate,
-      dtRegRenew: nextItem.dtRegRenew,
-      custId: nextItem.custId,
-      passPortNo: nextItem.passPortNo,
-      carLicenseNo: nextItem.carLicenseNo,
-      carLicenseIssuePlace: nextItem.carLicenseIssuePlace,
-      passPortIssueDate: nextItem.passPortIssueDate,
-      passPortExpiryDate: nextItem.passPortExpiryDate,
-      address3: nextItem.address3,
-      dtReg: nextItem.dtReg,
-      addField1: nextItem.addField1,
-      addField2: nextItem.addField2,
-      addField3: nextItem.addField3,
-      addField4: nextItem.addField4,
-      addField5: nextItem.addField5
+       customerId: nextItem.customerId,
+       customerCode: nextItem.customerCode,
+       customerDescA: nextItem.customerDescA,
+       customerDescE: nextItem.customerDescE,
+       customerTypeId: nextItem.customerTypeId,
+       costCenterId: nextItem.costCenterId,
+       empId: nextItem.empId,
+       customerCatId: nextItem.customerCatId,
+       currencyId: nextItem.currencyId,
+       tel: nextItem.tel,
+       tel2: nextItem.tel2,
+       tel3: nextItem.tel3,
+       tel4: nextItem.tel4,
+       tel5: nextItem.tel5,
+       fax: nextItem.fax,
+       address1: nextItem.address1,
+       address2: nextItem.address2,
+       isActive: nextItem.isActive,
+       forAdjustOnly: nextItem.forAdjustOnly,
+       nationality: nextItem.nationality,
+       creditPeriod: nextItem.creditPeriod,
+       creditLimit: nextItem.creditLimit,
+       dateOfBirth: nextItem.dateOfBirth,
+       cityId: nextItem.cityId,
+       passPortIssuePlace: nextItem.passPortIssuePlace,
+       carLicenseIssueDate: nextItem.carLicenseIssueDate,
+       carLicenseExpiryDate: nextItem.carLicenseExpiryDate,
+       dtRegRenew: nextItem.dtRegRenew,
+       custId: nextItem.custId,
+       passPortNo: nextItem.passPortNo,
+       carLicenseNo: nextItem.carLicenseNo,
+       carLicenseIssuePlace: nextItem.carLicenseIssuePlace,
+       passPortIssueDate: nextItem.passPortIssueDate,
+       passPortExpiryDate: nextItem.passPortExpiryDate,
+       address3: nextItem.address3,
+       dtReg: nextItem.dtReg,
+       addField1: nextItem.addField1,
+       addField2: nextItem.addField2,
+       addField3: nextItem.addField3,
+       addField4: nextItem.addField4,
+       addField5: nextItem.addField5,
+       accountId: null,
+       addAccount1: null,
+       addAccount2: null,
+       addAccount3: null,
+       addAccount4: null,
+       addAccount5: null,
+       addAccount6: null,
+       addAccount7: null,
+       addAccount8: null,
+       addAccount9: null,
+       addAccount10: null,
+       isAddAccount1ChangedForm: null,
+       isAddAccount2ChangedForm: null,
+       isAddAccount3ChangedForm: null,
+       isAddAccount4ChangedForm: null,
+       isAddAccount5ChangedForm: null,
+       isAddAccount6ChangedForm: null,
+       isAddAccount7ChangedForm: null,
+       isAddAccount8ChangedForm: null,
+       isAddAccount9ChangedForm: null,
+       isAddAccount10ChangedForm: null,
+       openningBalanceDepit: null,
+       openningBalanceCredit: null,
+       accCurrTrancDepit: null,
+       accCurrTrancCredit: null,
+       accTotalDebit: null,
+       accTotaCredit: null,
+       balanceDebitLocal: null,
+       balanceCreditLocal: null,
+       openningBalanceDepitCurncy: null,
+       openningBalanceCreditCurncy: null,
+       accCurrTrancDepitCurncy: null,
+       accCurrTrancCreditCurncy: null,
+       accTotalDebitCurncy: null,
+       accTotaCreditCurncy: null,
+       balanceDebitCurncy: null,
+       balanceCreditCurncy: null,
+       IsPrimaryAccountChangedForm: null
      })
       
       this.firstRow = false;
@@ -476,7 +713,45 @@ export class CustomersComponent implements OnInit{
         addField2: FirstItem.addField2,
         addField3: FirstItem.addField3,
         addField4: FirstItem.addField4,
-        addField5: FirstItem.addField5
+        addField5: FirstItem.addField5,
+        accountId: null,
+        addAccount1: null,
+        addAccount2: null,
+        addAccount3: null,
+        addAccount4: null,
+        addAccount5: null,
+        addAccount6: null,
+        addAccount7: null,
+        addAccount8: null,
+        addAccount9: null,
+        addAccount10: null,
+        isAddAccount1ChangedForm: null,
+        isAddAccount2ChangedForm: null,
+        isAddAccount3ChangedForm: null,
+        isAddAccount4ChangedForm: null,
+        isAddAccount5ChangedForm: null,
+        isAddAccount6ChangedForm: null,
+        isAddAccount7ChangedForm: null,
+        isAddAccount8ChangedForm: null,
+        isAddAccount9ChangedForm: null,
+        isAddAccount10ChangedForm: null,
+        openningBalanceDepit: null,
+        openningBalanceCredit: null,
+        accCurrTrancDepit: null,
+        accCurrTrancCredit: null,
+        accTotalDebit: null,
+        accTotaCredit: null,
+        balanceDebitLocal: null,
+        balanceCreditLocal: null,
+        openningBalanceDepitCurncy: null,
+        openningBalanceCreditCurncy: null,
+        accCurrTrancDepitCurncy: null,
+        accCurrTrancCreditCurncy: null,
+        accTotalDebitCurncy: null,
+        accTotaCreditCurncy: null,
+        balanceDebitCurncy: null,
+        balanceCreditCurncy: null,
+        IsPrimaryAccountChangedForm: null
       })
       this.firstRow = true;
       this.lastRow = false;
@@ -533,7 +808,45 @@ export class CustomersComponent implements OnInit{
         addField2: LastItem.addField2,
         addField3: LastItem.addField3,
         addField4: LastItem.addField4,
-        addField5: LastItem.addField5
+        addField5: LastItem.addField5,
+        accountId: null,
+        addAccount1: null,
+        addAccount2: null,
+        addAccount3: null,
+        addAccount4: null,
+        addAccount5: null,
+        addAccount6: null,
+        addAccount7: null,
+        addAccount8: null,
+        addAccount9: null,
+        addAccount10: null,
+        isAddAccount1ChangedForm: null,
+        isAddAccount2ChangedForm: null,
+        isAddAccount3ChangedForm: null,
+        isAddAccount4ChangedForm: null,
+        isAddAccount5ChangedForm: null,
+        isAddAccount6ChangedForm: null,
+        isAddAccount7ChangedForm: null,
+        isAddAccount8ChangedForm: null,
+        isAddAccount9ChangedForm: null,
+        isAddAccount10ChangedForm: null,
+        openningBalanceDepit: null,
+        openningBalanceCredit: null,
+        accCurrTrancDepit: null,
+        accCurrTrancCredit: null,
+        accTotalDebit: null,
+        accTotaCredit: null,
+        balanceDebitLocal: null,
+        balanceCreditLocal: null,
+        openningBalanceDepitCurncy: null,
+        openningBalanceCreditCurncy: null,
+        accCurrTrancDepitCurncy: null,
+        accCurrTrancCreditCurncy: null,
+        accTotalDebitCurncy: null,
+        accTotaCreditCurncy: null,
+        balanceDebitCurncy: null,
+        balanceCreditCurncy: null,
+        IsPrimaryAccountChangedForm: null
       })
 
     this.firstRow = false;
@@ -599,7 +912,45 @@ export class CustomersComponent implements OnInit{
               addField2: null,
               addField3: null,
               addField4: null,
-              addField5: null
+              addField5: null,
+              accountId: null,
+              addAccount1: null,
+              addAccount2: null,
+              addAccount3: null,
+              addAccount4: null,
+              addAccount5: null,
+              addAccount6: null,
+              addAccount7: null,
+              addAccount8: null,
+              addAccount9: null,
+              addAccount10: null,
+              isAddAccount1ChangedForm: null,
+              isAddAccount2ChangedForm: null,
+              isAddAccount3ChangedForm: null,
+              isAddAccount4ChangedForm: null,
+              isAddAccount5ChangedForm: null,
+              isAddAccount6ChangedForm: null,
+              isAddAccount7ChangedForm: null,
+              isAddAccount8ChangedForm: null,
+              isAddAccount9ChangedForm: null,
+              isAddAccount10ChangedForm: null,
+              openningBalanceDepit: null,
+              openningBalanceCredit: null,
+              accCurrTrancDepit: null,
+              accCurrTrancCredit: null,
+              accTotalDebit: null,
+              accTotaCredit: null,
+              balanceDebitLocal: null,
+              balanceCreditLocal: null,
+              openningBalanceDepitCurncy: null,
+              openningBalanceCreditCurncy: null,
+              accCurrTrancDepitCurncy: null,
+              accCurrTrancCreditCurncy: null,
+              accTotalDebitCurncy: null,
+              accTotaCreditCurncy: null,
+              balanceDebitCurncy: null,
+              balanceCreditCurncy: null,
+              IsPrimaryAccountChangedForm: null
             })
 
             this.DeleteDisable = true;
@@ -657,7 +1008,45 @@ export class CustomersComponent implements OnInit{
      addField2: null,
      addField3: null,
      addField4: null,
-     addField5: null
+     addField5: null,
+     accountId: null,
+     addAccount1: null,
+     addAccount2: null,
+     addAccount3: null,
+     addAccount4: null,
+     addAccount5: null,
+     addAccount6: null,
+     addAccount7: null,
+     addAccount8: null,
+     addAccount9: null,
+     addAccount10: null,
+     isAddAccount1ChangedForm: null,
+     isAddAccount2ChangedForm: null,
+     isAddAccount3ChangedForm: null,
+     isAddAccount4ChangedForm: null,
+     isAddAccount5ChangedForm: null,
+     isAddAccount6ChangedForm: null,
+     isAddAccount7ChangedForm: null,
+     isAddAccount8ChangedForm: null,
+     isAddAccount9ChangedForm: null,
+     isAddAccount10ChangedForm: null,
+     openningBalanceDepit: null,
+     openningBalanceCredit: null,
+     accCurrTrancDepit: null,
+     accCurrTrancCredit: null,
+     accTotalDebit: null,
+     accTotaCredit: null,
+     balanceDebitLocal: null,
+     balanceCreditLocal: null,
+     openningBalanceDepitCurncy: null,
+     openningBalanceCreditCurncy: null,
+     accCurrTrancDepitCurncy: null,
+     accCurrTrancCreditCurncy: null,
+     accTotalDebitCurncy: null,
+     accTotaCreditCurncy: null,
+     balanceDebitCurncy: null,
+     balanceCreditCurncy: null,
+     IsPrimaryAccountChangedForm: null
    })
   
     this.DisabledNextButton = true;
@@ -669,10 +1058,67 @@ export class CustomersComponent implements OnInit{
     this.EditReadonly = false;
     this.reloadDisabled = true;
     this.DeleteDisable = true;
-    this.UndoDisabled = false;  }
+    this.UndoDisabled = false; 
+   }
   
+    onAddAccount1Change(event: MatSelectChange) {
+      this.isAddAccount1Changed = event.value !== this.originalAddAccount1Value;
+    }
+
+    onAddAccount2Change(event: MatSelectChange) {
+      this.isAddAccount2Changed = event.value !== this.originalAddAccount2Value;
+    }
+
+    onAddAccount3Change(event: MatSelectChange) {
+      this.isAddAccount3Changed = event.value !== this.originalAddAccount3Value;
+    }
+
+    onAddAccount4Change(event: MatSelectChange) {
+      this.isAddAccount4Changed = event.value !== this.originalAddAccount4Value;
+    }
+
+    onAddAccount5Change(event: MatSelectChange) {
+      this.isAddAccount5Changed = event.value !== this.originalAddAccount5Value;
+    }
+
+    onAddAccount6Change(event: MatSelectChange) {
+      this.isAddAccount6Changed = event.value !== this.originalAddAccount6Value;
+    }
+
+    onAddAccount7Change(event: MatSelectChange) {
+      this.isAddAccount7Changed = event.value !== this.originalAddAccount7Value;
+    }
+
+    onAddAccount8Change(event: MatSelectChange) {
+      this.isAddAccount8Changed = event.value !== this.originalAddAccount8Value;
+    }
+
+    onAddAccount9Change(event: MatSelectChange) {
+      this.isAddAccount9Changed = event.value !== this.originalAddAccount9Value;
+    }
+
+    onAddAccount10Change(event: MatSelectChange) {
+      this.isAddAccount10Changed = event.value !== this.originalAddAccount10Value;
+    }
+
+    onPrimaryAccountChange(event: MatSelectChange) {
+      this.isPrimaryAccountChanged = event.value !== this.originalPrimaryAccountValue;
+    }
   
   onSumbit(){
+
+   if(this.IsPrimaryAccountChangedForm) this.CustomerForm.get('IsPrimaryAccountChangedForm')?.setValue(true);
+   if(this.isAddAccount1Changed) this.CustomerForm.get('isAddAccount1ChangedForm')?.setValue(true)
+   if(this.isAddAccount2Changed) this.CustomerForm.get('isAddAccount2ChangedForm')?.setValue(true)
+   if(this.isAddAccount3Changed) this.CustomerForm.get('isAddAccount3ChangedForm')?.setValue(true)
+   if(this.isAddAccount4Changed) this.CustomerForm.get('isAddAccount4ChangedForm')?.setValue(true)
+   if(this.isAddAccount5Changed) this.CustomerForm.get('isAddAccount5ChangedForm')?.setValue(true)
+   if(this.isAddAccount6Changed) this.CustomerForm.get('isAddAccount6ChangedForm')?.setValue(true)
+   if(this.isAddAccount7Changed) this.CustomerForm.get('isAddAccount7ChangedForm')?.setValue(true)
+   if(this.isAddAccount8Changed) this.CustomerForm.get('isAddAccount8ChangedForm')?.setValue(true)
+   if(this.isAddAccount9Changed) this.CustomerForm.get('isAddAccount9ChangedForm')?.setValue(true)
+   if(this.isAddAccount10Changed) this.CustomerForm.get('isAddAccount10ChangedForm')?.setValue(true)
+
     this.definitionService.AddCustomer(this.CustomerForm.value).subscribe(res=>{
       if(res.status){
         this.GetAllCustomers();
@@ -692,12 +1138,18 @@ export class CustomersComponent implements OnInit{
   }
 
   GetAllCustomerBranches(){
-    console.log('hi')
-    console.log(this.CustomerForm.value.customerId)
     if(this.CustomerForm.value.customerId){
       this.definitionService.GetCustomerBranches(this.CustomerForm.value.customerId).subscribe(res=>{
         this.AllCustomerBranches = res
-        console.log(this.AllCustomerBranches)
+        
+      });
+    }
+  }
+
+  GetAllCustomerContact(){
+    if(this.CustomerForm.value.customerId){
+      this.definitionService.GetCustomerContact(this.CustomerForm.value.customerId).subscribe(res=>{
+        this.AllCustomerContact = res
       });
     }
   }
@@ -725,6 +1177,12 @@ onTabChanged(event: MatTabChangeEvent) {
   if (event.tab.textLabel === 'الفروع') {
     this.GetAllCustomerBranches();
   }
+  if (event.tab.textLabel === 'جهات الإتصال') {
+    this.GetAllCustomerContact();
+  }
+  if (event.tab.textLabel === 'حسابات') {
+    this.GetAdditionalAccount();
+  }
 }
 
 
@@ -736,7 +1194,6 @@ DeleteCustomerBranch(custBranchId : any) {
   });
   _popup.afterClosed().subscribe((response) => {
     if (response) {
-      console.log(custBranchId)
          this.definitionService.DeleteCustomerBranch(custBranchId).subscribe(res=>{
           if(res.status){
             this.definitionService.GetCustomerBranches(res.id).subscribe(res=>{
@@ -767,6 +1224,469 @@ updateCustomerBranch(branchData:any){
       });
     }
   });
+}
+
+
+AddCustomerContact(){
+  var _popup = this.dialog.open(CustomerContactComponent, {
+    width: '70%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'أضافة جهة أتصال',
+      customerId: this.CustomerForm.value.customerId,
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+      this.definitionService.GetCustomerContact(response).subscribe(res=>{
+        this.AllCustomerContact = res
+      });
+    }
+  });
+}
+
+
+updateCustomerContact(customerContact:any){
+  var _popup = this.dialog.open(CustomerContactComponent, {
+    width: '70%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'تعديل جهه أتصال',
+      customerId: this.CustomerForm.value.customerId,
+      CustomerContactData : customerContact
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+      
+      this.definitionService.GetCustomerContact(response).subscribe(res=>{
+        this.AllCustomerContact = res
+      });
+    }
+  });
+}
+
+DeleteCustomerContact(custContactId : any) {
+  var _popup = this.dialog.open(DeleteConfirmComponent, {
+    width: '30%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if (response) {
+         this.definitionService.DeleteCustomerContact(custContactId).subscribe(res=>{
+          if(res.status){
+            this.definitionService.GetCustomerContact(res.id).subscribe(res=>{
+              this.AllCustomerContact = res
+            });
+          }
+         })
+    }
+  });
+}
+
+
+GetAdditionalAccount(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalAccount(this.CustomerForm.value.customerId).subscribe({
+      next: res => {
+          this.CustomerForm.get("addAccount1")?.setValue(res.addAccountCode1);
+          this.CustomerForm.get("addAccount2")?.setValue(res.addAccountCode2);
+          this.CustomerForm.get("addAccount3")?.setValue(res.addAccountCode3);
+          this.CustomerForm.get("addAccount4")?.setValue(res.addAccountCode4);
+          this.CustomerForm.get("addAccount5")?.setValue(res.addAccountCode5);
+          this.CustomerForm.get("addAccount6")?.setValue(res.addAccountCode6);
+          this.CustomerForm.get("addAccount7")?.setValue(res.addAccountCode7);
+          this.CustomerForm.get("addAccount8")?.setValue(res.addAccountCode8);
+          this.CustomerForm.get("addAccount9")?.setValue(res.addAccountCode9);
+          this.CustomerForm.get("addAccount10")?.setValue(res.addAccountCode10);
+
+          this.originalAddAccount1Value = this.CustomerForm.get('addAccount1')?.value;
+          this.originalAddAccount2Value = this.CustomerForm.get('addAccount2')?.value;
+          this.originalAddAccount3Value = this.CustomerForm.get('addAccount3')?.value;
+          this.originalAddAccount4Value = this.CustomerForm.get('addAccount4')?.value;
+          this.originalAddAccount5Value = this.CustomerForm.get('addAccount5')?.value;
+          this.originalAddAccount6Value = this.CustomerForm.get('addAccount6')?.value;
+          this.originalAddAccount7Value = this.CustomerForm.get('addAccount7')?.value;
+          this.originalAddAccount8Value = this.CustomerForm.get('addAccount8')?.value;
+          this.originalAddAccount9Value = this.CustomerForm.get('addAccount9')?.value;
+          this.originalAddAccount10Value = this.CustomerForm.get('addAccount10')?.value;
+          
+   
+        
+      }
+    })
+  }
+}
+
+GetCustomerMainAccount(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetCustomerMainAccount(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }
+    })
+  }
+}
+
+GetAdditionalaccount1(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount1(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }else{
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(null);
+        this.CustomerForm.get("accTotalDebit")?.setValue(null);
+        this.CustomerForm.get("accTotaCredit")?.setValue(null);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(null);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(null);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(null);
+      }
+    })
+  }
+}
+
+GetAdditionalaccount2(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount2(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }else{
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(null);
+        this.CustomerForm.get("accTotalDebit")?.setValue(null);
+        this.CustomerForm.get("accTotaCredit")?.setValue(null);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(null);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(null);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(null);
+      }
+    })
+  }
+}
+
+
+GetAdditionalaccount3(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount3(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }else{
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(null);
+        this.CustomerForm.get("accTotalDebit")?.setValue(null);
+        this.CustomerForm.get("accTotaCredit")?.setValue(null);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(null);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(null);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(null);
+      }
+    })
+  }
+}
+
+GetAdditionalaccount4(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount4(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }else{
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(null);
+        this.CustomerForm.get("accTotalDebit")?.setValue(null);
+        this.CustomerForm.get("accTotaCredit")?.setValue(null);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(null);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(null);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(null);
+      }
+    })
+  }
+}
+
+GetAdditionalaccount5(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount5(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }else{
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(null);
+        this.CustomerForm.get("accTotalDebit")?.setValue(null);
+        this.CustomerForm.get("accTotaCredit")?.setValue(null);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(null);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(null);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(null);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(null);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(null);
+      }
+    })
+  }
+}
+
+
+GetAdditionalaccount6(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount6(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }
+    })
+  }
+}
+
+
+GetAdditionalaccount7(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount7(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }
+    })
+  }
+}
+
+GetAdditionalaccount8(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount8(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }
+    })
+  }
+}
+
+GetAdditionalaccount9(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount9(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }
+    })
+  }
+}
+
+GetAdditionalaccount10(){
+  if(this.CustomerForm.value.customerId){
+    this.definitionService.GetAdditionalaccount10(this.CustomerForm.value.customerId).subscribe(res=>{
+      if(res){
+        this.CustomerForm.get("openningBalanceDepit")?.setValue(res.openningBalanceDepit);
+        this.CustomerForm.get("openningBalanceCredit")?.setValue(res.openningBalanceCredit);
+        this.CustomerForm.get("accCurrTrancDepit")?.setValue(res.accCurrTrancDepit);
+        this.CustomerForm.get("accCurrTrancCredit")?.setValue(res.accCurrTrancCredit);
+        this.CustomerForm.get("accTotalDebit")?.setValue(res.accTotalDebit);
+        this.CustomerForm.get("accTotaCredit")?.setValue(res.accTotaCredit);
+        this.CustomerForm.get("balanceDebitLocal")?.setValue(res.balanceDebitLocal);
+        this.CustomerForm.get("balanceCreditLocal")?.setValue(res.balanceCreditLocal);
+        this.CustomerForm.get("openningBalanceDepitCurncy")?.setValue(res.openningBalanceDepitCurncy);
+        this.CustomerForm.get("openningBalanceCreditCurncy")?.setValue(res.openningBalanceCreditCurncy);
+        this.CustomerForm.get("accCurrTrancDepitCurncy")?.setValue(res.accCurrTrancDepitCurncy);
+        this.CustomerForm.get("accCurrTrancCreditCurncy")?.setValue(res.accCurrTrancCreditCurncy);
+        this.CustomerForm.get("accTotalDebitCurncy")?.setValue(res.accTotalDebitCurncy);
+        this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
+        this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
+        this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+      }
+    })
+  }
+}
+
+Filterchange(data: Event) {
+  const value = (data.target as HTMLInputElement).value;
+  this.dataSource.filter = value;
 }
 
 }

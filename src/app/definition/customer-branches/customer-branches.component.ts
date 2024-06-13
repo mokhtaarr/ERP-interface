@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DefinitionService } from '../definition.service';
 
@@ -13,6 +13,7 @@ export class CustomerBranchesComponent implements OnInit {
   CustomerBranchDataForm:any;
   AddCustomerBranch_Response?: number;
   ReadonlyCode : boolean = false;
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ref: MatDialogRef<CustomerBranchesComponent>,
@@ -29,8 +30,8 @@ export class CustomerBranchesComponent implements OnInit {
   customerBranchForm = this.fb.group({
     custBranchId: [],
     customerId: [],
-    custBranchCode: [''],
-    custBranchName1: [''],
+    custBranchCode: ['',Validators.required],
+    custBranchName1: ['',Validators.required],
     custBranchName2: [''],
     remarks: [''],
     address: [''],
@@ -55,7 +56,6 @@ export class CustomerBranchesComponent implements OnInit {
   }
 
   fillForm(){
-    console.log(this.CustomerBranchDataForm)
     if(this.CustomerBranchDataForm){
         this.customerBranchForm.setValue({
           custBranchId: this.CustomerBranchDataForm.custBranchId,

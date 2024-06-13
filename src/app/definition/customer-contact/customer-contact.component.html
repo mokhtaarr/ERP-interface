@@ -1,0 +1,161 @@
+
+<form [formGroup]="customerContactForm" (ngSubmit)="onSumbit()">
+    <mat-tab-group     dir="rtl" backgroundColor="primary" >
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <h1 style="margin-bottom: auto;">
+                    (+)
+                    {{data.Title}}
+                </h1>
+            </ng-template>
+
+            <mat-dialog-content class="mat-typography">
+                <div class="row p-3">
+                    <mat-form-field  style="display:none;" class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>id</mat-label>
+                       <input matInput type="number" formControlName="custContactId" >
+                   </mat-form-field>
+   
+   
+                   <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>الكود</mat-label>
+                       <input matInput type="text" formControlName="contactCode" [readonly]="ReadonlyCode" >
+                   </mat-form-field>
+   
+                   <div class="col-lg-6 col-md-6 col-sm-12">
+                       <mat-slide-toggle color="primary" formControlName="isprimary" >جهة أساسية</mat-slide-toggle>
+                   </div>    
+                   <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>الإسم بالعربى</mat-label>
+                       <input matInput type="text" formControlName="contactName1" >
+                   </mat-form-field>
+   
+                   <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>الإسم بالانجليزى</mat-label>
+                       <input matInput type="text" formControlName="contactName2">
+                   </mat-form-field>
+   
+                   <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>تليفون 1</mat-label>
+                       <input matInput type="text" formControlName="contactPhone1">
+                   </mat-form-field>
+   
+                   <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>تليفون 2</mat-label>
+                       <input matInput type="text" formControlName="contactPhone2">
+                   </mat-form-field>
+   
+                   <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>تليفون 3</mat-label>
+                       <input matInput type="text" formControlName="contactPhone3">
+                   </mat-form-field>
+   
+                   <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>تليفون 4</mat-label>
+                       <input matInput type="text" formControlName="contactPhone4">
+                   </mat-form-field>
+   
+                   <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                       <mat-label>تليفون 5</mat-label>
+                       <input matInput type="text" formControlName="contactPhone5">
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>عنوان 1</mat-label>
+                       <input matInput formControlName="contactAddress1" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>عنوان 2</mat-label>
+                       <input matInput formControlName="contactAddress2" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>عنوان 3</mat-label>
+                       <input matInput formControlName="contactAddress3" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>الإيميل 1</mat-label>
+                       <input matInput formControlName="contactEmail1" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>الإيميل 2</mat-label>
+                       <input matInput formControlName="contactEmail2" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>الإيميل 3</mat-label>
+                       <input matInput formControlName="contactEmail3" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>بنك 1</mat-label>
+                       <input matInput formControlName="bank1" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>بنك 2</mat-label>
+                       <input matInput formControlName="bank2" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>بنك 3</mat-label>
+                       <input matInput formControlName="bank3" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>رقم البطاقة الشخصية</mat-label>
+                       <input matInput formControlName="idno" >
+                   </mat-form-field>
+   
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>جواز سفر</mat-label>
+                       <input matInput formControlName="passPortNo" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>حساب بنكى 1</mat-label>
+                       <input matInput formControlName="bankAccNo1" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>حساب بنكى 2</mat-label>
+                       <input matInput formControlName="bankAccNo2" >
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>حساب بنكى 3</mat-label>
+                       <input matInput formControlName="bankAccNo3" >
+                   </mat-form-field>
+                   
+                   <div></div>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>1 الملاحظات</mat-label>
+                       <textarea matInput formControlName="remark1" ></textarea>
+                   </mat-form-field>
+   
+                   <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                       <mat-label>2 الملاحظات</mat-label>
+                       <textarea matInput formControlName="remark2" ></textarea>
+                   </mat-form-field>
+   
+               </div>
+            </mat-dialog-content>
+            
+
+        </mat-tab>
+
+    </mat-tab-group>
+
+    <div mat-dialog-actions>
+        <a (click)="closepopup()" mat-raised-button color="warn">إغلاق</a>
+
+        <button mat-raised-button type="submit" color="primary" [disabled]="customerContactForm.invalid" >حفظ</button>
+
+    </div>
+</form>
+

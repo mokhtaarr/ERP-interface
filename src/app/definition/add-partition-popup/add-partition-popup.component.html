@@ -56,7 +56,7 @@
     <div mat-dialog-actions>
         <a (click)="closepopup()" mat-raised-button color="warn">إغلاق</a>
 
-        <button mat-raised-button type="submit" color="primary">حفظ</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="PartitionForm.invalid">حفظ</button>
 
     </div>
 </form>

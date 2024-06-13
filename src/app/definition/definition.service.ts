@@ -739,7 +739,360 @@ DeleteCustomerBranch(custBranchId : any){
   );
 }
 
+GetCustomerContact(customerId : any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAllCustomerContact?customerId=${customerId}`)
+}
+
+AddCustomerContact(values:any){
+  return this.http.post<any>(environment.apiUrl+'Customers/AddCustomerContact',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
 
 
+
+DeleteCustomerContact(custContactId : any){
+  return this.http.delete<any>(`${environment.apiUrl}Customers/DeleteCustomerContact?custContactId=${custContactId}`).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+GetMainChartAccount(customerId : any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetMainCharAccount?customerId=${customerId}`)
+}
+
+GetAdditionalAccount(customerId : any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAllAdditionalAccount?customerId=${customerId}`)
+}
+
+GetCustomerMainAccount(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetUserMainAccount?customerId=${customerId}`)
+}
+
+GetAdditionalaccount1(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount1?customerId=${customerId}`)
+}
+
+GetAdditionalaccount2(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount2?customerId=${customerId}`)
+}
+
+GetAdditionalaccount3(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount3?customerId=${customerId}`)
+}
+
+GetAdditionalaccount4(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount4?customerId=${customerId}`)
+}
+
+GetAdditionalaccount5(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount5?customerId=${customerId}`)
+}
+
+GetAdditionalaccount6(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount6?customerId=${customerId}`)
+}
+
+GetAdditionalaccount7(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount7?customerId=${customerId}`)
+}
+
+GetAdditionalaccount8(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount8?customerId=${customerId}`)
+}
+
+GetAdditionalaccount9(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount9?customerId=${customerId}`)
+}
+
+GetAdditionalaccount10(customerId:any){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAdditionalaccount10?customerId=${customerId}`)
+}
+
+
+// الموردين    Vendors
+
+GetAllVendors(){
+  return this.http.get<any>(environment.apiUrl+'Suppliers/GetAllSuppliers')
+}
+
+DeleteVendor(vendorId:any){
+  return this.http.delete<any>(`${environment.apiUrl}Suppliers/DeleteVendor?VendorId=${vendorId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
+GetVendorTypes(){
+  return this.http.get<any>(environment.apiUrl+'Suppliers/GetAllVendorTypes')
+}
+
+GetVendorCategories(){
+  return this.http.get<any>(environment.apiUrl+'Suppliers/GetAllVendorsCategories')
+}
+
+AddVendor(values:any){
+  return this.http.post<any>(environment.apiUrl+'Suppliers/AddVendor',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+GetAllVendorAdditionalAccount(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAllAdditionalAccount?vendorId=${vendorId}`)
+}
+
+
+GetVendorMainChartAccount(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetMainCharAccount?vendorId=${vendorId}`)
+}
+
+GeVendorMainAccount(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GeVendorMainAccount?vendorId=${vendorId}`)
+
+}
+GetVendorAdditionalAccount(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount1?vendorId=${vendorId}`)
+}
+
+GetVendorAdditionalAccount2(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount2?vendorId=${vendorId}`)
+}
+
+GetVendorAdditionalAccount3(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount3?vendorId=${vendorId}`)
+}
+
+GetVendorAdditionalAccount4(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount4?vendorId=${vendorId}`)
+}
+
+GetVendorAdditionalAccount5(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount5?vendorId=${vendorId}`)
+}
+
+
+GetVendorAdditionalAccount6(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount6?vendorId=${vendorId}`)
+}
+
+GetVendorAdditionalAccount7(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount7?vendorId=${vendorId}`)
+}
+
+GetVendorAdditionalAccount8(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount8?vendorId=${vendorId}`)
+}
+
+GetVendorAdditionalAccount9(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount9?vendorId=${vendorId}`)
+}
+
+GetVendorAdditionalAccount10(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAdditionalaccount10?vendorId=${vendorId}`)
+}
+
+AddVendorBranch(values:any){
+  return this.http.post<any>(environment.apiUrl+'Suppliers/AddVendorBranch',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+GetVendorBranches(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAllVendorBranches?vendorId=${vendorId}`)
+}
+
+DeleteVendorBranch(custBranchId : any){
+  return this.http.delete<any>(`${environment.apiUrl}Suppliers/DeleteVendorBranch?VendBranchId=${custBranchId}`).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+
+GetVendorContacts(vendorId : any){
+  return this.http.get<any>(`${environment.apiUrl}Suppliers/GetAllVendorContacts?vendorId=${vendorId}`)
+}
+
+AddVendorContact(values:any){
+  return this.http.post<any>(environment.apiUrl+'Suppliers/AddVendorContact',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+
+
+DeleteVendorContact(VendContactId : any){
+  return this.http.delete<any>(`${environment.apiUrl}Suppliers/DeleteVendorContact?VendContactId=${VendContactId}`).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+// HrEmployee الموظفين
+GetHrEmployees(){
+  return this.http.get<any>(environment.apiUrl+'HR_Employees/GetAllHrEmployees')
+}
+
+GetAllHrDepartment(){
+  return this.http.get<any>(environment.apiUrl+'HR_Employees/GetAllHrDepartment')
+}
+
+GetAllHrJobs(){
+  return this.http.get<any>(environment.apiUrl+'HR_Employees/GetAllHrJobs')
+}
+
+GetAllMsStores(){
+  return this.http.get<any>(environment.apiUrl+'HR_Employees/GetAllMsStores')
+
+}
+
+GetEmployeeMainAccount(empId : any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetMainAccountForEmployee?empId=${empId}`)
+}
+
+AddEmployee(values:any){
+  return this.http.post<any>(environment.apiUrl+'HR_Employees/AddHrEmployee',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+GetEmpAdditionalAccount(empId : any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAllAdditionalAccount?empId=${empId}`)
+}
+GetEmpMainAccount(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetEmployeeMainAccount?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount1(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount1?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount2(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount2?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount3(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount3?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount4(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount4?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount5(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount5?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount6(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount6?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount7(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount7?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount8(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount8?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount9(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount9?empId=${empId}`)
+}
+
+GetEmpAdditionalaccount10(empId:any){
+  return this.http.get<any>(`${environment.apiUrl}HR_Employees/GetAdditionalaccount10?empId=${empId}`)
+}
+
+
+DeleteEmployee(empId:any){
+  return this.http.delete<any>(`${environment.apiUrl}HR_Employees/DeleteEmployee?empId=${empId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
 
 }
