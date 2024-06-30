@@ -52,8 +52,6 @@ export class JobsComponent implements OnInit {
   treeControl = new FlatTreeControl<JobTree>(
     node => node.level,
     node => node.expandable,
-    
-
   );
 
   treeFlattener = new MatTreeFlattener(
@@ -99,7 +97,7 @@ export class JobsComponent implements OnInit {
     departMentId :[],
     jcode :['',Validators.required],
     jname1 :['',Validators.required],
-    jname2:['',Validators.required],
+    jname2:[''],
     jdesc:[''],
     jresponsibilities:[''],
     jqualifications:[''],

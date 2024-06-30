@@ -17,7 +17,8 @@ const routes: Routes = [
   {path:'main',component:MainComponent,children:[
     //  {path:'home',component : HomeComponent},
      {path:'home',loadChildren:()=>import('./home/home.module').then(h=>h.HomeModule)},
-     {path:'definition',loadChildren:()=>import('./definition/definition.module').then(d=>d.DefinitionModule)}
+     {path:'definition',loadChildren:()=>import('./definition/definition.module').then(d=>d.DefinitionModule)},
+     {path:'accountsModule',loadChildren:()=>import('./accounts-module/accounts-module.module').then(a=>a.AccountsModuleModule)}
   ]},
   {path:'',redirectTo:'branch',pathMatch:'full'},
   {path:'branch',component : BranchComponent},
