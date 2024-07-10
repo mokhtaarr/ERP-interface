@@ -138,4 +138,68 @@ export class AccountsModuleServicesService {
     }))
   }
 
+
+  // السيرفسيس الخاصه بالاكواد التحليلية
+  GetAllSysAnalyticalCode(){
+    return this.http.get<any>(environment.apiUrl +'SysAnalyticalCodes/GetAllSysAnalyticalCode')
+  }
+
+  GetAllSysAnalyticalCodeForSelect(){
+    return this.http.get<any>(environment.apiUrl +'SysAnalyticalCodes/GetAllSysAnalyticalCodeForSelect')
+  }
+
+  GetAllAccountsForSelect(){
+    return this.http.get<any>(environment.apiUrl +'SysAnalyticalCodes/GetAllAccountChartForSelect')
+  }
+
+  GetAll_CostCenterForSelect(){
+    return this.http.get<any>(environment.apiUrl +'SysAnalyticalCodes/GetAllCostCenterForSelect')
+  }
+
+  GetAllCustomer(){
+    return this.http.get<any>(environment.apiUrl +'SysAnalyticalCodes/GetAllCustomer')
+  }
+
+  GetAllHrEmployees(){
+    return this.http.get<any>(environment.apiUrl +'SysAnalyticalCodes/GetAllHrEmployees')
+  }
+
+  GetAllAssets(){
+    return this.http.get<any>(environment.apiUrl +'SysAnalyticalCodes/GetAllAssets')
+  }
+
+
+  GetAllVendors(){
+    return this.http.get<any>(environment.apiUrl +'SysAnalyticalCodes/GetAllVendors')
+  }
+
+  AddSysAnalyticalCode(values:any){
+    return this.http.post<any>(environment.apiUrl+'SysAnalyticalCodes/AddSysAnalyticalCode',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+  
+  DeleteSysAnalyticalCode(aid:any){
+    return this.http.delete<any>(`${environment.apiUrl}SysAnalyticalCodes/DeleteSysAnalyticalCode?aid=${aid}`)
+    .pipe(map((res)=>{
+      var message = res.message;
+      var messageEn = res.messageEn;
+  
+      if (res.status == true) this.toastr.success(message);
+  
+      if (res.status == false) this.toastr.error(message);
+  
+      return res.status;
+    }))
+  }
 }

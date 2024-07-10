@@ -27,6 +27,10 @@ import { CustomerBranchesComponent } from './customer-branches/customer-branches
 import { CustomerContactComponent } from './customer-contact/customer-contact.component';
 import { AddVendorBranchComponent } from './add-vendor-branch/add-vendor-branch.component';
 import { VendorContactComponent } from './vendor-contact/vendor-contact.component';
+import { AddItemUnitComponent } from './add-item-unit/add-item-unit.component';
+import { ProdBasicUnitsComponent } from './prod-basic-units/prod-basic-units.component';
+import { GetItemCollectionsComponent } from './get-item-collections/get-item-collections.component';
+import { UpdateItemUnitComponent } from './update-item-unit/update-item-unit.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,11 @@ import { VendorContactComponent } from './vendor-contact/vendor-contact.componen
     CustomerBranchesComponent,
     CustomerContactComponent,
     AddVendorBranchComponent,
-    VendorContactComponent
+    VendorContactComponent,
+    AddItemUnitComponent,
+    ProdBasicUnitsComponent,
+    GetItemCollectionsComponent,
+    UpdateItemUnitComponent
   ],
   imports: [
     CommonModule,

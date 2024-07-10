@@ -90,3 +90,27 @@ table {
     justify-content: center;
     width: 50px;
   }
+
+  .mat-mdc-table .mdc-data-table__row:hover{
+    background-color: #dfdfdf; 
+    cursor: pointer;
+  
+  }
+  
+  
+  .table-header-font-size{
+  font-weight: bold;
+  }
+  
+  td{
+  font-size: large;
+  }
+  
+
+  .tableTd{
+    min-width: 150px;
+  }
+
+  .tableTdForCollection{
+    min-width: 300px;
+  }

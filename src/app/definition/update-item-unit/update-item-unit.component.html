@@ -1,0 +1,231 @@
+
+<form [formGroup]="itemUnitForm" (ngSubmit)="onSumbit()">
+    <mat-tab-group     dir="rtl" backgroundColor="primary" >
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <h1 style="margin-bottom: auto;">
+                    (+)
+                    {{data.Title}}
+                </h1>
+            </ng-template>
+
+            <mat-dialog-content class="mat-typography">
+                <div class="row p-3">
+                
+                    <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                        <mat-slide-toggle color="primary" formControlName="isDefaultPurchas">وحده شراء أساسية</mat-slide-toggle>
+                    </div>
+    
+                    
+                    <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                        <mat-slide-toggle color="primary" formControlName="isDefaultSale">وحده بيع أساسية</mat-slide-toggle>
+    
+                    </div>
+    
+                    
+                    <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                        <mat-slide-toggle color="primary" formControlName="cannotDevide">لا يمكن التقسيم</mat-slide-toggle>
+    
+                    </div>
+                    <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                        <mat-label>الكود</mat-label>
+                        <input matInput type="text" formControlName="unitCode">
+                    </mat-form-field>
+    
+                    <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                        <mat-label>الإسم بالعربى</mat-label>
+                        <input matInput type="text" formControlName="unitNam" >
+                    </mat-form-field>
+    
+                    <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
+                        <mat-label>الإسم بالانجليزى</mat-label>
+                        <input matInput type="text" formControlName="unitNameE">
+                    </mat-form-field>
+    
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>كود ضريبى</mat-label>
+                        <input matInput type="text" formControlName="etaxUnitCode">
+                    </mat-form-field>
+    
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>معامل التحويل</mat-label>
+                        <input matInput type="number" formControlName="unittRate">
+                    </mat-form-field>
+    
+              
+    
+                    
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>الرمز</mat-label>
+                        <input matInput type="text" formControlName="symbol">
+                    </mat-form-field>
+    
+                    
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>الكمية 1</mat-label>
+                        <input matInput type="number" formControlName="quantity1">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 1</mat-label>
+                        <input matInput type="number" formControlName="price1">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>الكمية 2</mat-label>
+                        <input matInput type="number" formControlName="quantity2">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 2</mat-label>
+                        <input matInput type="number" formControlName="price2">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>الكمية 3</mat-label>
+                        <input matInput type="number" formControlName="quantity3">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 3</mat-label>
+                        <input matInput type="number" formControlName="price3">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>الكمية 4</mat-label>
+                        <input matInput type="number" formControlName="quantity4">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 4</mat-label>
+                        <input matInput type="number" formControlName="price4">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>الكمية 5</mat-label>
+                        <input matInput type="number" formControlName="quantity5">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 5</mat-label>
+                        <input matInput type="number" formControlName="price5">
+                    </mat-form-field>
+
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 6</mat-label>
+                        <input matInput type="number" formControlName="price6">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 7</mat-label>
+                        <input matInput type="number" formControlName="price7">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 8</mat-label>
+                        <input matInput type="number" formControlName="price8">
+                    </mat-form-field>
+
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 9</mat-label>
+                        <input matInput type="number" formControlName="price9">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>سعر 10</mat-label>
+                        <input matInput type="number" formControlName="price10">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 1</mat-label>
+                        <input matInput type="text" formControlName="barCode1">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 2 </mat-label>
+                        <input matInput type="text" formControlName="barCode2">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 3</mat-label>
+                        <input matInput type="text" formControlName="barCode3">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 4</mat-label>
+                        <input matInput type="text" formControlName="barCode4">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 5</mat-label>
+                        <input matInput type="text" formControlName="barCode5">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 6</mat-label>
+                        <input matInput type="text" formControlName="barCode6">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 7</mat-label>
+                        <input matInput type="text" formControlName="barCode7">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 8</mat-label>
+                        <input matInput type="text" formControlName="barCode8">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 9</mat-label>
+                        <input matInput type="text" formControlName="barCode9">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 10</mat-label>
+                        <input matInput type="text" formControlName="barCode10">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 11</mat-label>
+                        <input matInput type="text" formControlName="barCode11">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 12</mat-label>
+                        <input matInput type="text" formControlName="barCode12">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 13</mat-label>
+                        <input matInput type="text" formControlName="barCode13">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 14</mat-label>
+                        <input matInput type="text" formControlName="barCode14">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-2" appearance="outline" >
+                        <mat-label>باركود 15</mat-label>
+                        <input matInput type="text" formControlName="barCode15">
+                    </mat-form-field>
+
+                </div>
+            </mat-dialog-content>
+         
+
+        </mat-tab>
+
+    </mat-tab-group>
+
+    <div mat-dialog-actions>
+        <a (click)="closepopup()" mat-raised-button color="warn">إغلاق</a>
+
+        <button mat-raised-button type="submit" color="primary" [disabled]="itemUnitForm.invalid" >حفظ</button>
+
+    </div>
+</form>
+

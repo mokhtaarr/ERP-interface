@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
     
-
+<!-- 
     <div class="example-button-row">
         <div class="example-flex-container">
             <div class="example-button-container">
@@ -52,7 +52,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 
 
     
@@ -64,7 +64,100 @@
 
     <div style="margin-bottom: 50px;">
         <form [formGroup]="itemForm" (ngSubmit)="onSumbit()">
-            <mat-tab-group dir="rtl" style="margin-top: 30px;background-color: white;font-family: system-ui;">
+            
+            <div style="display: flex;justify-content: space-between;">
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+            
+            
+                      <div class="example-button-container">
+                        <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
+                          aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-step-backward"></i>
+                        </button> 
+                      </div>
+            
+                     
+            
+                      <div class="example-button-container">
+                        <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
+                          [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-caret-left"></i>
+                        </button>
+                      </div>
+
+                      <div class="example-button-container">
+                        <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
+                          [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-caret-right"></i>
+                        </button>
+                      </div>
+            
+                      <div class="example-button-container">
+                        <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
+                          aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-step-forward"></i>
+                        </button>
+                      </div>
+            
+                      <div class="example-button-container">
+                        <button type="button" mat-mini-fab color="primary"  (click)="loadItems()"
+                          [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-sync"></i>
+                        </button>
+                      </div>
+            
+                      <div class="example-button-container">
+                        <button type="submit" mat-mini-fab color="primary"  
+                          aria-label="Example icon button with a menu icon" [disabled]=" SaveDisable || itemForm.invalid">
+                          <i class="fas fa-save"></i>
+                        </button>
+                      </div>
+            
+                      <div class="example-button-container">
+                        <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || itemForm.invalid"
+                         (click)="Open_delete_confirm()"
+                          
+                           aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </div>
+            
+                      <div class="example-button-container">
+                        <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
+                          aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-undo"></i>
+                        </button>
+                      </div>
+            
+                      <div class="example-button-container">
+                        <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateItem()" color="primary"
+                          aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                      </div>
+            
+            
+                      <div class="example-button-container">
+                        <button type="button" (click)="New()" mat-mini-fab color="primary"
+                          aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+            
+                    </div>
+                  </div>
+    
+                  <div class="mt-2">
+                    <h1 style="color: #3f51b5;" *ngIf="itemForm.value.itemDescA"> 
+                        {{itemForm.value.itemDescA}}
+                        <img height="50" width="50" src="../../../assets/images/arrow.gif">
+    
+                    </h1>
+                </div>
+               </div> 
+        
+            <mat-tab-group (selectedTabChange)="onTabChanged($event)" dir="rtl" style="background-color: white;font-family: system-ui;">
 
                 <mat-tab>
                     <ng-template mat-tab-label>
@@ -78,7 +171,7 @@
                             <div class="form-floating">
                                 <input type="number" formControlName="ItemCardId" class="form-control"
                                     placeholder="name@example.com">
-                                <label for="floatingInput">الكود </label>
+                                <label for="floatingInput">id</label>
                             </div>
                         </div>
 
@@ -86,7 +179,7 @@
 
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الكود </mat-label>
-                                <input matInput formControlName="ItemCode" type="number">
+                                <input matInput formControlName="ItemCode" type="text" [readonly]="EditReadonly">
                             </mat-form-field>
 
                         </div>
@@ -95,7 +188,7 @@
 
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الكود الضريبى </mat-label>
-                                <input matInput type="number">
+                                <input matInput  formControlName="taxItemCode" type="text">
                             </mat-form-field>
 
                         </div>
@@ -119,12 +212,16 @@
 
                         </div>
 
+                      
+
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>فئات الاصناف</mat-label>
-                                <mat-select>
-                                    <mat-option value="one">First option</mat-option>
-                                    <mat-option value="two">Second option</mat-option>
+                                <mat-select formControlName="itemCategoryId" >
+                                    <mat-option *ngFor="let itemCat of AllItemCategory"
+                                        [value]="itemCat.itemCategoryId">
+                                        {{itemCat.itemCatCode}} - {{itemCat.itemCatDescA}}
+                                    </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -132,9 +229,11 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>مخزن</mat-label>
-                                <mat-select>
-                                    <mat-option value="one">First option</mat-option>
-                                    <mat-option value="two">Second option</mat-option>
+                                <mat-select formControlName="storePartId" >
+                                    <mat-option *ngFor="let part of AllPartitions"
+                                    [value]="part.storePartId">
+                                    {{part.partCode}} - {{part.partDescA}}
+                                </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -142,144 +241,158 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>طبيعة الصنف</mat-label>
-                                <mat-select>
-                                    <mat-option value="one">First option</mat-option>
-                                    <mat-option value="two">Second option</mat-option>
+                                <mat-select formControlName="itemType" >
+                                    <mat-option value="1">منتج تام</mat-option>
+                                    <mat-option value="2">خامه</mat-option>
+                                    <mat-option value="3">خدمه</mat-option>
+                                    <mat-option value="4">صنف تصنيع</mat-option>
+                                    <mat-option value="5">مركبه</mat-option>
+                                    <mat-option value="6">منتج نصف مصنع</mat-option>
+                                    <mat-option value="7">ثروه حيوانيه</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
 
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>جمله</mat-label>
+                                <input matInput formControlName="qtyInBox" type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تكلفه افتراضى</mat-label>
+                                <input matInput formControlName="purchasePrice" type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الكمية دفتريا</mat-label>
+                                <input matInput formControlName="qtyInNotebook" type="number">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الكمية الفعلية</mat-label>
+                                <input matInput formControlName="qtyPartiation" type="number">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>التكلفة / الفرع</mat-label>
+                                <input matInput formControlName="coastAverage" type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>محجوز للبيع</mat-label>
+                                <input matInput formControlName="coastAverage" type="number">
+                            </mat-form-field>
+                        </div>
+                        
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>تكلفة قبل الإخيره</mat-label>
+                                <input matInput formControlName="beforLastCost" type="number">
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>أخر سعر شراء</mat-label>
+                                <input matInput formControlName="lastCost" type="number">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>أخر سعر بيع</mat-label>
+                                <input matInput formControlName="lastSalePrice" type="number">
+                            </mat-form-field>
+                        </div>
+
+
+
+
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" formControlName="isCollection">صنف تجميع</mat-slide-toggle>
+
+                        </div>
+
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" formControlName="isAttributeItem">صنف ذو أبعاد</mat-slide-toggle>
+                        </div>
+
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" formControlName="isDimension">صنف ذو خصائص</mat-slide-toggle>
+                        </div>
+
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" formControlName="isSerialItem">أرقام مسلسلة</mat-slide-toggle>
+                        </div>
+
+                        <div></div>
+
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
                             <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">الوحده</label>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">التكلفة</label>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">الكمية دفتريا</label>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">الكمية الفعلية</label>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">التكلفة/الفرع</label>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">محجوز للبيع</label>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">تكلفة قبل الإخير</label>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">أخر سعر شراء</label>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">أخر سعر بيع</label>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="blue">صنف تجميع</mat-checkbox>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="blue">صنف ذو أبعاد</mat-checkbox>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="blue">صنف ذو خصائص</mat-checkbox>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="blue">أرقام مسلسلة</mat-checkbox>
-                        </div>
-
-                        <!-- 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-slide-toggle color="primary">ارقام مسلسه</mat-slide-toggle>
-
-                        </div> -->
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="date" class="form-control" placeholder="name@example.com">
+                                <input type="datetime-local" formControlName="lastPurchDate" class="form-control">
                                 <label for="floatingInput"> <i class="fas fa-clock"></i> تاريخ أخر شراء</label>
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating ang-maturial-select">
-                                <input type="date" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput"> <i class="fas fa-clock"></i> مده الضمان </label>
-                            </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>مده الضمان</mat-label>
+                                <input matInput type="number" formControlName="warantyPeriod">
+                            </mat-form-field>
+
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">حد الصنف</label>
-                            </div>
+                        
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>حد الطلب</mat-label>
+                                <input matInput type="number" formControlName="itemLimit">
+                            </mat-form-field>
+
+                        </div>
+                       
+
+                        
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>Prefix</mat-label>
+                                <input matInput type="text" formControlName="serialNoPrefix">
+                            </mat-form-field>
+
                         </div>
 
+                       
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="name@example.com">
-                                <label for="floatingInput">Prefix</label>
-                            </div>
+
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" formControlName="isExpir">تواريخ صلاحية</mat-slide-toggle>
                         </div>
 
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="blue">تواريخ صلاحية</mat-checkbox>
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" >استخدام الوحده المعادلة</mat-slide-toggle>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="blue">استخدام الوحده المعادلة</mat-checkbox>
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" >الوحده المعادلة اجباري</mat-slide-toggle>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="blue">الوحده المعادلة اجباري</mat-checkbox>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-checkbox color="blue">ايقاف بيع الصنف</mat-checkbox>
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" >ايقاف بيع الصنف</mat-slide-toggle>
                         </div>
 
 
@@ -294,30 +407,88 @@
                     </ng-template>
 
                     <div class="row p-3">
-
-                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <textarea class="form-control" style="height: 100px" placeholder="Leave a comment here"
-                                    id="floatingTextarea"></textarea>
-                                <label for="floatingTextarea">معلومه تظهر عند استخدام الصنف فى المستندات
-                                </label>
-                            </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>معلومه تظهر عند استخدام الصنف فى المستندات</mat-label>
+                                <input matInput formControlName="addField1" type="text">
+                            </mat-form-field>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top">
-                            <div class="form-floating">
-                                <textarea class="form-control" style="height: 100px" placeholder="Leave a comment here"
-                                    id="floatingTextarea"></textarea>
-                                <label for="floatingTextarea">الملاحظــات
-
-                                </label>
-                            </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 2</mat-label>
+                                <input matInput formControlName="addField2" type="text">
+                            </mat-form-field>
                         </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 3</mat-label>
+                                <input matInput formControlName="addField3" type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 4</mat-label>
+                                <input matInput formControlName="addField4" type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 5</mat-label>
+                                <input matInput formControlName="addField5" type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 6</mat-label>
+                                <input matInput formControlName="addField6" type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 7</mat-label>
+                                <input matInput formControlName="addField7" type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 8</mat-label>
+                                <input matInput formControlName="addField8" type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 9</mat-label>
+                                <input matInput formControlName="addField9" type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بيانات أضافية 10</mat-label>
+                                <input matInput formControlName="addField10" type="text">
+                            </mat-form-field>
+                        </div>
+
+                        <div></div>
+
+
+                        <mat-form-field class="col-lg-6 col-md-6 col-sm-12 mt-4" appearance="outline">
+                            <mat-label>ملاحظات</mat-label>
+                            <textarea matInput formControlName="remarks"></textarea>
+                        </mat-form-field>
                     </div>
 
                 </mat-tab>
 
-                <mat-tab>
+                <!-- <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-dollar-sign custom-icon"></i>
                         سياسات التسعير
@@ -429,24 +600,247 @@
 
                     </div>
 
-                </mat-tab>
-                <mat-tab>
+                </mat-tab> -->
+                <mat-tab label="وحدت و أسعار" >
                     <ng-template mat-tab-label>
                         <i class="fab fa-unity custom-icon"></i>
                         وحدت و أسعار
                     </ng-template>
 
                     <div class="row p-3">
-                        <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom" style="display: none;">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
-                                <mat-label>وحده القياس</mat-label>
-                                <mat-select>
-                                    <mat-option value="one">First option</mat-option>
-                                    <mat-option value="two">Second option</mat-option>
-                                </mat-select>
+                                <input matInput  type="number" formControlName="basUnitId"  >
                             </mat-form-field>
                         </div>
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>وحده القياس</mat-label>
+                                <input matInput type="text" formControlName="unitCode" [readonly]="itemUnitReadOnly" (dblclick)="OpenProdBasicUnits()">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <input matInput formControlName="unitNam"  type="text" [readonly]="itemUnitReadOnly" >
+                            </mat-form-field>
+                        </div>
+                        
                     </div>
+
+                   <div class="row p-3">
+                        <table style="margin-bottom: auto;" class="table table-hover mt-3" *ngIf="itemUnitsSub.length != 0">
+                            <thead>
+                              <tr>
+                                <th scope="col">وحده شراء أساسية</th>
+                                <th scope="col">وحده بيع أساسية</th>
+                                <th scope="col">لايمكن التقسيم</th>
+                                <th scope="col">كود الوحده</th>
+                                <th scope="col">اسم الوحده بالعربى</th>
+                                <th scope="col">اسم الوحده بالإنجليزى </th>
+                                <th scope="col">كود ضريبى</th>
+                                <th scope="col">معامل التحويل</th>
+                                <th scope="col">الرمز</th>
+                                <th scope="col">كميه 1</th>
+                                <th scope="col">سعر 1</th>
+                                <th scope="col">كميه 2</th>
+                                <th scope="col">سعر 2</th>
+                                <th scope="col">كميه 3</th>
+                                <th scope="col">سعر 3</th>
+                                <th scope="col">كميه 4</th>
+                                <th scope="col">سعر 4</th>
+                                <th scope="col">كميه 5</th>
+                                <th scope="col">سعر 5</th>
+                                <th scope="col">سعر 6</th>
+                                <th scope="col">سعر 7</th>
+                                <th scope="col">سعر 8</th>
+                                <th scope="col">سعر 9</th>
+                                <th scope="col">سعر 10</th>
+                                <th scope="col">باركود 1</th>
+                                <th scope="col">باركود 2</th>
+                                <th scope="col">باركود 3</th>
+                                <th scope="col">باركود 4</th>
+                                <th scope="col">باركود 5</th>
+                                <th scope="col">باركود 6</th>
+                                <th scope="col">باركود 7</th>
+                                <th scope="col">باركود 8</th>
+                                <th scope="col">باركود 9</th>
+                                <th scope="col">باركود 10</th>
+                                <th scope="col">باركود 11</th>
+                                <th scope="col">باركود 12</th>
+                                <th scope="col">باركود 13</th>
+                                <th scope="col">باركود 14</th>
+                                <th scope="col">باركود 15</th>
+                                <th scope="col">تعديل</th>
+                                <th scope="col">حذف</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let itemUnit of itemUnitsSub" >
+                                <th>
+                                    <p><mat-slide-toggle color="primary" [checked]="itemUnit?.isDefaultPurchas"></mat-slide-toggle></p>
+                                </th>
+                                <td>
+                                    <p><mat-slide-toggle color="primary" [checked]="itemUnit?.isDefaultSale"></mat-slide-toggle></p>
+                                </td>
+                                <td>
+                                    <p><mat-slide-toggle color="primary" [checked]="itemUnit?.cannotDevide"></mat-slide-toggle></p>
+                                </td>
+                                <td class="tableTd">{{itemUnit.unitCode}}</td>
+                                <td class="tableTd">{{itemUnit.unitNam}}</td>
+                                <td class="tableTd">{{itemUnit.unitNameE}}</td>
+                                <td class="tableTd">{{itemUnit?.etaxUnitCode}}</td>
+                                <td class="tableTd">{{itemUnit?.unittRate}}</td>
+                                <td class="tableTd">{{itemUnit?.symbol}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity1}}</td>
+                                <td class="tableTd">{{itemUnit?.price1}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity2}}</td>
+                                <td class="tableTd">{{itemUnit?.price2}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity3}}</td>
+                                <td class="tableTd">{{itemUnit?.price3}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity4}}</td>
+                                <td class="tableTd">{{itemUnit?.price4}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity5}}</td>
+                                <td class="tableTd">{{itemUnit?.price5}}</td>
+                                <td class="tableTd">{{itemUnit?.price6}}</td>
+                                <td class="tableTd">{{itemUnit?.price7}}</td>
+                                <td class="tableTd">{{itemUnit?.price8}}</td>
+                                <td class="tableTd">{{itemUnit?.price9}}</td>
+                                <td class="tableTd">{{itemUnit?.price10}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode1}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode2}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode3}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode4}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode5}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode6}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode7}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode8}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode9}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode10}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode11}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode12}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode13}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode14}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode15}}</td>
+
+                                <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                     (click)="updateItemUnit(itemUnit)"></i></td>
+
+                                <td><i class="fas fa-trash-alt" (click)="DeleteItemUnit(itemUnit.basUnitId)"
+                                    style="color: red;cursor: pointer;"></i></td>
+
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div> 
+
+                    <div class="row p-3">
+                        <table style="margin-bottom: auto;" class="table table-hover mt-3" *ngIf="itemUnits.length != 0">
+                            <thead>
+                              <tr>
+                                <th scope="col">وحده شراء أساسية</th>
+                                <th scope="col">وحده بيع أساسية</th>
+                                <th scope="col">لايمكن التقسيم</th>
+                                <th scope="col">كود الوحده</th>
+                                <th scope="col">اسم الوحده بالعربى</th>
+                                <th scope="col">اسم الوحده بالإنجليزى </th>
+                                <th scope="col">كود ضريبى</th>
+                                <th scope="col">معامل التحويل</th>
+                                <th scope="col">الرمز</th>
+                                <th scope="col">كميه 1</th>
+                                <th scope="col">سعر 1</th>
+                                <th scope="col">كميه 2</th>
+                                <th scope="col">سعر 2</th>
+                                <th scope="col">كميه 3</th>
+                                <th scope="col">سعر 3</th>
+                                <th scope="col">كميه 4</th>
+                                <th scope="col">سعر 4</th>
+                                <th scope="col">كميه 5</th>
+                                <th scope="col">سعر 5</th>
+                                <th scope="col">سعر 6</th>
+                                <th scope="col">سعر 7</th>
+                                <th scope="col">سعر 8</th>
+                                <th scope="col">سعر 9</th>
+                                <th scope="col">سعر 10</th>
+                                <th scope="col">باركود 1</th>
+                                <th scope="col">باركود 2</th>
+                                <th scope="col">باركود 3</th>
+                                <th scope="col">باركود 4</th>
+                                <th scope="col">باركود 5</th>
+                                <th scope="col">باركود 6</th>
+                                <th scope="col">باركود 7</th>
+                                <th scope="col">باركود 8</th>
+                                <th scope="col">باركود 9</th>
+                                <th scope="col">باركود 10</th>
+                                <th scope="col">باركود 11</th>
+                                <th scope="col">باركود 12</th>
+                                <th scope="col">باركود 13</th>
+                                <th scope="col">باركود 14</th>
+                                <th scope="col">باركود 15</th>
+                                <th scope="col">تعديل</th>
+                                <th scope="col">حذف</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let itemUnit of itemUnits" >
+                                <th>
+                                    <p><mat-slide-toggle color="primary" [checked]="itemUnit?.isDefaultPurchas"></mat-slide-toggle></p>
+                                </th>
+                                <td>
+                                    <p><mat-slide-toggle color="primary" [checked]="itemUnit?.isDefaultSale"></mat-slide-toggle></p>
+                                </td>
+                                <td>
+                                    <p><mat-slide-toggle color="primary" [checked]="itemUnit?.cannotDevide"></mat-slide-toggle></p>
+                                </td>
+                                <td class="tableTd">{{itemUnit.unitCode}}</td>
+                                <td class="tableTd">{{itemUnit.unitNam}}</td>
+                                <td class="tableTd">{{itemUnit.unitNameE}}</td>
+                                <td class="tableTd">{{itemUnit?.etaxUnitCode}}</td>
+                                <td class="tableTd">{{itemUnit?.unittRate}}</td>
+                                <td class="tableTd">{{itemUnit?.symbol}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity1}}</td>
+                                <td class="tableTd">{{itemUnit?.price1}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity2}}</td>
+                                <td class="tableTd">{{itemUnit?.price2}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity3}}</td>
+                                <td class="tableTd">{{itemUnit?.price3}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity4}}</td>
+                                <td class="tableTd">{{itemUnit?.price4}}</td>
+                                <td class="tableTd">{{itemUnit?.quantity5}}</td>
+                                <td class="tableTd">{{itemUnit?.price5}}</td>
+                                <td class="tableTd">{{itemUnit?.price6}}</td>
+                                <td class="tableTd">{{itemUnit?.price7}}</td>
+                                <td class="tableTd">{{itemUnit?.price8}}</td>
+                                <td class="tableTd">{{itemUnit?.price9}}</td>
+                                <td class="tableTd">{{itemUnit?.price10}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode1}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode2}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode3}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode4}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode5}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode6}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode7}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode8}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode9}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode10}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode11}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode12}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode13}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode14}}</td>
+                                <td class="tableTd">{{itemUnit?.barCode15}}</td>
+
+                                <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                     (click)="updateItemUnitFromDataBase(itemUnit)"></i></td>
+
+                                <td><i class="fas fa-trash-alt" (click)="deleteItemUnitFromDataBase(itemUnit.unitId)"
+                                    style="color: red;cursor: pointer;"></i></td>
+
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div> 
+
                 </mat-tab>
 
 
@@ -482,8 +876,8 @@
 
                         </div>
 
-                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top">
-
+                        <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top" >
+                            <img *ngIf="imageName"  [src]="imagePath +imageName" alt="Selected Image" style="width: 100%;" class="img-fluid">
                         </div>
 
 
@@ -498,34 +892,122 @@
 
                 </mat-tab>
 
-                <mat-tab>
+                <!-- <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-sync-alt custom-icon"></i>
                         بدائل الصنف
                     </ng-template>
                     Content 3
-                </mat-tab>
+                </mat-tab> -->
 
 
-                <mat-tab>
+                <mat-tab label="صنف مجمع" >
                     <ng-template mat-tab-label>
                         <i class="fas fa-sitemap custom-icon"></i>
                         صنف مجمع
                     </ng-template>
-                    Content 3
+                    <div class="row p-3">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <button mat-fab extended color="primary" type="button" (click)="OpenItemCollectionList()" >
+                               اختر الاصناف المجمعه
+                              </button>
+                              <div class="row p-3">
+                                <table style="margin-bottom: auto;" class="table table-hover mt-3" *ngIf="itemCollectionFromDataBase.length != 0">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">الكود</th>
+                                        <th scope="col">الإسم بالعربى</th>
+                                        <th scope="col">الإسم بالإنجليزى</th>
+                                        <th scope="col">اسم الوحده</th>
+                                        <th scope="col">طبيعة الصنف</th>
+                                        <th scope="col">حذف</th>
+                                    
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let itemCollection of itemCollectionFromDataBase" >
+                                      
+                                        <td class="tableTdForCollection">{{itemCollection.itemCode}}</td>
+                                        <td class="tableTdForCollection">{{itemCollection.itemDescA}}</td>
+                                        <td class="tableTdForCollection">{{itemCollection.itemDescE}}</td>
+                                        <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
+                                        <td class="tableTdForCollection">
+                                         <ng-container *ngIf="itemCollection.itemType === 1">منتج تام</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 2">خامه</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 3">خدمه</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 4">صنف تصنيع</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 5">مركبه</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 6">منتج نصف مصنع</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 7">ثروه حيوانيه</ng-container>
+                                        </td>
+                                        
+                                      
+        
+                                        <td><i class="fas fa-trash-alt" (click)="DeleteItemCollectionFromDataBase(itemCollection.itemCollectId)"
+                                            style="color: red;cursor: pointer;"></i></td>
+        
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                            </div> 
+
+
+                              <div class="row p-3" *ngIf="itemCollections.length != 0">
+                                <table style="margin-bottom: auto;" class="table table-hover mt-3">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">الكود</th>
+                                        <th scope="col">الإسم بالعربى</th>
+                                        <th scope="col">الإسم بالإنجليزى</th>
+                                        <th scope="col">اسم الوحده</th>
+                                        <th scope="col">طبيعة الصنف</th>
+                                        <th scope="col">حذف</th>
+                                    
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let itemCollection of itemCollections" >
+                                      
+                                        <td class="tableTdForCollection">{{itemCollection.itemCode}}</td>
+                                        <td class="tableTdForCollection">{{itemCollection.itemDescA}}</td>
+                                        <td class="tableTdForCollection">{{itemCollection.itemDescE}}</td>
+                                        <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
+                                        <td class="tableTdForCollection">
+                                         <ng-container *ngIf="itemCollection.itemType === 1">منتج تام</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 2">خامه</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 3">خدمه</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 4">صنف تصنيع</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 5">مركبه</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 6">منتج نصف مصنع</ng-container>
+                                         <ng-container *ngIf="itemCollection.itemType === 7">ثروه حيوانيه</ng-container>
+                                        </td>
+                                        
+                                      
+        
+                                        <td><i class="fas fa-trash-alt" (click)="DeleteItemCollection(itemCollection.itemCardId)"
+                                            style="color: red;cursor: pointer;"></i></td>
+        
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                            </div> 
+                        </div>
+                    </div>
 
                 </mat-tab>
 
 
-                <mat-tab>
+                <!-- <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-question-circle custom-icon"></i>
                         خصائص الصنف
                     </ng-template>
                     Content 3
 
-                </mat-tab>
-                <mat-tab>
+                </mat-tab> -->
+
+
+                <!-- <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-gift custom-icon"></i>
                         عروض
@@ -540,10 +1022,10 @@
                         مصروفات التصنيع
                     </ng-template>
                     Content 3
-                </mat-tab>
+                </mat-tab> -->
 
 
-                <mat-tab>
+                <!-- <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-users custom-icon"></i>
                         الموردين
@@ -556,7 +1038,7 @@
 
                         </div>
                     </div>
-                </mat-tab>
+                </mat-tab> -->
             </mat-tab-group>
         </form>
     </div>
@@ -581,9 +1063,58 @@
                 </ng-container>
 
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef class="table-header-font-size"> الإسم </th>
+                    <th mat-header-cell *matHeaderCellDef class="table-header-font-size">الإسم بالعربى</th>
                     <td mat-cell *matCellDef="let element"> {{element.itemDescA}} </td>
                 </ng-container>
+
+                <ng-container matColumnDef="nameEn">
+                    <th mat-header-cell *matHeaderCellDef class="table-header-font-size">الإسم بالإنجليزى</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <ng-container *ngIf="element.itemDescE else noData">
+                            {{element.itemDescE}} 
+                        </ng-container>
+                        <ng-template #noData>
+                            لايوجد أسم بالإنجليزى 
+                        </ng-template>
+                    </td>
+                </ng-container>
+                           
+                <ng-container matColumnDef="isExpir">
+                    <th mat-header-cell *matHeaderCellDef class="table-header-font-size">تواريخ صلاحية</th>
+                    <td mat-cell *matCellDef="let element">
+                        <p><mat-slide-toggle color="primary" [checked]="element.isExpir"></mat-slide-toggle></p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="isDimension">
+                    <th mat-header-cell *matHeaderCellDef class="table-header-font-size">صنف ذو خصائص</th>
+                    <td mat-cell *matCellDef="let element">
+                        <p><mat-slide-toggle color="primary" [checked]="element.isDimension"></mat-slide-toggle></p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="isAttributeItem">
+                    <th mat-header-cell *matHeaderCellDef class="table-header-font-size">صنف ذو أبعاد</th>
+                    <td mat-cell *matCellDef="let element">
+                        <p><mat-slide-toggle color="primary" [checked]="element.isAttributeItem"></mat-slide-toggle></p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="isCollection">
+                    <th mat-header-cell *matHeaderCellDef class="table-header-font-size">صنف تجميع</th>
+                    <td mat-cell *matCellDef="let element">
+                        <p><mat-slide-toggle color="primary" [checked]="element.isCollection"></mat-slide-toggle></p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="isSerialItem">
+                    <th mat-header-cell *matHeaderCellDef class="table-header-font-size">أرقام مسلسلة</th>
+                    <td mat-cell *matCellDef="let element">
+                        <p><mat-slide-toggle color="primary" [checked]="element.isSerialItem"></mat-slide-toggle></p>
+                    </td>
+                </ng-container>
+
+              
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>

@@ -6,13 +6,15 @@ import { AllComponent } from './all/all.component';
 import { AccountsGuideComponent } from './accounts-guide/accounts-guide.component';
 import { ImportModule } from '../import/import.module';
 import { CostCenterComponent } from './cost-center/cost-center.component';
+import { SysAnalyticalCodeComponent } from './sys-analytical-code/sys-analytical-code.component';
 
 
 @NgModule({
   declarations: [
     AllComponent,
     AccountsGuideComponent,
-    CostCenterComponent
+    CostCenterComponent,
+    SysAnalyticalCodeComponent
   ],
   imports: [
     CommonModule,

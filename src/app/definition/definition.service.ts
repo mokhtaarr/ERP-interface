@@ -25,19 +25,130 @@ export class DefinitionService {
     return this.http.get<Items[]>(environment.apiUrl + 'Items');
   }
 
-  addItem(formData: any) {
+  GetAllItemForItemCollections(){
+    return this.http.get<any>(environment.apiUrl+'Items/GetAllItemForItemCollections')
+   }
+
+  getAllProdBasicUnits() {
+    return this.http.get<any>(environment.apiUrl + 'Items/GetAllProdBsicUnits')
+  }
+
+  AddItemWitImage(formData: any) {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
+    return this.http.post<Items>(environment.apiUrl + 'Items/AddItemWitImage', formData, { headers });
+     
+  }
 
-    return this.http
-      .post<Items>(environment.apiUrl + 'Items/AddItem', formData, { headers })
-      .pipe(
-        map(() => this.toastr.success('تم إضافة المنتج بنجاح')),
-        catchError(() => {
-          this.toastr.error('حدث خطأ أثناء إضافة المنتج');
-          return EMPTY;
-        })
-      );
+  AddMsItemCard(values: any) {
+    return this.http.post<any>(environment.apiUrl+'Items/AddMsItemCard',values).pipe(map((res)=>{
+      var message = res.message;
+      var messageEn = res.messageEn;
+  
+      if (res.status == true) this.toastr.success(message);
+  
+      if (res.status == false) this.toastr.error(message);
+  
+      return res;
+    })) 
+  }
+
+GetItemUnit(itemCardId : any){
+  return this.http.get<any>(`${environment.apiUrl}Items/GetAllItemUnit?itemCardId=${itemCardId}`)
+}
+
+GetBasicItemUnit(basUnitId : any){
+  return this.http.get<any>(`${environment.apiUrl}Items/GetBasicItemUnit?basUnitId=${basUnitId}`)
+}
+
+GetItemUnitSub(basUnitId : any){
+  return this.http.get<any>(`${environment.apiUrl}Items/GetAllProdBsicUnitsSub?basUnitId=${basUnitId}`)
+}
+
+
+AddItemUnit(values:any){
+  return this.http.post<any>(environment.apiUrl+'Items/AddItemUnit',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+UpdateItemUnit(values:any){
+  return this.http.post<any>(environment.apiUrl+'Items/UpdateItemUnit',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+
+DeleteItemUnit(unitId: number) {
+  return this.http
+    .delete<any>(`${environment.apiUrl}Items/DeleteItemUnit?unitId=${unitId}`)
+    .pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) {
+          this.toastr.success(message);
+        }
+
+        if (res.status == false) this.toastr.error(message);
+
+        return res;
+      })
+    );
+}
+
+GetItemImage(itemCardId:any){
+  return this.http.get<any>(`${environment.apiUrl}Items/GetProductImage?itemCardId=${itemCardId}`)
+}
+
+GetItemCollections(itemCardId : any){
+  return this.http.get<any>(`${environment.apiUrl}Items/GetItemCollection?itemCardId=${itemCardId}`)
+}
+
+DeleteItemCollection(itemCollectId: number) {
+  return this.http
+    .delete<any>(`${environment.apiUrl}Items/DeleteItemCollection?itemCollectId=${itemCollectId}`)
+    .pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) {
+          this.toastr.success(message);
+        }
+
+        if (res.status == false) this.toastr.error(message);
+
+        return res;
+      })
+    );
+}
+
+  GetAllItemCategories(){
+    return this.http.get<any>(environment.apiUrl +'Items/GetAllItemCategory')
+  }
+
+  GetAllPartitions(){
+    return this.http.get<any>(environment.apiUrl +'Items/GetAllPartition')
   }
 
   // Branches Servies
