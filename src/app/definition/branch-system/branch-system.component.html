@@ -11,67 +11,70 @@
 
           <div class="example-button-container">
             <button type="button" (click)="getLastBranch()" [disabled]="lastRow" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-step-backward"></i>
-            </button>
-          </div>
-    
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab  (click)="getPrevBranch()" [disabled]="Disable_Left_button" color="primary" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-caret-left"></i>
+              <i class="fas fa-step-backward">  الاخير </i>
             </button>
           </div>
     
           <div class="example-button-container">
             <button type="button" mat-mini-fab    (click)="getNextBranch()" [disabled]="Disable_right_button"  color="primary" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-caret-right"></i>
+              <i class="fas fa-caret-left">  التالى </i>
+            </button>
+          </div>
+
+          <div class="example-button-container">
+            <button type="button" mat-mini-fab  (click)="getPrevBranch()" [disabled]="Disable_Left_button" color="primary" aria-label="Example icon button with a menu icon">
+              <i class="fas fa-caret-right">  السابق  </i>
             </button>
           </div>
     
+         
+    
           <div class="example-button-container">
             <button type="button" (click)="getFirstBranch()" [disabled]="firstRow" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-step-forward"></i>
+              <i class="fas fa-step-forward">  الأول  </i>
             </button>
           </div>
     
           <div class="example-button-container">
             <button type="button" mat-mini-fab color="primary"  (click)="getAllBranches()"
               [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-sync"></i>
+              <i class="fas fa-sync">  أعاده تهيئة  </i>
             </button>
           </div>
 
           <div class="example-button-container" >
             <button  mat-mini-fab color="primary" [disabled]="branchForm.invalid || SaveDisable"  type="submit">
-              <i class="fas fa-save"></i>
+              <i class="fas fa-save">  حفظ  </i>
             </button>
           </div>
     
     
           <div class="example-button-container">
             <button type="button" (click)="Open_delete_confirm()" [disabled]="branchForm.invalid || DeleteDisable" mat-mini-fab  color="warn" >
-              <i class="fas fa-trash-alt"></i>
+              <i class="fas fa-trash-alt">  حذف  </i>
             </button>
           </div>
 
           <div class="example-button-container">
             <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
               aria-label="Example icon button with a menu icon">
-              <i class="fas fa-undo"></i>
+              <i class="fas fa-undo">  تراجع  </i>
             </button>
           </div>
 
           <div class="example-button-container" >
-            <button type="button" mat-mini-fab [disabled]="branchForm.invalid || EditDisable" (click)="updateBranch()" color="primary" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-edit"></i>
+            <button type="button"  mat-mini-fab [disabled]="branchForm.invalid || EditDisable" (click)="updateBranch()" color="primary" aria-label="Example icon button with a menu icon">
+              <i class="fas fa-edit">  تعديل  </i>
             </button>
           </div>
     
           <div class="example-button-container" matTooltip="Warn">
-            <button type="button" mat-mini-fab   color="primary" (click)="New()" >
-              <i class="fas fa-plus"></i>
+            <button  type="button" mat-mini-fab   color="primary" (click)="New()" >
+                <i class="fas fa-plus" > جديد </i> 
             </button>
           </div>
-    
+
+          
         </div>
       </div>
 
@@ -99,6 +102,8 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+
+              
             </div>
 
 
@@ -169,6 +174,10 @@
 
               </div>
 
+              <div style="text-align: right;">
+                <button mat-raised-button color="primary" type="button" (click)="open_AddPartition_Popup()" style="margin: 1%;"> (+)  أضافة مخزن  </button>
+              </div>
+
             </div>
 
 
@@ -181,9 +190,7 @@
 
   <mat-card style="margin-bottom: 100px;width: 100%;"  *ngIf="AllPartition.length != 0" >
 
-    <div style="text-align: right;">
-      <button mat-raised-button color="primary" (click)="open_AddPartition_Popup()" style="margin: 1%;">إضافة مخزن (+)</button>
-    </div>
+    
     
     <mat-card-header class="justify-content-center">
       <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">

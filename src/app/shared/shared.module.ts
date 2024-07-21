@@ -25,8 +25,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CommonModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true
+      preventDuplicates: false,
+      closeButton:true,
+      progressBar:true,
+      progressAnimation:'decreasing'
+      
     }),
+
     TranslateModule.forRoot({
       defaultLanguage: 'ar',
       loader: {

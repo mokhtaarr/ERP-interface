@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DefinitionService } from '../definition.service';
 import { Items } from 'src/app/shared/models/items';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddItemUnitComponent } from '../add-item-unit/add-item-unit.component';
 import { ProdBasicUnitsComponent } from '../prod-basic-units/prod-basic-units.component';
@@ -14,6 +14,11 @@ import { ToastrService } from 'ngx-toastr';
 import { GetItemCollectionsComponent } from '../get-item-collections/get-item-collections.component';
 import { UpdateItemUnitComponent } from '../update-item-unit/update-item-unit.component';
 import { environment } from 'src/environments/environment.prod';
+import { ItemPartitionWithHisStoreComponent } from '../item-partition-with-his-store/item-partition-with-his-store.component';
+import { UpdateItemCollectionComponent } from '../update-item-collection/update-item-collection.component';
+import { UpdateItemCollectionFromDataBaseComponent } from '../update-item-collection-from-data-base/update-item-collection-from-data-base.component';
+import { UpdateItemAlternativeComponent } from '../update-item-alternative/update-item-alternative.component';
+import { UpdateItemAlternativeFromDatabaseComponent } from '../update-item-alternative-from-database/update-item-alternative-from-database.component';
 
 
 @Component({
@@ -60,15 +65,24 @@ export class ItemsComponent implements OnInit {
   AllPartitions : any[] = [];
   itemUnits : any[] = [];
   ItemsInListNull : any;
+  ItemsPartitions : any;
+  ItemAlternativesSendData : any;
 
-  itemCollections:any[] = [];
+  itemCollections : any[] = [];
+  itemAlternatives : any[] = [];
+  itemPartitionWithStores : any[] = [];
   imagePath = environment.ImageUrl;
   imageName:any;
   itemCollectionFromDataBase : any[] = [];
+  itemDefaultPartitionsFromDataBase : any[] = [];
+  itemAlternativesFromDataBase : any[] = []; 
   
+  itemIsCollection : boolean = true;
 
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
+  @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup;
+
 
 
   constructor(private definitionService:DefinitionService,private fb:FormBuilder,private dialog: MatDialog,
@@ -118,7 +132,7 @@ export class ItemsComponent implements OnInit {
     lastSalePrice:[],
     lastPurchDate:[],
     warantyPeriod:[],
-    isCollection:[],
+    isCollection:[false],
     isAttributeItem:[],
     isDimension:[],
     isSerialItem:[],
@@ -135,7 +149,7 @@ export class ItemsComponent implements OnInit {
     addField9:[''],
     addField10:[''],
     remarks:[''],
-    basUnitId:[],
+    basUnitId:[,Validators.required],
     unitCode:[''],
     unitNam:[''],
     itemCollections:[[]],
@@ -143,7 +157,9 @@ export class ItemsComponent implements OnInit {
     unitNameE:[''],
     etaxUnitCode:[''],
     cannotDevide:[''],
-    symbol:['']
+    symbol:[''],
+    itemPartition:[[]],
+    itemAlternatives:[[]],
   })
 
 
@@ -178,37 +194,53 @@ export class ItemsComponent implements OnInit {
   }
 
   onSumbit(){
-    this.ItemsInListNull = this.itemUnitsSub
-    this.itemCollectionsData = this.itemCollections;
-
-    if(this.ItemsInListNull != null){
-      this.itemForm.get("list")!.setValue(this.ItemsInListNull) 
-    }
-
-    if(this.itemCollectionsData != null){
-      this.itemForm.get("itemCollections")!.setValue(this.itemCollectionsData)
-    }
-    
-     this.definitionService.AddMsItemCard(this.itemForm.value).subscribe(res=>{
-      if(res.status){
-        this.itemForm.disable();
-        this.loadItems();
-        this.itemForm.get('ItemCardId')?.setValue(res.id)
-        this.AddItemWitImage();
-        this.DisabledNextButton = false;
-        this.DisabledPrevButton = false;
-        this.lastRow = false;
-        this.firstRow = false;
-        this.SaveDisable=true;
-        this.UpdateDisable = false;
-        this.UndoDisabled = true;
-        this.DeleteDisable=false;
-        this.itemUnitsSub.splice(0, this.itemUnitsSub.length);
-        this.itemCollections.splice(0, this.itemCollections.length);
-
+      this.ItemsInListNull = this.itemUnitsSub
+      this.itemCollectionsData = this.itemCollections;
+      this.ItemsPartitions = this.itemPartitionWithStores;
+      this.ItemAlternativesSendData = this.itemAlternatives;
+  
+      if(this.ItemsInListNull != null){
+        this.itemForm.get("list")!.setValue(this.ItemsInListNull) 
       }
-   })
+  
+      if(this.itemCollectionsData != null){
+        this.itemForm.get("itemCollections")!.setValue(this.itemCollectionsData)
+      }
+  
+      if(this.ItemsPartitions != null){
+        this.itemForm.get("itemPartition")!.setValue(this.ItemsPartitions)
+      }
+  
+      if(this.ItemAlternativesSendData != null){
+        this.itemForm.get("itemAlternatives")!.setValue(this.ItemAlternativesSendData)
+      }
+      
+       this.definitionService.AddMsItemCard(this.itemForm.value).subscribe(res=>{
+        if(res.status){
+          this.itemForm.disable();
+          this.loadItems();
+          this.itemForm.get('ItemCardId')?.setValue(res.id)
+          this.AddItemWitImage();
+          this.DisabledNextButton = false;
+          this.DisabledPrevButton = false;
+          this.lastRow = false;
+          this.firstRow = false;
+          this.SaveDisable=true;
+          this.UpdateDisable = false;
+          this.UndoDisabled = true;
+          this.DeleteDisable=false;
+          this.itemUnitsSub.splice(0, this.itemUnitsSub.length);
+          this.itemCollections.splice(0, this.itemCollections.length);
+          this.itemAlternatives.splice(0,this.itemAlternatives.length);
+          this.itemPartitionWithStores.splice(0,this.itemPartitionWithStores.length);
+          
+          this.tabGroup.selectedIndex = 0;
+  
+        }
+     })
+  
   }
+  
 
 
   Filterchange(data: Event) {
@@ -267,7 +299,9 @@ export class ItemsComponent implements OnInit {
       unitNameE: null,
       etaxUnitCode: null,
       cannotDevide: null,
-      symbol: null
+      symbol: null,
+      itemPartition: null,
+      itemAlternatives: null
     });
     this.itemUnitReadOnly = true;
     this.UpdateDisable = false;
@@ -332,7 +366,9 @@ export class ItemsComponent implements OnInit {
       unitNameE: null,
       etaxUnitCode: null,
       cannotDevide: null,
-      symbol: null
+      symbol: null,
+      itemPartition: null,
+      itemAlternatives: null
     })  
 
     this.firstRow = true;
@@ -396,7 +432,9 @@ export class ItemsComponent implements OnInit {
       unitNameE: null,
       etaxUnitCode: null,
       cannotDevide: null,
-      symbol: null
+      symbol: null,
+      itemPartition: null,
+      itemAlternatives: null
     })  
 
     this.firstRow = false;
@@ -462,7 +500,9 @@ export class ItemsComponent implements OnInit {
         unitNameE: null,
         etaxUnitCode: null,
         cannotDevide: null,
-        symbol: null
+        symbol: null,
+        itemPartition: null,
+        itemAlternatives: null
       })    
 
  
@@ -534,7 +574,9 @@ getPrevRowData() {
       unitNameE: null,
       etaxUnitCode: null,
       cannotDevide: null,
-      symbol: null
+      symbol: null,
+      itemPartition: null,
+      itemAlternatives: null
     })     
 
     
@@ -554,7 +596,75 @@ getPrevRowData() {
 }
 
 Open_delete_confirm(){
-
+  var _popup = this.dialog.open(DeleteConfirmComponent, {
+    width: '30%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if (response) {
+     this.definitionService.DeleteItem(this.itemForm.value.ItemCardId).subscribe(res=>{
+      if(res.status){
+        this.loadItems();
+        this.itemForm.setValue({
+          ItemCardId: null,
+          list: null,
+          ItemCode: null,
+          itemDescA: null,
+          itemDescE: null,
+          ImgDesc1: null,
+          ImgDesc2: null,
+          Image: null,
+          taxItemCode: null,
+          storePartId: null,
+          itemCategoryId: null,
+          itemType: null,
+          itemLimit: null,
+          qtyInBox: null,
+          purchasePrice: null,
+          qtyInNotebook: null,
+          qtyPartiation: null,
+          coastAverage: null,
+          beforLastCost: null,
+          lastCost: null,
+          lastSalePrice: null,
+          lastPurchDate: null,
+          warantyPeriod: null,
+          isCollection: null,
+          isAttributeItem: null,
+          isDimension: null,
+          isSerialItem: null,
+          serialNoPrefix: null,
+          isExpir: null,
+          addField1: null,
+          addField2: null,
+          addField3: null,
+          addField4: null,
+          addField5: null,
+          addField6: null,
+          addField7: null,
+          addField8: null,
+          addField9: null,
+          addField10: null,
+          remarks: null,
+          basUnitId: undefined,
+          unitCode: null,
+          unitNam: null,
+          itemCollections: null,
+          unittRate: null,
+          unitNameE: null,
+          etaxUnitCode: null,
+          cannotDevide: null,
+          symbol: null,
+          itemPartition: null,
+          itemAlternatives: null
+        });
+        this.DeleteDisable = true;
+        this.UpdateDisable = true;
+      }
+     })
+    }
+  });
 }
 
 undo(){
@@ -613,7 +723,9 @@ undo(){
           unitNameE: null,
           etaxUnitCode: null,
           cannotDevide: null,
-          symbol: null
+          symbol: null,
+          itemPartition: null,
+          itemAlternatives: null
         })
       
       this.UpdateDisable = false;
@@ -704,7 +816,9 @@ New(){
     unitNameE: null,
     etaxUnitCode: null,
     cannotDevide: null,
-    symbol: null
+    symbol: null,
+    itemPartition: null,
+    itemAlternatives: null
   })
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
@@ -717,6 +831,17 @@ New(){
   this.DeleteDisable = true;
   this.UndoDisabled = false;
   this.itemUnitReadOnly = false; 
+
+  this.itemPartitionWithStores = [];
+  this.itemDefaultPartitionsFromDataBase =[];
+  this.itemAlternatives = [];
+  this.itemAlternativesFromDataBase = [];
+  this.itemCollections = [];
+  this.itemCollectionFromDataBase = [];
+  this.selectedImage ='';
+  this.imageName = '';
+  this.itemUnits = [];
+  this.itemUnitsSub = [];
   
 }
 
@@ -744,12 +869,62 @@ onTabChanged(event: MatTabChangeEvent) {
 
   if (event.tab.textLabel === 'صنف مجمع') {
     this.GetItemCollectionFromDataBase();
+    this.ItemIsCollection()
   }
- 
+
+  if (event.tab.textLabel === 'مخازن أساسية') {
+    this.GetItemDefaultPartitionsDataBase();
+  }
+
+  if (event.tab.textLabel === 'بدائل الصنف'){
+    this.GetItemAlternativesFromDataBase();
+  }
+  
 }
 
-GetItemCollection(){
+GetItemPartitionWithHisStore(){
+  var _popup = this.dialog.open(ItemPartitionWithHisStoreComponent, {
+    width: '80%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'اختر',
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+      for (let i = 0; i < response.length; i++) {
+        let item = response[i];
+        let exists = this.itemPartitionWithStores.some(existingItem => existingItem.storePartId === item.storePartId);
+        let existsInDataBase;
 
+        if(this.itemDefaultPartitionsFromDataBase.length != 0){
+          existsInDataBase = this.itemDefaultPartitionsFromDataBase.some(i=>i.storePartId === item.storePartId)
+        }
+
+        if (!exists && !existsInDataBase) {
+          this.itemPartitionWithStores.push(item);
+        }else{
+          this.toastr.info(`هذا المخزن  (${item.partDescA})  موجود من قبل`)
+        }
+      }
+    }
+  });
+}
+
+DeleteItemParttion(itemToDelete:any){
+  var _popup = this.dialog.open(DeleteConfirmComponent, {
+    width: '30%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if (response) {
+      this.itemPartitionWithStores = this.itemPartitionWithStores.filter(item => item !== itemToDelete);
+      this.toastr.success("تم المسح بنجاح");
+
+    }
+  });
 }
 
 GetProductImage(){
@@ -828,6 +1003,46 @@ updateItemUnit(itemUnit:any){
   });
 }
 
+
+
+updateItemCollection(itemCollection:any){
+  var _popup = this.dialog.open(UpdateItemCollectionComponent, {
+    width: '90%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'تعديل صنف مجمع',
+      itemCollectionData : itemCollection,
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+        this.itemCollections = this.itemCollections.filter(item => item.itemCardId !== itemCollection.itemCardId);
+        this.itemCollections.push(response);
+        this.toastr.success("تم التعديل بنجاح")
+
+    }
+  });
+}
+
+updateItemCollectionFromDataBase(itemCollection:any){
+  var _popup = this.dialog.open(UpdateItemCollectionFromDataBaseComponent, {
+    width: '90%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'تعديل صنف مجمع',
+      itemCollectionData : itemCollection,
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+     this.GetItemCollectionFromDataBase();
+    }
+  });
+}
+
+
 DeleteItemUnit(basUnitId : any){
   var _popup = this.dialog.open(DeleteConfirmComponent, {
     width: '30%',
@@ -841,6 +1056,45 @@ DeleteItemUnit(basUnitId : any){
     }
   });
 }
+
+updateItemAlternative(itemAlter:any){
+  var _popup = this.dialog.open(UpdateItemAlternativeComponent, {
+    width: '90%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'تعديل صنف بديل',
+      itemAlterData : itemAlter,
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+        this.itemAlternatives = this.itemAlternatives.filter(item => item.itemCardId !== itemAlter.itemCardId);
+        this.itemAlternatives.push(response);
+        this.toastr.success("تم التعديل بنجاح")
+
+    }
+  });
+}
+
+updateItemAlterFromDataBase(itemAlternative:any){
+  console.log('beforePop up',itemAlternative)
+  var _popup = this.dialog.open(UpdateItemAlternativeFromDatabaseComponent, {
+    width: '90%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'تعديل صنف بديل',
+      itemAlterData : itemAlternative,
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+     this.GetItemAlternativesFromDataBase();
+    }
+  });
+}
+
 
 OpenProdBasicUnits(){
   var _popup = this.dialog.open(ProdBasicUnitsComponent, {
@@ -883,8 +1137,24 @@ OpenItemCollectionList(){
     },
   });
   _popup.afterClosed().subscribe((response) => {
-    if(response){
-    this.itemCollections = response
+      if (response) {
+        for (let i = 0; i < response.length; i++) {
+          let item = response[i];
+          let exists = this.itemCollections.some(existingItem => existingItem.itemCardId === item.itemCardId);
+          let existsInDataBase;
+
+          if(this.itemCollectionFromDataBase.length != 0){
+            existsInDataBase = this.itemCollectionFromDataBase.some(i=>i.subItemId === item.itemCardId)
+          }
+          
+          if (!exists && !existsInDataBase) {
+            
+            this.itemCollections.push(item);
+
+          }else{
+            this.toastr.info(`هذا الصنف ${item.itemDescA} موجود من قبل`)
+          }
+        }
     }
   });
 }
@@ -902,6 +1172,56 @@ DeleteItemCollection(itemCardId:any){
     }
   });
 }
+
+
+openItemAlternatives(){
+  var _popup = this.dialog.open(GetItemCollectionsComponent, {
+    width: '80%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'بدائل الإصناف',
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+      for (let i = 0; i < response.length; i++) {
+        let item = response[i];
+        let exists = this.itemAlternatives.some(existingItem => existingItem.itemCardId === item.itemCardId);
+        
+        let existsInDataBase;
+
+        if(this.itemAlternativesFromDataBase.length != 0){
+          existsInDataBase = this.itemAlternativesFromDataBase.some(i=>i.alterItemCardId === item.itemCardId)
+        }
+
+        if (!exists && !existsInDataBase) {
+          this.itemAlternatives.push(item);
+        }else{
+          this.toastr.info(`هذا الصنف ${item.itemDescA} موجود من قبل`)
+        }
+      }
+    }
+  });
+}
+
+DeleteItemAlternative(itemAlternative : any){
+  var _popup = this.dialog.open(DeleteConfirmComponent, {
+    width: '30%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if (response) {
+      this.itemAlternatives = this.itemAlternatives.filter(item => item !== itemAlternative);
+      this.toastr.success("تم المسح بنجاح");
+    }
+  });
+
+}
+
+
+
 
 updateItemUnitFromDataBase(itemUnit:any){
   var _popup = this.dialog.open(UpdateItemUnitComponent, {
@@ -944,6 +1264,24 @@ GetItemCollectionFromDataBase(){
  }
 }
 
+
+GetItemAlternativesFromDataBase(){
+  if(this.itemForm.value.ItemCardId){
+   this.definitionService.GetItemAlternatives(this.itemForm.value.ItemCardId).subscribe(res=>{
+     this.itemAlternativesFromDataBase = res
+   })
+  }
+ }
+
+
+GetItemDefaultPartitionsDataBase(){
+  if(this.itemForm.value.ItemCardId){
+   this.definitionService.GetItemDefaultPartitions(this.itemForm.value.ItemCardId).subscribe(res=>{
+     this.itemDefaultPartitionsFromDataBase = res
+   })
+  }
+ }
+
 DeleteItemCollectionFromDataBase(itemCollectId:any){
   var _popup = this.dialog.open(DeleteConfirmComponent, {
     width: '30%',
@@ -961,6 +1299,47 @@ DeleteItemCollectionFromDataBase(itemCollectId:any){
   });
 }
 
+DeleteItemAlternativesFromDataBase(alterId:any){
+  var _popup = this.dialog.open(DeleteConfirmComponent, {
+    width: '30%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if (response) {
+     this.definitionService.DeleteItemAlternatives(alterId).subscribe(res=>{
+      if(res.status){
+        this.GetItemAlternativesFromDataBase();
+      }
+     })
+    }
+  });
+}
+
+DeleteItemDefaultParttionFromDatabase(itemStorePrtId:any){
+  var _popup = this.dialog.open(DeleteConfirmComponent, {
+    width: '30%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if (response) {
+     this.definitionService.DeleteItemDefaultPartition(itemStorePrtId).subscribe(res=>{
+      if(res.status){
+        this.GetItemDefaultPartitionsDataBase();
+      }
+     })
+    }
+  });
+} 
+
+ItemIsCollection(){
+  if(this.itemForm.value.isCollection == false){
+    this.itemIsCollection = true;
+  }else{
+    this.itemIsCollection = false;
+  }
+}
 
 }
 

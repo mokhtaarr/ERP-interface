@@ -262,7 +262,6 @@ export class ItemCategoriesComponent implements OnInit{
   }
  
   onSumbit(){
-    console.log(this.itemCategoryForm.value)
     this.definitionService.AddItemCategory(this.itemCategoryForm.value).subscribe(res=>{
       if(res){
         this.getAllItemCategory();

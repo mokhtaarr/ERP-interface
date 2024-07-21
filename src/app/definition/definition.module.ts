@@ -31,6 +31,11 @@ import { AddItemUnitComponent } from './add-item-unit/add-item-unit.component';
 import { ProdBasicUnitsComponent } from './prod-basic-units/prod-basic-units.component';
 import { GetItemCollectionsComponent } from './get-item-collections/get-item-collections.component';
 import { UpdateItemUnitComponent } from './update-item-unit/update-item-unit.component';
+import { ItemPartitionWithHisStoreComponent } from './item-partition-with-his-store/item-partition-with-his-store.component';
+import { UpdateItemCollectionComponent } from './update-item-collection/update-item-collection.component';
+import { UpdateItemCollectionFromDataBaseComponent } from './update-item-collection-from-data-base/update-item-collection-from-data-base.component';
+import { UpdateItemAlternativeComponent } from './update-item-alternative/update-item-alternative.component';
+import { UpdateItemAlternativeFromDatabaseComponent } from './update-item-alternative-from-database/update-item-alternative-from-database.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +66,12 @@ import { UpdateItemUnitComponent } from './update-item-unit/update-item-unit.com
     AddItemUnitComponent,
     ProdBasicUnitsComponent,
     GetItemCollectionsComponent,
-    UpdateItemUnitComponent
+    UpdateItemUnitComponent,
+    ItemPartitionWithHisStoreComponent,
+    UpdateItemCollectionComponent,
+    UpdateItemCollectionFromDataBaseComponent,
+    UpdateItemAlternativeComponent,
+    UpdateItemAlternativeFromDatabaseComponent,
   ],
   imports: [
     CommonModule,

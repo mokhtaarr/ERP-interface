@@ -79,28 +79,225 @@
        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
            <li><a href="#" class="rounded" routerLink="/main/definition/branchs">{{'Branches'|translate}}</a></li>
            <li><a href="#" class="rounded" routerLink="/main/definition/items">{{'Categories'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Item categories'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Classification units'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Customer categories'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Customer types'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Movement book'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Customers'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Types of suppliers'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Suppliers'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'employees'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Jobs'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'The administrative structure'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'the cities'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Types of vehicles'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{'Vehicle shapes'|translate}}</a></li>
-           <li><a href="#" class="rounded">{{"Machinery and equipment"|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/item-categories" >{{'Item categories'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/item-units" >{{'Classification units'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/customer-categories" >{{'Customer categories'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/customer-types" >{{'Customer types'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/movement-book" >{{'Movement book'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/customers" >{{'Customers'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/suppliers-types" >{{'Types of suppliers'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/suppliers" >{{'Suppliers'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/employees" >{{'employees'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/jobs" >{{'Jobs'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/structure-administrative" >{{'The administrative structure'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/cities" >{{'the cities'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/Types-of-vehicles" >{{'Types of vehicles'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/Vehicle-shapes" >{{'Vehicle shapes'|translate}}</a></li>
+           <li><a href="#" class="rounded"  routerLink="/main/definition/machines-equipment" >{{"Machinery and equipment"|translate}}</a></li>
        </ul>
    </div>
    </div>
 
-   
 
- 
+   <div class="dropdown">
+    <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Stores">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#definition" aria-expanded="false">
+        <i class="fa fa-eercast" aria-hidden="true"></i>
+        المخازن
+     </button>
+
+
+     <span style="padding: 3%;">
+      <i class="dropdown-toggle"></i>
+    </span>
+    
+    </div>
+
+  
+  <div class="collapse" id="Stores" >
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a  class="rounded">الفروع</a></li>
+          <li><a  class="rounded">الإصناف</a></li>
+          <li><a  class="rounded">فئات الإصناف</a></li>
+          <li><a  class="rounded">خصائص الإصناف</a></li>
+          <li><a  class="rounded">وحدات الإصناف</a></li>
+          <li><a  class="rounded">طباعه الباركود</a></li>
+          <li><a  class="rounded">طلب تحويل مخازن</a></li>
+          <li><a  class="rounded">تحويل مخازن</a></li>
+          <li><a  class="rounded">أصناف ذات خصائص</a></li>
+          <li><a  class="rounded">جرد الأصناف</a></li>
+          <li><a  class="rounded">مستند توريد مخزنى</a></li>
+          <li><a  class="rounded">مستند صرف مخزنى</a></li>
+          <li><a  class="rounded">تسعير الأصناف</a></li>
+          <li><a  class="rounded">تغيير أكواد الأصناف</a></li>
+          <li><a  class="rounded">ضبط تكاليف و كميات</a></li>
+          <li><a  class="rounded">كارت الميزان</a></li>
+      </ul>
+  </div>
+  </div>
+
+  <div class="dropdown">
+    <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#purchases">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#definition" aria-expanded="false">
+        <i class="fa fa-eercast" aria-hidden="true"></i>
+        مشتريات
+     </button>
+
+
+     <span style="padding: 3%;">
+      <i class="dropdown-toggle"></i>
+    </span>
+    
+    </div>
+
+  
+  <div class="collapse" id="purchases" >
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a  class="rounded">فاتورة المشتريات</a></li>
+          <li><a  class="rounded">توريد مخزنى</a></li>
+          <li><a  class="rounded">فئات الإصناف</a></li>
+          <li><a  class="rounded">فئات الموردين</a></li>
+          <li><a  class="rounded">أنواع الموردين</a></li>
+          <li><a  class="rounded">الموردين</a></li>
+          <li><a  class="rounded">أمر شراء</a></li>
+          <li><a  class="rounded">مرتجعات مشتريات</a></li>
+          <li><a  class="rounded">كارت الميزان</a></li>
+          <li><a  class="rounded">طلب شراء</a></li>
+      </ul>
+  </div>
+  </div>
+
+  <div class="dropdown">
+    <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#sales">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#definition" aria-expanded="false">
+        <i class="fa fa-eercast" aria-hidden="true"></i>
+        مبيعات
+     </button>
+
+
+     <span style="padding: 3%;">
+      <i class="dropdown-toggle"></i>
+    </span>
+    
+    </div>
+
+  
+  <div class="collapse" id="sales" >
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a  class="rounded">فاتورة المبيعات</a></li>
+          <li><a  class="rounded">أمر شراء</a></li>
+          <li><a  class="rounded">فئات الإصناف</a></li>
+          <li><a  class="rounded">عرض سعر</a></li>
+          <li><a  class="rounded">تسليم فاتورة مبيعات</a></li>
+          <li><a  class="rounded">أنواع العملاء</a></li>
+          <li><a  class="rounded">العملاء</a></li>
+          <li><a  class="rounded">فئات العملاء</a></li>
+          <li><a  class="rounded">مرتجعات مبيعات</a></li>
+          <li><a  class="rounded">كارت الميزان</a></li>
+          <li><a  class="rounded">استعلام صنف</a></li>
+      </ul>
+  </div>
+  </div>
+
+
+  
+  <div class="dropdown">
+    <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#accounts">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#accounts" aria-expanded="false">
+        <i class="fa fa-eercast" aria-hidden="true"></i>
+        الحسابات
+     </button>
+
+
+     <span style="padding: 3%;">
+      <i class="dropdown-toggle"></i>
+    </span>
+    
+    </div>
+
+  
+  <div class="collapse" id="accounts" >
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a  class="rounded" routerLink="/main/accountsModule/accounts-guide">دليل الحسابات</a></li>
+          <li><a  class="rounded"  routerLink="/main/accountsModule/CalCostCenter">مركز التكلفة</a></li>
+          <li><a  class="rounded"  routerLink="/main/accountsModule/SysAnalyticalCode">أكواد تحليلية</a></li>
+          <li><a  class="rounded"  routerLink="/main/accountsModule/activities">أنشطة</a></li>
+          <li><a  class="rounded">تصنيف الحسابات</a></li>
+          <li><a  class="rounded">تبويب الحسابات</a></li>
+          <li><a  class="rounded">فئات العملات</a></li>
+          <li><a  class="rounded" routerLink="/main/accountsModule/currencies">العملات</a></li>
+          <li><a  class="rounded">مستند قبض</a></li>
+          <li><a  class="rounded">مستند صرف</a></li>
+          <li><a  class="rounded">تصفيه عهده</a></li>
+          <li><a  class="rounded">الفترات المالية</a></li>
+          <li><a  class="rounded">مستند قيد يومية</a></li>
+          <li><a  class="rounded">نوع المستند</a></li>
+          <li><a  class="rounded">الصناديق</a></li>
+          <li><a  class="rounded">ضرائب</a></li>
+          <li><a  class="rounded">المصروفات</a></li>
+      </ul>
+  </div>
+  </div>
+
+  <div class="dropdown">
+    <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Bank">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#accounts" aria-expanded="false">
+        <i class="fa fa-eercast" aria-hidden="true"></i>
+        البنوك
+     </button>
+
+
+     <span style="padding: 3%;">
+      <i class="dropdown-toggle"></i>
+    </span>
+    
+    </div>
+
+  
+  <div class="collapse" id="Bank" >
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a  class="rounded">البنوك و الحسابات البنكية</a></li>
+          <li><a  class="rounded">الحافظة البنكية</a></li>
+          <li><a  class="rounded">أشعار بنكى</a></li>
+          <li><a  class="rounded">أنواع خطابات الضمان</a></li>
+          <li><a  class="rounded">فئات خطاب الضمان</a></li>
+          <li><a  class="rounded">حالات خطابات الضمان</a></li>
+          <li><a  class="rounded">خطابات الضمان</a></li>
+          <li><a  class="rounded">حركة خطاب الضمان</a></li>
+      </ul>
+  </div>
+  </div>
+
+  <div class="dropdown">
+    <div style="display: flex; justify-content: space-between;cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#setting">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#accounts" aria-expanded="false">
+        <i class="fa fa-eercast" aria-hidden="true"></i>
+        أدوات البرنامج
+     </button>
+
+
+     <span style="padding: 3%;">
+      <i class="dropdown-toggle"></i>
+    </span>
+    
+    </div>
+
+  
+  <div class="collapse" id="setting" >
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a  class="rounded">نظام الأرشيف</a></li>
+          <li><a  class="rounded">تصدير بيانات</a></li>
+          <li><a  class="rounded">أستيراد البيانات</a></li>
+          <li><a  class="rounded">أدوار المستخدمين</a></li>
+          <li><a  class="rounded">المستخدمين</a></li>
+          <li><a  class="rounded">صلاحيات المستخدمين</a></li>
+          <li><a  class="rounded">أساسيات البرنامج</a></li>
+          <li><a  class="rounded">مصمم التقارير</a></li>
+      </ul>
+  </div>
+  </div>
+
+
 </div>
 </ng-container>
 

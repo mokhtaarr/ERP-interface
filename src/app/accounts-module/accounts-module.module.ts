@@ -7,6 +7,8 @@ import { AccountsGuideComponent } from './accounts-guide/accounts-guide.componen
 import { ImportModule } from '../import/import.module';
 import { CostCenterComponent } from './cost-center/cost-center.component';
 import { SysAnalyticalCodeComponent } from './sys-analytical-code/sys-analytical-code.component';
+import { ActivitiesComponent } from './activities/activities.component';
+import { CurrenciesComponent } from './currencies/currencies.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { SysAnalyticalCodeComponent } from './sys-analytical-code/sys-analytical
     AllComponent,
     AccountsGuideComponent,
     CostCenterComponent,
-    SysAnalyticalCodeComponent
+    SysAnalyticalCodeComponent,
+    ActivitiesComponent,
+    CurrenciesComponent
   ],
   imports: [
     CommonModule,

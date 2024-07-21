@@ -13,7 +13,7 @@
 
   function closeNavBasket() {
     document.getElementById("mySidebarBasket").style.width = "0";
-    sidebar.classList.remove("open-animation"); // إزالة الفئة لإيقاف التأثير
+    sidebar.classList.remove("open-animation"); 
 
   }
 

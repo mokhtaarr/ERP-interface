@@ -22,7 +22,11 @@
              
   
               
-              <button class="w-100 btn btn-lg btn-primary mt-5" type="submit" [disabled]="accountForm.invalid" style="background-color: #19b8e1;" fdprocessedid="infldq">Submit</button>
+              <button  *ngIf="!disableSumbit" class="w-100 btn btn-lg btn-primary mt-5" type="submit" [disabled]="accountForm.invalid" style="background-color: #19b8e1;" fdprocessedid="infldq">Submit</button>
+              <button  *ngIf="disableSumbit" class="w-100 btn btn-lg  mt-5" type="submit"
+               [disabled]="true" style="background-color: white;" fdprocessedid="infldq">
+                <img  src="../../../assets/images/loading2.gif" width="50" height="50" />
+              </button>
              
   
              

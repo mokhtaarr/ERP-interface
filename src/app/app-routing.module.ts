@@ -18,7 +18,8 @@ const routes: Routes = [
     //  {path:'home',component : HomeComponent},
      {path:'home',loadChildren:()=>import('./home/home.module').then(h=>h.HomeModule)},
      {path:'definition',loadChildren:()=>import('./definition/definition.module').then(d=>d.DefinitionModule)},
-     {path:'accountsModule',loadChildren:()=>import('./accounts-module/accounts-module.module').then(a=>a.AccountsModuleModule)}
+     {path:'accountsModule',loadChildren:()=>import('./accounts-module/accounts-module.module').then(a=>a.AccountsModuleModule)},
+     {path:'purchases',loadChildren:()=>import('./purchases/purchases.module').then(p=>p.PurchasesModule)},
   ]},
   {path:'',redirectTo:'branch',pathMatch:'full'},
   {path:'branch',component : BranchComponent},

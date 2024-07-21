@@ -19,6 +19,8 @@ export class AccountsModuleServicesService {
     return this.http.get<any>(environment.apiUrl +'AccountsGuide/GetAllAccounts')
   }
 
+ 
+
   GEtAllAccountsGuideForSelect(){
     return this.http.get<any>(environment.apiUrl +'AccountsGuide/GetAllAccountsForSelect')
   }
@@ -202,4 +204,43 @@ export class AccountsModuleServicesService {
       return res.status;
     }))
   }
+
+
+  // العملات
+
+   GetAllCurrencies(){
+    return this.http.get<any>(environment.apiUrl +'MSCurrency/getAllCurrencies')
+  }
+
+
+  addCurrency(values : any){
+    return this.http.post<any>(environment.apiUrl+'MSCurrency/AddCurrency',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+  DeleteCurrency(aid:any){
+    return this.http.delete<any>(`${environment.apiUrl}MSCurrency/DeleteCurrency?currencyId=${aid}`)
+    .pipe(map((res)=>{
+      var message = res.message;
+      var messageEn = res.messageEn;
+  
+      if (res.status == true) this.toastr.success(message);
+  
+      if (res.status == false) this.toastr.error(message);
+  
+      return res.status;
+    }))
+  }
+
+
 }

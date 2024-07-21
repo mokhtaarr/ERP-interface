@@ -61,23 +61,13 @@ export class GetItemCollectionsComponent implements OnInit{
 
   
   fillForm(row:any){
-    console.log('row',row)
    if(this.ItemCollection_Response.includes(row)){
-     this.toastr.error(`هذا المنتج  ( ${row.itemDescA} )   موجود من قبل`)
+     this.toastr.error(`هذا الصنف  ( ${row.itemDescA} )   موجود من قبل`)
       }else{
        this.ItemCollection_Response.push(row);
+       this.toastr.success('تم أضافة الصنف')
 
       }
-
-
-
-      // console.log("this.exsitingData",this.exsitingData)
-      // if(this.exsitingData){
-      //   this.ItemCollection_Response.push(row);
-      // }else{
-      //   this.toastr.error(`هذا المنتج موجود من قبل ${row.itemDescA}`)
-      // }
-    
    }
 
 

@@ -25,6 +25,25 @@ export class DefinitionService {
     return this.http.get<Items[]>(environment.apiUrl + 'Items');
   }
 
+  DeleteItem(itemCardId : any){
+    return this.http
+        .delete<any>(`${environment.apiUrl}Items/DeleteItemCard?itemCardId=${itemCardId}`)
+        .pipe(
+          map((res) => {
+            var message = res.message;
+            var messageEn = res.messageEn;
+    
+            if (res.status == true) {
+              this.toastr.success(message);
+            }
+    
+            if (res.status == false) this.toastr.error(message);
+    
+            return res;
+          })
+        );
+  }
+
   GetAllItemForItemCollections(){
     return this.http.get<any>(environment.apiUrl+'Items/GetAllItemForItemCollections')
    }
@@ -38,6 +57,10 @@ export class DefinitionService {
     headers.append('Content-Type', 'multipart/form-data');
     return this.http.post<Items>(environment.apiUrl + 'Items/AddItemWitImage', formData, { headers });
      
+  }
+
+  GetItemUnitsForItemCollection(itemCardId:any){
+    return this.http.get<any>(`${environment.apiUrl}Items/GetItemUnits?itemCardId=${itemCardId}`)
   }
 
   AddMsItemCard(values: any) {
@@ -63,6 +86,44 @@ GetBasicItemUnit(basUnitId : any){
 
 GetItemUnitSub(basUnitId : any){
   return this.http.get<any>(`${environment.apiUrl}Items/GetAllProdBsicUnitsSub?basUnitId=${basUnitId}`)
+}
+
+UpdateItemCollection(values: any): Observable<any> {
+  return this.http
+    .post<any>(environment.apiUrl + 'Items/UpdateItemCollection', values)
+    .pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) {
+          this.toastr.success(message);
+        }
+
+        if (res.status == false) this.toastr.error(message);
+
+        return res;
+      })
+    );
+}
+
+UpdateItemAlter(values: any): Observable<any> {
+  return this.http
+    .post<any>(environment.apiUrl + 'Items/UpdateItemAlter', values)
+    .pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) {
+          this.toastr.success(message);
+        }
+
+        if (res.status == false) this.toastr.error(message);
+
+        return res;
+      })
+    );
 }
 
 
@@ -116,6 +177,10 @@ DeleteItemUnit(unitId: number) {
     );
 }
 
+GetItemPartitionWithHisStore(){
+  return this.http.get<any>(environment.apiUrl +'Items/GetItemPartitionWithHisStore')
+}
+
 GetItemImage(itemCardId:any){
   return this.http.get<any>(`${environment.apiUrl}Items/GetProductImage?itemCardId=${itemCardId}`)
 }
@@ -124,9 +189,56 @@ GetItemCollections(itemCardId : any){
   return this.http.get<any>(`${environment.apiUrl}Items/GetItemCollection?itemCardId=${itemCardId}`)
 }
 
+GetItemAlternatives(itemCardId : any){
+  return this.http.get<any>(`${environment.apiUrl}Items/GetItemAlternatives?itemCardId=${itemCardId}`)
+}
+
+GetItemDefaultPartitions(itemCardId : any){
+  return this.http.get<any>(`${environment.apiUrl}Items/GetItemDefaultPartitions?itemCardId=${itemCardId}`)
+}
+
+DeleteItemDefaultPartition(itemStorePrtId: number) {
+  return this.http
+    .delete<any>(`${environment.apiUrl}Items/DeleteItemDefaultPartition?itemStorePrtId=${itemStorePrtId}`)
+    .pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) {
+          this.toastr.success(message);
+        }
+
+        if (res.status == false) this.toastr.error(message);
+
+        return res;
+      })
+    );
+}
+
+
 DeleteItemCollection(itemCollectId: number) {
   return this.http
     .delete<any>(`${environment.apiUrl}Items/DeleteItemCollection?itemCollectId=${itemCollectId}`)
+    .pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+
+        if (res.status == true) {
+          this.toastr.success(message);
+        }
+
+        if (res.status == false) this.toastr.error(message);
+
+        return res;
+      })
+    );
+}
+
+DeleteItemAlternatives(alterId: number) {
+  return this.http
+    .delete<any>(`${environment.apiUrl}Items/DeleteItemAlternative?alterId=${alterId}`)
     .pipe(
       map((res) => {
         var message = res.message;
@@ -297,6 +409,8 @@ DeleteItemCollection(itemCollectId: number) {
   GetAllItemCategory(){
     return this.http.get<any>(environment.apiUrl +'ItemCategory/GetAllItemCategory')
   }
+
+  
 
   AddItemCategory(values:any){
     return this.http.post<any>(environment.apiUrl+'ItemCategory/AddItemCategory',values).pipe(
@@ -1205,5 +1319,7 @@ DeleteEmployee(empId:any){
     return res.status;
   }))
 }
+
+
 
 }

@@ -163,7 +163,7 @@ ProdEquipmentsForm = this.fb.group({
         standardDailyWorkHours: FirstItem.standardDailyWorkHours,
         standardHourlyCost: FirstItem.standardHourlyCost,
         numberAvailable: FirstItem.numberAvailable,
-        isScaleBoolean: FirstItem.isScaleBoolean
+        isScaleBoolean: FirstItem.isScale
       });
       this.firstRow = true;
       this.lastRow = false;
@@ -194,7 +194,7 @@ ProdEquipmentsForm = this.fb.group({
         standardDailyWorkHours: LastItem.standardDailyWorkHours,
         standardHourlyCost: LastItem.standardHourlyCost,
         numberAvailable: LastItem.numberAvailable,
-        isScaleBoolean: LastItem.isScaleBoolean
+        isScaleBoolean: LastItem.isScale
       })
 
     this.firstRow = false;
@@ -231,7 +231,7 @@ ProdEquipmentsForm = this.fb.group({
           standardDailyWorkHours: PrevItem.standardDailyWorkHours,
           standardHourlyCost: PrevItem.standardHourlyCost,
           numberAvailable: PrevItem.numberAvailable,
-          isScaleBoolean: PrevItem.isScaleBoolean
+          isScaleBoolean: PrevItem.isScale
         })
   
 
@@ -279,7 +279,7 @@ ProdEquipmentsForm = this.fb.group({
           standardDailyWorkHours: nextItem.standardDailyWorkHours,
           standardHourlyCost: nextItem.standardHourlyCost,
           numberAvailable: nextItem.numberAvailable,
-          isScaleBoolean: nextItem.isScaleBoolean
+          isScaleBoolean: nextItem.isScale
         })
   
         this.firstRow = false;

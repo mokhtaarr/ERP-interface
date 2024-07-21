@@ -4,7 +4,7 @@
   }
   
   .open-animation {
-    transition: width 0.5s ease-in-out;
+    transition: width 0.1s ease-in-out;
     /* يمكنك تكوين هنا أي تأثير إضافي عند الفتح */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     /* تحديد الظل هنا (يمكنك تخصيص القيم حسب تفضيلاتك) */
@@ -43,7 +43,7 @@
     margin-top: 137px;
     position: absolute;
     right: -171px;
-    transition: 0.3s;
+    transition: 0.1s;
     padding: 5px;
     width: 200px;
     text-decoration: none;
@@ -90,7 +90,7 @@
     font-size: 20px;
     color: white;
     display: block;
-    transition: 0.3s;
+    transition: 0.1s;
   }
   
   .sidebar ul{

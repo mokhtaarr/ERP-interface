@@ -11,6 +11,7 @@ import { AccountService } from '../account.service';
 })
 export class LoginComponent {
 
+  disableSumbit:boolean = false
   constructor(private router : Router , private fb : FormBuilder , private accountService : AccountService){ }
 
   accountForm = this.fb.group({
@@ -20,9 +21,14 @@ export class LoginComponent {
 
 
   onSubmit(){
+    this.disableSumbit = true
     this.accountService.login(this.accountForm.value).subscribe(res=>{
-      if(res){
+      if(res.status == true){
           this.router.navigateByUrl('/main/home');
+      }
+
+      if(res.status == false){
+        this.disableSumbit = false
       }
     })
   }

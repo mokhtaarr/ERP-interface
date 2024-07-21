@@ -1,0 +1,77 @@
+.ang-maturial-select{
+    width: 100%;
+}  
+
+  
+  .example-label {
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 120px;
+  }
+
+.example-button-row {
+    display: table-cell;
+    max-width: 600px;
+  }
+  
+  .example-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }
+  
+  .example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 50px;
+  }
+  
+  .custom-icon{
+    font-size: larger;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+
+
+
+.mat-icon {
+  font-size: 20px; /* حجم الرموز */
+}
+
+/* تحسين استايل mat-tree-node */
+.mat-tree-node {
+  color: #3f51b5;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* تحسين استايل mat-tree */
+.mat-tree {
+  background-color: white;
+}
+
+
+
+.mat-mdc-table .mdc-data-table__row:hover{
+  background-color: #dfdfdf; 
+  cursor: pointer;
+
+}
+
+
+.table-header-font-size{
+font-weight: bold;
+}
+
+td{
+font-size: large;
+}
+
+
+
