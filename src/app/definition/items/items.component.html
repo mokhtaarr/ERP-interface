@@ -576,8 +576,8 @@
 
                     </div>
 
-                    <div class="row p-3">
-                        <table style="margin-bottom: auto;" class="table table-hover mt-3"
+                    <div class="row p-3" *ngIf="unitsDisable" >
+                        <table  style="margin-bottom: auto;" class="table table-hover mt-3" 
                             *ngIf="itemUnitsSub.length != 0">
                             <thead>
                                 <tr>
@@ -686,8 +686,8 @@
                         </table>
                     </div>
 
-                    <div class="row p-3">
-                        <table style="margin-bottom: auto;" class="table table-hover mt-3"
+                    <div class="row p-3" *ngIf="!unitsDisable" >
+                        <table  style="margin-bottom: auto;" class="table table-hover mt-3"
                             *ngIf="itemUnits.length != 0">
                             <thead>
                                 <tr>

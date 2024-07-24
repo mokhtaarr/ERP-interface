@@ -837,6 +837,35 @@ GetAlBasicUnits(){
 return this.http.get<any>(environment.apiUrl+'BasicUnits/GetAlBasicUnits')
 }
 
+updateUnit(values:any){
+  return this.http.post<any>(environment.apiUrl+'BasicUnits/UpdateUnit',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+AddUnit(values:any){
+  return this.http.post<any>(environment.apiUrl+'BasicUnits/AddUnit',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
 
 AddBasicUnit(values:any){
   return this.http.post<any>(environment.apiUrl+'BasicUnits/AddBasicUnit',values).pipe(map((res)=>{
@@ -864,6 +893,21 @@ DeleteBasicUnit(unitId:any){
     return res.status;
   }))
 }
+
+DeleteUnit(basUnitId:any){
+  return this.http.delete<any>(`${environment.apiUrl}BasicUnits/DeleteUnit?BasUnitId=${basUnitId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res.status;
+  }))
+}
+
 
 
 // customers  العملاء

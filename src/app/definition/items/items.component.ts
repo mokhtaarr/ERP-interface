@@ -76,6 +76,8 @@ export class ItemsComponent implements OnInit {
   itemCollectionFromDataBase : any[] = [];
   itemDefaultPartitionsFromDataBase : any[] = [];
   itemAlternativesFromDataBase : any[] = []; 
+
+  unitsDisable : boolean = false;
   
   itemIsCollection : boolean = true;
 
@@ -233,7 +235,8 @@ export class ItemsComponent implements OnInit {
           this.itemCollections.splice(0, this.itemCollections.length);
           this.itemAlternatives.splice(0,this.itemAlternatives.length);
           this.itemPartitionWithStores.splice(0,this.itemPartitionWithStores.length);
-          
+          this.imageName = null;
+          this.selectedImage = null;
           this.tabGroup.selectedIndex = 0;
   
         }
@@ -303,6 +306,7 @@ export class ItemsComponent implements OnInit {
       itemPartition: null,
       itemAlternatives: null
     });
+    this.tabGroup.selectedIndex = 0;
     this.itemUnitReadOnly = true;
     this.UpdateDisable = false;
     this.DeleteDisable = false;
@@ -370,7 +374,7 @@ export class ItemsComponent implements OnInit {
       itemPartition: null,
       itemAlternatives: null
     })  
-
+    this.tabGroup.selectedIndex = 0;
     this.firstRow = true;
     this.lastRow = false;
     this.DisabledPrevButton = true;
@@ -437,6 +441,7 @@ export class ItemsComponent implements OnInit {
       itemAlternatives: null
     })  
 
+    this.tabGroup.selectedIndex = 0;
     this.firstRow = false;
     this.lastRow = true;
     this.DisabledPrevButton = false;
@@ -505,7 +510,7 @@ export class ItemsComponent implements OnInit {
         itemAlternatives: null
       })    
 
- 
+      this.tabGroup.selectedIndex = 0;
       this.firstRow = false;
       this.UpdateDisable = false;
       this.DeleteDisable = false;
@@ -579,7 +584,7 @@ getPrevRowData() {
       itemAlternatives: null
     })     
 
-    
+    this.tabGroup.selectedIndex = 0;    
     this.firstRow = false;
     this.lastRow = false;
     this.UpdateDisable = false;
@@ -737,7 +742,8 @@ undo(){
       this.SaveDisable = true;
       this.UndoDisabled = true;
       this.DeleteDisable = false;
-   
+      this.unitsDisable = false;
+
      }
     }
 }
@@ -756,7 +762,6 @@ updateItem(){
   this.itemUnitReadOnly = true;
   this.reloadDisabled = false;
   this.UpdateDisable = true;
-  this.itemForm.get("unitCode")?.disable();
   this.UndoDisabled = false;
   this.items = this.dataSource.filteredData;
   this.undoIndex = this.items.findIndex(p=>p.itemCardId == this.itemForm.value.ItemCardId);
@@ -1121,7 +1126,8 @@ OpenProdBasicUnits(){
       this.definitionService.GetItemUnitSub(response.basUnitId).subscribe(res=>{
         this.itemUnitsSub = res
         this.itemUnitReadOnly = true;
-        
+        this.unitsDisable = true;
+
       })
     }
   });

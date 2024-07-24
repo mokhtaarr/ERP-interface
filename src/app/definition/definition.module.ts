@@ -36,6 +36,8 @@ import { UpdateItemCollectionComponent } from './update-item-collection/update-i
 import { UpdateItemCollectionFromDataBaseComponent } from './update-item-collection-from-data-base/update-item-collection-from-data-base.component';
 import { UpdateItemAlternativeComponent } from './update-item-alternative/update-item-alternative.component';
 import { UpdateItemAlternativeFromDatabaseComponent } from './update-item-alternative-from-database/update-item-alternative-from-database.component';
+import { UpdateUnitComponent } from './update-unit/update-unit.component';
+import { AddUnitComponent } from './add-unit/add-unit.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import { UpdateItemAlternativeFromDatabaseComponent } from './update-item-altern
     UpdateItemCollectionFromDataBaseComponent,
     UpdateItemAlternativeComponent,
     UpdateItemAlternativeFromDatabaseComponent,
+    UpdateUnitComponent,
+    AddUnitComponent,
   ],
   imports: [
     CommonModule,

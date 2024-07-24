@@ -13,7 +13,7 @@ import { AccountsModuleServicesService } from '../accounts-module-services.servi
 })
 export class ActivitiesComponent implements OnInit{
 
-  allCostCenter : any[] = [];
+  allActivities : any[] = [];
   dataSource:any;
   AllCurrency:any[]=[];
 
@@ -32,7 +32,7 @@ export class ActivitiesComponent implements OnInit{
   undoItem:any;
 
   DataFilter :any;
-  allCostCenterForSelect : any[] = [];
+  allActivitiesForSelect : any[] = [];
   AllSysAnalyticalCodes : any[] = [];
 
   CostCenterItem : any;
@@ -41,36 +41,36 @@ export class ActivitiesComponent implements OnInit{
     return {
       expandable: !!node.children && node.children.length > 0,
       level: level,
-      costCenterId: node.costCenterId,
-      costCenterCode:node.costCenterCode,
-      mainCostCenterId:node.mainCostCenterId,
-      costCenterNameA : node.costCenterNameA,
-      costCenterNameE : node.costCenterNameE,
-      costCenterLevel : node.costCenterLevel,
-      centerCategory : node.centerCategory,
-      costType : node.costType,
+      activeId: node.activeId,
+      activeCode:node.activeCode,
+      mainActiveId:node.mainActiveId,
+      activeNameA : node.activeNameA,
+      activeNameE : node.activeNameE,
+      activeLevel : node.activeLevel,
+      activeCategory : node.activeCategory,
+      activeType : node.activeType,
       cashFlowList:node.cashFlowList,
       remarksA:node.remarksA,
       rate:node.rate,
       jopDesc:node.jopDesc,
       currencyId:node.currencyId,
-      accCostCenterId:node.accCostCenterId,
+      accActiveId:node.accActiveId,
       openningBalanceDepit: node.openningBalanceDepit,
       openningBalanceCredit: node.openningBalanceCredit,
-      costCenterCurrTrancDepit: node.costCenterCurrTrancDepit,
-      costCenterCurrTrancCredit: node.costCenterCurrTrancCredit,
-      costCenterTotalDebit: node.costCenterTotalDebit,
+      activeCurrTrancDepit: node.activeCurrTrancDepit,
+      activeCurrTrancCredit: node.activeCurrTrancCredit,
+      activeTotalDebit: node.activeTotalDebit,
       balanceDebitLocal: node.balanceDebitLocal,
       balanceCreditLocal: node.balanceCreditLocal,
       openningBalanceDepitCurncy: node.openningBalanceDepitCurncy,
       openningBalanceCreditCurncy: node.openningBalanceCreditCurncy,
-      costCenterTotalDebitCurncy: node.costCenterTotalDebitCurncy,
+      activeTotalDebitCurncy: node.activeTotalDebitCurncy,
       balanceDebitCurncy: node.balanceDebitCurncy,
       balanceCreditCurncy: node.balanceCreditCurncy,
-      costCenterTotaCredit: node.costCenterTotaCredit,
-      costCenterCurrTrancDepitCurncy: node.costCenterCurrTrancDepitCurncy,
-      costCenterCurrTrancCreditCurncy: node.costCenterCurrTrancCreditCurncy,
-      costCenterTotaCreditCurncy: node.costCenterTotaCreditCurncy,
+      activeTotaCredit: node.activeTotaCredit,
+      activeCurrTrancDepitCurncy: node.activeCurrTrancDepitCurncy,
+      activeCurrTrancCreditCurncy: node.activeCurrTrancCreditCurncy,
+      activeTotaCreditCurncy: node.activeTotaCreditCurncy,
       aid:node.aid,
     };
   };
@@ -97,39 +97,39 @@ export class ActivitiesComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.calCostCenterForm.disable();
+    this.ActivityForm.disable();
     this.GetAllCurrency();
-    this.GetAllCostCenter();
-    this.GetAllCostCenterForSelect();
+    this.GetAllActivities();
+    this.GetAllActivitiesForSelect();
     this.GetAllSys_AnalyticalCodes();
   }
 
-  calCostCenterForm = this.fb.group({
-    costCenterId:[],
-    costCenterCode :[,Validators.required],
-    costCenterNameA :['',Validators.required],
-    costCenterNameE :[''],
-    mainCostCenterId:[],
-    costCenterLevel:[],
-    centerCategory:[1],
-    costType:[1],
+  ActivityForm = this.fb.group({
+    activeId:[],
+    activeCode :[,Validators.required],
+    activeNameA :['',Validators.required],
+    activeNameE :[''],
+    mainActiveId:[],
+    activeLevel:[],
+    activeCategory:[1],
+    activeType:[1],
     cashFlowList:[1],
     jopDesc:[1],
-    accCostCenterId:[],
+    accActiveId:[],
     openningBalanceDepit:[],
     openningBalanceCredit:[],
-    costCenterCurrTrancDepit:[],
-    costCenterCurrTrancCredit:[],
-    costCenterTotalDebit:[],
-    costCenterTotaCredit:[],
+    activeCurrTrancDepit:[],
+    activeCurrTrancCredit:[],
+    activeTotalDebit:[],
+    activeTotaCredit:[],
     balanceDebitLocal:[],
     balanceCreditLocal:[],
     openningBalanceDepitCurncy:[],
     openningBalanceCreditCurncy:[],
-    costCenterCurrTrancDepitCurncy:[],
-    costCenterCurrTrancCreditCurncy:[],
-    costCenterTotalDebitCurncy:[],
-    costCenterTotaCreditCurncy:[],
+    activeCurrTrancDepitCurncy:[],
+    activeCurrTrancCreditCurncy:[],
+    activeTotalDebitCurncy:[],
+    activeTotaCreditCurncy:[],
     balanceDebitCurncy:[],
     balanceCreditCurncy:[],
     remarksA:[''],
@@ -139,11 +139,11 @@ export class ActivitiesComponent implements OnInit{
   })
 
   
-  GetAllCostCenter(){
-    this.AccountsService.GEtAllCostCenter().subscribe(res=>{
-      this.allCostCenter = res;
+  GetAllActivities(){
+    this.AccountsService.GetAllActivities().subscribe(res=>{
+      this.allActivities = res;
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-      this.dataSource.data = this.allCostCenter;
+      this.dataSource.data = this.allActivities;
     })
   }
 
@@ -156,34 +156,34 @@ export class ActivitiesComponent implements OnInit{
 
 
   getLastRowData(){
-    const LastItem = this.allCostCenter[this.allCostCenter.length-1];
+    const LastItem = this.allActivities[this.allActivities.length-1];
     if(LastItem){
-      this.calCostCenterForm.setValue({
-        costCenterId: LastItem.costCenterId,
-        costCenterCode: LastItem.costCenterCode,
-        costCenterNameA: LastItem.costCenterNameA,
-        costCenterNameE: LastItem.costCenterNameE,
-        mainCostCenterId: LastItem.mainCostCenterId,
-        costCenterLevel: LastItem.costCenterLevel,
-        centerCategory: LastItem.centerCategory,
-        costType: LastItem.costType,
+      this.ActivityForm.setValue({
+        activeId: LastItem.activeId,
+        activeCode: LastItem.activeCode,
+        activeNameA: LastItem.activeNameA,
+        activeNameE: LastItem.activeNameE,
+        mainActiveId: LastItem.mainActiveId,
+        activeLevel: LastItem.activeLevel,
+        activeCategory: LastItem.activeCategory,
+        activeType: LastItem.activeType,
         cashFlowList: LastItem.cashFlowList,
         jopDesc: LastItem.jopDesc,
-        accCostCenterId: LastItem.accCostCenterId,
+        accActiveId: LastItem.accActiveId,
         openningBalanceDepit: LastItem.openningBalanceDepit,
         openningBalanceCredit: LastItem.openningBalanceCredit,
-        costCenterCurrTrancDepit: LastItem.costCenterCurrTrancDepit,
-        costCenterCurrTrancCredit: LastItem.costCenterCurrTrancCredit,
-        costCenterTotalDebit: LastItem.costCenterTotalDebit,
-        costCenterTotaCredit: LastItem.costCenterTotaCredit,
+        activeCurrTrancDepit: LastItem.activeCurrTrancDepit,
+        activeCurrTrancCredit: LastItem.activeCurrTrancCredit,
+        activeTotalDebit: LastItem.activeTotalDebit,
+        activeTotaCredit: LastItem.activeTotaCredit,
         balanceDebitLocal: LastItem.balanceDebitLocal,
         balanceCreditLocal: LastItem.balanceCreditLocal,
         openningBalanceDepitCurncy: LastItem.openningBalanceDepitCurncy,
         openningBalanceCreditCurncy: LastItem.openningBalanceCreditCurncy,
-        costCenterCurrTrancDepitCurncy: LastItem.costCenterCurrTrancDepitCurncy,
-        costCenterCurrTrancCreditCurncy: LastItem.costCenterCurrTrancCreditCurncy,
-        costCenterTotalDebitCurncy: LastItem.costCenterTotalDebitCurncy,
-        costCenterTotaCreditCurncy: LastItem.costCenterTotaCreditCurncy,
+        activeCurrTrancDepitCurncy: LastItem.activeCurrTrancDepitCurncy,
+        activeCurrTrancCreditCurncy: LastItem.activeCurrTrancCreditCurncy,
+        activeTotalDebitCurncy: LastItem.activeTotalDebitCurncy,
+        activeTotaCreditCurncy: LastItem.activeTotaCreditCurncy,
         balanceDebitCurncy: LastItem.balanceDebitCurncy,
         balanceCreditCurncy: LastItem.balanceCreditCurncy,
         remarksA: LastItem.remarksA,
@@ -204,35 +204,35 @@ export class ActivitiesComponent implements OnInit{
 
   
   getNextRowData(){
-    const index = this.allCostCenter.findIndex(p=>p.costCenterId == this.calCostCenterForm.value.costCenterId);
-    const nextItem = this.allCostCenter[index + 1];
+    const index = this.allActivities.findIndex(p=>p.activeId == this.ActivityForm.value.activeId);
+    const nextItem = this.allActivities[index + 1];
     if(nextItem){
-      this.calCostCenterForm.setValue({
-        costCenterId: nextItem.costCenterId,
-        costCenterCode: nextItem.costCenterCode,
-        costCenterNameA: nextItem.costCenterNameA,
-        costCenterNameE: nextItem.costCenterNameE,
-        mainCostCenterId: nextItem.mainCostCenterId,
-        costCenterLevel: nextItem.costCenterLevel,
-        centerCategory: nextItem.centerCategory,
-        costType: nextItem.costType,
+      this.ActivityForm.setValue({
+        activeId: nextItem.activeId,
+        activeCode: nextItem.activeCode,
+        activeNameA: nextItem.activeNameA,
+        activeNameE: nextItem.activeNameE,
+        mainActiveId: nextItem.mainActiveId,
+        activeLevel: nextItem.activeLevel,
+        activeCategory: nextItem.activeCategory,
+        activeType: nextItem.activeType,
         cashFlowList: nextItem.cashFlowList,
         jopDesc: nextItem.jopDesc,
-        accCostCenterId: nextItem.accCostCenterId,
+        accActiveId: nextItem.accActiveId,
         openningBalanceDepit: nextItem.openningBalanceDepit,
         openningBalanceCredit: nextItem.openningBalanceCredit,
-        costCenterCurrTrancDepit: nextItem.costCenterCurrTrancDepit,
-        costCenterCurrTrancCredit: nextItem.costCenterCurrTrancCredit,
-        costCenterTotalDebit: nextItem.costCenterTotalDebit,
-        costCenterTotaCredit: nextItem.costCenterTotaCredit,
+        activeCurrTrancDepit: nextItem.activeCurrTrancDepit,
+        activeCurrTrancCredit: nextItem.activeCurrTrancCredit,
+        activeTotalDebit: nextItem.activeTotalDebit,
+        activeTotaCredit: nextItem.activeTotaCredit,
         balanceDebitLocal: nextItem.balanceDebitLocal,
         balanceCreditLocal: nextItem.balanceCreditLocal,
         openningBalanceDepitCurncy: nextItem.openningBalanceDepitCurncy,
         openningBalanceCreditCurncy: nextItem.openningBalanceCreditCurncy,
-        costCenterCurrTrancDepitCurncy: nextItem.costCenterCurrTrancDepitCurncy,
-        costCenterCurrTrancCreditCurncy: nextItem.costCenterCurrTrancCreditCurncy,
-        costCenterTotalDebitCurncy: nextItem.costCenterTotalDebitCurncy,
-        costCenterTotaCreditCurncy: nextItem.costCenterTotaCreditCurncy,
+        activeCurrTrancDepitCurncy: nextItem.activeCurrTrancDepitCurncy,
+        activeCurrTrancCreditCurncy: nextItem.activeCurrTrancCreditCurncy,
+        activeTotalDebitCurncy: nextItem.activeTotalDebitCurncy,
+        activeTotaCreditCurncy: nextItem.activeTotaCreditCurncy,
         balanceDebitCurncy: nextItem.balanceDebitCurncy,
         balanceCreditCurncy: nextItem.balanceCreditCurncy,
         remarksA: nextItem.remarksA,
@@ -244,9 +244,9 @@ export class ActivitiesComponent implements OnInit{
       this.UpdateDisable = false;
       this.DeleteDisable = false;
   
-      const LastItem = this.allCostCenter.findIndex(p=>p.costCenterId == this.calCostCenterForm.value.costCenterId);
+      const LastItem = this.allActivities.findIndex(p=>p.activeId == this.ActivityForm.value.activeId);
   
-      if(this.allCostCenter.length -1 === LastItem){
+      if(this.allActivities.length -1 === LastItem){
         this.DisabledNextButton = true;
         this.lastRow = true;
       }
@@ -257,39 +257,39 @@ export class ActivitiesComponent implements OnInit{
 
 
   getPrevRowData(){
-    const index = this.allCostCenter.findIndex(p=>p.costCenterId == this.calCostCenterForm.value.costCenterId);
-    const PrevItem = this.allCostCenter[index - 1];
+    const index = this.allActivities.findIndex(p=>p.activeId == this.ActivityForm.value.activeId);
+    const PrevItem = this.allActivities[index - 1];
     if(PrevItem == null){
       this.DisabledPrevButton = true;
     }
     
     if(PrevItem){
-      this.calCostCenterForm.setValue({
-        costCenterId: PrevItem.costCenterId,
-        costCenterCode: PrevItem.costCenterCode,
-        costCenterNameA: PrevItem.costCenterNameA,
-        costCenterNameE: PrevItem.costCenterNameE,
-        mainCostCenterId: PrevItem.mainCostCenterId,
-        costCenterLevel: PrevItem.costCenterLevel,
-        centerCategory: PrevItem.centerCategory,
-        costType: PrevItem.costType,
+      this.ActivityForm.setValue({
+        activeId: PrevItem.activeId,
+        activeCode: PrevItem.activeCode,
+        activeNameA: PrevItem.activeNameA,
+        activeNameE: PrevItem.activeNameE,
+        mainActiveId: PrevItem.mainActiveId,
+        activeLevel: PrevItem.activeLevel,
+        activeCategory: PrevItem.activeCategory,
+        activeType: PrevItem.activeType,
         cashFlowList: PrevItem.cashFlowList,
         jopDesc: PrevItem.jopDesc,
-        accCostCenterId: PrevItem.accCostCenterId,
+        accActiveId: PrevItem.accActiveId,
         openningBalanceDepit: PrevItem.openningBalanceDepit,
         openningBalanceCredit: PrevItem.openningBalanceCredit,
-        costCenterCurrTrancDepit: PrevItem.costCenterCurrTrancDepit,
-        costCenterCurrTrancCredit: PrevItem.costCenterCurrTrancCredit,
-        costCenterTotalDebit: PrevItem.costCenterTotalDebit,
-        costCenterTotaCredit: PrevItem.costCenterTotaCredit,
+        activeCurrTrancDepit: PrevItem.activeCurrTrancDepit,
+        activeCurrTrancCredit: PrevItem.activeCurrTrancCredit,
+        activeTotalDebit: PrevItem.activeTotalDebit,
+        activeTotaCredit: PrevItem.activeTotaCredit,
         balanceDebitLocal: PrevItem.balanceDebitLocal,
         balanceCreditLocal: PrevItem.balanceCreditLocal,
         openningBalanceDepitCurncy: PrevItem.openningBalanceDepitCurncy,
         openningBalanceCreditCurncy: PrevItem.openningBalanceCreditCurncy,
-        costCenterCurrTrancDepitCurncy: PrevItem.costCenterCurrTrancDepitCurncy,
-        costCenterCurrTrancCreditCurncy: PrevItem.costCenterCurrTrancCreditCurncy,
-        costCenterTotalDebitCurncy: PrevItem.costCenterTotalDebitCurncy,
-        costCenterTotaCreditCurncy: PrevItem.costCenterTotaCreditCurncy,
+        activeCurrTrancDepitCurncy: PrevItem.activeCurrTrancDepitCurncy,
+        activeCurrTrancCreditCurncy: PrevItem.activeCurrTrancCreditCurncy,
+        activeTotalDebitCurncy: PrevItem.activeTotalDebitCurncy,
+        activeTotaCreditCurncy: PrevItem.activeTotaCreditCurncy,
         balanceDebitCurncy: PrevItem.balanceDebitCurncy,
         balanceCreditCurncy: PrevItem.balanceCreditCurncy,
         remarksA: PrevItem.remarksA,
@@ -303,7 +303,7 @@ export class ActivitiesComponent implements OnInit{
     this.UpdateDisable = false;
     this.DeleteDisable = false;
 
-    const firstItem = this.allCostCenter.findIndex(p=>p.costCenterId == this.calCostCenterForm.value.costCenterId);
+    const firstItem = this.allActivities.findIndex(p=>p.activeId == this.ActivityForm.value.activeId);
 
      if(firstItem === 0){
           this.DisabledPrevButton = true;
@@ -317,34 +317,34 @@ export class ActivitiesComponent implements OnInit{
   }
 
   getFirstRowData(){
-    const firstItem = this.allCostCenter[0];
+    const firstItem = this.allActivities[0];
     if(firstItem){
-      this.calCostCenterForm.setValue({
-        costCenterId: firstItem.costCenterId,
-        costCenterCode: firstItem.costCenterCode,
-        costCenterNameA: firstItem.costCenterNameA,
-        costCenterNameE: firstItem.costCenterNameE,
-        mainCostCenterId: firstItem.mainCostCenterId,
-        costCenterLevel: firstItem.costCenterLevel,
-        centerCategory: firstItem.centerCategory,
-        costType: firstItem.costType,
+      this.ActivityForm.setValue({
+        activeId: firstItem.activeId,
+        activeCode: firstItem.activeCode,
+        activeNameA: firstItem.activeNameA,
+        activeNameE: firstItem.activeNameE,
+        mainActiveId: firstItem.mainActiveId,
+        activeLevel: firstItem.activeLevel,
+        activeCategory: firstItem.activeCategory,
+        activeType: firstItem.activeType,
         cashFlowList: firstItem.cashFlowList,
         jopDesc: firstItem.jopDesc,
-        accCostCenterId: firstItem.accCostCenterId,
+        accActiveId: firstItem.accActiveId,
         openningBalanceDepit: firstItem.openningBalanceDepit,
         openningBalanceCredit: firstItem.openningBalanceCredit,
-        costCenterCurrTrancDepit: firstItem.costCenterCurrTrancDepit,
-        costCenterCurrTrancCredit: firstItem.costCenterCurrTrancCredit,
-        costCenterTotalDebit: firstItem.costCenterTotalDebit,
-        costCenterTotaCredit: firstItem.costCenterTotaCredit,
+        activeCurrTrancDepit: firstItem.activeCurrTrancDepit,
+        activeCurrTrancCredit: firstItem.activeCurrTrancCredit,
+        activeTotalDebit: firstItem.activeTotalDebit,
+        activeTotaCredit: firstItem.activeTotaCredit,
         balanceDebitLocal: firstItem.balanceDebitLocal,
         balanceCreditLocal: firstItem.balanceCreditLocal,
         openningBalanceDepitCurncy: firstItem.openningBalanceDepitCurncy,
         openningBalanceCreditCurncy: firstItem.openningBalanceCreditCurncy,
-        costCenterCurrTrancDepitCurncy: firstItem.costCenterCurrTrancDepitCurncy,
-        costCenterCurrTrancCreditCurncy: firstItem.costCenterCurrTrancCreditCurncy,
-        costCenterTotalDebitCurncy: firstItem.costCenterTotalDebitCurncy,
-        costCenterTotaCreditCurncy: firstItem.costCenterTotaCreditCurncy,
+        activeCurrTrancDepitCurncy: firstItem.activeCurrTrancDepitCurncy,
+        activeCurrTrancCreditCurncy: firstItem.activeCurrTrancCreditCurncy,
+        activeTotalDebitCurncy: firstItem.activeTotalDebitCurncy,
+        activeTotaCreditCurncy: firstItem.activeTotaCreditCurncy,
         balanceDebitCurncy: firstItem.balanceDebitCurncy,
         balanceCreditCurncy: firstItem.balanceCreditCurncy,
         remarksA: firstItem.remarksA,
@@ -371,36 +371,36 @@ export class ActivitiesComponent implements OnInit{
     });
     _popup.afterClosed().subscribe((response) => {
       if (response) {
-        this.AccountsService.DeleteCostCenter(this.calCostCenterForm.value.costCenterId).subscribe(res=>{
+        this.AccountsService.DeleteActivity(this.ActivityForm.value.activeId).subscribe(res=>{
           if(res){
-            this.GetAllCostCenter();
-            this.GetAllCostCenterForSelect();
-            this.calCostCenterForm.setValue({
-              costCenterId: null,
-              costCenterCode: null,
-              costCenterNameA: null,
-              costCenterNameE: null,
-              mainCostCenterId: null,
-              costCenterLevel: null,
-              centerCategory: null,
-              costType: null,
+            this.GetAllActivities();
+            this.GetAllActivitiesForSelect();
+            this.ActivityForm.setValue({
+              activeId: null,
+              activeCode: null,
+              activeNameA: null,
+              activeNameE: null,
+              mainActiveId: null,
+              activeLevel: null,
+              activeCategory: null,
+              activeType: null,
               cashFlowList: null,
               jopDesc: null,
-              accCostCenterId: null,
+              accActiveId: null,
               openningBalanceDepit: null,
               openningBalanceCredit: null,
-              costCenterCurrTrancDepit: null,
-              costCenterCurrTrancCredit: null,
-              costCenterTotalDebit: null,
-              costCenterTotaCredit: null,
+              activeCurrTrancDepit: null,
+              activeCurrTrancCredit: null,
+              activeTotalDebit: null,
+              activeTotaCredit: null,
               balanceDebitLocal: null,
               balanceCreditLocal: null,
               openningBalanceDepitCurncy: null,
               openningBalanceCreditCurncy: null,
-              costCenterCurrTrancDepitCurncy: null,
-              costCenterCurrTrancCreditCurncy: null,
-              costCenterTotalDebitCurncy: null,
-              costCenterTotaCreditCurncy: null,
+              activeCurrTrancDepitCurncy: null,
+              activeCurrTrancCreditCurncy: null,
+              activeTotalDebitCurncy: null,
+              activeTotaCreditCurncy: null,
               balanceDebitCurncy: null,
               balanceCreditCurncy: null,
               remarksA: null,
@@ -420,34 +420,34 @@ export class ActivitiesComponent implements OnInit{
   
 
   undo(){
-    this.calCostCenterForm.disable();
+    this.ActivityForm.disable();
     if(this.undoItem){
-      this.calCostCenterForm.setValue({
-        costCenterId: this.undoItem.costCenterId,
-        costCenterCode: this.undoItem.costCenterCode,
-        costCenterNameA: this.undoItem.costCenterNameA,
-        costCenterNameE: this.undoItem.costCenterNameE,
-        mainCostCenterId: this.undoItem.mainCostCenterId,
-        costCenterLevel: this.undoItem.costCenterLevel,
-        centerCategory: this.undoItem.centerCategory,
-        costType: this.undoItem.costType,
+      this.ActivityForm.setValue({
+        activeId: this.undoItem.activeId,
+        activeCode: this.undoItem.activeCode,
+        activeNameA: this.undoItem.activeNameA,
+        activeNameE: this.undoItem.activeNameE,
+        mainActiveId: this.undoItem.mainActiveId,
+        activeLevel: this.undoItem.activeLevel,
+        activeCategory: this.undoItem.activeCategory,
+        activeType: this.undoItem.activeType,
         cashFlowList: this.undoItem.cashFlowList,
         jopDesc: this.undoItem.jopDesc,
-        accCostCenterId: this.undoItem.accCostCenterId,
+        accActiveId: this.undoItem.accActiveId,
         openningBalanceDepit: this.undoItem.openningBalanceDepit,
         openningBalanceCredit: this.undoItem.openningBalanceCredit,
-        costCenterCurrTrancDepit: this.undoItem.costCenterCurrTrancDepit,
-        costCenterCurrTrancCredit: this.undoItem.costCenterCurrTrancCredit,
-        costCenterTotalDebit: this.undoItem.costCenterTotalDebit,
-        costCenterTotaCredit: this.undoItem.costCenterTotaCredit,
+        activeCurrTrancDepit: this.undoItem.activeCurrTrancDepit,
+        activeCurrTrancCredit: this.undoItem.activeCurrTrancCredit,
+        activeTotalDebit: this.undoItem.activeTotalDebit,
+        activeTotaCredit: this.undoItem.activeTotaCredit,
         balanceDebitLocal: this.undoItem.balanceDebitLocal,
         balanceCreditLocal: this.undoItem.balanceCreditLocal,
         openningBalanceDepitCurncy: this.undoItem.openningBalanceDepitCurncy,
         openningBalanceCreditCurncy: this.undoItem.openningBalanceCreditCurncy,
-        costCenterCurrTrancDepitCurncy: this.undoItem.costCenterCurrTrancDepitCurncy,
-        costCenterCurrTrancCreditCurncy: this.undoItem.costCenterCurrTrancCreditCurncy,
-        costCenterTotalDebitCurncy: this.undoItem.costCenterTotalDebitCurncy,
-        costCenterTotaCreditCurncy: this.undoItem.costCenterTotaCreditCurncy,
+        activeCurrTrancDepitCurncy: this.undoItem.activeCurrTrancDepitCurncy,
+        activeCurrTrancCreditCurncy: this.undoItem.activeCurrTrancCreditCurncy,
+        activeTotalDebitCurncy: this.undoItem.activeTotalDebitCurncy,
+        activeTotaCreditCurncy: this.undoItem.activeTotaCreditCurncy,
         balanceDebitCurncy: this.undoItem.balanceDebitCurncy,
         balanceCreditCurncy: this.undoItem.balanceCreditCurncy,
         remarksA: this.undoItem.remarksA,
@@ -456,32 +456,32 @@ export class ActivitiesComponent implements OnInit{
         aid: this.undoItem.aid
       });
     }else{
-      this.calCostCenterForm.setValue({
-        costCenterId: null,
-        costCenterCode: null,
-        costCenterNameA: null,
-        costCenterNameE: null,
-        mainCostCenterId: null,
-        costCenterLevel: null,
-        centerCategory: null,
-        costType: null,
+      this.ActivityForm.setValue({
+        activeId: null,
+        activeCode: null,
+        activeNameA: null,
+        activeNameE: null,
+        mainActiveId: null,
+        activeLevel: null,
+        activeCategory: null,
+        activeType: null,
         cashFlowList: null,
         jopDesc: null,
-        accCostCenterId: null,
+        accActiveId: null,
         openningBalanceDepit: null,
         openningBalanceCredit: null,
-        costCenterCurrTrancDepit: null,
-        costCenterCurrTrancCredit: null,
-        costCenterTotalDebit: null,
-        costCenterTotaCredit: null,
+        activeCurrTrancDepit: null,
+        activeCurrTrancCredit: null,
+        activeTotalDebit: null,
+        activeTotaCredit: null,
         balanceDebitLocal: null,
         balanceCreditLocal: null,
         openningBalanceDepitCurncy: null,
         openningBalanceCreditCurncy: null,
-        costCenterCurrTrancDepitCurncy: null,
-        costCenterCurrTrancCreditCurncy: null,
-        costCenterTotalDebitCurncy: null,
-        costCenterTotaCreditCurncy: null,
+        activeCurrTrancDepitCurncy: null,
+        activeCurrTrancCreditCurncy: null,
+        activeTotalDebitCurncy: null,
+        activeTotaCreditCurncy: null,
         balanceDebitCurncy: null,
         balanceCreditCurncy: null,
         remarksA: null,
@@ -502,8 +502,8 @@ export class ActivitiesComponent implements OnInit{
     this.DeleteDisable = false;
   }
 
-  updateCalCostCenter(){
-    this.calCostCenterForm.enable();
+  updateActivity(){
+    this.ActivityForm.enable();
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -514,39 +514,39 @@ export class ActivitiesComponent implements OnInit{
     this.reloadDisabled = false;
     this.UpdateDisable = true;
     this.UndoDisabled = false;
-    this.undoItem = this.calCostCenterForm.value;
+    this.undoItem = this.ActivityForm.value;
   }
 
   New(){
-    this.calCostCenterForm.enable();
-    this.undoItem = this.calCostCenterForm.value;
+    this.ActivityForm.enable();
+    this.undoItem = this.ActivityForm.value;
     if(this.CostCenterItem != null){
-      this.calCostCenterForm.setValue({
-        costCenterId: null,
-        costCenterCode: this.CostCenterItem.costCenterCode + 1,
-        costCenterNameA: this.CostCenterItem.costCenterNameA  + "-",
-        costCenterNameE: this.CostCenterItem.costCenterNameE ? this.CostCenterItem.costCenterNameE + "-" : null,
-        mainCostCenterId: this.CostCenterItem.costCenterId,
-        costCenterLevel: this.CostCenterItem.level + 2,
-        centerCategory: 1,
-        costType: 2,
+      this.ActivityForm.setValue({
+        activeId: null,
+        activeCode: this.CostCenterItem.activeCode + 1,
+        activeNameA: this.CostCenterItem.activeNameA  + "-",
+        activeNameE: this.CostCenterItem.activeNameE ? this.CostCenterItem.activeNameE + "-" : null,
+        mainActiveId: this.CostCenterItem.activeId,
+        activeLevel: this.CostCenterItem.level + 2,
+        activeCategory: 1,
+        activeType: 2,
         cashFlowList: 1,
         jopDesc: 1,
-        accCostCenterId: null,
+        accActiveId: null,
         openningBalanceDepit: null,
         openningBalanceCredit: null,
-        costCenterCurrTrancDepit: null,
-        costCenterCurrTrancCredit: null,
-        costCenterTotalDebit: null,
-        costCenterTotaCredit: null,
+        activeCurrTrancDepit: null,
+        activeCurrTrancCredit: null,
+        activeTotalDebit: null,
+        activeTotaCredit: null,
         balanceDebitLocal: null,
         balanceCreditLocal: null,
         openningBalanceDepitCurncy: null,
         openningBalanceCreditCurncy: null,
-        costCenterCurrTrancDepitCurncy: null,
-        costCenterCurrTrancCreditCurncy: null,
-        costCenterTotalDebitCurncy: null,
-        costCenterTotaCreditCurncy: null,
+        activeCurrTrancDepitCurncy: null,
+        activeCurrTrancCreditCurncy: null,
+        activeTotalDebitCurncy: null,
+        activeTotaCreditCurncy: null,
         balanceDebitCurncy: null,
         balanceCreditCurncy: null,
         remarksA: null,
@@ -555,32 +555,32 @@ export class ActivitiesComponent implements OnInit{
         aid: null
       });
     }else{
-      this.calCostCenterForm.setValue({
-        costCenterId: null,
-        costCenterCode: null,
-        costCenterNameA: null,
-        costCenterNameE: null,
-        mainCostCenterId: null,
-        costCenterLevel: null,
-        centerCategory: null,
-        costType: 1,
+      this.ActivityForm.setValue({
+        activeId: null,
+        activeCode: null,
+        activeNameA: null,
+        activeNameE: null,
+        mainActiveId: null,
+        activeLevel: null,
+        activeCategory: null,
+        activeType: 1,
         cashFlowList: 1,
         jopDesc: 1,
-        accCostCenterId: null,
+        accActiveId: null,
         openningBalanceDepit: null,
         openningBalanceCredit: null,
-        costCenterCurrTrancDepit: null,
-        costCenterCurrTrancCredit: null,
-        costCenterTotalDebit: null,
-        costCenterTotaCredit: null,
+        activeCurrTrancDepit: null,
+        activeCurrTrancCredit: null,
+        activeTotalDebit: null,
+        activeTotaCredit: null,
         balanceDebitLocal: null,
         balanceCreditLocal: null,
         openningBalanceDepitCurncy: null,
         openningBalanceCreditCurncy: null,
-        costCenterCurrTrancDepitCurncy: null,
-        costCenterCurrTrancCreditCurncy: null,
-        costCenterTotalDebitCurncy: null,
-        costCenterTotaCreditCurncy: null,
+        activeCurrTrancDepitCurncy: null,
+        activeCurrTrancCreditCurncy: null,
+        activeTotalDebitCurncy: null,
+        activeTotaCreditCurncy: null,
         balanceDebitCurncy: null,
         balanceCreditCurncy: null,
         remarksA: null,
@@ -606,37 +606,37 @@ export class ActivitiesComponent implements OnInit{
   handleNodeClick(node: any) {
     if(node){
       this.CostCenterItem = node,
-      this.calCostCenterForm.setValue({
-        costCenterId: node.costCenterId,
-        costCenterCode: node.costCenterCode,
-        costCenterNameA: node.costCenterNameA,
-        costCenterNameE: node.costCenterNameE,
-        mainCostCenterId: node.mainCostCenterId,
-        costCenterLevel: node.level + 1,
-        centerCategory: node.centerCategory,
-        costType: node.costType,
+      this.ActivityForm.setValue({
+        activeId: node.activeId,
+        activeCode: node.activeCode,
+        activeNameA: node.activeNameA,
+        activeNameE: node.activeNameE,
+        mainActiveId: node.mainActiveId,
+        activeLevel: node.level + 1,
+        activeCategory: node.activeCategory,
+        activeType: node.activeType,
         cashFlowList: node.cashFlowList,
-        accCostCenterId: node.accCostCenterId,
+        accActiveId: node.accActiveId,
         openningBalanceDepit: node.openningBalanceDepit,
         openningBalanceCredit: node.openningBalanceCredit,
-        costCenterCurrTrancDepit: node.costCenterCurrTrancDepit,
-        costCenterCurrTrancCredit: node.costCenterCurrTrancCredit,
-        costCenterTotalDebit: node.costCenterTotalDebit,
+        activeCurrTrancDepit: node.activeCurrTrancDepit,
+        activeCurrTrancCredit: node.activeCurrTrancCredit,
+        activeTotalDebit: node.activeTotalDebit,
         balanceDebitLocal: node.balanceDebitLocal,
         balanceCreditLocal: node.balanceCreditLocal,
         openningBalanceDepitCurncy: node.openningBalanceDepitCurncy,
         openningBalanceCreditCurncy: node.openningBalanceCreditCurncy,
-        costCenterTotalDebitCurncy: node.costCenterTotalDebitCurncy,
+        activeTotalDebitCurncy: node.activeTotalDebitCurncy,
         balanceDebitCurncy: node.balanceDebitCurncy,
         balanceCreditCurncy: node.balanceCreditCurncy,
         remarksA: node.remarksA,
         currencyId: node.currencyId,
         rate: node.rate,
         jopDesc: node.jopDesc,
-        costCenterTotaCredit: node.costCenterTotaCredit,
-        costCenterCurrTrancDepitCurncy: node.costCenterCurrTrancDepitCurncy,
-        costCenterCurrTrancCreditCurncy: node.costCenterCurrTrancCreditCurncy,
-        costCenterTotaCreditCurncy: node.costCenterTotaCreditCurncy,
+        activeTotaCredit: node.activeTotaCredit,
+        activeCurrTrancDepitCurncy: node.activeCurrTrancDepitCurncy,
+        activeCurrTrancCreditCurncy: node.activeCurrTrancCreditCurncy,
+        activeTotaCreditCurncy: node.activeTotaCreditCurncy,
         aid: node.aid,
       })
   
@@ -647,24 +647,24 @@ export class ActivitiesComponent implements OnInit{
       const valuesToCheck = [
         node.openningBalanceDepit,
         node.openningBalanceCredit,
-        node.costCenterCurrTrancDepit,
+        node.activeCurrTrancDepit,
         node.accCurrTrancCredit,
-        node.costCenterTotalDebit,
+        node.activeTotalDebit,
         node.accTotaCredit,
         node.balanceDebitLocal,
         node.balanceCreditLocal,
         node.openningBalanceDepitCurncy,
         node.openningBalanceCreditCurncy,
-        node.costCenterCurrTrancDepitCurncy,
+        node.activeCurrTrancDepitCurncy,
         node.accCurrTrancCreditCurncy,
-        node.costCenterTotalDebitCurncy,
+        node.activeTotalDebitCurncy,
         node.accTotaCreditCurncy,
         node.balanceDebitCurncy,
         node.balanceCreditCurncy
       ];
       
       if (valuesToCheck.some(value => value !== 0)) {
-        this.calCostCenterForm.controls['currencyId'].disable();
+        this.ActivityForm.controls['currencyId'].disable();
       }
       
 
@@ -675,17 +675,17 @@ export class ActivitiesComponent implements OnInit{
   Filterchange(data: Event){
     const value = (data.target as HTMLInputElement).value;
     if (value.trim() === '') {
-      this.dataSource.data = this.allCostCenter; 
+      this.dataSource.data = this.allActivities; 
     } else {
-      this.DataFilter = this.allCostCenter
-      .filter(i => i.costCenterNameA.includes(value));
+      this.DataFilter = this.allActivities
+      .filter(i => i.activeNameA.includes(value));
       this.dataSource.data = this.DataFilter;
     }
   }
 
-  GetAllCostCenterForSelect(){
-    this.AccountsService.GetAllCostCenterForSelect().subscribe(res=>{
-      this.allCostCenterForSelect = res;
+  GetAllActivitiesForSelect(){
+    this.AccountsService.GetAllActivitiesForSelect().subscribe(res=>{
+      this.allActivitiesForSelect = res;
     })
   }
 
@@ -703,13 +703,13 @@ GetAllSys_AnalyticalCodes(){
 
 
 onSumbit(){
-  this.AccountsService.AddCalCostCenter(this.calCostCenterForm.value).subscribe(res=>{
+  this.AccountsService.AddActivity(this.ActivityForm.value).subscribe(res=>{
    if(res.status){
-    this.GetAllCostCenter();
-    this.GetAllCostCenterForSelect();
-     this.calCostCenterForm.disable();
-     this.CostCenterItem = this.calCostCenterForm.value
-     this.calCostCenterForm.get('costCenterId')?.setValue(res.id)
+    this.GetAllActivities();
+    this.GetAllActivitiesForSelect();
+     this.ActivityForm.disable();
+     this.CostCenterItem = this.ActivityForm.value
+     this.ActivityForm.get('activeId')?.setValue(res.id)
      this.DisabledNextButton = false;
      this.DisabledPrevButton = false;
      this.lastRow = false;

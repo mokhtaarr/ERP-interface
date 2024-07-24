@@ -139,8 +139,49 @@
             </mat-form-field>
 
           </div>
-        </mat-tab>
 
+          <div>
+            <button mat-fab class="m-2" extended color="primary"  [disabled]="disableAddUnit"  type="button" (click)="AddUnit()">
+              أضافة وحده
+            </button>
+            <table  style="margin-bottom: auto;" class="table table-hover mt-3" 
+                *ngIf="itemUnitsSub.length > 0">
+                <thead>
+                    <tr>
+                        <th scope="col">الكود</th>
+                        <th scope="col">الإسم بالعربى </th>
+                        <th scope="col">الإسم بالإنجليزى</th>
+                        <th scope="col">معامل التحويل</th>
+                        <th scope="col">لايمكن تقسم الوحده</th>
+                        <th scope="col">الرمز</th>
+                        <th scope="col">الملاحظات</th>
+                        <th scope="col">تعديل</th>
+                        <th scope="col">حذف</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let itemUnit of itemUnitsSub">
+                        <td class="tableTd">{{itemUnit.unitCode}}</td>
+                        <td class="tableTd">{{itemUnit.unitNam}}</td>
+                        <td class="tableTd">{{itemUnit.unitNameE}}</td>
+                        <td class="tableTd">{{itemUnit?.unittRate}}</td>
+                        <td>
+                          <p><mat-slide-toggle color="primary"
+                                  [checked]="itemUnit?.cannotDevide"></mat-slide-toggle></p>
+                      </td>
+                        <td class="tableTd">{{itemUnit?.symbol}}</td>
+                        <td class="tableTd">{{itemUnit?.remarks}}</td>
+                        <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                              (click)="updateUnit(itemUnit)"  ></i></td>
+      
+                        <td><i class="fas fa-trash-alt"
+                              (click)="DeleteUnit(itemUnit?.basUnitId)"   style="color: red;cursor: pointer;"></i></td>
+      
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </mat-tab>
       </mat-tab-group>
     </form>
   </div>

@@ -96,6 +96,46 @@ export class AccountsModuleServicesService {
     }))
   }
 
+  // السيرفسيس الخاصه بالانشطة
+  GetAllActivities(){
+    return this.http.get<any>(environment.apiUrl +'Activite/GetAllActivities')
+  }
+
+  GetAllActivitiesForSelect(){
+    return this.http.get<any>(environment.apiUrl +'Activite/GetAllActivitiesForSelect')
+  }
+
+  AddActivity(values:any){
+    return this.http.post<any>(environment.apiUrl+'Activite/AddCalActivity',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+  DeleteActivity(activeId:any){
+    return this.http.delete<any>(`${environment.apiUrl}Activite/DeleteActivity?ActiveId=${activeId}`)
+    .pipe(map((res)=>{
+      var message = res.message;
+      var messageEn = res.messageEn;
+  
+      if (res.status == true) this.toastr.success(message);
+  
+      if (res.status == false) this.toastr.error(message);
+  
+      return res.status;
+    }))
+  }
+
+
+
 
   // السيرفسيس الخاصه بمركز التكلفه 
   GEtAllCostCenter(){

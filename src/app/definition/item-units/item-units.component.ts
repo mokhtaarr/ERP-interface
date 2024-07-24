@@ -6,6 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DefinitionService } from '../definition.service';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
+import { UpdateUnitComponent } from '../update-unit/update-unit.component';
+import { AddUnitComponent } from '../add-unit/add-unit.component';
 
 @Component({
   selector: 'app-item-units',
@@ -19,7 +21,8 @@ export class ItemUnitsComponent implements OnInit{
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
-  AllBasicsUnit:any[] = []
+  AllBasicsUnit: any[] = []
+  itemUnitsSub: any[] = []
 
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
@@ -33,6 +36,8 @@ export class ItemUnitsComponent implements OnInit{
   reloadDisabled : boolean = true;
   UndoDisabled : boolean = true;
   undoIndex!: number;
+
+  disableAddUnit:boolean = true;
 
   constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
   }
@@ -105,7 +110,9 @@ export class ItemUnitsComponent implements OnInit{
       this.UpdateDisable = false;
       this.DeleteDisable = false;
       this.UndoDisabled = true;
+      this.disableAddUnit = false;
       window.scrollTo({ top: 30, behavior: 'smooth' });
+      this.getSubUnits(row.basUnitId);
     }
   }
 
@@ -123,7 +130,7 @@ export class ItemUnitsComponent implements OnInit{
         remarks: FirstItem.remarks,
         autoDesc: FirstItem.autoDesc
       })
-  
+      this.disableAddUnit = false;
       this.firstRow = true;
       this.lastRow = false;
       this.DisabledPrevButton = true;
@@ -147,7 +154,7 @@ export class ItemUnitsComponent implements OnInit{
         remarks: LastItem.remarks,
         autoDesc: LastItem.autoDesc
       })
-
+    this.disableAddUnit = false;
     this.firstRow = false;
     this.lastRow = true;
     this.DisabledPrevButton = false;
@@ -175,7 +182,7 @@ export class ItemUnitsComponent implements OnInit{
       remarks: PrevItem.remarks,
       autoDesc: PrevItem.autoDesc
      })
-
+        this.disableAddUnit = false;
         this.firstRow = false;
         this.lastRow = false;
         this.UpdateDisable = false;
@@ -213,7 +220,7 @@ export class ItemUnitsComponent implements OnInit{
         remarks: nextItem.remarks,
         autoDesc: nextItem.autoDesc
        })
-        
+       this.disableAddUnit = false;
         this.firstRow = false;
         this.UpdateDisable = false;
         this.DeleteDisable = false;
@@ -338,8 +345,73 @@ export class ItemUnitsComponent implements OnInit{
     this.reloadDisabled = true;
     this.DeleteDisable = true;
     this.UndoDisabled = false;
+    this.disableAddUnit = true;
+
   }
   
 
+  // السيرفسيس الخاصه بالوحدات الفرعيه للوحده الاساسية
+  
+  getSubUnits(basUnitId:any){
+    this.definitionService.GetItemUnitSub(basUnitId).subscribe(res=>{
+      this.itemUnitsSub = res
+    })
+  }
+
+
+  updateUnit(itemUnit:any){
+    var _popup = this.dialog.open(UpdateUnitComponent, {
+      width: '90%',
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+      data: {
+        Title: 'تعديل وحده',
+        itemUnitData : itemUnit,
+        basicId : this.BasicsUnitForm.value.basUnitId
+      },
+    });
+    _popup.afterClosed().subscribe((response) => {
+      if(response){
+           this.getSubUnits(response);
+      }
+    });
+  }
+
+DeleteUnit(basUnitId:any){
+    var _popup = this.dialog.open(DeleteConfirmComponent, {
+      width: '30%',
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+    });
+    _popup.afterClosed().subscribe((response) => {
+      if (response) {
+        this.definitionService.DeleteUnit(basUnitId).subscribe(res=>{
+          if(res){
+            this.getSubUnits(this.BasicsUnitForm.value.basUnitId);
+           
+          }
+        })
+           
+      }
+    });
+  }
+
+  AddUnit(){
+    var _popup = this.dialog.open(AddUnitComponent, {
+      width: '90%',
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+      data: {
+        Title: 'أضافة وحده',
+        ParentUnitId : this.BasicsUnitForm.value.basUnitId,
+        ParentName : this.BasicsUnitForm.value.unitNam
+      },
+    });
+    _popup.afterClosed().subscribe((response) => {
+      if(response){
+           this.getSubUnits(response);
+      }
+    });
+  }
 }
 

@@ -7,7 +7,7 @@
 
 
     <div style="margin-bottom: 150px;">
-        <form [formGroup]="calCostCenterForm" (ngSubmit)="onSumbit()">
+        <form [formGroup]="ActivityForm" (ngSubmit)="onSumbit()">
             <div style="display: flex;justify-content: space-between;">
                 <div class="example-button-row">
                     <div class="example-flex-container">
@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="example-button-container">
-                            <button type="button" mat-mini-fab color="primary" (click)="GetAllCostCenter()"
+                            <button type="button" mat-mini-fab color="primary" (click)="GetAllActivities()"
                                 [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
                                 <i class="fas fa-sync"></i>
                             </button>
@@ -53,7 +53,7 @@
 
                         <div class="example-button-container">
                             <button type="submit" mat-mini-fab color="primary"
-                                [disabled]=" SaveDisable || calCostCenterForm.invalid"
+                                [disabled]=" SaveDisable || ActivityForm.invalid"
                                 aria-label="Example icon button with a menu icon">
                                 <i class="fas fa-save"></i>
                             </button>
@@ -61,7 +61,7 @@
 
                         <div class="example-button-container">
                             <button type="button" mat-mini-fab color="warn"
-                                [disabled]=" DeleteDisable || calCostCenterForm.invalid" (click)="Open_delete_confirm()"
+                                [disabled]=" DeleteDisable || ActivityForm.invalid" (click)="Open_delete_confirm()"
                                 aria-label="Example icon button with a menu icon">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
@@ -76,7 +76,7 @@
 
                         <div class="example-button-container">
                             <button type="button" mat-mini-fab [disabled]="UpdateDisable"
-                                (click)="updateCalCostCenter()" color="primary"
+                                (click)="updateActivity()" color="primary"
                                 aria-label="Example icon button with a menu icon">
                                 <i class="fas fa-edit"></i>
                             </button>
@@ -92,8 +92,8 @@
                     </div>
                 </div>
                 <div>
-                    <h1 style="color: #3f51b5;" *ngIf="calCostCenterForm.value.costCenterNameA">
-                        {{calCostCenterForm.value.costCenterNameA}}
+                    <h1 style="color: #3f51b5;" *ngIf="ActivityForm.value.activeNameA">
+                        {{ActivityForm.value.activeNameA}}
                         <img height="50" width="50" src="../../../assets/images/arrow.gif">
                     </h1>
                 </div>
@@ -108,7 +108,7 @@
                                 <h2 style="margin-bottom: auto;">
                                     <i class="fas fa-info-circle custom-icon"></i>
 
-                                    بيانات 
+                                    بيانات أساسية 
                                 </h2>
                             </ng-template>
 
@@ -117,37 +117,37 @@
                                     <mat-form-field appearance="outline" style="display: none;"
                                         class="col-lg-3 col-md-6 col-sm-12">
                                         <mat-label>Id</mat-label>
-                                        <input matInput type="number" formControlName="costCenterId">
+                                        <input matInput type="number" formControlName="activeId">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-label>رقم النشاط</mat-label>
-                                        <input matInput type="number" formControlName="costCenterCode"
+                                        <input matInput type="number" formControlName="activeCode"
                                             [readonly]="EditReadonly">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-label>الإسم بالعربى</mat-label>
-                                        <input matInput type="text" formControlName="costCenterNameA">
+                                        <input matInput type="text" formControlName="activeNameA">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-label>الإسم بالإنجليزى</mat-label>
-                                        <input matInput type="text" formControlName="costCenterNameE">
+                                        <input matInput type="text" formControlName="activeNameE">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-label>المستوى</mat-label>
-                                        <input matInput type="number" formControlName="costCenterLevel" [readonly]="true">
+                                        <input matInput type="number" formControlName="activeLevel" [readonly]="true">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-label>النشاط الرئيسى</mat-label>
-                                        <mat-select formControlName="mainCostCenterId">
+                                        <mat-select formControlName="mainActiveId">
                                             <mat-option (onSelectionChange)="MainAccountData(costCenter)"
-                                                [value]="costCenter.costCenterId" *ngFor="let costCenter of allCostCenterForSelect"
-                                                [style.display]="costCenter.costCenterId === calCostCenterForm.get('costCenterId')!.value ? 'none' : ''">
-                                                {{costCenter.costCenterCode}} - {{costCenter.costCenterNameA}}
+                                                [value]="costCenter.activeId" *ngFor="let costCenter of allActivitiesForSelect"
+                                                [style.display]="costCenter.activeId === ActivityForm.get('activeId')!.value ? 'none' : ''">
+                                                {{costCenter.activeCode}} - {{costCenter.activeNameA}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -169,19 +169,19 @@
                                            -->
                                     <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-label>نوع النشاط</mat-label>
-                                        <mat-select formControlName="costType">
+                                        <mat-select formControlName="activeType">
                                             <mat-option
-                                                [disabled]="calCostCenterForm.get('mainCostCenterId')!.value != null"
+                                                [disabled]="ActivityForm.get('mainActiveId')!.value != null"
                                                 [value]="1">رئيسى</mat-option>
                                             <mat-option
-                                                [disabled]="calCostCenterForm.get('mainCostCenterId')!.value == null"
+                                                [disabled]="ActivityForm.get('mainActiveId')!.value == null"
                                                 [value]="2">فرعى</mat-option>
                                         </mat-select>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-label>طبيعه النشاط</mat-label>
-                                        <mat-select formControlName="centerCategory">
+                                        <mat-select formControlName="activeCategory">
                                             <mat-option [value]="1">اصول</mat-option>
                                             <mat-option [value]="2">خصوم</mat-option>
                                             <mat-option [value]="3">ايرادات</mat-option>
@@ -226,11 +226,11 @@
                                     
                                     <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-label>المراكز المجمعه</mat-label>
-                                        <mat-select formControlName="accCostCenterId">
+                                        <mat-select formControlName="accActiveId">
                                             <mat-option 
-                                                [value]="costCenter.costCenterId" *ngFor="let costCenter of allCostCenterForSelect"
-                                                [style.display]="costCenter.costCenterId === calCostCenterForm.get('costCenterId')!.value ? 'none' : ''">
-                                                {{costCenter.costCenterCode}} - {{costCenter.costCenterNameA}}
+                                                [value]="costCenter.activeId" *ngFor="let costCenter of allActivitiesForSelect"
+                                                [style.display]="costCenter.activeId === ActivityForm.get('activeId')!.value ? 'none' : ''">
+                                                {{costCenter.activeCode}} - {{costCenter.activeNameA}}
                                             </mat-option>
                                         </mat-select>                                        
                                     </mat-form-field>
@@ -253,6 +253,7 @@
                                         </mat-form-field>
                                     </div>
 
+                                    <div></div>
                                     <mat-form-field class="col-lg-6 col-md-6 col-sm-12" appearance="outline">
                                         <mat-label>ملاحظات</mat-label>
                                         <textarea matInput formControlName="remarksA"></textarea>
@@ -295,7 +296,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-form-field class="ang-maturial-select" appearance="outline">
                                             <mat-label>الحركه الحالية مدين</mat-label>
-                                            <input matInput type="number" formControlName="costCenterCurrTrancDepit"
+                                            <input matInput type="number" formControlName="activeCurrTrancDepit"
                                                 [readonly]="true">
                                         </mat-form-field>
                                     </div> 
@@ -303,7 +304,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-form-field class="ang-maturial-select" appearance="outline">
                                             <mat-label>الحركه الحالية دائن</mat-label>
-                                            <input matInput type="number" formControlName="costCenterCurrTrancCredit"
+                                            <input matInput type="number" formControlName="activeCurrTrancCredit"
                                                 [readonly]="true">
                                         </mat-form-field>
                                     </div>
@@ -311,7 +312,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-form-field class="ang-maturial-select" appearance="outline">
                                             <mat-label>الإجمالى مدين</mat-label>
-                                            <input matInput type="number" formControlName="costCenterTotalDebit"
+                                            <input matInput type="number" formControlName="activeTotalDebit"
                                                 [readonly]="true">
                                         </mat-form-field>
                                     </div>
@@ -319,7 +320,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-form-field class="ang-maturial-select" appearance="outline">
                                             <mat-label>الإجمالى دائن</mat-label>
-                                            <input matInput type="number" formControlName="costCenterTotaCredit"
+                                            <input matInput type="number" formControlName="activeTotaCredit"
                                                 [readonly]="true">
                                         </mat-form-field>
                                     </div>
@@ -365,7 +366,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-form-field class="ang-maturial-select" appearance="outline">
                                             <mat-label>الحركه الحالية مدين</mat-label>
-                                            <input matInput type="number" formControlName="costCenterCurrTrancDepitCurncy"
+                                            <input matInput type="number" formControlName="activeCurrTrancDepitCurncy"
                                                 [readonly]="true">
                                         </mat-form-field>
                                     </div>
@@ -373,7 +374,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-form-field class="ang-maturial-select" appearance="outline">
                                             <mat-label>الحركه الحالية دائن</mat-label>
-                                            <input matInput type="number" formControlName="costCenterCurrTrancCreditCurncy"
+                                            <input matInput type="number" formControlName="activeCurrTrancCreditCurncy"
                                                 [readonly]="true">
                                         </mat-form-field>
                                     </div>
@@ -381,7 +382,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-form-field class="ang-maturial-select" appearance="outline">
                                             <mat-label>الإجمالى مدين</mat-label>
-                                            <input matInput type="number" formControlName="costCenterTotalDebitCurncy"
+                                            <input matInput type="number" formControlName="activeTotalDebitCurncy"
                                                 [readonly]="true">
                                         </mat-form-field>
                                     </div>
@@ -389,7 +390,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <mat-form-field class="ang-maturial-select" appearance="outline">
                                             <mat-label>الإجمالى دائن</mat-label>
-                                            <input matInput type="number" formControlName="costCenterTotaCreditCurncy"
+                                            <input matInput type="number" formControlName="activeTotaCreditCurncy"
                                                 [readonly]="true">
                                         </mat-form-field>
                                     </div>
@@ -605,7 +606,7 @@
                         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="handleNodeClick(node)">
                             <button mat-icon-button disabled><i class="far fa-folder-open"
                                     style="font-size: 20px;color: #ecd9a6;"></i></button>
-                            {{node.costCenterNameA}}
+                            {{node.activeNameA}}
                         </mat-tree-node>
 
                         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
@@ -616,7 +617,7 @@
                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
                             </button>
-                            {{node.costCenterNameA}}
+                            {{node.activeNameA}}
                         </mat-tree-node>
                     </mat-tree>
 
