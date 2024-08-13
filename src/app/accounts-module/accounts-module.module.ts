@@ -9,6 +9,9 @@ import { CostCenterComponent } from './cost-center/cost-center.component';
 import { SysAnalyticalCodeComponent } from './sys-analytical-code/sys-analytical-code.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
+import { FinancialYearComponent } from './financial-year/financial-year.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { CheckboxRendererComponent } from './checkbox-renderer/checkbox-renderer.component';
 
 
 @NgModule({
@@ -18,12 +21,16 @@ import { CurrenciesComponent } from './currencies/currencies.component';
     CostCenterComponent,
     SysAnalyticalCodeComponent,
     ActivitiesComponent,
-    CurrenciesComponent
+    CurrenciesComponent,
+    FinancialYearComponent,
+    CheckboxRendererComponent,
   ],
   imports: [
     CommonModule,
     AccountsModuleRoutingModule,
-    ImportModule
+    ImportModule,
+    AgGridModule
+
   ]
 })
 export class AccountsModuleModule { }

@@ -24,12 +24,23 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   imports: [
     CommonModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-top-center',
       preventDuplicates: false,
       closeButton:true,
       progressBar:true,
       progressAnimation:'decreasing'
       
+
+      // positionClass: 'toast-top-center',
+      // preventDuplicates: false,
+      // closeButton: true, // لتفعيل زر الإغلاق
+      // progressBar: true, // لتفعيل شريط التقدم
+      // progressAnimation: 'decreasing', // تفعيل تأثير التقدم المتناقص
+      // timeOut: 0, // لضبط الوقت الذي سيبقى فيه الإشعار ظاهرًا (0 يعني عدم اختفائه تلقائيًا)
+      // extendedTimeOut: 0, // لتحديد الوقت الإضافي بعد مرور الوقت الأساسي (0 يعني عدم إضافة وقت إضافي)
+      // tapToDismiss: false //
+
+
     }),
 
     TranslateModule.forRoot({

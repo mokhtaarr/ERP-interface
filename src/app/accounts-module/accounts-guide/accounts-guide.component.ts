@@ -1,6 +1,6 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatTree, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { AccountsModuleServicesService } from '../accounts-module-services.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -38,7 +38,7 @@ export class AccountsGuideComponent implements OnInit {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
   undoItem:any;
@@ -107,6 +107,7 @@ export class AccountsGuideComponent implements OnInit {
     node => node.children,   
   );
 
+  @ViewChild('tree') tree !: MatTree<any>;
 
   constructor(private AccountsService : AccountsModuleServicesService,private fb:FormBuilder,private dialog: MatDialog){
 
@@ -173,6 +174,9 @@ export class AccountsGuideComponent implements OnInit {
       this.allAccountsGuide = res;
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.dataSource.data = this.allAccountsGuide;
+      if (this.tree && this.tree.treeControl) {
+        this.tree.treeControl.expandAll();
+      }
     })
   }
 
@@ -336,9 +340,17 @@ export class AccountsGuideComponent implements OnInit {
 
   getPrevRowData(){
     const index = this.allAccountsGuide.findIndex(p=>p.accountId == this.AccountGuideForm.value.accountId);
+
+    if(index === 0 || index === -1){
+      this.DisabledPrevButton = true;
+      this.firstRow = true;
+   }
+
+
     const PrevItem = this.allAccountsGuide[index - 1];
     if(PrevItem == null){
       this.DisabledPrevButton = true;
+      this.firstRow = true;
     }
     
     if(PrevItem){
@@ -616,7 +628,19 @@ export class AccountsGuideComponent implements OnInit {
 
   undo(){
     this.AccountGuideForm.disable();
-    if(this.undoItem){
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.DeleteDisable = true;
+    this.UpdateDisable = true;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
+
+    if(this.undoItem.accountId != null){
+      this.DeleteDisable = false;
+      this.UpdateDisable = false;
       this.AccountGuideForm.setValue({
         accountId: this.undoItem.accountId,
         accountCode: this.undoItem.accountCode,
@@ -651,52 +675,7 @@ export class AccountsGuideComponent implements OnInit {
         accountStopped: this.undoItem.accountStopped,
         rate: this.undoItem.rate
       });
-    }else{
-      this.AccountGuideForm.setValue({
-        accountId: null,
-        accountCode: null,
-        accountNameA: null,
-        accountNameE: null,
-        mainAccountId: null,
-        accountLevel: null,
-        accountNature: null,
-        accountType: null,
-        accountGroup: null,
-        accCashFlow: null,
-        calcMethod: null,
-        openningBalanceDepit: null,
-        openningBalanceCredit: null,
-        accCurrTrancDepit: null,
-        accCurrTrancCredit: null,
-        accTotalDebit: null,
-        accTotaCredit: null,
-        balanceDebitLocal: null,
-        balanceCreditLocal: null,
-        openningBalanceDepitCurncy: null,
-        openningBalanceCreditCurncy: null,
-        accCurrTrancDepitCurncy: null,
-        accCurrTrancCreditCurncy: null,
-        accTotalDebitCurncy: null,
-        accTotaCreditCurncy: null,
-        balanceDebitCurncy: null,
-        balanceCreditCurncy: null,
-        remarksA: null,
-        remarksE: null,
-        currencyId: null,
-        accountStopped: null,
-        rate: null
-      });
     }
-    
-    this.UpdateDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
-    this.reloadDisabled = false;
-    this.SaveDisable = true;
-    this.UndoDisabled = true;
-    this.DeleteDisable = false;
   }
 
   updateAccount(){

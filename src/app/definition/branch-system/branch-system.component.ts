@@ -18,7 +18,7 @@ import { last } from 'rxjs';
   styleUrls: ['./branch-system.component.scss'],
 })
 export class BranchSystemComponent implements OnInit {
-  AllBranches: Branches[] = [];
+  AllBranches: any[] = [];
   branches_button: Branches[] = [];
   branch!: Branches;
   readonly_field: boolean = false;
@@ -32,7 +32,7 @@ export class BranchSystemComponent implements OnInit {
   EditDisable : boolean = true;
   SaveDisable : boolean = true;
   DeleteDisable : boolean = true;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   firstRow: boolean = false;
   lastRow: boolean = false;
@@ -41,6 +41,8 @@ export class BranchSystemComponent implements OnInit {
   AllPartition: partition[] = [];
   selectedBranchId: any;
 
+  disableAddPartition : boolean = false;
+  allBoxBanks:any[] = [];
   dataSource: any;
   displayedColumns: string[] = [
     'partCode',
@@ -63,6 +65,7 @@ export class BranchSystemComponent implements OnInit {
     this.branchForm.disable();
     this.getAllBranches();
     this.updateDisabledState();
+    this.GetAllBoxBankForBranches();
   }
 
   branchForm = this.fb.group({
@@ -70,11 +73,9 @@ export class BranchSystemComponent implements OnInit {
     storeCode: ['', Validators.required],
     storeDescA: ['', Validators.required],
     storeDescE: ['', Validators.required],
-    branch_offical: [''],
-    phone: [''],
-    Treasury: [''],
-    branch_location: [''],
-    main: [false],
+    tel: [''],
+    boxId:[],
+    storeType: [false],
   });
 
   updateDisabledState() {
@@ -86,24 +87,34 @@ export class BranchSystemComponent implements OnInit {
   }
 
   getAllBranches() {
-    this.definitionService.getAllBranches().subscribe((data: Branches[]) => {
+    this.definitionService.getAllBranches().subscribe(data => {
       this.AllBranches = data;
+      const firstBranch = this.AllBranches[0];
+      if(firstBranch){
+       this.getPartition_of_StoreId(firstBranch.storeId);
+       this.getBranch(firstBranch.storeId);
+       this.selectedBranchId = firstBranch.storeId;
+      }
     });
+  }
+
+  GetAllBoxBankForBranches(){
+    this.definitionService.GetAllBoxBankForBranches().subscribe(res=>{
+      this.allBoxBanks = res;
+    })
   }
 
   getBranch(storeId: number) {
     this.readonly_field = true;
-    this.definitionService.getBranch(storeId).subscribe((res: Branches) => {
+    this.definitionService.getBranch(storeId).subscribe(res => {
       this.branchForm.setValue({
         storeId: res.storeId,
         storeCode: res.storeCode,
         storeDescA: res.storeDescA,
-        storeDescE: res.storeDescE,
-        branch_offical: '',
-        phone: '',
-        Treasury: '',
-        branch_location: '',
-        main: false,
+        storeDescE: res.storeDescE ?? '',
+        tel:res.tel ?? '',
+        boxId: res.boxId ?? null,
+        storeType: res.storeType ?? false,
       });
     });
 
@@ -132,6 +143,7 @@ export class BranchSystemComponent implements OnInit {
       });
 
     this.StoreId_for_DeletedPartition = storeId;
+    this.branchForm.get('storeId')?.setValue(storeId);
   }
 
   open_AddPartition_Popup() {
@@ -142,6 +154,7 @@ export class BranchSystemComponent implements OnInit {
       data: {
         Title: 'إضافة مخزن',
         branches: this.AllBranches,
+        storeId : this.branchForm.value.storeId
       },
     });
 
@@ -189,16 +202,14 @@ export class BranchSystemComponent implements OnInit {
       storeCode: null,
       storeDescA: null,
       storeDescE: null,
-      branch_offical: null,
-      phone: null,
-      Treasury: null,
-      branch_location: null,
-      main: null,
+      tel: null,
+      boxId: null,
+      storeType: null,
     });
     this.updateDisabledState();
 
     this.Disable_Left_button = true;
-    this.Disable_Left_button = true;
+    this.Disable_right_button = true;
     this.lastRow = true;
     this.firstRow = true;
     this.EditDisable = true;
@@ -207,13 +218,18 @@ export class BranchSystemComponent implements OnInit {
     this.reloadDisabled = true;
     this.DeleteDisable = true;
     this.UndoDisabled = false;
-
+    this.disableAddPartition = true;
+    this.AllPartition = []
   }
 
   onSumbit() {
     this.definitionService.AddBranch(this.branchForm.value).subscribe(res=>{
-      if(res){
-        this.getAllBranches();
+      if(res.status){
+       
+        this.definitionService.getAllBranches().subscribe((data: Branches[]) => {
+          this.AllBranches = data;
+        });
+
         this.Disable_Left_button = false;
         this.Disable_right_button = false;
         this.lastRow = false;
@@ -221,6 +237,12 @@ export class BranchSystemComponent implements OnInit {
         this.SaveDisable=true;
         this.EditDisable = false;
         this.UndoDisabled = true;
+        this.branchForm.disable();
+        this.branchForm.get('storeId')?.setValue(res.id);
+        this.selectedBranchId = this.branchForm.value.storeId;
+        this.getPartition_of_StoreId(res.id);
+        this.getBranch(res.id)
+        this.disableAddPartition = false;
       }
     });
   }
@@ -245,6 +267,7 @@ export class BranchSystemComponent implements OnInit {
     this.reloadDisabled = false;
     this.EditDisable = true;
     this.UndoDisabled = false;
+    this.disableAddPartition = true;
     this.undoIndex = this.AllBranches.findIndex(p=>p.storeId == this.branchForm.value.storeId);
   }
 
@@ -267,17 +290,20 @@ export class BranchSystemComponent implements OnInit {
           this.definitionService
             .DeleteBranch(this.getStoreId)
             .subscribe((res) => {
-              this.getAllBranches();
+
+              this.definitionService.getAllBranches().subscribe((data: Branches[]) => {
+                this.AllBranches = data;});
+              
+                this.disableAddPartition = true;
+              
               this.branchForm.setValue({
                 storeId: null,
                 storeCode: null,
                 storeDescA: null,
                 storeDescE: null,
-                branch_offical: null,
-                phone: null,
-                Treasury: null,
-                branch_location: null,
-                main: null,
+                tel: null,
+                boxId: null,
+                storeType: null,
               });
             });
       }
@@ -300,8 +326,10 @@ export class BranchSystemComponent implements OnInit {
       if (response) {
         if (partCode.length != 0)
           this.definitionService.DeletePartition(partCode).subscribe((res) => {
-            this.getAllBranches();
-            const row = this.dataSource.data.find(
+            this.definitionService.getAllBranches().subscribe((data: Branches[]) => {
+              this.AllBranches = data;})
+              
+              const row = this.dataSource.data.find(
               (item: any) => item.partCode === partCode
             );
             if (row) {
@@ -319,13 +347,13 @@ export class BranchSystemComponent implements OnInit {
         storeId: LastBranch.storeId,
         storeCode: LastBranch.storeCode,
         storeDescA: LastBranch.storeDescA,
-        storeDescE: LastBranch.storeDescE,
-        branch_offical: null,
-        phone: null,
-        Treasury: null,
-        branch_location: null,
-        main: null,
+        storeDescE: LastBranch.storeDescE ?? '',
+        tel: LastBranch.tel ?? '',
+        boxId: LastBranch.boxId ?? null,
+        storeType: LastBranch.storeType ?? false,
       });
+
+      this.selectedBranchId = LastBranch.storeId;
 
       this.getPartition_of_StoreId(LastBranch.storeId);
       this.Disable_Left_button = false ;
@@ -336,7 +364,8 @@ export class BranchSystemComponent implements OnInit {
       this.firstRow = false;
       this.lastRow = true;
 
-   
+      this.disableAddPartition = false;
+
       this.DeleteDisable = false;
   
     }
@@ -349,15 +378,17 @@ export class BranchSystemComponent implements OnInit {
         storeId: firstBranch.storeId,
         storeCode: firstBranch.storeCode,
         storeDescA: firstBranch.storeDescA,
-        storeDescE: firstBranch.storeDescE,
-        branch_offical: null,
-        phone: null,
-        Treasury: null,
-        branch_location: null,
-        main: null,
+        storeDescE: firstBranch.storeDescE ?? '',
+        tel: firstBranch.tel ?? '',
+        boxId: firstBranch.boxId ?? null,
+        storeType: firstBranch.storeType ?? false,
       });
 
+      this.selectedBranchId = firstBranch.storeId;
+
       this.getPartition_of_StoreId(firstBranch.storeId);
+
+      this.disableAddPartition = false;
 
       this.Disable_Left_button = true ;
       this.Disable_right_button = false;
@@ -382,13 +413,16 @@ export class BranchSystemComponent implements OnInit {
         storeId: nextItem.storeId,
         storeCode: nextItem.storeCode,
         storeDescA: nextItem.storeDescA,
-        storeDescE: nextItem.storeDescE,
-        branch_offical: null,
-        phone: null,
-        Treasury: null,
-        branch_location: null,
-        main: null,
+        storeDescE: nextItem.storeDescE ?? '',
+        tel: nextItem.tel ?? '',
+        boxId: nextItem.boxId ?? null,
+        storeType: nextItem.storeType ?? false,
       });
+
+      
+      this.disableAddPartition = false;
+
+      this.selectedBranchId = nextItem.storeId;
 
       this.getPartition_of_StoreId(nextItem.storeId);
 
@@ -416,19 +450,30 @@ export class BranchSystemComponent implements OnInit {
     const index = this.AllBranches.findIndex(
       (p) => p.storeId == this.branchForm.value.storeId
     );
+
+
+    if (index === 0) {
+      this.Disable_Left_button = true;
+      this.firstRow = true;
+    }
+
+
     const prevItem = this.AllBranches[index - 1];
     if (prevItem) {
       this.branchForm.setValue({
         storeId: prevItem.storeId,
         storeCode: prevItem.storeCode,
         storeDescA: prevItem.storeDescA,
-        storeDescE: prevItem.storeDescE,
-        branch_offical: null,
-        phone: null,
-        Treasury: null,
-        branch_location: null,
-        main: null,
+        storeDescE: prevItem.storeDescE ?? '',
+        tel: prevItem.tel ?? '',
+        boxId: prevItem.boxId ?? null,
+        storeType: prevItem.storeType ?? false,
       });
+
+      this.disableAddPartition = false;
+
+
+      this.selectedBranchId = prevItem.storeId;
 
       this.firstRow = false;
       this.lastRow = false;
@@ -453,6 +498,7 @@ export class BranchSystemComponent implements OnInit {
 
   undo(){
     this.branchForm.disable();
+    this.disableAddPartition = false
     if(this.undoIndex != -1){
       const undoItem = this.AllBranches[this.undoIndex]
 
@@ -461,25 +507,28 @@ export class BranchSystemComponent implements OnInit {
          storeId: undoItem.storeId,
          storeCode: undoItem.storeCode,
          storeDescA: undoItem.storeDescA,
-         storeDescE: undoItem.storeDescE,
-         branch_offical: null,
-         phone: null,
-         Treasury: null,
-         branch_location: null,
-         main: null
+         storeDescE: undoItem.storeDescE ?? '',
+         tel: undoItem.tel ?? '',
+         boxId: undoItem.boxId ?? null,
+         storeType: undoItem.storeType ?? false
        })
 
-      this.EditDisable = false;
-      this.Disable_right_button = false;
-      this.Disable_Left_button = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
-      this.DeleteDisable = false;
-   
+       this.disableAddPartition = false;
+
+       this.selectedBranchId = undoItem.storeId;
+       
+       this.getPartition_of_StoreId(undoItem.storeId)
      }
+
+     this.EditDisable = false;
+     this.Disable_right_button = false;
+     this.Disable_Left_button = false;
+     this.lastRow = false;
+     this.firstRow = false;
+     this.reloadDisabled = false;
+     this.SaveDisable = true;
+     this.UndoDisabled = true;
+     this.DeleteDisable = false;
     }
   }
 }

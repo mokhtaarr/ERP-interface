@@ -38,6 +38,7 @@ import { UpdateItemAlternativeComponent } from './update-item-alternative/update
 import { UpdateItemAlternativeFromDatabaseComponent } from './update-item-alternative-from-database/update-item-alternative-from-database.component';
 import { UpdateUnitComponent } from './update-unit/update-unit.component';
 import { AddUnitComponent } from './add-unit/add-unit.component';
+import { BoxesComponent } from './boxes/boxes.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { AddUnitComponent } from './add-unit/add-unit.component';
     UpdateItemAlternativeFromDatabaseComponent,
     UpdateUnitComponent,
     AddUnitComponent,
+    BoxesComponent,
   ],
   imports: [
     CommonModule,

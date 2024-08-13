@@ -27,4 +27,23 @@ export class AccountService {
       })
     );
   }
+
+  getAllCompanies(){
+    return this.http.get<any>(environment.apiUrl+'DataBase/GetAllDataBases')
+  }
+
+  getCompany(DataBaseId : any){
+    return this.http.get<any>(`${environment.apiUrl}DataBase/GetDataBase?DataBaseId=${DataBaseId}`).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
 }

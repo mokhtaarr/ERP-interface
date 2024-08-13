@@ -31,7 +31,7 @@ export class SuppliersTypesComponent implements OnInit  {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
 
 
@@ -303,6 +303,13 @@ constructor(private definitionService: DefinitionService , private fb:FormBuilde
   
     undo() {
       this.vendorTypeForm.disable();
+      this.DisabledNextButton = false;
+      this.DisabledPrevButton = false;
+      this.lastRow = false;
+      this.firstRow = false;
+      this.reloadDisabled = false;
+      this.SaveDisable = true;
+      this.UndoDisabled = true;
 
       if(this.undoIndex != -1){
         const undoItem = this.AllVendorTypes[this.undoIndex]
@@ -320,15 +327,7 @@ constructor(private definitionService: DefinitionService , private fb:FormBuilde
          });
 
         this.UpdateDisable = false;
-        this.DisabledNextButton = false;
-        this.DisabledPrevButton = false;
-        this.lastRow = false;
-        this.firstRow = false;
-        this.reloadDisabled = false;
-        this.SaveDisable = true;
-        this.UndoDisabled = true;
         this.DeleteDisable = false;
-         
         }
         
      

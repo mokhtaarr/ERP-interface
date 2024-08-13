@@ -265,11 +265,15 @@ DeleteItemAlternatives(alterId: number) {
 
   // Branches Servies
   getAllBranches() {
-    return this.http.get<Branches[]>(environment.apiUrl + 'Branches');
+    return this.http.get<any[]>(environment.apiUrl + 'Branches');
+  }
+
+  GetAllBoxBankForBranches(){
+    return this.http.get<any>(environment.apiUrl +'Branches/GetAllBoxBanks')
   }
 
   getBranch(storeId: number) {
-    return this.http.get<Branches>(
+    return this.http.get<any>(
       environment.apiUrl + `Branches/storeId?storeId=${storeId}`
     );
   }
@@ -338,7 +342,7 @@ DeleteItemAlternatives(alterId: number) {
 
           if (res.status == false) this.toastr.error(message);
 
-          return res.status;
+          return res;
         })
       );
   }
@@ -1365,5 +1369,47 @@ DeleteEmployee(empId:any){
 }
 
 
+// box bank services 
+
+
+GetAllBoxBanks(){
+  return this.http.get<any>(environment.apiUrl+'Boxes/GetAllBoxBanks')
+}
+
+
+GetAllAccountForBoxBanks(){
+  return this.http.get<any>(environment.apiUrl+'Boxes/GetAllAccount')
+}
+
+
+AddBoxBank(values:any){
+  return this.http.post<any>(environment.apiUrl+'Boxes/AddBox',values).pipe(
+    map((res) => {
+      var message = res.message;
+      var messageEn = res.messageEn;
+
+      if (res.status == true) this.toastr.success(message);
+      
+      if (res.status == false) this.toastr.error(message);
+
+      return res;
+    })
+  );
+}
+
+
+DeleteBoxBank(BoxId:any){
+  return this.http.delete<any>(`${environment.apiUrl}Boxes/DeleteBoxBank?BoxId=${BoxId}`)
+  .pipe(map((res)=>{
+    var message = res.message;
+    var messageEn = res.messageEn;
+
+    if (res.status == true) this.toastr.success(message);
+
+    if (res.status == false) this.toastr.error(message);
+
+    return res;
+  }))
+}
 
 }

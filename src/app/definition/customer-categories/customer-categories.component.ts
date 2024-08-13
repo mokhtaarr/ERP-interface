@@ -30,7 +30,7 @@ export class CustomerCategoriesComponent implements OnInit{
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex !: number
 
@@ -57,7 +57,7 @@ export class CustomerCategoriesComponent implements OnInit{
     customerCatId:[''],
     catCode:['',Validators.required],
     catDescA:['',Validators.required],
-    catDescE:['',Validators.required],
+    catDescE:[''],
     remarks:[''],
     defaultDisc:[''],
     reportDiscValu:[''],
@@ -101,6 +101,7 @@ export class CustomerCategoriesComponent implements OnInit{
       if(res){
         this.getAllCustomerCategory();
         this.CustomerCategoryForm.disable();
+        this.CustomerCategoryForm.get('customerCatId')?.setValue(res.id)
         this.DisabledNextButton = false;
         this.DisabledPrevButton = false;
         this.lastRow = false;
@@ -154,6 +155,14 @@ export class CustomerCategoriesComponent implements OnInit{
 
     undo() {
       this.CustomerCategoryForm.disable();
+      this.DisabledNextButton = false;
+      this.DisabledPrevButton = false;
+      this.lastRow = false;
+      this.firstRow = false;
+      this.reloadDisabled = false;
+      this.SaveDisable = true;
+      this.UndoDisabled = true;
+
 
       if(this.undoIndex != -1){
         const undoItem = this.customerCategory[this.undoIndex]
@@ -175,24 +184,11 @@ export class CustomerCategoriesComponent implements OnInit{
             isDealer: undoItem.isDealer,
             salPrice: undoItem.salPrice
           });
-
-        this.UpdateDisable = false;
-        this.DisabledNextButton = false;
-        this.DisabledPrevButton = false;
-        this.lastRow = false;
-        this.firstRow = false;
-        this.reloadDisabled = false;
-        this.SaveDisable = true;
-        this.UndoDisabled = true;
-        this.DeleteDisable = false;
-         
-        }
+          this.DeleteDisable = false;
+          this.UpdateDisable = false;
         
-      }
-
-      this.SaveDisable = true;
-      
-  
+        } 
+      }  
     }
 
     updateCustomerCategory() {

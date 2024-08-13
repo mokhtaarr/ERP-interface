@@ -1,8 +1,8 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
+import { MatTreeFlattener, MatTreeFlatDataSource, MatTree } from '@angular/material/tree';
 import { DeleteConfirmComponent } from 'src/app/definition/delete-confirm/delete-confirm.component';
 import { AccountsModuleServicesService } from '../accounts-module-services.service';
 
@@ -87,6 +87,7 @@ export class ActivitiesComponent implements OnInit{
     node => node.children,   
   );
 
+  @ViewChild('tree') tree !: MatTree<any>;
 
 
   constructor(private AccountsService : AccountsModuleServicesService,private fb:FormBuilder,private dialog: MatDialog){
@@ -144,6 +145,9 @@ export class ActivitiesComponent implements OnInit{
       this.allActivities = res;
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.dataSource.data = this.allActivities;
+      if (this.tree && this.tree.treeControl) {
+        this.tree.treeControl.expandAll();
+      }
     })
   }
 
@@ -258,6 +262,12 @@ export class ActivitiesComponent implements OnInit{
 
   getPrevRowData(){
     const index = this.allActivities.findIndex(p=>p.activeId == this.ActivityForm.value.activeId);
+
+    if(index === 0 || index === -1){
+      this.DisabledPrevButton = true;
+      this.firstRow = true;
+   }
+
     const PrevItem = this.allActivities[index - 1];
     if(PrevItem == null){
       this.DisabledPrevButton = true;
@@ -421,7 +431,20 @@ export class ActivitiesComponent implements OnInit{
 
   undo(){
     this.ActivityForm.disable();
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.DeleteDisable = true;
+    this.UpdateDisable = true;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
+
     if(this.undoItem){
+      this.DeleteDisable = false;
+      this.UpdateDisable = false;
+
       this.ActivityForm.setValue({
         activeId: this.undoItem.activeId,
         activeCode: this.undoItem.activeCode,
@@ -455,51 +478,7 @@ export class ActivitiesComponent implements OnInit{
         rate: this.undoItem.rate,
         aid: this.undoItem.aid
       });
-    }else{
-      this.ActivityForm.setValue({
-        activeId: null,
-        activeCode: null,
-        activeNameA: null,
-        activeNameE: null,
-        mainActiveId: null,
-        activeLevel: null,
-        activeCategory: null,
-        activeType: null,
-        cashFlowList: null,
-        jopDesc: null,
-        accActiveId: null,
-        openningBalanceDepit: null,
-        openningBalanceCredit: null,
-        activeCurrTrancDepit: null,
-        activeCurrTrancCredit: null,
-        activeTotalDebit: null,
-        activeTotaCredit: null,
-        balanceDebitLocal: null,
-        balanceCreditLocal: null,
-        openningBalanceDepitCurncy: null,
-        openningBalanceCreditCurncy: null,
-        activeCurrTrancDepitCurncy: null,
-        activeCurrTrancCreditCurncy: null,
-        activeTotalDebitCurncy: null,
-        activeTotaCreditCurncy: null,
-        balanceDebitCurncy: null,
-        balanceCreditCurncy: null,
-        remarksA: null,
-        currencyId: null,
-        rate: null,
-        aid: null
-      })
-    }
-    
-    this.UpdateDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
-    this.reloadDisabled = false;
-    this.SaveDisable = true;
-    this.UndoDisabled = true;
-    this.DeleteDisable = false;
+    }  
   }
 
   updateActivity(){

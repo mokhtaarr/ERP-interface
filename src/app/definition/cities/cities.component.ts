@@ -30,7 +30,7 @@ export class CitiesComponent implements OnInit{
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
   AllVehicleShapes: any;
@@ -161,6 +161,13 @@ export class CitiesComponent implements OnInit{
   
       const index = this.AllCity.findIndex(p=>p.cityId == this.CityForm.value.cityId);
   
+  
+      if (index === 0) {
+        this.DisabledPrevButton = true;
+        this.firstRow = true;
+      }
+
+
       const PrevItem = this.AllCity[index - 1];
   
       if(PrevItem){
@@ -309,4 +316,6 @@ Filterchange(data: Event) {
   const value = (data.target as HTMLInputElement).value;
   this.dataSource.filter = value;
 }
+
+
 }

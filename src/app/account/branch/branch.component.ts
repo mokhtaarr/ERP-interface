@@ -1,26 +1,56 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-branch',
   templateUrl: './branch.component.html',
   styleUrls: ['./branch.component.scss']
 })
-export class BranchComponent {
+export class BranchComponent implements OnInit{
 
+  disableSumbit:boolean = false;
+  disableBranches:boolean = true;
 
-  constructor(private router : Router , private fb : FormBuilder ,private toastr:ToastrService ){
-    
+  allCompanies:any[] = [];
+  constructor(private CompaniesServices:AccountService ,private router : Router , private fb : FormBuilder ,private toastr:ToastrService,private http: HttpClient){
+
+  }
+  ngOnInit(): void {
+    this.getAllCompanies();
   }
 
   branchForm = this.fb.group({
-    branch:['',Validators.required]
+    DataBaseId:['',Validators.required]
   })
 
   onSubmit(){
-    this.toastr.success("تم اختيار الشركه بنجاح");
-     this.router.navigateByUrl('/login');
+    this.disableSumbit = true
+
+    this.CompaniesServices.getCompany(this.branchForm.value.DataBaseId).subscribe(res=>{
+      if(res.status){
+        this.router.navigateByUrl('/login'); 
+      }else{
+        this.disableSumbit = false
+      }
+    })    
+  }
+
+
+  getAllCompanies(){
+    this.CompaniesServices.getAllCompanies().subscribe({
+      next: (res) => {
+        this.allCompanies = res;
+      },
+      error: (err) => {
+        console.error("Error fetching companies", err);
+      },
+      complete: () => {
+        this.disableBranches = false;
+      }
+    });
   }
 }

@@ -3,6 +3,8 @@ export interface Branches{
     storeCode : string;
     storeDescA : string;
     storeDescE : string;
+    boxId : any;
+    
 }
 
 

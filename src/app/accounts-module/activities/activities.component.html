@@ -13,7 +13,7 @@
                     <div class="example-flex-container">
 
 
-                        <div class="example-button-container">
+                        <!-- <div class="example-button-container">
                             <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()"
                                 [disabled]="lastRow" aria-label="Example icon button with a menu icon">
                                 <i class="fas fa-step-backward"></i>
@@ -88,7 +88,90 @@
                                 aria-label="Example icon button with a menu icon">
                                 <i class="fas fa-plus"></i>
                             </button>
-                        </div>
+                        </div> -->
+
+
+                        <button mat-fab extended color="primary" type="button" 
+                        (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                            <i class="fas fa-step-backward"></i>
+                          </mat-icon>
+                        </button>
+                   
+                        <button mat-fab extended color="primary" type="button" 
+                        (click)="getNextRowData()" [disabled]="DisabledNextButton" style="flex-direction:column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                            <i class="fas fa-caret-left"></i>
+                          </mat-icon>
+                        </button>
+              
+                        <button mat-fab extended color="primary" type="button" 
+                        (click)="getPrevRowData()" [disabled]="DisabledPrevButton" style="flex-direction:column;">
+                         <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+                         <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                           <i class="fas fa-caret-right"></i>
+                         </mat-icon>
+                       </button>
+              
+                        <button mat-fab extended color="primary" type="button" 
+                          (click)="getFirstRowData()" [disabled]="firstRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                              <i class="fas fa-step-forward"></i>
+                            </mat-icon>
+                        </button>
+              
+                        <button mat-fab extended color="primary" type="button" 
+                        (click)="GetAllActivities()" [disabled]="reloadDisabled" style="flex-direction: column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                            <i class="fas fa-sync"></i>
+                          </mat-icon>
+                        </button>
+              
+              
+                        <button mat-fab extended color="primary" type="submit" 
+                        [disabled]="ActivityForm.invalid || SaveDisable" style="flex-direction:column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                            <i class="fas fa-save"></i>
+                          </mat-icon>
+                        </button>
+              
+                        <button mat-fab extended color="warn" type="button" 
+                        (click)="Open_delete_confirm()" [disabled]="ActivityForm.invalid || DeleteDisable" style="flex-direction: column;">
+                         <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+                         <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                           <i class="fas fa-trash-alt"></i>
+                         </mat-icon>
+                       </button>
+              
+              
+                        <button mat-fab extended color="primary" type="button" 
+                        (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                            <i class="fas fa-undo"></i>
+                          </mat-icon>
+                        </button>
+              
+              
+                        <button mat-fab extended color="primary" type="button" 
+                        [disabled]="UpdateDisable" (click)="updateActivity()" style="flex-direction: column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                            <i class="fas fa-edit"></i>
+                          </mat-icon>
+                        </button>
+              
+                        <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                            <i class="fas fa-plus"></i>
+                          </mat-icon>
+                        </button>
                     </div>
                 </div>
                 <div>
@@ -595,14 +678,19 @@
 
                     </mat-tab-group>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12" style="background-color: white;">
+                <div class="col-lg-3 col-md-6 col-sm-12 tree-container" style="background-color: white;">
                     <mat-form-field style="width: 100%;margin-top: 15px;" appearance="outline" dir="rtl">
                         <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث
                         </mat-label>
                         <input matInput (keyup)="Filterchange($event)" />
                     </mat-form-field>
 
-                    <mat-tree dir="rtl" [dataSource]="dataSource" [treeControl]="treeControl">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button mat-mini-fab color="primary" type="button" (click)="tree.treeControl.collapseAll()" ><i class="fas fa-eye-slash"></i></button>
+                        <button mat-mini-fab color="primary" type="button" (click)="tree.treeControl.expandAll()"><i class="fas fa-eye"></i></button>
+                    </div>
+
+                    <mat-tree #tree dir="rtl" [dataSource]="dataSource" [treeControl]="treeControl">
                         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="handleNodeClick(node)">
                             <button mat-icon-button disabled><i class="far fa-folder-open"
                                     style="font-size: 20px;color: #ecd9a6;"></i></button>

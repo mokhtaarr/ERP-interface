@@ -47,7 +47,7 @@ export class ItemsComponent implements OnInit {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
 
@@ -78,8 +78,12 @@ export class ItemsComponent implements OnInit {
   itemAlternativesFromDataBase : any[] = []; 
 
   unitsDisable : boolean = false;
+  collectionDisable : boolean = false;
+  alterNativeDisable : boolean = false;
+  storeDisable  : boolean = false;
   
   itemIsCollection : boolean = true;
+  disbaleImage : boolean = false;
 
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
@@ -122,7 +126,7 @@ export class ItemsComponent implements OnInit {
     taxItemCode:[''],
     storePartId:[],
     itemCategoryId:[],
-    itemType:[1],
+    itemType:[1,Validators.required],
     itemLimit:[],
     qtyInBox:[],
     purchasePrice:[],
@@ -674,6 +678,14 @@ Open_delete_confirm(){
 
 undo(){
   this.itemForm.disable();
+  this.DisabledNextButton = false;
+  this.DisabledPrevButton = false;
+  this.lastRow = false;
+  this.firstRow = false;
+  this.reloadDisabled = false;
+  this.SaveDisable = true;
+  this.UndoDisabled = true;
+  this.unitsDisable = false;
 
     if(this.undoIndex != -1){
       const undoItem = this.items[this.undoIndex]
@@ -732,18 +744,8 @@ undo(){
           itemPartition: null,
           itemAlternatives: null
         })
-      
-      this.UpdateDisable = false;
-      this.DisabledNextButton = false;
-      this.DisabledPrevButton = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
-      this.DeleteDisable = false;
-      this.unitsDisable = false;
-
+        this.DeleteDisable = false;
+        this.UpdateDisable = false;
      }
     }
 }
@@ -909,6 +911,7 @@ GetItemPartitionWithHisStore(){
 
         if (!exists && !existsInDataBase) {
           this.itemPartitionWithStores.push(item);
+          this.storeDisable = true;
         }else{
           this.toastr.info(`هذا المخزن  (${item.partDescA})  موجود من قبل`)
         }
@@ -1151,6 +1154,7 @@ OpenItemCollectionList(){
 
           if(this.itemCollectionFromDataBase.length != 0){
             existsInDataBase = this.itemCollectionFromDataBase.some(i=>i.subItemId === item.itemCardId)
+            this.collectionDisable = true;
           }
           
           if (!exists && !existsInDataBase) {
@@ -1199,10 +1203,12 @@ openItemAlternatives(){
 
         if(this.itemAlternativesFromDataBase.length != 0){
           existsInDataBase = this.itemAlternativesFromDataBase.some(i=>i.alterItemCardId === item.itemCardId)
+           
         }
 
         if (!exists && !existsInDataBase) {
           this.itemAlternatives.push(item);
+          this.alterNativeDisable = true
         }else{
           this.toastr.info(`هذا الصنف ${item.itemDescA} موجود من قبل`)
         }
@@ -1274,7 +1280,7 @@ GetItemCollectionFromDataBase(){
 GetItemAlternativesFromDataBase(){
   if(this.itemForm.value.ItemCardId){
    this.definitionService.GetItemAlternatives(this.itemForm.value.ItemCardId).subscribe(res=>{
-     this.itemAlternativesFromDataBase = res
+     this.itemAlternativesFromDataBase = res;
    })
   }
  }

@@ -315,6 +315,14 @@ export class ItemCategoriesComponent implements OnInit{
 
   undo(){
     this.itemCategoryForm.disable();
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
+    
     if(this.undoIndex != -1){
       const undoItem = this.AllItemCategory[this.undoIndex]
       if(undoItem){
@@ -331,19 +339,8 @@ export class ItemCategoriesComponent implements OnInit{
        
       }
       this.UpdateDisable = false;
-      this.DisabledNextButton = false;
-      this.DisabledPrevButton = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
       this.DeleteDisable = false;
-  
       }
-     
-      this.SaveDisable = true;
-
   }
 
 }

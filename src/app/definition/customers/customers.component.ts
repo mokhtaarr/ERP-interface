@@ -41,7 +41,7 @@ export class CustomersComponent implements OnInit{
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
 
@@ -248,6 +248,13 @@ export class CustomersComponent implements OnInit{
 
  undo(){
   this.CustomerForm.disable();
+  this.DisabledNextButton = false;
+  this.DisabledPrevButton = false;
+  this.lastRow = false;
+  this.firstRow = false;
+  this.reloadDisabled = false;
+  this.SaveDisable = true;
+  this.UndoDisabled = true;
 
     if(this.undoIndex != -1){
       const undoItem = this.AllCustomers[this.undoIndex]
@@ -336,15 +343,7 @@ export class CustomersComponent implements OnInit{
        })
 
       this.UpdateDisable = false;
-      this.DisabledNextButton = false;
-      this.DisabledPrevButton = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
       this.DeleteDisable = false;
-   
      }
     }
  }

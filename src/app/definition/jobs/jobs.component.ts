@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatTree, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { ExampleFlatNode, JobTree} from 'src/app/shared/models/tree';
 import { DefinitionService } from '../definition.service';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
@@ -72,12 +72,14 @@ export class JobsComponent implements OnInit {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
   HrDepartmentsForm: any;
+  DataFilter :any;
 
  
+  @ViewChild('tree') tree !: MatTree<any>;
 
 
   constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
@@ -117,7 +119,21 @@ export class JobsComponent implements OnInit {
       this.allHrJobs = res;
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.dataSource.data = this.allHrJobs;
+      if (this.tree && this.tree.treeControl) {
+        this.tree.treeControl.expandAll();
+      }
     })
+  }
+
+  Filterchange(data: Event){
+    const value = (data.target as HTMLInputElement).value;
+    if (value.trim() === '') {
+      this.dataSource.data = this.allHrJobs; 
+    } else {
+      this.DataFilter = this.allHrJobs
+      .filter(i => i.jname1.includes(value));
+      this.dataSource.data = this.DataFilter;
+    }
   }
 
   GetAllHrJobsForSelect(){
@@ -376,6 +392,13 @@ Open_delete_confirm(){
 
 undo(){
   this.HrJobsForm.disable();
+  this.DisabledNextButton = false;
+  this.DisabledPrevButton = false;
+  this.lastRow = false;
+  this.firstRow = false;
+  this.reloadDisabled = false;
+  this.SaveDisable = true;
+  this.UndoDisabled = true;
 
   if(this.undoIndex != -1){
     const undoItem = this.allHrJobs[this.undoIndex]
@@ -401,15 +424,7 @@ undo(){
         numberAvailable: undoItem.numberAvailable
       });
     this.UpdateDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
-    this.reloadDisabled = false;
-    this.SaveDisable = true;
-    this.UndoDisabled = true;
     this.DeleteDisable = false;
- 
    }
   }
 }

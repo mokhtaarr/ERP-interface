@@ -70,11 +70,10 @@ table {
   
 
   
-.example-button-row {
+  .example-button-row {
     display: table-cell;
-    max-width: 600px;
+    max-width: 1000px;
   }
-  
   .example-button-row .mat-mdc-button-base {
     margin: 8px 8px 8px 0;
   }
@@ -114,3 +113,25 @@ table {
   .tableTdForCollection{
     min-width: 300px;
   }
+
+  // دي الاستايل الجديد بتاع الزراير
+
+  .mat-mdc-extended-fab {
+    border-radius: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+    max-width: 100%;
+    height: 45px;
+    line-height: normal;
+    }
+    
+    .mat-mdc-table .mdc-data-table__row:hover{
+      background-color: #dfdfdf; 
+      cursor: pointer;
+    
+    }
+    
+    .example-button-row {
+      display: table-cell;
+      max-width: 1000px;
+    }

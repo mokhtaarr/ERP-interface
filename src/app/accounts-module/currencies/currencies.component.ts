@@ -31,7 +31,7 @@ export class CurrenciesComponent  implements OnInit {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex !: number
   AllItemCategory: any;
@@ -142,6 +142,18 @@ export class CurrenciesComponent  implements OnInit {
 
   const index = this.AllCurreny.findIndex(p=>p.currencyId == this.currencyForm.value.currencyId);
 
+
+  if(index === -1){
+    this.DisabledPrevButton = true;
+    this.firstRow = true;
+  }
+
+  if(index === 0){
+    this.DisabledPrevButton = true;
+    this.firstRow = true;
+  }
+
+
   const PrevItem = this.AllCurreny[index - 1];
 
   if(PrevItem){
@@ -223,6 +235,14 @@ export class CurrenciesComponent  implements OnInit {
 
  undo(){
   this.currencyForm.disable();
+  this.DisabledNextButton = false;
+  this.DisabledPrevButton = false;
+  this.lastRow = false;
+  this.firstRow = false;
+  this.reloadDisabled = false;
+  this.SaveDisable = true;
+  this.UndoDisabled = true;
+
   if(this.undoIndex != -1){
     const undoItem = this.AllCurreny[this.undoIndex]
     if(undoItem){
@@ -237,20 +257,8 @@ export class CurrenciesComponent  implements OnInit {
      
     }
     this.UpdateDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
-    this.reloadDisabled = false;
-    this.SaveDisable = true;
-    this.UndoDisabled = true;
     this.DeleteDisable = false;
-
     }
-   
-    this.SaveDisable = true;
-
-
  }
 
  updateCurrency(){

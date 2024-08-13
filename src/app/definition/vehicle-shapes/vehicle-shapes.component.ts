@@ -31,7 +31,7 @@ export class VehicleShapesComponent implements OnInit  {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
   AllCustomerType: any;
@@ -262,6 +262,14 @@ Open_delete_confirm(){
 undo(){
   this.VehicleShapesForm.disable();
 
+  this.DisabledNextButton = false;
+  this.DisabledPrevButton = false;
+  this.lastRow = false;
+  this.firstRow = false;
+  this.reloadDisabled = false;
+  this.SaveDisable = true;
+  this.UndoDisabled = true;
+
   if(this.undoIndex != -1){
     const undoItem = this.AllVehicleShapes[this.undoIndex]
 
@@ -275,15 +283,7 @@ undo(){
     })
 
     this.UpdateDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
-    this.reloadDisabled = false;
-    this.SaveDisable = true;
-    this.UndoDisabled = true;
     this.DeleteDisable = false;
- 
    }
   }
 

@@ -9,8 +9,13 @@ import { environment } from 'src/environments/environment';
 })
 export class AccountsModuleServicesService {
 
+  codeNumber : number = 0
   constructor(private http: HttpClient, public toastr: ToastrService) {
     
+  }
+
+  getAllItems() {
+    return this.http.get<any[]>(environment.apiUrl + 'Items');
   }
 
   // السرفسيس الخاصه با دليل الحسابات
@@ -283,4 +288,91 @@ export class AccountsModuleServicesService {
   }
 
 
+  // السيرفسيس الخاصه بالسنوات المالية 
+  GetSysFinancialYears(){
+    return this.http.get<any>(environment.apiUrl+'SysFinancialYears/GetAllSys_FinancialYears')
+  }
+
+
+
+  private arabicMonthNames: string[] = [
+    'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+    'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+  ];
+
+  getDateRanges(startDate: Date, endDate: Date,financialYearsCode:any) {
+    if (startDate > endDate) {
+      throw new Error('تاريخ البداية يجب أن يكون قبل تاريخ النهاية.');
+    }
+
+    const dateRanges = [];
+    let current = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+    const end = new Date(endDate.getFullYear(), endDate.getMonth() + 1, 0);
+   
+    while (current <= end) {
+      let monthStart = new Date(current.getFullYear(), current.getMonth(), 1);
+      let monthEnd = new Date(current.getFullYear(), current.getMonth() + 1, 0);
+
+      if (monthStart < startDate) {
+        monthStart = startDate;
+      }
+
+      if (monthEnd > endDate) {
+        monthEnd = endDate;
+      }
+
+      const monthNameEnglish = monthStart.toLocaleString('default', { month: 'long' });
+      const monthNameArabic = this.arabicMonthNames[monthStart.getMonth()];
+
+      dateRanges.push({
+        financialIntervalsId:null,
+        monthNameE: monthNameEnglish,
+        monthNameA: monthNameArabic,
+        startingFrom: monthStart,
+        endingDate: monthEnd,
+        financialIntervalCode: `${financialYearsCode}-${dateRanges.length + 1}`,
+        isClosed:false,
+        isActive:true
+      });
+     
+
+      current = new Date(current.getFullYear(), current.getMonth() + 1, 1);
+    }
+
+    return dateRanges;
+  }
+
+
+  addfinancialYear(values : any){
+    return this.http.post<any>(environment.apiUrl+'SysFinancialYears/AddFinancialYear',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+  GetSysFinancialIntervals(FinancialYearsId:any){
+    return this.http.get<any>(`${environment.apiUrl}SysFinancialYears/GetSysFinancialIntervals?FinancialYearsId=${FinancialYearsId}`)
+  }
+      
+  DeleteFinance(FinancialYearsId:any){
+    return this.http.delete<any>(`${environment.apiUrl}SysFinancialYears/DeleteFanincial?FinancialYearsId=${FinancialYearsId}`)
+    .pipe(map((res)=>{
+      var message = res.message;
+      var messageEn = res.messageEn;
+  
+      if (res.status == true) this.toastr.success(message);
+  
+      if (res.status == false) this.toastr.error(message);
+  
+      return res.status;
+    }))
+  }
 }

@@ -17,6 +17,7 @@ import { MachinesEquipmentComponent } from './machines-equipment/machines-equipm
 import { CitiesComponent } from './cities/cities.component';
 import { TypesOfVehiclesComponent } from './types-of-vehicles/types-of-vehicles.component';
 import { VehicleShapesComponent } from './vehicle-shapes/vehicle-shapes.component';
+import { BoxesComponent } from './boxes/boxes.component';
 
 const routes: Routes = [
   {path:'items',component:ItemsComponent},
@@ -35,7 +36,8 @@ const routes: Routes = [
   {path:'machines-equipment',component:MachinesEquipmentComponent},
   {path:'cities',component:CitiesComponent},
   {path:'Types-of-vehicles',component:TypesOfVehiclesComponent},
-  {path:'Vehicle-shapes',component:VehicleShapesComponent}
+  {path:'Vehicle-shapes',component:VehicleShapesComponent},
+  {path:'boxes',component:BoxesComponent}
 
 ];
 

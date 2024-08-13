@@ -1,0 +1,76 @@
+.modified-cell {
+    background-color: rgb(10, 150, 10); /* يمكنك تغيير اللون حسب الحاجة */
+  }
+
+
+    
+  .example-label {
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 120px;
+  }
+
+.example-button-row {
+    display: table-cell;
+    max-width: 1000px;
+  }
+
+  .mat-mdc-extended-fab {
+    border-radius: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+    max-width: 100%;
+    height: 45px;
+    line-height: normal;
+  }
+  
+  .example-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }
+  
+  .example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 50px;
+  }
+  
+  .table-header-font-size{
+    font-weight: bold;
+  }
+  
+  td{
+    font-size: large;
+  }
+  
+  .mat-mdc-table .mdc-data-table__row:hover{
+    background-color: #dfdfdf; 
+    cursor: pointer;
+  }
+
+  .table-container {
+    max-height: 300px; 
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
+    position: relative; 
+  }
+  
+  .table-container::-webkit-scrollbar {
+    width: 12px; 
+  }
+  
+  .table-container::-webkit-scrollbar-thumb {
+    background-color: #888; 
+    border-radius: 10px; 
+  }
+  
+  .table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; 
+  }
+  

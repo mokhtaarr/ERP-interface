@@ -5,79 +5,162 @@
             <div class="example-button-row">
                 <div class="example-flex-container">
         
-        
+<!--         
                   <div class="example-button-container">
                     <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
                       aria-label="Example icon button with a menu icon">
                       <i class="fas fa-step-backward"></i>
                     </button>
-                  </div>
+                  </div> -->
+
+                  <button mat-fab extended color="primary" type="button" 
+                    (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
+                      <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+                      <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                        <i class="fas fa-step-backward"></i>
+                      </mat-icon>
+                    </button>
         
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
                       [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
                       <i class="fas fa-caret-left"></i>
                     </button>
-                  </div>
+                  </div> -->
+
+                  <button mat-fab extended color="primary" type="button" 
+                   (click)="getNextRowData()" [disabled]="DisabledNextButton" style="flex-direction:column;">
+                     <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+                     <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                       <i class="fas fa-caret-left"></i>
+                     </mat-icon>
+                   </button>
       
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
                       [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
                       <i class="fas fa-caret-right"></i>
       
                     </button>
-                  </div>
+                  </div> -->
+
+                  <button mat-fab extended color="primary" type="button" 
+                   (click)="getPrevRowData()" [disabled]="DisabledPrevButton" style="flex-direction:column;">
+                    <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+                    <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                      <i class="fas fa-caret-right"></i>
+                    </mat-icon>
+                  </button>
         
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
                       aria-label="Example icon button with a menu icon">
                       <i class="fas fa-step-forward"></i>
                     </button>
-                  </div>
+                  </div> -->
+
+                  <button mat-fab extended color="primary" type="button" 
+                   (click)="getFirstRowData()" [disabled]="firstRow" style="flex-direction:column;">
+                     <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+                     <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                       <i class="fas fa-step-forward"></i>
+                     </mat-icon>
+                   </button>
         
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="button" mat-mini-fab color="primary"  (click)="GetAllCities()"
                       [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
                       <i class="fas fa-sync"></i>
                     </button>
-                  </div>
+                  </div> -->
+
+                  <button mat-fab extended color="primary" type="button" 
+                  (click)="GetAllCities()" [disabled]="reloadDisabled" style="flex-direction: column;">
+                    <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+                    <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                      <i class="fas fa-sync"></i>
+                    </mat-icon>
+                  </button>
+
+
         
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || CityForm.invalid" 
                       aria-label="Example icon button with a menu icon">
                       <i class="fas fa-save"></i>
                     </button>
-                  </div>
+                  </div> -->
+
+                  <button mat-fab extended color="primary" type="submit" 
+                  [disabled]="CityForm.invalid || SaveDisable" style="flex-direction:column;">
+                    <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+                    <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                      <i class="fas fa-save"></i>
+                    </mat-icon>
+                  </button>
         
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || CityForm.invalid" (click)="Open_delete_confirm()"
                       
                        aria-label="Example icon button with a menu icon">
                       <i class="fas fa-trash-alt"></i>
                     </button>
-                  </div>
+                  </div> -->
+
+
+                  <button mat-fab extended color="warn" type="button" 
+                   (click)="Open_delete_confirm()" [disabled]="CityForm.invalid || DeleteDisable" style="flex-direction: column;">
+                    <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+                    <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                      <i class="fas fa-trash-alt"></i>
+                    </mat-icon>
+                  </button>
         
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
                       aria-label="Example icon button with a menu icon">
                       <i class="fas fa-undo"></i>
                     </button>
-                  </div>
+                  </div> -->
+
+                  
+                 <button mat-fab extended color="primary" type="button" 
+                 (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
+                   <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+                   <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                     <i class="fas fa-undo"></i>
+                   </mat-icon>
+                 </button>
+         
         
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateCity()" color="primary"
                       aria-label="Example icon button with a menu icon">
                       <i class="fas fa-edit"></i>
                     </button>
-                  </div>
+                  </div> -->
         
+                  <button mat-fab extended color="primary" type="button" 
+                  [disabled]="UpdateDisable" (click)="updateCity()" style="flex-direction: column;">
+                    <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+                    <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                      <i class="fas fa-edit"></i>
+                    </mat-icon>
+                  </button>
         
-                  <div class="example-button-container">
+                  <!-- <div class="example-button-container">
                     <button type="button" (click)="New()" mat-mini-fab color="primary"
                       aria-label="Example icon button with a menu icon">
                       <i class="fas fa-plus"></i>
                     </button>
-                  </div>
+                  </div> -->
+
+                  <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+                    <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+                    <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                      <i class="fas fa-plus"></i>
+                    </mat-icon>
+                  </button>
         
                 </div>
               </div>

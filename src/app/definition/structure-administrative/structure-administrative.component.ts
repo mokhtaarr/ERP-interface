@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatTree, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { noop } from 'rxjs';
 import { ExampleFlatNode, ExampleFlatNode2, FoodNode } from 'src/app/shared/models/tree';
 import { DefinitionService } from '../definition.service';
@@ -61,9 +61,12 @@ export class StructureAdministrativeComponent implements OnInit {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
-  undoIndex!: number;
+  undoIndex!: number; 
+   DataFilter :any;
+
+   @ViewChild('tree') tree !: MatTree<any>;
 
   constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
    
@@ -128,8 +131,23 @@ export class StructureAdministrativeComponent implements OnInit {
       this.AllHrDepartment = res;
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.dataSource.data = this.AllHrDepartment;
+      if (this.tree && this.tree.treeControl) {
+        this.tree.treeControl.expandAll();
+      }
     })
   }
+
+  Filterchange(data: Event){
+    const value = (data.target as HTMLInputElement).value;
+    if (value.trim() === '') {
+      this.dataSource.data = this.AllHrDepartment; 
+    } else {
+      this.DataFilter = this.AllHrDepartment
+      .filter(i => i.name.includes(value));
+      this.dataSource.data = this.DataFilter;
+    }
+  }
+
 
 
   getFirstRowData(){
@@ -279,6 +297,13 @@ export class StructureAdministrativeComponent implements OnInit {
 
   undo(){
     this.HrDepartmentsForm.disable();
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
 
     if(this.undoIndex != -1){
       const undoItem = this.AllHrDepartment[this.undoIndex]
@@ -295,15 +320,7 @@ export class StructureAdministrativeComponent implements OnInit {
         });
 
       this.UpdateDisable = false;
-      this.DisabledNextButton = false;
-      this.DisabledPrevButton = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
       this.DeleteDisable = false;
-   
      }
     }
   }

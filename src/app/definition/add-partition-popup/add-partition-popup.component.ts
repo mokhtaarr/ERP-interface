@@ -17,6 +17,7 @@ export class AddPartitionPopupComponent implements OnInit {
   Popup_Response : any;
   update_Partition : any;
   Add_Readonly_Effect : boolean = false;
+  selectStoreId : any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data : any,private ref:MatDialogRef<AddPartitionPopupComponent>,
   private definitionService : DefinitionService,private fb:FormBuilder){
@@ -24,8 +25,8 @@ export class AddPartitionPopupComponent implements OnInit {
   }
   ngOnInit(): void {
     this.Add_inputdata = this.data;
-  
-
+    this.selectStoreId = this.data.storeId;
+    this.selectStore();
   }
 
   PartitionForm = this.fb.group({
@@ -49,6 +50,12 @@ export class AddPartitionPopupComponent implements OnInit {
 
   closepopup(){
     this.ref.close(this.Popup_Response);
+  }
+
+  selectStore(){
+    if(this.selectStoreId != null){
+      this.PartitionForm.get("storeId")?.setValue(this.selectStoreId)
+    }
   }
 
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountsModuleServicesService } from '../accounts-module-services.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatTree, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DeleteConfirmComponent } from 'src/app/definition/delete-confirm/delete-confirm.component';
 
@@ -27,7 +27,7 @@ export class CostCenterComponent implements OnInit {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
   undoItem:any;
@@ -88,6 +88,7 @@ export class CostCenterComponent implements OnInit {
     node => node.children,   
   );
 
+  @ViewChild('tree') tree !: MatTree<any>;
 
 
   constructor(private AccountsService : AccountsModuleServicesService,private fb:FormBuilder,private dialog: MatDialog){
@@ -98,6 +99,7 @@ export class CostCenterComponent implements OnInit {
 
 
   ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.calCostCenterForm.disable();
     this.GetAllCurrency();
     this.GetAllCostCenter();
@@ -145,6 +147,9 @@ export class CostCenterComponent implements OnInit {
       this.allCostCenter = res;
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.dataSource.data = this.allCostCenter;
+      if (this.tree && this.tree.treeControl) {
+        this.tree.treeControl.expandAll();
+      }
     })
   }
 
@@ -259,9 +264,16 @@ export class CostCenterComponent implements OnInit {
 
   getPrevRowData(){
     const index = this.allCostCenter.findIndex(p=>p.costCenterId == this.calCostCenterForm.value.costCenterId);
+
+    if(index === 0 || index === -1){
+      this.DisabledPrevButton = true;
+      this.firstRow = true;
+   }
+
     const PrevItem = this.allCostCenter[index - 1];
     if(PrevItem == null){
       this.DisabledPrevButton = true;
+      this.firstRow = true;
     }
     
     if(PrevItem){
@@ -422,7 +434,20 @@ export class CostCenterComponent implements OnInit {
 
   undo(){
     this.calCostCenterForm.disable();
-    if(this.undoItem){
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.DeleteDisable = true;
+    this.UpdateDisable = true;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
+
+
+    if(this.undoItem.costCenterId != null){
+      this.DeleteDisable = false;
+      this.UpdateDisable = false;
       this.calCostCenterForm.setValue({
         costCenterId: this.undoItem.costCenterId,
         costCenterCode: this.undoItem.costCenterCode,
@@ -456,51 +481,7 @@ export class CostCenterComponent implements OnInit {
         rate: this.undoItem.rate,
         aid: this.undoItem.aid
       });
-    }else{
-      this.calCostCenterForm.setValue({
-        costCenterId: null,
-        costCenterCode: null,
-        costCenterNameA: null,
-        costCenterNameE: null,
-        mainCostCenterId: null,
-        costCenterLevel: null,
-        centerCategory: null,
-        costType: null,
-        cashFlowList: null,
-        jopDesc: null,
-        accCostCenterId: null,
-        openningBalanceDepit: null,
-        openningBalanceCredit: null,
-        costCenterCurrTrancDepit: null,
-        costCenterCurrTrancCredit: null,
-        costCenterTotalDebit: null,
-        costCenterTotaCredit: null,
-        balanceDebitLocal: null,
-        balanceCreditLocal: null,
-        openningBalanceDepitCurncy: null,
-        openningBalanceCreditCurncy: null,
-        costCenterCurrTrancDepitCurncy: null,
-        costCenterCurrTrancCreditCurncy: null,
-        costCenterTotalDebitCurncy: null,
-        costCenterTotaCreditCurncy: null,
-        balanceDebitCurncy: null,
-        balanceCreditCurncy: null,
-        remarksA: null,
-        currencyId: null,
-        rate: null,
-        aid: null
-      })
     }
-    
-    this.UpdateDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
-    this.reloadDisabled = false;
-    this.SaveDisable = true;
-    this.UndoDisabled = true;
-    this.DeleteDisable = false;
   }
 
   updateCalCostCenter(){

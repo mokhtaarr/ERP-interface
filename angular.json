@@ -36,6 +36,8 @@
               "node_modules/ngx-toastr/toastr.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/ngx-spinner/animations/line-spin-fade.css",
+              "node_modules/ag-grid-community/styles/ag-grid.css",
+              "node_modules/ag-grid-community/styles/ag-theme-alpine.css",
               "src/styles.scss"
             ],
             "scripts": [

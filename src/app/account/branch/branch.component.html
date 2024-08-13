@@ -4,27 +4,37 @@
       <div class="col-sm-6 d-flex justify-content-center m-auto">
 
         <div class="form-signin" style="width: 80%;">
-          <form  [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
             <div class="d-flex justify-content-center">
               <img class="mb-4" src="../../../assets/images/logo3.png" alt="" width="130" height="120">
             </div>
 
-           
-            <p style="color: #2dd3f4;">Company</p>
+
+            <p style="color: #2dd3f4;">Select Company</p>
             <div class="mt-2">
-              <select class="form-select" formControlName="branch" aria-label="Default select example" style="height: 50px; color: #2c698d;">
-                <option disabled selected>select</option>
-                <option value="1">Company One</option>
-                <option value="2">Company Two</option>
-                <option value="3">Company Three</option>
+              <select *ngIf="!disableBranches" class="form-select" formControlName="DataBaseId"
+               aria-label="Default select example" style="height: 50px; color: #2c698d;">
+                <option *ngFor="let Company of allCompanies" [value]="Company.dataBaseId">
+                  {{Company.dataBaseName}}
+                </option>
               </select>
+
+              <button  *ngIf="disableBranches" class="w-100 btn btn-lg" type="button"
+               style="background-color: white;" fdprocessedid="infldq">
+               <img  src="../../../assets/images/loading2.gif" width="50" height="50" />
+             </button>
+
             </div>
 
-            
-            <button class="w-100 btn btn-lg btn-primary mt-5" type="submit" [disabled]="branchForm.invalid" style="background-color: #19b8e1;" fdprocessedid="infldq">Submit</button>
-           
+            <button  *ngIf="!disableSumbit" class="w-100 btn btn-lg btn-primary mt-5" type="submit" [disabled]="branchForm.invalid"
+              style="background-color: #19b8e1;" fdprocessedid="infldq">Confirm</button>
+              <button  *ngIf="disableSumbit" class="w-100 btn btn-lg  mt-5" type="submit"
+               [disabled]="true" style="background-color: white;" fdprocessedid="infldq">
+                <img  src="../../../assets/images/loading2.gif" width="50" height="50" />
+              </button>
 
-           
+
+
             <p class="mt-5 mb-3" style="color: white; border-top: 1px solid white;"></p>
 
             <p class="mt-5 mb-3" style="color: white; ">All Works Copyright of Respective Owner, Otherwise ©SoftGo.</p>
@@ -33,15 +43,13 @@
             </p>
           </form>
         </div>
-        
+
 
       </div>
       <div class="col-sm-6 px-0 d-none d-sm-block">
-        <img src="../../../assets/images/login.gif"
-          alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
+        <img src="../../../assets/images/login.gif" alt="Login image" class="w-100 vh-100"
+          style="object-fit: cover; object-position: left;">
       </div>
     </div>
   </div>
 </section>
-
-

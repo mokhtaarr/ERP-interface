@@ -1,8 +1,8 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatTree, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { AccountsModuleServicesService } from '../accounts-module-services.service';
 import { Observable, map, startWith } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -24,7 +24,7 @@ export class SysAnalyticalCodeComponent implements OnInit {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
   undoItem:any;
@@ -127,17 +127,22 @@ export class SysAnalyticalCodeComponent implements OnInit {
     node => node.children,   
   );
 
+  @ViewChild('tree') tree !: MatTree<any>;
+
   constructor(private AccountsService : AccountsModuleServicesService,private fb:FormBuilder,private dialog: MatDialog){
 
   }
+  
+
   ngOnInit(): void {
     this.SysAnalyticalCodeForm.disable();
     this.GetAllSysAnalyticalCode();
     this.GetAllCostCenterForSelect();
     this.GetAllSysAnalyticalCodeForSelect();
     this.GetAllAccountsForSelect();
-
   }
+
+  
 
   hasChild = (_: number, node: any) => node.expandable;
   
@@ -210,6 +215,9 @@ export class SysAnalyticalCodeComponent implements OnInit {
       this.allSysAnalyticalCodes = res;
       this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
       this.dataSource.data = this.allSysAnalyticalCodes;
+      if (this.tree && this.tree.treeControl) {
+        this.tree.treeControl.expandAll();
+      }
     })
   }
 
@@ -369,6 +377,9 @@ export class SysAnalyticalCodeComponent implements OnInit {
 
   undo(){
     this.SysAnalyticalCodeForm.disable();
+    this.DeleteDisable = false;
+    this.UpdateDisable = false;
+    
     if(this.undoItem){
       this.SysAnalyticalCodeForm.setValue({
         aid: this.undoItem.aid,
@@ -493,7 +504,6 @@ export class SysAnalyticalCodeComponent implements OnInit {
       })
     }
     
-    this.UpdateDisable = false;
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
     this.lastRow = false;
@@ -501,7 +511,6 @@ export class SysAnalyticalCodeComponent implements OnInit {
     this.reloadDisabled = false;
     this.SaveDisable = true;
     this.UndoDisabled = true;
-    this.DeleteDisable = false;
   }
 
 
@@ -665,6 +674,13 @@ export class SysAnalyticalCodeComponent implements OnInit {
 
   getPrevRowData(){
     const index = this.allSysAnalyticalCodes.findIndex(p=>p.aid == this.SysAnalyticalCodeForm.value.aid);
+
+    if(index === 0 || index === -1){
+      this.DisabledPrevButton = true;
+      this.firstRow = true;
+   }
+
+
     const PrevItem = this.allSysAnalyticalCodes[index - 1];
     if(PrevItem == null){
       this.DisabledPrevButton = true;

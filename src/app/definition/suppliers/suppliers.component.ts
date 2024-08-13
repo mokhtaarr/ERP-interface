@@ -32,7 +32,7 @@ export class SuppliersComponent implements OnInit {
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
 
@@ -73,7 +73,8 @@ export class SuppliersComponent implements OnInit {
   AllCalAccountChart:any[]=[];
   AllCities:any[]=[];
 
-  
+  selectedAccount: number | null = null;
+
   constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
   }
 
@@ -378,6 +379,8 @@ export class SuppliersComponent implements OnInit {
             this.VendorForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
             this.VendorForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
             this.VendorForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+            this.selectedAccount = 1; 
+
           }
         })
       }
@@ -832,6 +835,14 @@ export class SuppliersComponent implements OnInit {
 
  undo(){
   this.VendorForm.disable();
+  this.DisabledNextButton = false;
+  this.DisabledPrevButton = false;
+  this.lastRow = false;
+  this.firstRow = false;
+  this.reloadDisabled = false;
+  this.SaveDisable = true;
+  this.UndoDisabled = true;
+  
     if(this.undoIndex != -1){
       const undoItem = this.AllVendors[this.undoIndex]
 
@@ -909,19 +920,10 @@ export class SuppliersComponent implements OnInit {
          email3: null,
          IsPrimaryAccountChangedForm: null
        })
-
-      this.UpdateDisable = false;
-      this.DisabledNextButton = false;
-      this.DisabledPrevButton = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
-      this.DeleteDisable = false;
-   
      }
     }
+    this.UpdateDisable = false;
+    this.DeleteDisable = true;
  }
 
  getFirstRowData() {
@@ -1431,6 +1433,9 @@ getNextRowData() {
   }
   if (event.tab.textLabel === 'حسابات') {
     this.GetAllVendorAdditionalAccount();
+  }
+  if (event.tab.textLabel === 'الارصده') {
+    this.GetVendorMainAccount();
   }
 }
     

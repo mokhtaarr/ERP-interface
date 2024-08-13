@@ -62,7 +62,7 @@ export class EmployeesComponent implements OnInit{
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
   AllCurrency: any;
@@ -346,6 +346,13 @@ export class EmployeesComponent implements OnInit{
  
  undo(){
   this.HrEmployeesForm.disable();
+  this.DisabledNextButton = false;
+  this.DisabledPrevButton = false;
+  this.lastRow = false;
+  this.firstRow = false;
+  this.reloadDisabled = false;
+  this.SaveDisable = true;
+  this.UndoDisabled = true;
 
     if(this.undoIndex != -1){
       const undoItem = this.AllHrEmployess[this.undoIndex]
@@ -423,13 +430,6 @@ export class EmployeesComponent implements OnInit{
         })
       
       this.UpdateDisable = false;
-      this.DisabledNextButton = false;
-      this.DisabledPrevButton = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
       this.DeleteDisable = false;
    
      }

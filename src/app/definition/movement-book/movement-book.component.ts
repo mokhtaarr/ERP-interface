@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -35,7 +35,7 @@ export class MovementBookComponent implements OnInit{
   UpdateDisable : boolean = true;
 
   EditReadonly : boolean = false;
-  reloadDisabled : boolean = true;
+  reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
   
@@ -63,8 +63,8 @@ export class MovementBookComponent implements OnInit{
 
   SysBooksForm = this.fb.group({
     bookId:[],
-    prefixCode:[''],
-    bookNameAr:[''],
+    prefixCode:['',Validators.required],
+    bookNameAr:['',Validators.required],
     bookNameEn:[''],
     termType:[],
     storeId:[],
@@ -341,6 +341,13 @@ export class MovementBookComponent implements OnInit{
 
   undo(){
     this.SysBooksForm.disable();
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
 
     if(this.undoIndex != -1){
       const undoItem = this.AllSysBooks[this.undoIndex]
@@ -362,13 +369,6 @@ export class MovementBookComponent implements OnInit{
        })
 
       this.UpdateDisable = false;
-      this.DisabledNextButton = false;
-      this.DisabledPrevButton = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
       this.DeleteDisable = false;
      }
     }
