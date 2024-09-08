@@ -18,6 +18,11 @@ export class VehicleShapesComponent implements OnInit  {
   displayedColumns: string[] = ['shapeCode', 'name1', 'name2', 'remark'];
   AllVehicleShapes :any[] = [];
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
+
+
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
@@ -51,7 +56,7 @@ export class VehicleShapesComponent implements OnInit  {
     vehicleShapeId:[],
     shapeCode:['',Validators.required],
     name1:['',Validators.required],
-    name2:['',Validators.required],
+    name2:[''],
     remark:['']
   })
 
@@ -107,6 +112,8 @@ fillForm(row:any){
 
 updateVehicleShapes(){
   this.VehicleShapesForm.enable();
+  this.readonlyTable = true;
+  this.newDisable = true;
   this.DeleteDisable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
@@ -261,7 +268,8 @@ Open_delete_confirm(){
 
 undo(){
   this.VehicleShapesForm.disable();
-
+  this.readonlyTable = false;
+  this.newDisable = false;
   this.DisabledNextButton = false;
   this.DisabledPrevButton = false;
   this.lastRow = false;
@@ -295,6 +303,8 @@ undo(){
 
 New(){
   this.VehicleShapesForm.enable();
+  this.readonlyTable = true;
+  this.newDisable = true;
   this.AllVehicleShapes = this.dataSource.filteredData;
   this.undoIndex = this.AllVehicleShapes.findIndex(p=>p.vehicleShapeId == this.VehicleShapesForm.value.vehicleShapeId);
   this.VehicleShapesForm.setValue({

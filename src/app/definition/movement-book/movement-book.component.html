@@ -156,7 +156,7 @@
             </mat-icon>
           </button>
 
-          <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+          <button mat-fab extended color="primary" type="button" [disabled]="newDisable" (click)="New()" style="flex-direction:column;">
             <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;">
               <i class="fas fa-plus"></i>
@@ -279,11 +279,13 @@
     <mat-card-header class="justify-content-center">
       <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
         <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-        <input matInput (keyup)="Filterchange($event)" />
+        <input matInput  [readonly]="readonlyTable" (keyup)="Filterchange($event)" />
       </mat-form-field>
     </mat-card-header> <mat-card-content>
 
-      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+      <table matSort mat-table
+      [class.readonly-table]="readonlyTable"
+      [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
 
         <ng-container matColumnDef="prefixCode">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>الكود</th>

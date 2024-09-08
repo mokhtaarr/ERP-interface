@@ -7,6 +7,9 @@ import { MsLetterOfGuaranteeTypesComponent } from './ms-letter-of-guarantee-type
 import { ImportModule } from '../import/import.module';
 import { MsLetterOfGuaranteeCategoryComponent } from './ms-letter-of-guarantee-category/ms-letter-of-guarantee-category.component';
 import { MsLetterOfGuaranteeStatusComponent } from './ms-letter-of-guarantee-status/ms-letter-of-guarantee-status.component';
+import { BanksComponent } from './banks/banks.component';
+import { AddAccountComponent } from './add-account/add-account.component';
+import { SearchAccountsComponent } from './search-accounts/search-accounts.component';
 
 
 @NgModule({
@@ -14,7 +17,10 @@ import { MsLetterOfGuaranteeStatusComponent } from './ms-letter-of-guarantee-sta
     AllComponent,
     MsLetterOfGuaranteeTypesComponent,
     MsLetterOfGuaranteeCategoryComponent,
-    MsLetterOfGuaranteeStatusComponent
+    MsLetterOfGuaranteeStatusComponent,
+    BanksComponent,
+    AddAccountComponent,
+    SearchAccountsComponent
   ],
   imports: [
     CommonModule,

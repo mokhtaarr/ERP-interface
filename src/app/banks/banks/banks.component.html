@@ -1,0 +1,816 @@
+<div class="container-fluid">
+
+    <div class="d-flex p-3 rounded shadow-sm" style="background-color: white; justify-content: center;">
+        <h1 style="margin: inherit;">البنوك <i class="fas fa-university custom-icon"></i></h1>
+    </div>
+
+    <div style="margin-bottom: 50px;">
+        <form [formGroup]="BankForm" (ngSubmit)="onSumbit()">
+            <div style="display: flex;justify-content: space-between;">
+            
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+    
+                      <button mat-fab extended color="primary" type="button" 
+                        (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                            <i class="fas fa-step-backward"></i>
+                          </mat-icon>
+                        </button>
+        
+    
+                      <button mat-fab extended color="primary" type="button" 
+                       (click)="getNextRowData()" [disabled]="DisabledNextButton" style="flex-direction:column;">
+                         <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+                         <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                           <i class="fas fa-caret-left"></i>
+                         </mat-icon>
+                       </button>
+    
+                      <button mat-fab extended color="primary" type="button" 
+                       (click)="getPrevRowData()" [disabled]="DisabledPrevButton" style="flex-direction:column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                          <i class="fas fa-caret-right"></i>
+                        </mat-icon>
+                      </button>
+            
+                      <button mat-fab extended color="primary" type="button" 
+                       (click)="getFirstRowData()" [disabled]="firstRow" style="flex-direction:column;">
+                         <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+                         <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                           <i class="fas fa-step-forward"></i>
+                         </mat-icon>
+                       </button>
+            
+                      
+    
+                      <button mat-fab extended color="primary" type="button" 
+                      (click)="GetAllBanks()" [disabled]="reloadDisabled" style="flex-direction: column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                          <i class="fas fa-sync"></i>
+                        </mat-icon>
+                      </button>
+    
+                      <button mat-fab extended color="primary" type="submit" 
+                      [disabled]="BankForm.invalid || SaveDisable" style="flex-direction:column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                          <i class="fas fa-save"></i>
+                        </mat-icon>
+                      </button>
+    
+                      <button mat-fab extended color="warn" type="button" 
+                       (click)="Open_delete_confirm()" [disabled]="BankForm.invalid || DeleteDisable" style="flex-direction: column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                          <i class="fas fa-trash-alt"></i>
+                        </mat-icon>
+                      </button>
+            
+                      
+                     <button mat-fab extended color="primary" type="button" 
+                     (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
+                       <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+                       <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                         <i class="fas fa-undo"></i>
+                       </mat-icon>
+                     </button>
+            
+                      <button mat-fab extended color="primary" type="button" 
+                      [disabled]="UpdateDisable" (click)="updateBank()" style="flex-direction: column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                          <i class="fas fa-edit"></i>
+                        </mat-icon>
+                      </button>
+            
+                      <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                          <i class="fas fa-plus"></i>
+                        </mat-icon>
+                      </button>
+            
+                    </div>
+    
+                    
+                  </div>
+
+
+                  <!-- <div class="mt-2" *ngIf="itemForm.value.itemDescA" style="display:flex;">
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{itemForm.value.itemDescA}} </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> - </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{itemForm.value.ItemCode}} </h1>
+                    <img height="50" width="50" src="../../../assets/images/arrow.gif">
+    
+                      </div> -->
+            </div>
+
+             
+
+            <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user"></i>
+
+                            بيانات البنك
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+                       
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12 mdc-text-field--invalid">
+                            <mat-label>كود</mat-label>
+                            <input matInput type="text" formControlName="boxCode" [readonly]="EditReadonly" >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12 mdc-text-field--invalid">
+                            <mat-label>الاسم بالعربى</mat-label>
+                            <input matInput type="text" formControlName="desca" >
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>الاسم بالإنجليزى</mat-label>
+                            <input matInput type="text" formControlName="desce"  >
+                        </mat-form-field>
+
+                        <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-slide-toggle color="primary" formControlName="isActive">نشط</mat-slide-toggle>
+                        </div>
+                       
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>الشخص المسئول</mat-label>
+                            <input matInput type="text" formControlName="bankResposableName"  >
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>تليفون</mat-label>
+                            <input matInput type="text" formControlName="bankTel" >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>محمول</mat-label>
+                            <input matInput type="text" formControlName="bankMobile"  >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>فاكس</mat-label>
+                            <input matInput type="text" formControlName="bankFax" >
+                        </mat-form-field>
+
+                        <div></div>
+
+                        <button mat-fab extended color="primary" type="button"
+                        [disabled]="BankForm.get('boxId')?.value == null || AddAccountDisable == true"
+                         (click)="AddAccount()" style="width: 200px;">
+                           اضافه حساب
+                       </button>
+                   
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user"></i>
+                            أرصده الحساب
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+                        <hr/>
+                        <h1>محلى</h1>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى مدين</mat-label>
+                                <input matInput type="number" [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                       
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <hr/>
+                        <h1>العمله</h1>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                       
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user "></i>
+                             أرصده ح.شبكات مرتده
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+                        <hr/>
+                        <h1>محلى</h1>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى مدين</mat-label>
+                                <input matInput type="number" [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                       
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <hr/>
+                        <h1>العمله</h1>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                       
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user "></i>
+                             أرصده مصروفات بنكيه
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+                        <hr/>
+                        <h1>محلى</h1>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى مدين</mat-label>
+                                <input matInput type="number" [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                       
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <hr/>
+                        <h1>العمله</h1>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                       
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user "></i>
+                             شبكات تحت التحصيل
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+                        <hr/>
+                        <h1>محلى</h1>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى مدين</mat-label>
+                                <input matInput type="number" [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                       
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <hr/>
+                        <h1>العمله</h1>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرصيد الإفتتاحى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                       
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الحركه الحالية دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإجمالى دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة مدين</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الإرصدة دائن</mat-label>
+                                <input matInput type="number"  [readonly]="true">
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+
+                </mat-tab>
+
+
+            </mat-tab-group>
+        </form>
+    </div>
+
+
+    <mat-card style="margin-bottom: 100px;" >
+        <mat-card-header class="justify-content-center">
+          <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+            <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+            <input matInput [readonly]="readonlyTable" (keyup)="Filterchange($event)"  />
+          </mat-form-field>
+        </mat-card-header>
+
+       <mat-card-content>
+
+          <table
+          [class.readonly-table]="readonlyTable"
+           matSort mat-table [dataSource]="dataSourceAccounts" class="mat-elevation-z8" dir="rtl">
+            <ng-container matColumnDef="acounntNameA">
+                <th mat-header-cell *matHeaderCellDef>الحساب</th>
+                <td mat-cell *matCellDef="let element"> {{element.accountCode}} - {{element.accountNameA}} </td>
+              </ng-container>
+            
+              <ng-container matColumnDef="accountChrtName">
+                <th mat-header-cell *matHeaderCellDef>حساب الدليل</th>
+                <td mat-cell *matCellDef="let element"> {{element.accountChrtCode}} - {{element.accountChrtName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="currencyName">
+                <th mat-header-cell *matHeaderCellDef>العمله</th>
+                <td mat-cell *matCellDef="let element"> {{element.currencyCode}} - {{element.currencyName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="rate">
+                <th mat-header-cell *matHeaderCellDef>م.التحويل</th>
+                <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="chequnderCollectName">
+                <th mat-header-cell *matHeaderCellDef> ح.شيكات تحت التحصيل</th>
+                <td mat-cell *matCellDef="let element"> {{element.chequnderCollectCode}} - {{element.chequnderCollectName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="retAccountName">
+                <th mat-header-cell *matHeaderCellDef>ح.شيكت مرتده</th>
+                <td mat-cell *matCellDef="let element"> {{element.retAccountcode}} - {{element.retAccountName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="bankExpensAccName">
+                <th mat-header-cell *matHeaderCellDef>ح.مصروفات بنكيه</th>
+                <td mat-cell *matCellDef="let element"> {{element.bankExpensAccCode}} - {{element.bankExpensAccName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef>تعديل</th>
+                <td mat-cell *matCellDef="let element"><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                    (click)="UpdateAccount(element)"></i></td>
+              </ng-container>
+
+              <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef>حذف</th>
+                <td mat-cell *matCellDef="let element">
+                    <i class="fas fa-trash-alt"
+                    (click)="DeleteAccount(element.boxCurrencyId)"
+                    style="color: red;cursor: pointer;"></i>
+                </td>
+              </ng-container>
+
+                
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+          </table>
+    
+        </mat-card-content>
+        <mat-card-footer>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+          </mat-paginator>
+        </mat-card-footer>
+    </mat-card>
+
+
+
+   
+</div>

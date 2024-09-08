@@ -6,7 +6,7 @@ import { DefinitionService } from '../definition.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { AddVendorBranchComponent } from '../add-vendor-branch/add-vendor-branch.component';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 import { VendorContactComponent } from '../vendor-contact/vendor-contact.component';
@@ -35,6 +35,10 @@ export class SuppliersComponent implements OnInit {
   reloadDisabled : boolean = false;
   UndoDisabled : boolean = true;
   undoIndex!: number;
+
+  @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup;
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
 
   AllVendorBranches: any[] = []
   AllVendorContacts : any[] =[]
@@ -72,6 +76,7 @@ export class SuppliersComponent implements OnInit {
   AllCurrency:any[]=[];
   AllCalAccountChart:any[]=[];
   AllCities:any[]=[];
+  AllCountries:any[]=[];
 
   selectedAccount: number | null = null;
 
@@ -89,6 +94,7 @@ export class SuppliersComponent implements OnInit {
     this.GetAllVendorCategories();
     this.GetAllCurrency();
     this.GetAllCities();
+    this.GetAllCountries();
   }
 
   VendorForm = this.fb.group({
@@ -163,6 +169,13 @@ export class SuppliersComponent implements OnInit {
     email:[''],
     email2:[''],
     email3:[''],
+    etaxCustType:[''],
+    taxRefNo:[''],
+    taxExemptionNo:[''],
+    countryId:[],
+    buildingNumber:[],
+    buildingNumber2:[],
+    zipCode:['']
   })
 
 
@@ -193,6 +206,12 @@ export class SuppliersComponent implements OnInit {
       this.AllCostCenter = res;
     })
   }
+
+  GetAllCountries(){
+    this.definitionService.GetAllCountries().subscribe(res=>{
+      this.AllCountries = res;
+    })
+   }
 
  GetAllHrEmployees(){
   this.definitionService.GetAllHrEmployees().subscribe(res=>{
@@ -302,7 +321,14 @@ export class SuppliersComponent implements OnInit {
           email: null,
           email2: null,
           email3: null,
-          IsPrimaryAccountChangedForm: null
+          IsPrimaryAccountChangedForm: null,
+          etaxCustType: row.etaxCustType,
+          taxRefNo: row.taxRefNo,
+          taxExemptionNo: row.taxExemptionNo,
+          countryId: row.countryId,
+          buildingNumber: row.buildingNumber,
+          buildingNumber2: row.buildingNumber2,
+          zipCode: row.zipCode
         })
     
         this.UpdateDisable = false;
@@ -727,6 +753,8 @@ export class SuppliersComponent implements OnInit {
 
     New() {
       this.VendorForm.enable();
+      this.newDisable = true;
+      this.readonlyTable = true;
       this.AllVendors = this.dataSource.filteredData;
       this.undoIndex = this.AllVendors.findIndex(p=>p.vendorId == this.VendorForm.value.vendorId);
      this.VendorForm.setValue({
@@ -800,7 +828,14 @@ export class SuppliersComponent implements OnInit {
        email: null,
        email2: null,
        email3: null,
-       IsPrimaryAccountChangedForm: null
+       IsPrimaryAccountChangedForm: null,
+       etaxCustType: null,
+       taxRefNo: null,
+       taxExemptionNo: null,
+       countryId: null,
+       buildingNumber: null,
+       buildingNumber2: null,
+       zipCode: null
      })
     
       this.DisabledNextButton = true;
@@ -819,6 +854,10 @@ export class SuppliersComponent implements OnInit {
   
   updateVendor(){
   this.VendorForm.enable();
+  this.newDisable = false;
+  this.readonlyTable = false;
+  this.newDisable = true;
+  this.readonlyTable = true;
   this.DeleteDisable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
@@ -878,6 +917,13 @@ export class SuppliersComponent implements OnInit {
          addField3: undoItem.addField3,
          addField4: undoItem.addField4,
          addField5: undoItem.addField5,
+         etaxCustType: undoItem.etaxCustType,
+         taxRefNo: undoItem.taxRefNo,
+         taxExemptionNo: undoItem.taxExemptionNo,
+         countryId: undoItem.countryId,
+         buildingNumber: undoItem.buildingNumber,
+         buildingNumber2: undoItem.buildingNumber2,
+         zipCode: undoItem.zipCode,
          accountId: null,
          addAccount1: null,
          addAccount2: null,
@@ -918,7 +964,7 @@ export class SuppliersComponent implements OnInit {
          email: null,
          email2: null,
          email3: null,
-         IsPrimaryAccountChangedForm: null
+         IsPrimaryAccountChangedForm: null,
        })
      }
     }
@@ -1001,7 +1047,14 @@ export class SuppliersComponent implements OnInit {
         email: null,
         email2: null,
         email3: null,
-        IsPrimaryAccountChangedForm: null
+        IsPrimaryAccountChangedForm: null,
+        etaxCustType: FirstItem.etaxCustType,
+        taxRefNo: FirstItem.taxRefNo,
+        taxExemptionNo: FirstItem.taxExemptionNo,
+        countryId: FirstItem.countryId,
+        buildingNumber: FirstItem.buildingNumber,
+        buildingNumber2: FirstItem.buildingNumber2,
+        zipCode: FirstItem.zipCode,
       })
     this.firstRow = true;
     this.lastRow = false;
@@ -1088,7 +1141,14 @@ getLastRowData(){
       email: null,
       email2: null,
       email3: null,
-      IsPrimaryAccountChangedForm: null
+      IsPrimaryAccountChangedForm: null,
+      etaxCustType: LastItem.etaxCustType,
+      taxRefNo: LastItem.taxRefNo,
+      taxExemptionNo: LastItem.taxExemptionNo,
+      countryId: LastItem.countryId,
+      buildingNumber: LastItem.buildingNumber,
+      buildingNumber2: LastItem.buildingNumber2,
+      zipCode: LastItem.zipCode,
     })
 
   this.firstRow = false;
@@ -1180,7 +1240,14 @@ getPrevRowData() {
       email: null,
       email2: null,
       email3: null,
-      IsPrimaryAccountChangedForm: null
+      IsPrimaryAccountChangedForm: null,
+      etaxCustType: PrevItem.etaxCustType,
+      taxRefNo: PrevItem.taxRefNo,
+      taxExemptionNo: PrevItem.taxExemptionNo,
+      countryId: PrevItem.countryId,
+      buildingNumber: PrevItem.buildingNumber,
+      buildingNumber2: PrevItem.buildingNumber2,
+      zipCode: PrevItem.zipCode,
     })
 
     this.firstRow = false;
@@ -1282,7 +1349,14 @@ getNextRowData() {
       email: null,
       email2: null,
       email3: null,
-      IsPrimaryAccountChangedForm: null
+      IsPrimaryAccountChangedForm: null,
+      etaxCustType: nextItem.etaxCustType,
+      taxRefNo: nextItem.taxRefNo,
+      taxExemptionNo: nextItem.taxExemptionNo,
+      countryId: nextItem.countryId,
+      buildingNumber: nextItem.buildingNumber,
+      buildingNumber2: nextItem.buildingNumber2,
+      zipCode: nextItem.zipCode,
     })
   
     this.firstRow = false;
@@ -1326,6 +1400,8 @@ getNextRowData() {
        this.UpdateDisable = false;
        this.UndoDisabled = true;
        this.DeleteDisable=false;
+       this.tabGroup.selectedIndex = 0;
+
      }
    })
  }
@@ -1413,7 +1489,14 @@ getNextRowData() {
             balanceCreditCurncy: null,
             email: null,
             email2: null,
-            email3: null
+            email3: null,
+            etaxCustType: null,
+            taxRefNo: null,
+            taxExemptionNo: null,
+            countryId: null,
+            buildingNumber: null,
+            buildingNumber2: null,
+            zipCode: null
           })
           this.DeleteDisable = true;
           this.UpdateDisable = true;

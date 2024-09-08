@@ -19,6 +19,7 @@ import { UpdateItemCollectionComponent } from '../update-item-collection/update-
 import { UpdateItemCollectionFromDataBaseComponent } from '../update-item-collection-from-data-base/update-item-collection-from-data-base.component';
 import { UpdateItemAlternativeComponent } from '../update-item-alternative/update-item-alternative.component';
 import { UpdateItemAlternativeFromDatabaseComponent } from '../update-item-alternative-from-database/update-item-alternative-from-database.component';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 
 @Component({
@@ -36,7 +37,11 @@ export class ItemsComponent implements OnInit {
   items : any[] = []
   getItemNextItem : Items | undefined
   displayedColumns: string[] = ['position', 'name','nameEn','isExpir','isDimension','isAttributeItem','isCollection','isSerialItem'];
-    
+  isCollectionToggle: boolean = false;
+
+  itemCollectinDisable:boolean = true;
+  itemAlternativeDisable:boolean = true;
+  AddstoreDisable:boolean = true;
    
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
@@ -88,8 +93,8 @@ export class ItemsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
   @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup;
-
-
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
 
   constructor(private definitionService:DefinitionService,private fb:FormBuilder,private dialog: MatDialog,
     public toastr: ToastrService){
@@ -235,13 +240,13 @@ export class ItemsComponent implements OnInit {
           this.UpdateDisable = false;
           this.UndoDisabled = true;
           this.DeleteDisable=false;
-          this.itemUnitsSub.splice(0, this.itemUnitsSub.length);
           this.itemCollections.splice(0, this.itemCollections.length);
           this.itemAlternatives.splice(0,this.itemAlternatives.length);
           this.itemPartitionWithStores.splice(0,this.itemPartitionWithStores.length);
           this.imageName = null;
           this.selectedImage = null;
           this.tabGroup.selectedIndex = 0;
+          this.readonlyTable = false;
   
         }
      })
@@ -310,6 +315,7 @@ export class ItemsComponent implements OnInit {
       itemPartition: null,
       itemAlternatives: null
     });
+    this.isCollectionToggle = true;
     this.tabGroup.selectedIndex = 0;
     this.itemUnitReadOnly = true;
     this.UpdateDisable = false;
@@ -656,7 +662,7 @@ Open_delete_confirm(){
           addField9: null,
           addField10: null,
           remarks: null,
-          basUnitId: undefined,
+          basUnitId: null,
           unitCode: null,
           unitNam: null,
           itemCollections: null,
@@ -686,6 +692,8 @@ undo(){
   this.SaveDisable = true;
   this.UndoDisabled = true;
   this.unitsDisable = false;
+  this.readonlyTable = false;
+  this.newDisable = false;
 
     if(this.undoIndex != -1){
       const undoItem = this.items[this.undoIndex]
@@ -753,6 +761,9 @@ undo(){
 
 updateItem(){
   this.itemUnitReadOnly = false; 
+  this.itemCollectinDisable = false;
+  this.itemAlternativeDisable = false;
+  this.AddstoreDisable = false;
   this.itemForm.enable();
   this.DeleteDisable = true;
   this.DisabledNextButton = true;
@@ -762,16 +773,19 @@ updateItem(){
   this.SaveDisable = false;
   this.EditReadonly = true;
   this.itemUnitReadOnly = true;
-  this.reloadDisabled = false;
+  this.reloadDisabled = true;
   this.UpdateDisable = true;
   this.UndoDisabled = false;
+  this.readonlyTable = true;
   this.items = this.dataSource.filteredData;
+  this.newDisable = true;
   this.undoIndex = this.items.findIndex(p=>p.itemCardId == this.itemForm.value.ItemCardId);
 
 }
 
 New(){
   this.itemForm.enable();
+  this.newDisable = true;
   this.items = this.dataSource.filteredData;
   this.undoIndex = this.items.findIndex(p=>p.itemCardId == this.itemForm.value.ItemCardId);
   this.itemForm.setValue({
@@ -827,6 +841,7 @@ New(){
     itemPartition: null,
     itemAlternatives: null
   })
+  this.readonlyTable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
   this.lastRow = true;
@@ -838,6 +853,10 @@ New(){
   this.DeleteDisable = true;
   this.UndoDisabled = false;
   this.itemUnitReadOnly = false; 
+
+  this.itemCollectinDisable = false;
+  this.itemAlternativeDisable = false;
+  this.AddstoreDisable = false;
 
   this.itemPartitionWithStores = [];
   this.itemDefaultPartitionsFromDataBase =[];
@@ -876,7 +895,7 @@ onTabChanged(event: MatTabChangeEvent) {
 
   if (event.tab.textLabel === 'صنف مجمع') {
     this.GetItemCollectionFromDataBase();
-    this.ItemIsCollection()
+    // this.ItemIsCollection()
   }
 
   if (event.tab.textLabel === 'مخازن أساسية') {
@@ -1086,7 +1105,6 @@ updateItemAlternative(itemAlter:any){
 }
 
 updateItemAlterFromDataBase(itemAlternative:any){
-  console.log('beforePop up',itemAlternative)
   var _popup = this.dialog.open(UpdateItemAlternativeFromDatabaseComponent, {
     width: '90%',
     enterAnimationDuration: '1000ms',
@@ -1345,13 +1363,18 @@ DeleteItemDefaultParttionFromDatabase(itemStorePrtId:any){
   });
 } 
 
-ItemIsCollection(){
-  if(this.itemForm.value.isCollection == false){
-    this.itemIsCollection = true;
-  }else{
-    this.itemIsCollection = false;
-  }
-}
+// ItemIsCollection(){
+//   if(this.itemForm.value.isCollection == false){
+//     this.itemIsCollection = true;
+//   }else{
+//     this.itemIsCollection = false;
+//   }
+// }
+
+
+// onToggleChange(event: MatSlideToggleChange) {
+//   this.isCollectionToggle = event.checked;
+// }
 
 }
 

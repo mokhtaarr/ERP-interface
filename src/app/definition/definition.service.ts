@@ -1048,6 +1048,10 @@ DeleteCustomerContact(custContactId : any){
   );
 }
 
+GetAllCountries(){
+  return this.http.get<any>(`${environment.apiUrl}Customers/GetAllCountries`)
+}
+
 GetMainChartAccount(customerId : any){
   return this.http.get<any>(`${environment.apiUrl}Customers/GetMainCharAccount?customerId=${customerId}`)
 }

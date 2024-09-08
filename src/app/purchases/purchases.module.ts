@@ -8,6 +8,8 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order.componen
 import { ImportModule } from '../import/import.module';
 import { PurchaseCommanderComponent } from './purchase-commander/purchase-commander.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { AddItemComponent } from './add-item/add-item.component';
+import { UpdateItemComponent } from './update-item/update-item.component';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { InvoiceComponent } from './invoice/invoice.component';
     AllComponent,
     PurchaseOrderComponent,
     PurchaseCommanderComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    AddItemComponent,
+    UpdateItemComponent
   ],
   imports: [
     CommonModule,

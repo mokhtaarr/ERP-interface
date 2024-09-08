@@ -20,6 +20,9 @@ export class GUsersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
   
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
@@ -53,8 +56,8 @@ export class GUsersComponent implements OnInit {
     userCode:['',Validators.required],
     firstName:['',Validators.required],
     lastName:[''],
-    userName:[''],
-    password:[],
+    userName:['',Validators.required],
+    password:[,Validators.required],
     empId:[],
     storeId:[],
     isActive:[],
@@ -231,6 +234,8 @@ export class GUsersComponent implements OnInit {
 
   New() {
     this.UserForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.AllUsers = this.dataSource.filteredData;
     this.undoIndex = this.AllUsers.findIndex(p=>p.userId == this.UserForm.value.userId);
     this.UserForm.setValue({
@@ -260,6 +265,8 @@ export class GUsersComponent implements OnInit {
 
   updateUser() {
     this.UserForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -277,6 +284,8 @@ export class GUsersComponent implements OnInit {
 
   undo() {
     this.UserForm.disable();
+    this.readonlyTable = false;
+    this.newDisable = false;
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
     this.lastRow = false;

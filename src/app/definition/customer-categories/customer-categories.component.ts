@@ -21,6 +21,9 @@ export class CustomerCategoriesComponent implements OnInit{
   @ViewChild(MatSort) sort !: MatSort;
   customerCategory:any[] = [];
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
   firstRow: boolean = false;
@@ -162,6 +165,8 @@ export class CustomerCategoriesComponent implements OnInit{
       this.reloadDisabled = false;
       this.SaveDisable = true;
       this.UndoDisabled = true;
+      this.readonlyTable = false;
+      this.newDisable = false;
 
 
       if(this.undoIndex != -1){
@@ -193,6 +198,8 @@ export class CustomerCategoriesComponent implements OnInit{
 
     updateCustomerCategory() {
       this.CustomerCategoryForm.enable();
+      this.readonlyTable = true;
+      this.newDisable = true;
       this.DeleteDisable = true;
       this.DisabledNextButton = true;
       this.DisabledPrevButton = true;
@@ -210,7 +217,9 @@ export class CustomerCategoriesComponent implements OnInit{
 
     New() {
       this.CustomerCategoryForm.enable();
-
+      this.readonlyTable = true;
+      this.newDisable = true;
+      
       this.customerCategory = this.dataSource.filteredData;
      this.undoIndex = this.customerCategory.findIndex(p=>p.customerCatId == this.CustomerCategoryForm.value.customerCatId);
 

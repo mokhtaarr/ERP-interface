@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -21,7 +21,8 @@ export class MachinesEquipmentComponent implements OnInit{
   // 'timeRate','standardMonthlyCost','standardHolyDays','standardDailyCost','standardDailyWorkHours','standardHourlyCost','numberAvailable'
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
-
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
   ALLprodEquipments : any[] = [];
 
   DisabledPrevButton: boolean = false;
@@ -48,8 +49,8 @@ export class MachinesEquipmentComponent implements OnInit{
 
 ProdEquipmentsForm = this.fb.group({
   equipId : [],
-  equipCode:[''],
-  equipName1:[''],
+  equipCode:['',Validators.required],
+  equipName1:['',Validators.required],
   equipName2:[''],
   jdesc:[''],
   remarks:[''],
@@ -129,6 +130,8 @@ ProdEquipmentsForm = this.fb.group({
 
   updateProdEquipment(){
     this.ProdEquipmentsForm.enable();
+    this.readonlyTable = true;
+    this.newDisable =true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -342,6 +345,8 @@ ProdEquipmentsForm = this.fb.group({
 
   undo(){
     this.ProdEquipmentsForm.disable();
+    this.readonlyTable = false;
+    this.newDisable = false;
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
     this.lastRow = false;
@@ -381,6 +386,8 @@ ProdEquipmentsForm = this.fb.group({
 
   New(){
     this.ProdEquipmentsForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.ALLprodEquipments = this.dataSource.filteredData;
     this.undoIndex = this.ALLprodEquipments.findIndex(p=>p.equipId == this.ProdEquipmentsForm.value.equipId);
    this.ProdEquipmentsForm.setValue({

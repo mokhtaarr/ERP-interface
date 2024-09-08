@@ -23,6 +23,8 @@ const routes: Routes = [
      {path:'banks',loadChildren:()=>import('./banks/banks.module').then(b=>b.BanksModule)},
      {path:'system-tools',loadChildren:()=>import('./system-tools/system-tools.module').then(s=>s.SystemToolsModule)},
      {path:'stores',loadChildren:()=>import('./stores/stores.module').then(s=>s.StoresModule)},
+     {path:'sales',loadChildren:()=>import('./sales/sales.module').then(s=>s.SalesModule)},
+     
   ]},
   {path:'',redirectTo:'branch',pathMatch:'full'},
   {path:'branch',component : BranchComponent},

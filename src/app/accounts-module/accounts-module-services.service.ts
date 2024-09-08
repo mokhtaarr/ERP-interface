@@ -25,6 +25,9 @@ export class AccountsModuleServicesService {
   }
 
  
+ GetNewAccountCode(mainAccountId : any){
+    return this.http.get<any>(`${environment.apiUrl}AccountsGuide/GetNewAccountCode?mainAccountId=${mainAccountId}`)
+ }
 
   GEtAllAccountsGuideForSelect(){
     return this.http.get<any>(environment.apiUrl +'AccountsGuide/GetAllAccountsForSelect')

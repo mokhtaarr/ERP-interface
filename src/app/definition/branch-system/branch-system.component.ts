@@ -72,7 +72,7 @@ export class BranchSystemComponent implements OnInit {
     storeId: [0],
     storeCode: ['', Validators.required],
     storeDescA: ['', Validators.required],
-    storeDescE: ['', Validators.required],
+    storeDescE: [''],
     tel: [''],
     boxId:[],
     storeType: [false],
@@ -223,6 +223,8 @@ export class BranchSystemComponent implements OnInit {
   }
 
   onSumbit() {
+    console.log(this.branchForm.value);
+    
     this.definitionService.AddBranch(this.branchForm.value).subscribe(res=>{
       if(res.status){
        

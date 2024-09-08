@@ -49,7 +49,7 @@ export class ItemCategoriesComponent implements OnInit{
     itemCategoryId : [],
     itemCatCode :['',Validators.required],
     itemCatDescA :['',Validators.required],
-    itemCatDescE:['',Validators.required],
+    itemCatDescE:[''],
     parentItemCategoryId:[],
     itemCategoryType:[],
     remarks:[''],

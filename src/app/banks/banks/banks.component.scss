@@ -1,0 +1,87 @@
+.input-mrg-top{
+    margin-top: 1rem;
+  }
+  
+  .ang-maturial-select{
+    width: 100%;
+  }  
+  
+  .select-margin-bottom{
+    margin-bottom: -20px;
+  }
+  
+  .mat-mdc-table .mdc-data-table__row:hover{
+    background-color: #dfdfdf; 
+    cursor: pointer;
+  
+  }
+
+  .readonly-table {
+    pointer-events: none;
+    opacity: 0.6; 
+  }
+  
+  
+  .example-label {
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 120px;
+  }
+  
+  .example-button-row {
+    display: table-cell;
+    max-width: 1000px;
+  }
+  
+  .example-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }
+  
+  .example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 50px;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+  
+  td{
+    font-size: large;
+  }
+  
+  th{
+    font-size: large;
+  }
+  
+  
+  .custom-icon{
+    font-size: larger;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+  
+  
+  .hidden {
+  display: none;
+  }
+  
+  .mat-mdc-extended-fab {
+  border-radius: 15px;
+  padding-left: 0px;
+  padding-right: 0px;
+  max-width: 100%;
+  height: 45px;
+  line-height: normal;
+  }
+  
+  

@@ -176,39 +176,37 @@
             </h1>
           </ng-template>
 
-          <div class="row p-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                <mat-form-field style="width: 100%;" appearance="outline">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12" style="background-color: #3f51b587;">
+                <mat-form-field class="custom-select p-3 rtl-styled"  style="width: 100%;" appearance="outline">
                   <mat-label style="font-size: larger;"><i class="fas fa-search"></i> أختر الفرع </mat-label>
-                  <mat-select [(value)]="selectedBranchId"  [disabled]="disableAddPartition" >
+                  <mat-select  [(value)]="selectedBranchId"   >
                     <mat-option style="font-size: large;" *ngFor="let branch of AllBranches"
                     (click)="getPartition_of_StoreId(branch.storeId);getBranch(branch.storeId)"  [value]="branch.storeId">
                       {{branch.storeDescA}}
                     </mat-option>
                   </mat-select>
-                </mat-form-field>
-
-              
+                </mat-form-field>              
             </div>
 
 
-            <div class="col-lg-9 col-md-6 col-sm-12 input-mrg-top row">
+            <div class="col-lg-9 col-md-6 col-sm-12 input-mrg-top row p-3">
 
-              <mat-form-field class="col-lg-4 col-md-6 col-sm-12" appearance="outline" style="display: none;" >
+              <mat-form-field class="col-lg-4 col-md-6 col-sm-12 " appearance="outline" style="display: none;" >
                 <mat-label class="p-1"> الكود </mat-label>
                 <input matInput type="number" formControlName="storeId">
               </mat-form-field>
 
 
               <div class="col-lg-4 col-md-6 col-sm-12">
-                <mat-form-field class="ang-maturial-select"  appearance="outline">
+                <mat-form-field class="ang-maturial-select mdc-text-field--invalid"  appearance="outline">
                   <mat-label class="p-1"> الكود </mat-label>
                   <input matInput  type="string" [readOnly]="readonly_field"  formControlName="storeCode" >
                 </mat-form-field>
               </div>
              
 
-              <div class="col-lg-4 col-md-6 col-sm-12" >
+              <div class="col-lg-4 col-md-6 col-sm-12 mdc-text-field--invalid">
                 <mat-form-field class="ang-maturial-select" appearance="outline" >
                   <mat-label> الإسم بالعربى </mat-label>
                   <input matInput type="text"  formControlName="storeDescA">
@@ -218,7 +216,7 @@
               <div class="col-lg-4 col-md-6 col-sm-12">
                 <mat-form-field class="ang-maturial-select" appearance="outline">
                   <mat-label> الإسم بالإنجليزى </mat-label>
-                  <input matInput type="text" formControlName="storeDescE" >
+                  <input matInput type="text"  formControlName="storeDescE" >
                 </mat-form-field>
               </div>
               

@@ -19,6 +19,9 @@ export class MsLetterOfGuaranteeCategoryComponent implements OnInit {
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
   
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
@@ -201,6 +204,8 @@ export class MsLetterOfGuaranteeCategoryComponent implements OnInit {
 
   New() {
     this.bankForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.AllLetters = this.dataSource.filteredData;
     this.undoIndex = this.AllLetters.findIndex(p=>p.letOfGrnteeCatId == this.bankForm.value.letOfGrnteeCatId);
     this.bankForm.setValue({
@@ -224,6 +229,8 @@ export class MsLetterOfGuaranteeCategoryComponent implements OnInit {
 
   updateLetter() {
     this.bankForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -241,6 +248,8 @@ export class MsLetterOfGuaranteeCategoryComponent implements OnInit {
   
   undo() {
     this.bankForm.disable();
+    this.readonlyTable = false;
+    this.newDisable = false;
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
     this.lastRow = false;

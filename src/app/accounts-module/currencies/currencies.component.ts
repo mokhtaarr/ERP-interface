@@ -20,6 +20,9 @@ export class CurrenciesComponent  implements OnInit {
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
   AllCurreny : any[] = [];
 
   DisabledPrevButton: boolean = false;
@@ -235,6 +238,8 @@ export class CurrenciesComponent  implements OnInit {
 
  undo(){
   this.currencyForm.disable();
+  this.readonlyTable = false;
+  this.newDisable = false;
   this.DisabledNextButton = false;
   this.DisabledPrevButton = false;
   this.lastRow = false;
@@ -262,7 +267,9 @@ export class CurrenciesComponent  implements OnInit {
  }
 
  updateCurrency(){
-  this.currencyForm.enable()
+  this.currencyForm.enable();
+  this.readonlyTable = true;
+  this.newDisable = true;
   this.DeleteDisable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
@@ -279,6 +286,8 @@ export class CurrenciesComponent  implements OnInit {
 
  New(){
   this.currencyForm.enable();
+  this.readonlyTable = true;
+  this.newDisable = true;
 
   this.AllCurreny = this.dataSource.filteredData;
   this.undoIndex = this.AllCurreny.findIndex(p=>p.currencyId == this.currencyForm.value.currencyId);

@@ -76,23 +76,32 @@ html {
 // .toast {
 //     font-size: 50px; /* تغيير حجم الخط */
 //     padding: 20px; /* تعديل المسافة حول النص */
-//     width: 500px; /* تغيير عرض الإشعار */
+//     // width: 500px; /* تغيير عرض الإشعار */
 //     margin-top: 20px;
 //   }
   
-  .toast-title {
-    font-size: 18px; /* تغيير حجم خط العنوان */
-  }
+  // .toast-title {
+  //   font-size: 18px; /* تغيير حجم خط العنوان */
+  // }
   
-  .toast-message {
-    font-size: 30px; /* تغيير حجم خط النص */
-  }
+  // .toast-message {
+  //   font-size: 30px; /* تغيير حجم خط النص */
+  // }
   
+//   .toast-container.toast-top-center .ngx-toastr, .toast-container.toast-bottom-center .ngx-toastr {
+//     width: 50%;
+//     margin-left: auto;
+//     margin-right: auto;
+//     margin-top: 21px;
+//     text-align: center;
+//     height: 60px;
+// }
+
   .toast-container.toast-top-center .ngx-toastr, .toast-container.toast-bottom-center .ngx-toastr {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 21px;
-    text-align: center;
-    height: 60px;
+    font-weight: bold;
+    text-align: center;  
 }
+
+.toast-message {
+    font-size:large; /* تغيير حجم خط النص */
+  }

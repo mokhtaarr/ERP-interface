@@ -20,7 +20,10 @@ export class CitiesComponent implements OnInit{
   @ViewChild(MatSort) sort !: MatSort;
 
   AllCity : any[] = [];
-  
+
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
   firstRow: boolean = false;
@@ -101,6 +104,8 @@ export class CitiesComponent implements OnInit{
   
   updateCity(){
     this.CityForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -108,7 +113,7 @@ export class CitiesComponent implements OnInit{
     this.firstRow = true;
     this.SaveDisable = false;
     this.EditReadonly = true;
-    this.reloadDisabled = false;
+    this.reloadDisabled = true;
     this.UpdateDisable = true;
     this.UndoDisabled = false;
     this.AllCity = this.dataSource.filteredData;
@@ -258,6 +263,17 @@ export class CitiesComponent implements OnInit{
   
   undo(){
     this.CityForm.disable();
+    this.readonlyTable = false;
+    this.newDisable = false;
+    this.UpdateDisable = false;
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
+    this.DeleteDisable = false;
   
     if(this.undoIndex != -1){
       const undoItem = this.AllCity[this.undoIndex]
@@ -269,27 +285,17 @@ export class CitiesComponent implements OnInit{
         cityName: undoItem.cityName,
         remarks: undoItem.remarks
       })
-  
-      this.UpdateDisable = false;
-      this.DisabledNextButton = false;
-      this.DisabledPrevButton = false;
-      this.lastRow = false;
-      this.firstRow = false;
-      this.reloadDisabled = false;
-      this.SaveDisable = true;
-      this.UndoDisabled = true;
-      this.DeleteDisable = false;
-   
      }
 
     }
-    this.SaveDisable = true;
-
   }
   
   
 New(){
   this.CityForm.enable();
+  this.readonlyTable = true;
+  this.newDisable = true;
+
   this.AllCity = this.dataSource.filteredData;
   this.undoIndex = this.AllCity.findIndex(p=>p.cityId == this.CityForm.value.cityId);
   this.CityForm.setValue({

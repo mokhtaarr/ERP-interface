@@ -74,4 +74,8 @@ export class GetItemCollectionsComponent implements OnInit{
    closepopup() {
     this.ref.close(this.ItemCollection_Response);
   }
+  
+  cancel(){
+    this.ref.close();
+  }
 }

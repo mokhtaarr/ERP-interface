@@ -19,6 +19,9 @@ export class TypesOfVehiclesComponent implements OnInit{
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
   AllVehicleTypes:any[] = []
 
   DisabledPrevButton: boolean = false;
@@ -47,7 +50,7 @@ export class TypesOfVehiclesComponent implements OnInit{
     vehicleTypId:[],
     typeCode:['',Validators.required],
     name1:['',Validators.required],
-    name2:['',Validators.required],
+    name2:[''],
     remark:[''],
 
   })
@@ -244,6 +247,8 @@ export class TypesOfVehiclesComponent implements OnInit{
 
   undo(){
     this.vehicleTypeForm.disable();
+    this.readonlyTable = false;
+    this.newDisable = false;
 
     this.DisabledNextButton = false;
       this.DisabledPrevButton = false;
@@ -274,6 +279,8 @@ export class TypesOfVehiclesComponent implements OnInit{
 
   updateVehicleType(){
     this.vehicleTypeForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -290,6 +297,8 @@ export class TypesOfVehiclesComponent implements OnInit{
 
   New(){
     this.vehicleTypeForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.AllVehicleTypes = this.dataSource.filteredData;
     this.undoIndex = this.AllVehicleTypes.findIndex(p=>p.vehicleTypId == this.vehicleTypeForm.value.vehicleTypId);
    this.vehicleTypeForm.setValue({

@@ -16,7 +16,8 @@ export class SuppliersTypesComponent implements OnInit  {
 
   AllVendorTypes : any[] = [];
   AllVendorTypesSelect : any[] = [];
-
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
   dataSource: any;
   displayedColumns: string[] = ['vendorTypeCode', 'vendorTypeDescA', 'vendorTypeDescE','name_VendorTypeParent','vendorTypeLevelType','remarks'];
   @ViewChild(MatPaginator) paginator !: MatPaginator;
@@ -53,7 +54,7 @@ constructor(private definitionService: DefinitionService , private fb:FormBuilde
     vendorTypeId:[],
     vendorTypeCode:['',Validators.required],
     vendorTypeDescA:['',Validators.required],
-    vendorTypeDescE:['',Validators.required],
+    vendorTypeDescE:[''],
     vendorTypeParent:[''],
     vendorTypeLevel:[''],
     vendorTypeLevelType:[''],
@@ -148,6 +149,8 @@ constructor(private definitionService: DefinitionService , private fb:FormBuilde
 
  New(){
   this.vendorTypeForm.enable();
+  this.readonlyTable = true;
+  this.newDisable = true;
   this.AllVendorTypes = this.dataSource.filteredData;
   this.undoIndex = this.AllVendorTypes.findIndex(p=>p.vendorTypeId == this.vendorTypeForm.value.vendorTypeId);
   this.vendorTypeForm.setValue({
@@ -310,6 +313,8 @@ constructor(private definitionService: DefinitionService , private fb:FormBuilde
       this.reloadDisabled = false;
       this.SaveDisable = true;
       this.UndoDisabled = true;
+      this.readonlyTable = false;
+      this.newDisable = false;
 
       if(this.undoIndex != -1){
         const undoItem = this.AllVendorTypes[this.undoIndex]
@@ -338,6 +343,8 @@ constructor(private definitionService: DefinitionService , private fb:FormBuilde
   
   updateVendorType(){
       this.vendorTypeForm.enable();
+      this.readonlyTable = true;
+      this.newDisable = true;
       this.DeleteDisable = true;
       this.DisabledNextButton = true;
       this.DisabledPrevButton = true;

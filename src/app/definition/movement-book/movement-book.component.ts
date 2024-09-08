@@ -20,6 +20,9 @@ export class MovementBookComponent implements OnInit{
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
   AllSysBooks:any[] = [];
   AllTermType:any[]=[];
   AllUser:any[]=[];
@@ -150,6 +153,8 @@ export class MovementBookComponent implements OnInit{
 
   updateSysBook(){
     this.SysBooksForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -348,6 +353,8 @@ export class MovementBookComponent implements OnInit{
     this.reloadDisabled = false;
     this.SaveDisable = true;
     this.UndoDisabled = true;
+    this.readonlyTable = false;
+    this.newDisable = false;
 
     if(this.undoIndex != -1){
       const undoItem = this.AllSysBooks[this.undoIndex]
@@ -376,6 +383,8 @@ export class MovementBookComponent implements OnInit{
 
   New(){
     this.SysBooksForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.AllSysBooks = this.dataSource.filteredData;
     this.undoIndex = this.AllSysBooks.findIndex(p=>p.bookId == this.SysBooksForm.value.bookId);
    this.SysBooksForm.setValue({

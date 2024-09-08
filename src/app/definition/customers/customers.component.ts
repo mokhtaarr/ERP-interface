@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DefinitionService } from '../definition.service';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 import { CustomerBranchesComponent } from '../customer-branches/customer-branches.component';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { CustomerContactComponent } from '../customer-contact/customer-contact.component';
 import { MatSelectChange } from '@angular/material/select';
 
@@ -30,8 +30,10 @@ export class CustomersComponent implements OnInit{
   AllCurrency:any[]=[];
   AllCalAccountChart:any[]=[];
   AllCities:any[]=[];
+  AllCountries:any[]=[];
 
-  
+  @ViewChild('tabGroup', { static: false }) tabGroup!: MatTabGroup;
+
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
   firstRow: boolean = false;
@@ -49,6 +51,11 @@ export class CustomersComponent implements OnInit{
   AllCustomerContact : any[] = [];
 
   MainAccountId : any;
+
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
+  selectedAccount: number | null = null;
 
   originalPrimaryAccountValue: any;
   originalAddAccount1Value: any;
@@ -89,6 +96,7 @@ export class CustomersComponent implements OnInit{
     this.GetAllCurrency();
     this.GetAllAccountChart();
     this.GetAllCities();
+    this.GetAllCountries();
   }
 
   CustomerForm = this.fb.group({
@@ -170,7 +178,14 @@ export class CustomersComponent implements OnInit{
     accTotalDebitCurncy:[],
     accTotaCreditCurncy:[],
     balanceDebitCurncy:[],
-    balanceCreditCurncy:[]
+    balanceCreditCurncy:[],
+    etaxCustType:[''],
+    taxRefNo:[''],
+    taxExemptionNo:[''],
+    countryId:[],
+    buildingNumber:[],
+    buildingNumber2:[],
+    zipCode:['']
   })
 
   GetAllCustomers(){
@@ -231,6 +246,9 @@ export class CustomersComponent implements OnInit{
 
  updatecustomer(){
   this.CustomerForm.enable();
+  this.readonlyTable = true;
+    this.newDisable = true;
+
   this.DeleteDisable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
@@ -248,6 +266,9 @@ export class CustomersComponent implements OnInit{
 
  undo(){
   this.CustomerForm.disable();
+  this.readonlyTable = false;
+    this.newDisable = false;
+
   this.DisabledNextButton = false;
   this.DisabledPrevButton = false;
   this.lastRow = false;
@@ -339,7 +360,14 @@ export class CustomersComponent implements OnInit{
          accTotaCreditCurncy: null,
          balanceDebitCurncy: null,
          balanceCreditCurncy: null,
-         IsPrimaryAccountChangedForm: null
+         IsPrimaryAccountChangedForm: null,
+         etaxCustType: undoItem.etaxCustType,
+         taxRefNo: undoItem.taxRefNo,
+         taxExemptionNo: undoItem.taxExemptionNo,
+         countryId: undoItem.countryId,
+         buildingNumber: undoItem.buildingNumber,
+         buildingNumber2: undoItem.buildingNumber2,
+         zipCode: undoItem.zipCode,
        })
 
       this.UpdateDisable = false;
@@ -347,6 +375,13 @@ export class CustomersComponent implements OnInit{
      }
     }
  }
+
+ GetAllCountries(){
+  this.definitionService.GetAllCountries().subscribe(res=>{
+    this.AllCountries = res;
+  })
+ }
+
 
  fillForm(row:any){
    this.definitionService.GetMainChartAccount(row.customerId).subscribe({
@@ -439,7 +474,14 @@ export class CustomersComponent implements OnInit{
           accTotaCreditCurncy: null,
           balanceDebitCurncy: null,
           balanceCreditCurncy: null,
-          IsPrimaryAccountChangedForm: null
+          IsPrimaryAccountChangedForm: null,
+          etaxCustType: row.etaxCustType,
+          taxRefNo: row.taxRefNo,
+          taxExemptionNo: row.taxExemptionNo,
+          countryId: row.countryId,
+          buildingNumber: row.buildingNumber,
+          buildingNumber2: row.buildingNumber2,
+          zipCode: row.zipCode
         });
     
         this.UpdateDisable = false;
@@ -540,7 +582,14 @@ export class CustomersComponent implements OnInit{
      accTotaCreditCurncy: null,
      balanceDebitCurncy: null,
      balanceCreditCurncy: null,
-     IsPrimaryAccountChangedForm: null
+     IsPrimaryAccountChangedForm: null,
+     etaxCustType: PrevItem.etaxCustType,
+     taxRefNo: PrevItem.taxRefNo,
+     taxExemptionNo: PrevItem.taxExemptionNo,
+     countryId: PrevItem.countryId,
+     buildingNumber: PrevItem.buildingNumber,
+     buildingNumber2: PrevItem.buildingNumber2,
+     zipCode: PrevItem.zipCode,
    })
 
       this.firstRow = false;
@@ -650,7 +699,14 @@ export class CustomersComponent implements OnInit{
        accTotaCreditCurncy: null,
        balanceDebitCurncy: null,
        balanceCreditCurncy: null,
-       IsPrimaryAccountChangedForm: null
+       IsPrimaryAccountChangedForm: null,
+       etaxCustType: nextItem.etaxCustType,
+       taxRefNo: nextItem.taxRefNo,
+       taxExemptionNo: nextItem.taxExemptionNo,
+       countryId: nextItem.countryId,
+       buildingNumber: nextItem.buildingNumber,
+       buildingNumber2: nextItem.buildingNumber2,
+       zipCode: nextItem.zipCode,
      })
       
       this.firstRow = false;
@@ -750,7 +806,14 @@ export class CustomersComponent implements OnInit{
         accTotaCreditCurncy: null,
         balanceDebitCurncy: null,
         balanceCreditCurncy: null,
-        IsPrimaryAccountChangedForm: null
+        IsPrimaryAccountChangedForm: null,
+        etaxCustType: FirstItem.etaxCustType,
+        taxRefNo: FirstItem.taxRefNo,
+        taxExemptionNo: FirstItem.taxExemptionNo,
+        countryId: FirstItem.countryId,
+        buildingNumber: FirstItem.buildingNumber,
+        buildingNumber2: FirstItem.buildingNumber2,
+        zipCode: FirstItem.zipCode,
       })
       this.firstRow = true;
       this.lastRow = false;
@@ -845,7 +908,14 @@ export class CustomersComponent implements OnInit{
         accTotaCreditCurncy: null,
         balanceDebitCurncy: null,
         balanceCreditCurncy: null,
-        IsPrimaryAccountChangedForm: null
+        IsPrimaryAccountChangedForm: null,
+        etaxCustType: LastItem.etaxCustType,
+        taxRefNo: LastItem.taxRefNo,
+        taxExemptionNo: LastItem.taxExemptionNo,
+        countryId: LastItem.countryId,
+        buildingNumber: LastItem.buildingNumber,
+        buildingNumber2: LastItem.buildingNumber2,
+        zipCode: LastItem.zipCode,
       })
 
     this.firstRow = false;
@@ -949,7 +1019,14 @@ export class CustomersComponent implements OnInit{
               accTotaCreditCurncy: null,
               balanceDebitCurncy: null,
               balanceCreditCurncy: null,
-              IsPrimaryAccountChangedForm: null
+              IsPrimaryAccountChangedForm: null,
+              etaxCustType: null,
+              taxRefNo: null,
+              taxExemptionNo: null,
+              countryId: null,
+              buildingNumber: null,
+              buildingNumber2: null,
+              zipCode: null
             })
 
             this.DeleteDisable = true;
@@ -965,6 +1042,8 @@ export class CustomersComponent implements OnInit{
   New() {
     this.CustomerForm.enable();
     this.AllCustomers = this.dataSource.filteredData;
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.undoIndex = this.AllCustomers.findIndex(p=>p.customerId == this.CustomerForm.value.customerId);
    this.CustomerForm.setValue({
      customerId: null,
@@ -1045,7 +1124,14 @@ export class CustomersComponent implements OnInit{
      accTotaCreditCurncy: null,
      balanceDebitCurncy: null,
      balanceCreditCurncy: null,
-     IsPrimaryAccountChangedForm: null
+     IsPrimaryAccountChangedForm: null,
+     etaxCustType: null,
+     taxRefNo: null,
+     taxExemptionNo: null,
+     countryId: null,
+     buildingNumber: null,
+     buildingNumber2: null,
+     zipCode: null
    })
   
     this.DisabledNextButton = true;
@@ -1131,6 +1217,7 @@ export class CustomersComponent implements OnInit{
         this.UpdateDisable = false;
         this.UndoDisabled = true;
         this.DeleteDisable=false;
+        this.tabGroup.selectedIndex = 0;
 
       }
     })
@@ -1181,6 +1268,9 @@ onTabChanged(event: MatTabChangeEvent) {
   }
   if (event.tab.textLabel === 'حسابات') {
     this.GetAdditionalAccount();
+  }
+  if (event.tab.textLabel === 'الارصده') {
+    this.GetCustomerMainAccount();
   }
 }
 
@@ -1340,6 +1430,8 @@ GetCustomerMainAccount(){
         this.CustomerForm.get("accTotaCreditCurncy")?.setValue(res.accTotaCreditCurncy);
         this.CustomerForm.get("balanceDebitCurncy")?.setValue(res.balanceDebitCurncy);
         this.CustomerForm.get("balanceCreditCurncy")?.setValue(res.balanceCreditCurncy);
+        this.selectedAccount = 1; 
+
       }
     })
   }

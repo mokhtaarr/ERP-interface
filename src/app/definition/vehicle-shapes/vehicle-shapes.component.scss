@@ -62,3 +62,8 @@ font-weight: bold;
 td{
 font-size: large;
 }
+
+.readonly-table {
+  pointer-events: none;
+  opacity: 0.6; 
+}

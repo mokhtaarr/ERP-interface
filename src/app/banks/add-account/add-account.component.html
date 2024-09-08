@@ -1,0 +1,130 @@
+
+<form [formGroup]="AccountForm" (ngSubmit)="onSumbit()" >
+    <mat-tab-group     dir="rtl" backgroundColor="primary" >
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <h1 style="margin-bottom: auto;">
+                    (+)
+                    {{data.Title}}
+                </h1>
+            </ng-template>
+
+            <mat-dialog-content class="mat-typography">
+                <div class="row p-3">
+
+                    <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12 mdc-text-field--invalid">
+                        <mat-label>كود الحساب </mat-label>
+                        <input matInput type="text" formControlName="AccountCode" >
+                    </mat-form-field>
+
+
+                    <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
+                        <mat-label>اسم الحساب  بالعربى</mat-label>
+                        <input matInput type="text" formControlName="AccounntNameA" >
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
+                        <mat-label>اسم الحساب  بالإنجليزى</mat-label>
+                        <input matInput type="text" formControlName="AccounntNameE" >
+                    </mat-form-field>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top select-margin-bottom"
+                        style="display: flex; align-items: center;">
+                         <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
+                            <mat-label>ابحث <i class="fas fa-search"></i></mat-label>
+                            <input matInput type="text" (input)="onSearch($event)">
+                        </mat-form-field>
+
+                        <mat-form-field style="flex: 1; margin-right: 10px;" class="ang-maturial-select mdc-text-field--invalid" appearance="outline">
+                            <mat-label>حساب الدليل</mat-label>
+                            <mat-select formControlName="accountChrtId" (selectionChange)="onAccountSelect($event)">
+                              <mat-option *ngFor="let acc of filteredAccountChrtId" [value]="acc.accountId">
+                                {{acc.accountCode}} - {{acc.accountNameA}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                      </div>
+                      
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                        <mat-form-field class="ang-maturial-select" appearance="outline">
+                            <mat-label>العملة</mat-label>
+                            <mat-select formControlName="currencyId" >
+                                <mat-option *ngFor="let currency of AllCurrency" [value]="currency.currencyId">
+                                    {{currency.currencyCode}} - {{currency.currencyDescA}}  / م.التحويل : {{currency.rate}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top select-margin-bottom" style="display: flex; align-items: center;">
+                        <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
+                            <mat-label>ابحث <i class="fas fa-search"></i></mat-label>
+                            <input matInput type="text" (input)="onSearchCheq($event)">
+                        </mat-form-field>
+
+                        <mat-form-field style="flex: 1; margin-right: 10px;" class="ang-maturial-select" appearance="outline">
+                            <mat-label>حساب شيكات تحت التحصيل</mat-label>
+                            <mat-select formControlName="chequndercollectId">
+                                <mat-option *ngFor="let acc of filteredAllChequndercollectId"
+                                    [value]="acc.accountId">
+                                    {{acc.accountCode}} - {{acc.accountNameA}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top select-margin-bottom" style="display: flex; align-items: center;" >
+                        <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
+                            <mat-label>ابحث <i class="fas fa-search"></i></mat-label>
+                            <input matInput type="text" (input)="onSearchRet($event)">
+                        </mat-form-field>
+
+                        <mat-form-field style="flex: 1; margin-right: 10px;" class="ang-maturial-select" appearance="outline">
+                            <mat-label>حساب شيكات مرتده</mat-label>
+                            <mat-select formControlName="retAccountId">
+                                <mat-option *ngFor="let acc of AllAccounts"
+                                    [value]="acc.accountId">
+                                    {{acc.accountCode}} - {{acc.accountNameA}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 input-mrg-top select-margin-bottom" style="display: flex; align-items: center;">
+                        <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
+                            <mat-label>ابحث <i class="fas fa-search"></i></mat-label>
+                            <input matInput type="text" (input)="onSearchBank($event)">
+                        </mat-form-field>
+
+                        <mat-form-field style="flex: 1; margin-right: 10px;" class="ang-maturial-select" appearance="outline">
+                            <mat-label>حساب مصروفات بنكيه</mat-label>
+                            <mat-select formControlName="bankExpensAccId">
+                                <mat-option *ngFor="let acc of AllAccounts"
+                                    [value]="acc.accountId">
+                                    {{acc.accountCode}} - {{acc.accountNameA}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                 
+
+                </div>
+            </mat-dialog-content>
+         
+
+        </mat-tab>
+
+    </mat-tab-group>
+
+    <div mat-dialog-actions>
+        <a (click)="closepopup()" mat-raised-button color="warn">إغلاق</a>
+           
+        <button mat-raised-button type="submit" color="primary" [disabled]="AccountForm.invalid"   >حفظ</button>
+
+    </div>
+</form>
+

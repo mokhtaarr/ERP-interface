@@ -52,6 +52,10 @@ export class AccountsGuideComponent implements OnInit {
   currentlevel !: number ;
   AccountItem : any;
 
+  readonlyTree : boolean = false;
+  newDisable:boolean = false;
+  NewCode:any;
+
  
   private _transformer = (node: any, level: number) => {
     return {
@@ -628,6 +632,8 @@ export class AccountsGuideComponent implements OnInit {
 
   undo(){
     this.AccountGuideForm.disable();
+    this.readonlyTree = false;
+    this.newDisable = false;
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
     this.lastRow = false;
@@ -680,6 +686,8 @@ export class AccountsGuideComponent implements OnInit {
 
   updateAccount(){
     this.AccountGuideForm.enable();
+    this.readonlyTree = true;
+    this.newDisable = true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -695,42 +703,58 @@ export class AccountsGuideComponent implements OnInit {
 
   New(){
     this.AccountGuideForm.enable();
+    this.readonlyTree = true;
+    this.newDisable = true;
     this.undoItem = this.AccountGuideForm.value;
     if(this.AccountItem != null){
-      this.AccountGuideForm.setValue({
-        accountId: null,
-        accountCode: this.AccountItem.accountCode + 1,
-        accountNameA: this.AccountItem.accountNameA + "-",
-        accountNameE:  this.AccountItem.accountNameE ? this.AccountItem.accountNameE + "-" : null,
-        mainAccountId: this.AccountItem.accountId,
-        accountLevel: this.AccountItem.level + 2,
-        accountNature: 1,
-        accountType: 4,
-        accountGroup: 1,
-        accCashFlow: 1,
-        calcMethod: this.AccountItem.calcMethod,
-        openningBalanceDepit: null,
-        openningBalanceCredit: null,
-        accCurrTrancDepit: null,
-        accCurrTrancCredit: null,
-        accTotalDebit: null,
-        accTotaCredit: null,
-        balanceDebitLocal: null,
-        balanceCreditLocal: null,
-        openningBalanceDepitCurncy: null,
-        openningBalanceCreditCurncy: null,
-        accCurrTrancDepitCurncy: null,
-        accCurrTrancCreditCurncy: null,
-        accTotalDebitCurncy: null,
-        accTotaCreditCurncy: null,
-        balanceDebitCurncy: null,
-        balanceCreditCurncy: null,
-        remarksA: null,
-        remarksE: null,
-        currencyId: null,
-        accountStopped: null,
-        rate: null
+      const mainAccountIdValue = this.allAccountsForSelect.some(account => account.accountId === this.AccountItem.accountId) 
+      ? this.AccountItem.accountId 
+      : this.AccountItem.mainAccountId;
+
+
+      this.AccountsService.GetNewAccountCode(mainAccountIdValue).subscribe({
+        next: (res) => {
+          this.NewCode = res;
+        },
+        complete: () => {
+          this.AccountGuideForm.setValue({
+            accountId: null,
+            accountCode: this.NewCode + 1 ,
+            accountNameA: this.AccountItem.accountNameA + "-",
+            accountNameE:  this.AccountItem.accountNameE ? this.AccountItem.accountNameE + "-" : null,
+            mainAccountId: mainAccountIdValue,
+            accountLevel: this.AccountItem.level + 2,
+            accountNature: 1,
+            accountType: this.AccountItem.accountType == 1 || this.AccountItem.accountType == 4  ?  4 : 2,
+            accountGroup: this.AccountItem.accountGroup ?? 1,
+            accCashFlow: this.AccountItem.accCashFlow ?? 1,
+            calcMethod: this.AccountItem.calcMethod,
+            openningBalanceDepit: null,
+            openningBalanceCredit: null,
+            accCurrTrancDepit: null,
+            accCurrTrancCredit: null,
+            accTotalDebit: null,
+            accTotaCredit: null,
+            balanceDebitLocal: null,
+            balanceCreditLocal: null,
+            openningBalanceDepitCurncy: null,
+            openningBalanceCreditCurncy: null,
+            accCurrTrancDepitCurncy: null,
+            accCurrTrancCreditCurncy: null,
+            accTotalDebitCurncy: null,
+            accTotaCreditCurncy: null,
+            balanceDebitCurncy: null,
+            balanceCreditCurncy: null,
+            remarksA: null,
+            remarksE: null,
+            currencyId: this.AccountItem.currencyId,
+            accountStopped: null,
+            rate: this.AccountItem.rate
+          });
+        }
+       
       });
+
       // this.AccountGuideForm.controls['calcMethod'].disable();
 
     }else{

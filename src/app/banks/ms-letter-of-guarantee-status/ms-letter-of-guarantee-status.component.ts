@@ -35,6 +35,8 @@ export class MsLetterOfGuaranteeStatusComponent implements OnInit {
 
   AllLetters:any[] = []
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
 
   constructor(private BankService: BanksService , private fb:FormBuilder,private dialog: MatDialog){
   }
@@ -200,6 +202,8 @@ export class MsLetterOfGuaranteeStatusComponent implements OnInit {
 
   New() {
     this.bankForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.AllLetters = this.dataSource.filteredData;
     this.undoIndex = this.AllLetters.findIndex(p=>p.letOfGrnteeStatusId == this.bankForm.value.letOfGrnteeStatusId);
     this.bankForm.setValue({
@@ -223,6 +227,8 @@ export class MsLetterOfGuaranteeStatusComponent implements OnInit {
 
   updateLetter() {
     this.bankForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -240,6 +246,8 @@ export class MsLetterOfGuaranteeStatusComponent implements OnInit {
   
   undo() {
     this.bankForm.disable();
+    this.readonlyTable = false;
+    this.newDisable = false;
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
     this.lastRow = false;

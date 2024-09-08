@@ -24,6 +24,9 @@ export class CustomerTypesComponent implements OnInit{
   AllCustomerType : any[] = [];
   AllCustomerTypeSelect : any[] = [];
 
+  readonlyTable : boolean = false;
+  newDisable:boolean = false;
+
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
   firstRow: boolean = false;
@@ -50,7 +53,7 @@ export class CustomerTypesComponent implements OnInit{
     customerTypeId :[],
     customerTypeCode:['',Validators.required],
     customerTypeDescA:['',Validators.required],
-    customerTypeDescE:['',Validators.required],
+    customerTypeDescE:[''],
     customerTypeParent:[],
     customerTypeLevel:[],
     customerTypeLevelType:[''],
@@ -266,6 +269,9 @@ export class CustomerTypesComponent implements OnInit{
 
   undo(){
     this.customerTypeForm.disable();
+    this.readonlyTable = false;
+    this.newDisable = false;
+
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
     this.lastRow = false;
@@ -296,6 +302,9 @@ export class CustomerTypesComponent implements OnInit{
 
   updatecustomerType(){
     this.customerTypeForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
+
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -312,6 +321,9 @@ export class CustomerTypesComponent implements OnInit{
 
   New(){
     this.customerTypeForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
+
     this.AllCustomerType = this.dataSource.filteredData;
     this.undoIndex = this.AllCustomerType.findIndex(p=>p.customerTypeId == this.customerTypeForm.value.customerTypeId);
    this.customerTypeForm.setValue({

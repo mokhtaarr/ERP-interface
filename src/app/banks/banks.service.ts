@@ -120,5 +120,81 @@ export class BanksService {
       }))
     }
   
+
+    // السيرفسيس الخاصه با البنوك
+
+    GetAllBanks(){
+      return this.http.get<any>(environment.apiUrl +'Bank/GetAllBanks')
+    }
+
+    AddBank(values:any){
+      return this.http.post<any>(environment.apiUrl+'Bank/AddBank',values).pipe(
+        map((res) => {
+          var message = res.message;
+          var messageEn = res.messageEn;
+    
+          if (res.status == true) this.toastr.success(message);
+          
+          if (res.status == false) this.toastr.error(message);
+    
+          return res;
+        })
+      );
+    }
+
+    GetAllAccounts(){
+      return this.http.get<any>(environment.apiUrl +'Bank/GetAllAccounts')
+    }
+
+    GetAllCurrency(){
+      return this.http.get<any>(environment.apiUrl+'Customers/GetAllCurrency')
+    }
+
+    AddBankAccount(values:any){
+      return this.http.post<any>(environment.apiUrl+'Bank/AddAccount',values).pipe(
+        map((res) => {
+          var message = res.message;
+          var messageEn = res.messageEn;
+    
+          if (res.status == true) this.toastr.success(message);
+          
+          if (res.status == false) this.toastr.error(message);
+    
+          return res;
+        })
+      );
+    }
+    
+    GetBankAccounts(boxId : any){
+      return this.http.get<any>(`${environment.apiUrl}Bank/GetBankData?boxId=${boxId}`)
+    }
+  
+    DeleteAccount(boxCurrencyId:any){
+      return this.http.delete<any>(`${environment.apiUrl}Bank/DeleteAccount?boxCurrencyId=${boxCurrencyId}`)
+      .pipe(map((res)=>{
+        var message = res.message;
+        var messageEn = res.messageEn;
+    
+        if (res.status == true) this.toastr.success(message);
+    
+        if (res.status == false) this.toastr.error(message);
+    
+        return res.status;
+      }))
+    }
+
+    DeleteBank(boxId:any){
+      return this.http.delete<any>(`${environment.apiUrl}Bank/DeleteBank?boxId=${boxId}`)
+      .pipe(map((res)=>{
+        var message = res.message;
+        var messageEn = res.messageEn;
+    
+        if (res.status == true) this.toastr.success(message);
+    
+        if (res.status == false) this.toastr.error(message);
+    
+        return res.status;
+      }))
+    }
  
 }

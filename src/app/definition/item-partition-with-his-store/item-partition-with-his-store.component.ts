@@ -66,4 +66,8 @@ export class ItemPartitionWithHisStoreComponent implements OnInit {
     this.ref.close(this.Partition_Response);
   }
 
+cancel(){
+  this.ref.close();
+ }
+
 }

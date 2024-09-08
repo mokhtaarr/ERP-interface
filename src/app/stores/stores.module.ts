@@ -8,6 +8,7 @@ import { ImportModule } from '../import/import.module';
 import { StoreExchangeComponent } from './store-exchange/store-exchange.component';
 import { SupplyStoreComponent } from './supply-store/supply-store.component';
 import { RequestConvertStoreComponent } from './request-convert-store/request-convert-store.component';
+import { InventoryOfItemsComponent } from './inventory-of-items/inventory-of-items.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { RequestConvertStoreComponent } from './request-convert-store/request-co
     ConvertingStoresComponent,
     StoreExchangeComponent,
     SupplyStoreComponent,
-    RequestConvertStoreComponent
+    RequestConvertStoreComponent,
+    InventoryOfItemsComponent
   ],
   imports: [
     CommonModule,

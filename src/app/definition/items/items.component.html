@@ -171,7 +171,7 @@
                             </button>
                         </div> -->
 
-                        <button mat-fab extended color="primary" type="button" (click)="New()"
+                        <button mat-fab extended color="primary" [disabled]="newDisable" type="button" (click)="New()"
                             style="flex-direction:column;">
                             <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
                             <mat-icon style="margin-right: 10px;margin-left: 10px;">
@@ -210,7 +210,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
 
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الكود </mat-label>
@@ -219,7 +219,7 @@
 
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom ">
 
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الكود الضريبى </mat-label>
@@ -229,7 +229,7 @@
                         </div>
 
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
 
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الإسم بالعربى </mat-label>
@@ -272,17 +272,17 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>طبيعة الصنف</mat-label>
                                 <mat-select formControlName="itemType">
-                                    <mat-option value="1">منتج تام</mat-option>
-                                    <mat-option value="2">خامه</mat-option>
-                                    <mat-option value="3">خدمه</mat-option>
-                                    <mat-option value="4">صنف تصنيع</mat-option>
-                                    <mat-option value="5">مركبه</mat-option>
-                                    <mat-option value="6">منتج نصف مصنع</mat-option>
-                                    <mat-option value="7">ثروه حيوانيه</mat-option>
+                                    <mat-option [value]="1">منتج تام</mat-option>
+                                    <mat-option [value]="2">خامه</mat-option>
+                                    <mat-option [value]="3">خدمه</mat-option>
+                                    <mat-option [value]="4">صنف تصنيع</mat-option>
+                                    <mat-option [value]="5">مركبه</mat-option>
+                                    <mat-option [value]="6">منتج نصف مصنع</mat-option>
+                                    <mat-option [value]="7">ثروه حيوانيه</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -397,8 +397,10 @@
                         </div>
 
                         <div class="col-lg-2 col-md-6 col-sm-12 input-mrg-top">
-                            <mat-slide-toggle color="primary" formControlName="isCollection">صنف
-                                تجميع</mat-slide-toggle>
+                            <mat-slide-toggle color="primary"   
+                             formControlName="isCollection">
+                                صنف تجميع 
+                            </mat-slide-toggle>
 
                         </div>
 
@@ -644,7 +646,7 @@
                     </ng-template>
 
                     <div class="row p-3">
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom"
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid"
                             style="display: none;">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <input matInput type="number" formControlName="basUnitId">
@@ -672,6 +674,8 @@
                             *ngIf="itemUnitsSub.length != 0">
                             <thead>
                                 <tr>
+                                    <th scope="col">تعديل</th>
+                                    <th scope="col">حذف</th>
                                     <th scope="col">وحده شراء أساسية</th>
                                     <th scope="col">وحده بيع أساسية</th>
                                     <th scope="col">لايمكن التقسيم</th>
@@ -711,23 +715,28 @@
                                     <th scope="col">باركود 13</th>
                                     <th scope="col">باركود 14</th>
                                     <th scope="col">باركود 15</th>
-                                    <th scope="col">تعديل</th>
-                                    <th scope="col">حذف</th>
                                 </tr>
+                                
                             </thead>
                             <tbody>
                                 <tr *ngFor="let itemUnit of itemUnitsSub">
+                                    <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                        (click)="updateItemUnit(itemUnit)"></i></td>
+
+                                   <td><i class="fas fa-trash-alt" (click)="DeleteItemUnit(itemUnit.basUnitId)"
+                                        style="color: red;cursor: pointer;"></i></td>
+                                    
                                     <th>
                                         <p><mat-slide-toggle color="primary"
-                                                [checked]="itemUnit?.isDefaultPurchas"></mat-slide-toggle></p>
+                                             [disabled]="true"   [checked]="itemUnit?.isDefaultPurchas"></mat-slide-toggle></p>
                                     </th>
                                     <td>
                                         <p><mat-slide-toggle color="primary"
-                                                [checked]="itemUnit?.isDefaultSale"></mat-slide-toggle></p>
+                                            [disabled]="true" [checked]="itemUnit?.isDefaultSale"></mat-slide-toggle></p>
                                     </td>
                                     <td>
                                         <p><mat-slide-toggle color="primary"
-                                                [checked]="itemUnit?.cannotDevide"></mat-slide-toggle></p>
+                                            [disabled]="true"  [checked]="itemUnit?.cannotDevide"></mat-slide-toggle></p>
                                     </td>
                                     <td class="tableTd">{{itemUnit.unitCode}}</td>
                                     <td class="tableTd">{{itemUnit.unitNam}}</td>
@@ -765,13 +774,6 @@
                                     <td class="tableTd">{{itemUnit?.barCode13}}</td>
                                     <td class="tableTd">{{itemUnit?.barCode14}}</td>
                                     <td class="tableTd">{{itemUnit?.barCode15}}</td>
-
-                                    <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
-                                            (click)="updateItemUnit(itemUnit)"></i></td>
-
-                                    <td><i class="fas fa-trash-alt" (click)="DeleteItemUnit(itemUnit.basUnitId)"
-                                            style="color: red;cursor: pointer;"></i></td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -782,6 +784,8 @@
                             *ngIf="itemUnits.length != 0">
                             <thead>
                                 <tr>
+                                    <th scope="col">تعديل</th>
+                                    <th scope="col">حذف</th>
                                     <th scope="col">وحده شراء أساسية</th>
                                     <th scope="col">وحده بيع أساسية</th>
                                     <th scope="col">لايمكن التقسيم</th>
@@ -821,23 +825,29 @@
                                     <th scope="col">باركود 13</th>
                                     <th scope="col">باركود 14</th>
                                     <th scope="col">باركود 15</th>
-                                    <th scope="col">تعديل</th>
-                                    <th scope="col">حذف</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let itemUnit of itemUnits">
+                                    <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                        (click)="updateItemUnitFromDataBase(itemUnit)"></i></td>
+
+                                   <td><i class="fas fa-trash-alt"
+                                        (click)="deleteItemUnitFromDataBase(itemUnit.unitId)"
+                                        style="color: red;cursor: pointer;"></i></td>
+
+
                                     <th>
                                         <p><mat-slide-toggle color="primary"
-                                                [checked]="itemUnit?.isDefaultPurchas"></mat-slide-toggle></p>
+                                            [disabled]="true" [checked]="itemUnit?.isDefaultPurchas"></mat-slide-toggle></p>
                                     </th>
                                     <td>
                                         <p><mat-slide-toggle color="primary"
-                                                [checked]="itemUnit?.isDefaultSale"></mat-slide-toggle></p>
+                                            [disabled]="true" [checked]="itemUnit?.isDefaultSale"></mat-slide-toggle></p>
                                     </td>
                                     <td>
                                         <p><mat-slide-toggle color="primary"
-                                                [checked]="itemUnit?.cannotDevide"></mat-slide-toggle></p>
+                                            [disabled]="true" [checked]="itemUnit?.cannotDevide"></mat-slide-toggle></p>
                                     </td>
                                     <td class="tableTd">{{itemUnit.unitCode}}</td>
                                     <td class="tableTd">{{itemUnit.unitNam}}</td>
@@ -875,19 +885,12 @@
                                     <td class="tableTd">{{itemUnit?.barCode13}}</td>
                                     <td class="tableTd">{{itemUnit?.barCode14}}</td>
                                     <td class="tableTd">{{itemUnit?.barCode15}}</td>
-
-                                    <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
-                                            (click)="updateItemUnitFromDataBase(itemUnit)"></i></td>
-
-                                    <td><i class="fas fa-trash-alt"
-                                            (click)="deleteItemUnitFromDataBase(itemUnit.unitId)"
-                                            style="color: red;cursor: pointer;"></i></td>
-
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
+                  
                 </mat-tab>
 
 
@@ -947,11 +950,13 @@
                     </ng-template>
                     <div class="row p-3">
                         <div class="col-lg-3 col-md-6 col-sm-12">
-                            <button mat-fab extended color="primary" [disabled]="itemIsCollection" type="button"
-                                (click)="OpenItemCollectionList()">
+                            <button mat-fab extended color="primary"
+                             [disabled]="itemForm.get('isCollection')?.value == false || itemForm.get('isCollection')?.value == null || itemAlternativeDisable == true"
+                             type="button"
+                                (click)="OpenItemCollectionList()" style="width: 200px;">
                                 اختر الاصناف المجمعه
                             </button>
-                            <div class="row p-3" *ngIf="!collectionDisable">
+                            <!-- <div class="row p-3" *ngIf="!collectionDisable">
                                 <table style="margin-bottom: auto;" class="table table-hover mt-3"
                                     *ngIf="itemCollectionFromDataBase.length != 0">
                                     <thead>
@@ -1051,7 +1056,85 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div> -->
+
+                            <div class="row p-3">
+                                <table style="margin-bottom: auto;" class="table table-hover mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">حذف</th>
+                                            <th scope="col">تعديل</th>
+                                            <th scope="col">الكود</th>
+                                            <th scope="col">الإسم بالعربى</th>
+                                            <th scope="col">الإسم بالإنجليزى</th>
+                                            <th scope="col">اسم الوحده</th>
+                                            <th scope="col">طبيعة الصنف</th>
+                                            <th scope="col">الكمية</th>
+                                            <th scope="col">ملاحظات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let itemCollection of itemCollectionFromDataBase">
+                                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                                (click)="updateItemCollectionFromDataBase(itemCollection)"></i></td>
+
+                                        <td><i class="fas fa-trash-alt"
+                                                (click)="DeleteItemCollectionFromDataBase(itemCollection.itemCollectId)"
+                                                style="color: red;cursor: pointer;"></i></td>
+                                            <td class="tableTdForCollection">{{itemCollection.itemCode}}</td>
+                                            <td class="tableTdForCollection">{{itemCollection.itemDescA}}</td>
+                                            <td class="tableTdForCollection">{{itemCollection.itemDescE}}</td>
+                                            <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
+                                            <td class="tableTdForCollection">
+                                                <ng-container *ngIf="itemCollection.itemType === 1">منتج
+                                                    تام</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 2">خامه</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 3">خدمه</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 4">صنف
+                                                    تصنيع</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 5">مركبه</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 6">منتج نصف
+                                                    مصنع</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 7">ثروه
+                                                    حيوانيه</ng-container>
+                                            </td>
+                                            <td class="tableTdForCollection">{{itemCollection.quantity}}</td>
+                                            <td class="tableTdForCollection">{{itemCollection.remarks}}</td>
+                                        </tr>
+
+                                        <tr *ngFor="let itemCollection of itemCollections">
+                                            <td><i class="fas fa-trash-alt"
+                                                    (click)="DeleteItemCollection(itemCollection.itemCardId)"
+                                                    style="color: red;cursor: pointer;"></i></td>
+
+                                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                                    (click)="updateItemCollection(itemCollection)"></i></td>
+
+                                            <td class="tableTdForCollection">{{itemCollection.itemCode}}</td>
+                                            <td class="tableTdForCollection">{{itemCollection.itemDescA}}</td>
+                                            <td class="tableTdForCollection">{{itemCollection.itemDescE}}</td>
+                                            <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
+                                            <td class="tableTdForCollection">
+                                                <ng-container *ngIf="itemCollection.itemType === 1">منتج
+                                                    تام</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 2">خامه</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 3">خدمه</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 4">صنف
+                                                    تصنيع</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 5">مركبه</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 6">منتج نصف
+                                                    مصنع</ng-container>
+                                                <ng-container *ngIf="itemCollection.itemType === 7">ثروه
+                                                    حيوانيه</ng-container>
+                                            </td>
+                                            <td class="tableTdForCollection">{{itemCollection.quantity}}</td>
+                                            <td class="tableTdForCollection">{{itemCollection.remarks}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
+
+
                         </div>
                     </div>
 
@@ -1064,14 +1147,16 @@
                     </ng-template>
                     <div class="row p-3">
                         <div class="col-lg-3 col-md-6 col-sm-12">
-                            <button mat-fab extended color="primary" type="button" (click)="openItemAlternatives()">
+                            <button mat-fab extended color="primary" [disabled]="itemAlternativeDisable" style="width: 200px;"
+                             type="button" (click)="openItemAlternatives()">
                                 اختر بدائل الصنف
                             </button>
-                            <div class="row p-3" *ngIf="!alterNativeDisable">
-                                <table style="margin-bottom: auto;" class="table table-hover mt-3">
+
+                            <!-- <div class="row p-3" *ngIf="!alterNativeDisable">
+                                <table *ngIf="itemAlternativesFromDataBase.length != 0" style="margin-bottom: auto;" class="table table-hover mt-3">
                                     <thead>
                                         <tr>
-                                            <th scope="col">حذف</th>
+                                            <th scope="col">حذف </th>
                                             <th scope="col">تعديل</th>
                                             <th scope="col">الكود</th>
                                             <th scope="col">الإسم بالعربى</th>
@@ -1121,7 +1206,7 @@
                                 <table style="margin-bottom: auto;" class="table table-hover mt-3">
                                     <thead>
                                         <tr>
-                                            <th scope="col">حذف</th>
+                                            <th scope="col"> حذف</th>
                                             <th scope="col">تعديل</th>
                                             <th scope="col">الكود</th>
                                             <th scope="col">الإسم بالعربى</th>
@@ -1162,7 +1247,85 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div> -->
+
+                            <div class="row p-3" >
+                                <table  style="margin-bottom: auto;" class="table table-hover mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">حذف </th>
+                                            <th scope="col">تعديل</th>
+                                            <th scope="col">الكود</th>
+                                            <th scope="col">الإسم بالعربى</th>
+                                            <th scope="col">الإسم بالإنجليزى</th>
+                                            <th scope="col">اسم الوحده</th>
+                                            <th scope="col">طبيعة الصنف</th>
+                                            <th scope="col">الكمية</th>
+                                            <th scope="col">ملاحظات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let itemAlternative of itemAlternativesFromDataBase">
+                                            <td><i class="fas fa-trash-alt"
+                                                    (click)="DeleteItemAlternativesFromDataBase(itemAlternative.alterId)"
+                                                    style="color: red;cursor: pointer;"></i></td>
+
+                                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                                    (click)="updateItemAlterFromDataBase(itemAlternative)"></i></td>
+
+                                            <td class="tableTdForCollection">{{itemAlternative.itemCode}}</td>
+                                            <td class="tableTdForCollection">{{itemAlternative.itemDescA}}</td>
+                                            <td class="tableTdForCollection">{{itemAlternative.itemDescE}}</td>
+                                            <td class="tableTdForCollection">{{itemAlternative.unitNam}}</td>
+                                            <td class="tableTdForCollection">
+                                                <ng-container *ngIf="itemAlternative.itemType === 1">منتج
+                                                    تام</ng-container>
+                                                <ng-container *ngIf="itemAlternative.itemType === 2">خامه</ng-container>
+                                                <ng-container *ngIf="itemAlternative.itemType === 3">خدمه</ng-container>
+                                                <ng-container *ngIf="itemAlternative.itemType === 4">صنف
+                                                    تصنيع</ng-container>
+                                                <ng-container
+                                                    *ngIf="itemAlternative.itemType === 5">مركبه</ng-container>
+                                                <ng-container *ngIf="itemAlternative.itemType === 6">منتج نصف
+                                                    مصنع</ng-container>
+                                                <ng-container *ngIf="itemAlternative.itemType === 7">ثروه
+                                                    حيوانيه</ng-container>
+                                            </td>
+                                            <td class="tableTdForCollection">{{itemAlternative.quantity}}</td>
+                                            <td class="tableTdForCollection">{{itemAlternative.remarks}}</td>
+                                        </tr>
+
+                                        <tr *ngFor="let itemAlter of itemAlternatives">
+                                            <td><i class="fas fa-trash-alt" (click)="DeleteItemAlternative(itemAlter)"
+                                                    style="color: red;cursor: pointer;"></i></td>
+
+                                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                                    (click)="updateItemAlternative(itemAlter)"></i></td>
+
+                                            <td class="tableTdForCollection">{{itemAlter.itemCode}}</td>
+                                            <td class="tableTdForCollection">{{itemAlter.itemDescA}}</td>
+                                            <td class="tableTdForCollection">{{itemAlter.itemDescE}}</td>
+                                            <td class="tableTdForCollection">{{itemAlter.unitNam}}</td>
+                                            <td class="tableTdForCollection">
+                                                <ng-container *ngIf="itemAlter.itemType === 1">منتج
+                                                    تام</ng-container>
+                                                <ng-container *ngIf="itemAlter.itemType === 2">خامه</ng-container>
+                                                <ng-container *ngIf="itemAlter.itemType === 3">خدمه</ng-container>
+                                                <ng-container *ngIf="itemAlter.itemType === 4">صنف
+                                                    تصنيع</ng-container>
+                                                <ng-container *ngIf="itemAlter.itemType === 5">مركبه</ng-container>
+                                                <ng-container *ngIf="itemAlter.itemType === 6">منتج نصف
+                                                    مصنع</ng-container>
+                                                <ng-container *ngIf="itemAlter.itemType === 7">ثروه
+                                                    حيوانيه</ng-container>
+                                            </td>
+                                            <td class="tableTdForCollection">{{itemAlter.quantity}}</td>
+                                            <td class="tableTdForCollection">{{itemAlter.remarks}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
+
                         </div>
                     </div>
 
@@ -1174,38 +1337,40 @@
                         مخازن أساسية
                     </ng-template>
                     <div class="row p-3">
-                        <button mat-fab extended color="primary" type="button" (click)="GetItemPartitionWithHisStore()">
+                        <button mat-fab extended color="primary" type="button" [disabled]="AddstoreDisable"
+                           style="width: 100px;" (click)="GetItemPartitionWithHisStore()">
                             اختر المخزن
                         </button>
 
+                        <!-- <div *ngIf="!storeDisable">
+                            <table *ngIf="itemDefaultPartitionsFromDataBase.length != 0" style="margin-bottom: auto;" class="table table-hover mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">حذف</th>
+    
+                                        <th scope="col">كود الفرع</th>
+                                        <th scope="col">اسم الفرع</th>
+                                        <th scope="col">كود المخزن</th>
+                                        <th scope="col">اسم المخزن</th>
+    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let itemPatition of itemDefaultPartitionsFromDataBase">
+                                        <td><i class="fas fa-trash-alt"
+                                                (click)="DeleteItemDefaultParttionFromDatabase(itemPatition.itemStorePrtId)"
+                                                style="color: red;cursor: pointer;"></i></td>
+                                        <td>{{itemPatition.storeCode}}</td>
+                                        <td>{{itemPatition.storeDescA}}</td>
+                                        <td>{{itemPatition.partCode}}</td>
+                                        <td>{{itemPatition.partDescA}}</td>    
+                                    </tr>
+                                </tbody>
+                            </table>
+    
+                        </div>
 
-                        <table *ngIf="!storeDisable" style="margin-bottom: auto;" class="table table-hover mt-3">
-                            <thead>
-                                <tr>
-                                    <th scope="col">حذف</th>
-
-                                    <th scope="col">كود الفرع</th>
-                                    <th scope="col">اسم الفرع</th>
-                                    <th scope="col">كود المخزن</th>
-                                    <th scope="col">اسم المخزن</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let itemPatition of itemDefaultPartitionsFromDataBase">
-                                    <td><i class="fas fa-trash-alt"
-                                            (click)="DeleteItemDefaultParttionFromDatabase(itemPatition.itemStorePrtId)"
-                                            style="color: red;cursor: pointer;"></i></td>
-                                    <td>{{itemPatition.storeCode}}</td>
-                                    <td>{{itemPatition.storeDescA}}</td>
-                                    <td>{{itemPatition.partCode}}</td>
-                                    <td>{{itemPatition.partDescA}}</td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-
+                        
 
                         <div *ngIf="itemPartitionWithStores.length != 0">
                             <table style="margin-bottom: auto;" class="table table-hover mt-3">
@@ -1232,6 +1397,45 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div> -->
+
+                        <div >
+                            <table  style="margin-bottom: auto;" class="table table-hover mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">حذف</th>
+    
+                                        <th scope="col">كود الفرع</th>
+                                        <th scope="col">اسم الفرع</th>
+                                        <th scope="col">كود المخزن</th>
+                                        <th scope="col">اسم المخزن</th>
+    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let itemPatition of itemDefaultPartitionsFromDataBase">
+                                        <td><i class="fas fa-trash-alt"
+                                                (click)="DeleteItemDefaultParttionFromDatabase(itemPatition.itemStorePrtId)"
+                                                style="color: red;cursor: pointer;"></i></td>
+                                        <td>{{itemPatition.storeCode}}</td>
+                                        <td>{{itemPatition.storeDescA}}</td>
+                                        <td>{{itemPatition.partCode}}</td>
+                                        <td>{{itemPatition.partDescA}}</td>    
+                                    </tr>
+
+                                    <tr *ngFor="let itemPatition of itemPartitionWithStores">
+                                        <td><i class="fas fa-trash-alt" (click)="DeleteItemParttion(itemPatition)"
+                                                style="color: red;cursor: pointer;"></i></td>
+
+                                        <td>{{itemPatition.storeCode}}</td>
+                                        <td>{{itemPatition.storeDescA}}</td>
+                                        <td>{{itemPatition.partCode}}</td>
+                                        <td>{{itemPatition.partDescA}}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+    
                         </div>
                     </div>
 
@@ -1279,13 +1483,15 @@
         <mat-card-header class="justify-content-center">
             <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
                 <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-                <input matInput (keyup)="Filterchange($event)" />
+                <input matInput [readonly]="readonlyTable" (keyup)="Filterchange($event)" />
             </mat-form-field>
         </mat-card-header>
         <mat-card-content>
 
 
-            <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+            <table matSort mat-table [dataSource]="dataSource"
+            [class.readonly-table]="readonlyTable"
+             class="mat-elevation-z8" dir="rtl">
 
 
                 <ng-container matColumnDef="position">
@@ -1313,35 +1519,35 @@
                 <ng-container matColumnDef="isExpir">
                     <th mat-header-cell *matHeaderCellDef class="table-header-font-size">تواريخ صلاحية</th>
                     <td mat-cell *matCellDef="let element">
-                        <p><mat-slide-toggle color="primary" [checked]="element.isExpir"></mat-slide-toggle></p>
+                        <p><mat-slide-toggle color="primary" [disabled]="true" [checked]="element.isExpir"></mat-slide-toggle></p>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="isDimension">
                     <th mat-header-cell *matHeaderCellDef class="table-header-font-size">صنف ذو خصائص</th>
                     <td mat-cell *matCellDef="let element">
-                        <p><mat-slide-toggle color="primary" [checked]="element.isDimension"></mat-slide-toggle></p>
+                        <p><mat-slide-toggle color="primary" [disabled]="true" [checked]="element.isDimension"></mat-slide-toggle></p>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="isAttributeItem">
                     <th mat-header-cell *matHeaderCellDef class="table-header-font-size">صنف ذو أبعاد</th>
                     <td mat-cell *matCellDef="let element">
-                        <p><mat-slide-toggle color="primary" [checked]="element.isAttributeItem"></mat-slide-toggle></p>
+                        <p><mat-slide-toggle color="primary"  [disabled]="true" [checked]="element.isAttributeItem"></mat-slide-toggle></p>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="isCollection">
                     <th mat-header-cell *matHeaderCellDef class="table-header-font-size">صنف تجميع</th>
                     <td mat-cell *matCellDef="let element">
-                        <p><mat-slide-toggle color="primary" [checked]="element.isCollection"></mat-slide-toggle></p>
+                        <p><mat-slide-toggle color="primary" [disabled]="true" [checked]="element.isCollection"></mat-slide-toggle></p>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="isSerialItem">
                     <th mat-header-cell *matHeaderCellDef class="table-header-font-size">أرقام مسلسلة</th>
                     <td mat-cell *matCellDef="let element">
-                        <p><mat-slide-toggle color="primary" [checked]="element.isSerialItem"></mat-slide-toggle></p>
+                        <p><mat-slide-toggle color="primary" [disabled]="true" [checked]="element.isSerialItem"></mat-slide-toggle></p>
                     </td>
                 </ng-container>
 

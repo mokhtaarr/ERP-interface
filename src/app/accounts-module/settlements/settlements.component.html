@@ -1,0 +1,279 @@
+<div class="container-fluid">
+
+    <div class="d-flex p-3 rounded shadow-sm" style="background-color: white; justify-content: center;">
+        <h1 style="margin: inherit;">تسويات  <i class="fas fa-file-alt custom-icon"></i> </h1>
+    </div>
+
+    <div style="margin-bottom: 50px;">
+        <form [formGroup]="PurchaseOrderForm" (ngSubmit)="onSumbit()">
+            <div style="display: flex;justify-content: space-between;">
+            
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+    
+                      <button mat-fab extended color="primary" type="button" 
+                        (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
+                          <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+                          <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                            <i class="fas fa-step-backward"></i>
+                          </mat-icon>
+                        </button>
+        
+    
+                      <button mat-fab extended color="primary" type="button" 
+                       (click)="getNextRowData()" [disabled]="DisabledNextButton" style="flex-direction:column;">
+                         <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+                         <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                           <i class="fas fa-caret-left"></i>
+                         </mat-icon>
+                       </button>
+    
+                      <button mat-fab extended color="primary" type="button" 
+                       (click)="getPrevRowData()" [disabled]="DisabledPrevButton" style="flex-direction:column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                          <i class="fas fa-caret-right"></i>
+                        </mat-icon>
+                      </button>
+            
+                      <button mat-fab extended color="primary" type="button" 
+                       (click)="getFirstRowData()" [disabled]="firstRow" style="flex-direction:column;">
+                         <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+                         <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                           <i class="fas fa-step-forward"></i>
+                         </mat-icon>
+                       </button>
+            
+                      
+    
+                      <button mat-fab extended color="primary" type="button" 
+                      (click)="GetAllPurchaseOrder()" [disabled]="reloadDisabled" style="flex-direction: column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                          <i class="fas fa-sync"></i>
+                        </mat-icon>
+                      </button>
+    
+                      <button mat-fab extended color="primary" type="submit" 
+                      [disabled]="PurchaseOrderForm.invalid || SaveDisable" style="flex-direction:column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                          <i class="fas fa-save"></i>
+                        </mat-icon>
+                      </button>
+    
+                      <button mat-fab extended color="warn" type="button" 
+                       (click)="Open_delete_confirm()" [disabled]="PurchaseOrderForm.invalid || DeleteDisable" style="flex-direction: column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                          <i class="fas fa-trash-alt"></i>
+                        </mat-icon>
+                      </button>
+            
+                      <!-- <div class="example-button-container">
+                        <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
+                          aria-label="Example icon button with a menu icon">
+                          <i class="fas fa-undo"></i>
+                        </button>
+                      </div> -->
+    
+                      
+                     <button mat-fab extended color="primary" type="button" 
+                     (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
+                       <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+                       <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                         <i class="fas fa-undo"></i>
+                       </mat-icon>
+                     </button>
+            
+                      <button mat-fab extended color="primary" type="button" 
+                      [disabled]="UpdateDisable" (click)="updatePurchaseOrder()" style="flex-direction: column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                          <i class="fas fa-edit"></i>
+                        </mat-icon>
+                      </button>
+            
+                      <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+                        <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+                        <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+                          <i class="fas fa-plus"></i>
+                        </mat-icon>
+                      </button>
+            
+                    </div>
+    
+                    
+                  </div>
+
+
+                  <!-- <div class="mt-2" *ngIf="itemForm.value.itemDescA" style="display:flex;">
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{itemForm.value.itemDescA}} </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> - </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{itemForm.value.ItemCode}} </h1>
+                    <img height="50" width="50" src="../../../assets/images/arrow.gif">
+    
+                      </div> -->
+            </div>
+
+             
+
+            <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui; margin-bottom: 100px;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fas fa-file-alt"></i>
+
+                            بيانات اساسيه
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+                       
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>رقم المستند</mat-label>
+                            <input matInput type="text"  [readonly]="EditReadonly" >
+                        </mat-form-field>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>أختر</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">Pay 1</mat-option>
+                                    <mat-option value="1">Pay 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-floating">
+                                <input type="datetime-local"  class="form-control"
+                                    [readonly]="true">
+                                <label for="floatingInput"> <i class="fas fa-clock"></i> تاريخ المستند</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>نوع المستند</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">مستند 1</mat-option>
+                                    <mat-option value="1">مستند 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>نوع التسويه</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">مستند 1</mat-option>
+                                    <mat-option value="1">مستند 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الجهه</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">جهه 1</mat-option>
+                                    <mat-option value="1">جهه 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>مرجع</mat-label>
+                                <input matInput type="number" >
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>عميل</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">عميل 1</mat-option>
+                                    <mat-option value="1">عميل 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>كود العمله</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">العمله 1</mat-option>
+                                    <mat-option value="1">العمله 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>المبلغ</mat-label>
+                                <input matInput type="number" >
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>مستند الحركه</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">مستند 1</mat-option>
+                                    <mat-option value="1">مستند 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> رقم المستند</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">مستند 1</mat-option>
+                                    <mat-option value="1">مستند 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>المبلغ فقط</mat-label>
+                                <input matInput type="number" >
+                            </mat-form-field>
+                        </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>اللغه</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">عربي </mat-option>
+                                    <mat-option value="1">انجليزى </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div></div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>ملاحظات</mat-label>
+                                <textarea matInput></textarea>
+                              </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+
+            </mat-tab-group>
+        </form>
+    </div>
+
+</div>

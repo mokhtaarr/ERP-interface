@@ -83,7 +83,7 @@ export class StructureAdministrativeComponent implements OnInit {
     departMentId : [],
     departCode:['',Validators.required],
     name:['',Validators.required],
-    departName2:['',Validators.required],
+    departName2:[''],
     departTask:[''],
     remarks:[''],
     parentId:[]

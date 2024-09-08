@@ -52,7 +52,7 @@ export class ItemUnitsComponent implements OnInit{
     basUnitId:[],
     unitCode:['',Validators.required],
     unitNam:['',Validators.required],
-    unitNameE:['',Validators.required],
+    unitNameE:[''],
     unittRate:[],
     etaxUnitCode:[''],
     remarks:[''],

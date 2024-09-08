@@ -135,3 +135,8 @@ font-size: large;
     display: table-cell;
     max-width: 1000px;
   }
+
+  .readonly-table {
+    pointer-events: none;
+    opacity: 0.6; 
+  }

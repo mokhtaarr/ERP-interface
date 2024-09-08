@@ -20,6 +20,7 @@ export class FinancialYearComponent implements OnInit {
   items: any[] = [];
   modifiedRows: any[] = []; // متغير لتعقب الصفوف المعدلة
   paginationPageSize: number = 10;
+  readonlyTable : boolean = false;
 
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
@@ -295,6 +296,7 @@ export class FinancialYearComponent implements OnInit {
 
   undo(){
     this.FinancialForm.disable();
+    this.readonlyTable = false;
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
     this.lastRow = false;
@@ -333,6 +335,8 @@ export class FinancialYearComponent implements OnInit {
 
   New() {
     this.FinancialForm.enable();
+    this.readonlyTable = true;
+
      this.undoIndex = this.SysFinancialYears.findIndex(p=>p.financialYearsId == this.FinancialForm.value.financialYearsId);
     this.FinancialForm.setValue({
       financialYearsId: null,
@@ -413,6 +417,7 @@ export class FinancialYearComponent implements OnInit {
 
   updateFinancial() {
     this.FinancialForm.enable();
+    this.readonlyTable = true;
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
@@ -438,6 +443,7 @@ export class FinancialYearComponent implements OnInit {
       if (response) {
         this.AccountsService.DeleteFinance(this.FinancialForm.value.financialYearsId).subscribe(res=>{
           if(res){
+            this.dateRanges = [];
             this.GetAllSysFinancialYears();
            this.FinancialForm.setValue({
              financialYearsId: null,

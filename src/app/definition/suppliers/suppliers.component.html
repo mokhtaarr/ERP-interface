@@ -162,7 +162,7 @@
                </mat-icon>
              </button>
    
-             <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+             <button mat-fab extended color="primary" type="button" [disabled]="newDisable" (click)="New()" style="flex-direction:column;">
                <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
                <mat-icon style="margin-right: 10px;margin-left: 10px;" >
                  <i class="fas fa-plus"></i>
@@ -191,7 +191,7 @@
                 </div>
                </div> 
             
-            <mat-tab-group (selectedTabChange)="onTabChanged($event)" dir="rtl" style="background-color: white;font-family: system-ui;">
+            <mat-tab-group #tabGroup (selectedTabChange)="onTabChanged($event)" dir="rtl" style="background-color: white;font-family: system-ui;">
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-database custom-icon"></i>
@@ -211,7 +211,8 @@
 
                     </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                   
+                    <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid ">
 
                         <mat-form-field class="ang-maturial-select" appearance="outline">
                             <mat-label> الكود </mat-label>
@@ -260,7 +261,7 @@
                         </div>
 
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
 
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الإسم بالعربى </mat-label>
@@ -278,7 +279,7 @@
 
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب </mat-label>
                                 <mat-select formControlName="accountId" (selectionChange)="onPrimaryAccountChange($event)">
@@ -303,11 +304,54 @@
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>نوع ضريبى</mat-label>
+                                <mat-select formControlName="etaxCustType" >
+                                    <mat-option value="Person">Person</mat-option>
+                                    <mat-option value="Business">Business</mat-option>
+                                    <mat-option value="Foreigner">Foreigner</mat-option>
+                                  
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>السجل الضريبى</mat-label>
+                                <input matInput type="text" formControlName="taxRefNo">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>رقم الاعفاء الضريبى</mat-label>
+                                <input matInput type="text" formControlName="taxExemptionNo">
+                            </mat-form-field>
+
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>العملة</mat-label>
                                 <mat-select formControlName="currencyId" >
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let currency of AllCurrency" [value]="currency.currencyId">
                                         {{currency.currencyCode}} - {{currency.currencyDescA}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الدوله</mat-label>
+                                <mat-select  formControlName="countryId" >
+                                    <mat-option [value]="null">لا يوجد</mat-option>
+                                    <mat-option *ngFor="let country of AllCountries" [value]="country.countryId">
+                                        {{country.countryCode}} - {{country.countryName}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -387,18 +431,41 @@
 
                      
                         <div class="col-lg-3 col-md-6 col-sm-12">
-                            <mat-form-field class="ang-maturial-select" appearance="outline">
-                                <mat-label>عنوان 1</mat-label>
+                            <mat-form-field class="ang-maturial-select input-mrg-top" appearance="outline">
+                                <mat-label>اسم الشارع</mat-label>
                                 <input matInput type="text" formControlName="address1">
                             </mat-form-field>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
-                                <mat-label>عنوان 2</mat-label>
+                                <mat-label>اسم الشارع اضافى</mat-label>
                                 <input matInput type="text" formControlName="address2">
                             </mat-form-field>
                         </div>
+
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>رقم المبني</mat-label>
+                                <input matInput type="number" formControlName="buildingNumber">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> رقم المبني أضافى</mat-label>
+                                <input matInput type="number" formControlName="buildingNumber2">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>الرمز البريدي</mat-label>
+                                <input matInput type="string" formControlName="zipCode">
+                            </mat-form-field>
+                        </div>
+                        
 
                         <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
                          <mat-slide-toggle color="primary" formControlName="isActive">نشط</mat-slide-toggle>
@@ -408,6 +475,7 @@
                           <mat-slide-toggle color="primary" formControlName="forAdjustOnly">للتسوية فقط</mat-slide-toggle>
                         </div>
 
+                        <div></div>
                        
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
@@ -1101,16 +1169,18 @@
         <mat-card-header class="justify-content-center">
           <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
             <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-            <input matInput (keyup)="Filterchange($event)" />
+            <input matInput [readonly]="readonlyTable" (keyup)="Filterchange($event)" />
           </mat-form-field>
         </mat-card-header> <mat-card-content>
     
-          <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
+          <table matSort mat-table [dataSource]="dataSource"
+          [class.readonly-table]="readonlyTable"
+          class="mat-elevation-z8" dir="rtl">
     
             <ng-container matColumnDef="isActive">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>نشط</th>
                 <td mat-cell *matCellDef="let element">
-                    <p><mat-slide-toggle color="primary" [checked]="element.isActive"></mat-slide-toggle></p>
+                    <p><mat-slide-toggle color="primary" [disabled]="true" [checked]="element.isActive"></mat-slide-toggle></p>
 
                 </td>
             </ng-container>

@@ -59,6 +59,7 @@
     overflow-y: auto; 
     border: 1px solid #ccc; 
     position: relative; 
+    cursor: pointer;
   }
   
   .table-container::-webkit-scrollbar {
@@ -74,3 +75,8 @@
     background-color: #555; 
   }
   
+
+  .readonly-grid {
+    pointer-events: none;
+    opacity: 0.6; 
+  }

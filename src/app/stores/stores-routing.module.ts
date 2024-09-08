@@ -5,6 +5,7 @@ import { ConvertingStoresComponent } from './converting-stores/converting-stores
 import { StoreExchangeComponent } from './store-exchange/store-exchange.component';
 import { SupplyStoreComponent } from './supply-store/supply-store.component';
 import { RequestConvertStoreComponent } from './request-convert-store/request-convert-store.component';
+import { InventoryOfItemsComponent } from './inventory-of-items/inventory-of-items.component';
 
 const routes: Routes = [
   {path:'',component:AllComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path:'store-exchange',component:StoreExchangeComponent},
   {path:'supply-store',component:SupplyStoreComponent},
   {path:'request-convert-store',component:RequestConvertStoreComponent},
+  {path:'inventory-of-items',component:InventoryOfItemsComponent}
   
 ];
 

@@ -28,12 +28,19 @@ export class BoxesComponent implements OnInit {
   undoIndex!: number;
   allAccounts:any[] = [];
   allBoxBanks:any[] = [];
+
+  newDisable:boolean = false;
+
+
   dataSource: any;
   displayedColumns: string[] = [
     'boxCode',
     'desca',
     'desce',
   ];
+
+  readonlyTable : boolean = false;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -76,6 +83,9 @@ export class BoxesComponent implements OnInit {
   New() {
     
     this.boxForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
+
     this.undoIndex = this.allBoxBanks.findIndex(p=>p.boxId == this.boxForm.value.boxId);
     this.boxForm.setValue({
       boxId: null,
@@ -283,6 +293,17 @@ Open_delete_confirm(){
 
 undo(){
   this.boxForm.disable();
+  this.readonlyTable = false;
+  this.newDisable = false;
+  this.UpdateDisable = false;
+  this.DisabledNextButton = false;
+  this.DisabledPrevButton = false;
+  this.lastRow = false;
+  this.firstRow = false;
+  this.reloadDisabled = false;
+  this.SaveDisable = true;
+  this.UndoDisabled = true;
+  this.DeleteDisable = false;
 
   if(this.undoIndex != -1){
     const undoItem = this.allBoxBanks[this.undoIndex]
@@ -295,25 +316,16 @@ undo(){
       desce: undoItem.desce,
       accountId: undoItem.accountId
     })
-
-    this.UpdateDisable = false;
-    this.DisabledNextButton = false;
-    this.DisabledPrevButton = false;
-    this.lastRow = false;
-    this.firstRow = false;
-    this.reloadDisabled = false;
-    this.SaveDisable = true;
-    this.UndoDisabled = true;
-    this.DeleteDisable = false;
    }
-
   }
-  this.SaveDisable = true;
 }
 
 
 updateBoxBank(){
   this.boxForm.enable();
+  this.readonlyTable = true;
+  this.newDisable = true;
+  this.newDisable = true;
   this.DeleteDisable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;

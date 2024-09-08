@@ -12,6 +12,9 @@ import { CurrenciesComponent } from './currencies/currencies.component';
 import { FinancialYearComponent } from './financial-year/financial-year.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CheckboxRendererComponent } from './checkbox-renderer/checkbox-renderer.component';
+import { ExchangeDocumentComponent } from './exchange-document/exchange-document.component';
+import { ReceiptDocumentComponent } from './receipt-document/receipt-document.component';
+import { SettlementsComponent } from './settlements/settlements.component';
 
 
 @NgModule({
@@ -24,6 +27,9 @@ import { CheckboxRendererComponent } from './checkbox-renderer/checkbox-renderer
     CurrenciesComponent,
     FinancialYearComponent,
     CheckboxRendererComponent,
+    ExchangeDocumentComponent,
+    ReceiptDocumentComponent,
+    SettlementsComponent,
   ],
   imports: [
     CommonModule,

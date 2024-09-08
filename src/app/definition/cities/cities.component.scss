@@ -79,3 +79,7 @@ height: 45px;
 line-height: normal;
 }
 
+.readonly-table {
+  pointer-events: none;
+  opacity: 0.6; 
+}
