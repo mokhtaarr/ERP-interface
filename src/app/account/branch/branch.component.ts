@@ -44,6 +44,7 @@ export class BranchComponent implements OnInit{
     this.CompaniesServices.getAllCompanies().subscribe({
       next: (res) => {
         this.allCompanies = res;
+        this.branchForm.get('DataBaseId')?.setValue(this.allCompanies[0].dataBaseId)
       },
       error: (err) => {
         console.error("Error fetching companies", err);

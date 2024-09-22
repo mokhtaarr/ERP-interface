@@ -1,53 +1,87 @@
 <section class="vh-100" style="direction: ltr;">
-    <div class="container-fluid">
-      <div class="row" style="background-color: #2c698d;">
-        <div class="col-sm-6 d-flex justify-content-center m-auto">
-  
-          <div class="form-signin" style="width: 80%;">
-            <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" >
-              <div class="d-flex justify-content-center">
-                <img class="mb-4" src="../../../assets/images/logo3.png" alt="" width="130" height="120">
-              </div>
+  <div class="container-fluid">
+    <div class="row" style="background-color: #2c698d;">
+      <div class="col-sm-6 d-flex justify-content-center m-auto">
 
-              <div class="form-floating mt-2">
-                <input type="text" class="form-control" id="floatingInput" formControlName="firstName" placeholder="name@.com" fdprocessedid="lm2lwq">
-                <label for="floatingInput" >User Name</label>
-              </div>
-  
-              <div class="form-floating mt-2">
-                <input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Password" fdprocessedid="9oxjsj">
-                <label for="floatingPassword">Password</label>
-              </div>
-  
-             
-  
-              
-              <button  *ngIf="!disableSumbit" class="w-100 btn btn-lg btn-primary mt-5" type="submit" [disabled]="accountForm.invalid" style="background-color: #19b8e1;" fdprocessedid="infldq">Submit</button>
-              <button  *ngIf="disableSumbit" class="w-100 btn btn-lg  mt-5" type="submit"
-               [disabled]="true" style="background-color: white;" fdprocessedid="infldq">
-                <img  src="../../../assets/images/loading2.gif" width="50" height="50" />
-              </button>
-             
-  
-             
-              <p class="mt-5 mb-3" style="color: white; border-top: 1px solid white;"></p>
-  
-              <p class="mt-5 mb-3" style="color: white; ">All Works Copyright of Respective Owner, Otherwise ©SoftGo.</p>
-  
-              <p class="mt-5 mb-3" style="color: white;"> V.1
-              </p>
-            </form>
-          </div>
-          
-  
+        <div class="form-signin" style="width: 80%;">
+          <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex justify-content-center">
+              <img class="mb-4" src="../../../assets/images/logo3.png" alt="" width="130" height="120">
+            </div>
+
+            <div class="form-floating mt-2">
+              <input type="text" class="form-control" id="floatingInput" formControlName="userName"
+                placeholder="name@.com" fdprocessedid="lm2lwq">
+              <label for="floatingInput">User Name</label>
+            </div>
+
+            <div class="form-floating mt-2">
+              <input type="password" class="form-control" id="floatingPassword" formControlName="password"
+                placeholder="Password" fdprocessedid="9oxjsj">
+              <label for="floatingPassword">Password</label>
+            </div>
+
+            <!-- <p style="color: #2dd3f4;">Select Branch</p>
+              <div class="mt-2">
+                <select  class="form-select" formControlName="storeId"
+                 aria-label="Default select example" style="height: 50px; color: #2c698d;">
+                  <option *ngFor="let store of AllStores" [value]="store.storeId">
+                   {{store.storeCode}} - {{store.storeDescA}}
+                  </option>
+                </select>
+              </div> -->
+
+            <div class="col-lg-12 col-md-6 col-sm-12 mt-3">
+              <mat-form-field class="ang-maturial-select" appearance="fill" style="width: 100%;">
+                <mat-label style="padding: 10px;">select the branch</mat-label>
+                <mat-select formControlName="storeId" >
+                  <mat-option *ngFor="let store of AllStores" [value]="store.storeId">
+                    {{store.storeDescA}} - {{store.storeCode}} 
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div style="display:flex;justify-content: space-between;">
+
+              <button *ngIf="!disableStoresButton" (click)="getStores()" class="btn btn-lg btn btn-secondary mt-5"
+                type="button" [disabled]="accountForm.invalid" 
+                fdprocessedid="infldq">Select the branch</button>
+
+              <button *ngIf="disableStoresButton" class=" btn btn-lg  mt-5" type="button" [disabled]="true"
+                  style="background-color: white;" fdprocessedid="infldq">
+                  <img src="../../../assets/images/loading2.gif" width="30" height="30" />
+                </button>
+
+
+                <button *ngIf="!disableSumbit" class="btn btn-lg btn-primary mt-5" type="submit"
+                  [disabled]="accountForm.get('storeId')?.value == null || accountForm.invalid  || disableSumbitButton" style="background-color: #19b8e1;"
+                  fdprocessedid="infldq">Submit</button>
+               
+                  <button *ngIf="disableSumbit" class=" btn btn-lg  mt-5" type="button" [disabled]="true"
+                  style="background-color: white;" fdprocessedid="infldq">
+                  <img src="../../../assets/images/loading2.gif" width="30" height="30" />
+                </button>
+
+            </div>
+
+
+
+            <p class="mt-5 mb-3" style="color: white; border-top: 1px solid white;"></p>
+
+            <p class="mt-5 mb-3" style="color: white; ">All Works Copyright of Respective Owner, Otherwise ©SoftGo.</p>
+
+            <p class="mt-5 mb-3" style="color: white;"> V.1
+            </p>
+          </form>
         </div>
-        <div class="col-sm-6 px-0 d-none d-sm-block">
-          <img src="../../../assets/images/login3.gif"
-            alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
-        </div>
+
+
+      </div>
+      <div class="col-sm-6 px-0 d-none d-sm-block">
+        <img src="../../../assets/images/login3.gif" alt="Login image" class="w-100 vh-100"
+          style="object-fit: cover; object-position: left;">
       </div>
     </div>
-  </section>
-  
-  
-  
+  </div>
+</section>

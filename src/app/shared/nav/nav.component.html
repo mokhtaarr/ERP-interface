@@ -1,9 +1,14 @@
 <header class="p-2 mb-3 border-bottom shadow-sm" style="background-color: white;height: 60px;">
   <div class="d-flex justify-content-between">
     <div style="display: flex;">
-      <a style="margin-top: 10px; color: black;" routerLink="/branch" >
+      
+    <ng-container style="margin-top: 5px;" *ngIf="(accountService.currentUser$ | async) as userInfo" > 
+      <!-- <a style="margin-top: 10px; color: black;" routerLink="/branch" >
         <i class="fas fa-sign-out-alt"></i>
-      </a>
+      </a> -->
+      <h2 style="color:red;margin-right: 5px;cursor: pointer;" (click)="logOut()" >تسجيل الخروج</h2>   <span>/</span>  <h2 style="color:#31d1f9;margin-left:5px"> {{userInfo.userName}} : مرحبا</h2>
+      
+    </ng-container>
 
       <div class="dropdown" class="m-2">
         <a href="#" class="d-block text-decoration-none" style="color: white;" data-bs-toggle="dropdown"

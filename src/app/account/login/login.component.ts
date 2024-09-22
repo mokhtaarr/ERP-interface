@@ -11,14 +11,39 @@ import { AccountService } from '../account.service';
 })
 export class LoginComponent {
 
-  disableSumbit:boolean = false
+  disableSumbit:boolean = false;
+  disableStoresButton:boolean = false;
+  disableSumbitButton:boolean = true;
+  
+  AllStores:any[]=[];
   constructor(private router : Router , private fb : FormBuilder , private accountService : AccountService){ }
 
   accountForm = this.fb.group({
-    firstName : ['',Validators.required],
-    password : ['',Validators.required]
+    userName : ['',Validators.required],
+    password : ['',Validators.required],
+    storeId:[]
   })
 
+
+  getStores(){
+    this.disableStoresButton = true;
+    this.accountService.getAllStores(this.accountForm.value).subscribe({
+      next: (res) => {
+        this.AllStores = res?.data;
+        if(this.AllStores?.length > 0){
+          this.accountForm.get('storeId')?.setValue(this.AllStores[0].storeId)
+        }
+        this.disableStoresButton = false;
+      },
+      error: (err) => {
+        this.disableStoresButton = false;
+      },
+      complete: () => {
+        this.disableSumbitButton = false;
+        this.disableStoresButton = false;
+      }
+    });
+  }
 
   onSubmit(){
     this.disableSumbit = true
@@ -32,4 +57,6 @@ export class LoginComponent {
       }
     })
   }
+
+  
 }

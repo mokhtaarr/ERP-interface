@@ -5,13 +5,14 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order.componen
 import { AllComponent } from './all/all.component';
 import { PurchaseCommanderComponent } from './purchase-commander/purchase-commander.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { PurchasesInvoiceComponent } from './purchases-invoice/purchases-invoice.component';
 
 const routes: Routes = [
   {path:'',component:AllComponent},
   {path:'purchases-invoice',component:PurchasesComponent},
   {path:'Purchase-order',component:PurchaseOrderComponent},
   {path:'Purchase-commander',component:PurchaseCommanderComponent},
-  {path:'invoice',component:InvoiceComponent},
+  {path:'invoice',component:PurchasesInvoiceComponent},
   
 ];
 

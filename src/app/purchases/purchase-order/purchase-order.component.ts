@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -17,10 +17,7 @@ import { UpdateItemComponent } from '../update-item/update-item.component';
 })
 export class PurchaseOrderComponent  implements OnInit {
 
-  dataSource :any;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  @ViewChild(MatPaginator) paginator !: MatPaginator;
-  @ViewChild(MatSort) sort !: MatSort;
+ 
 
   DisabledPrevButton: boolean = false;
   DisabledNextButton: boolean = false;
@@ -45,6 +42,10 @@ export class PurchaseOrderComponent  implements OnInit {
   itemCollectionFromDataBase : any[] = [];
   AddItemDisable : boolean = false;
 
+  AllPurchaseOrder:any[] = [];
+  
+  readonlyTable: boolean = true;
+  newDisable: boolean = false;
 
 
   constructor(private purchasesServicesService: PurchasesServicesService , private fb:FormBuilder,private dialog: MatDialog,
@@ -53,21 +54,19 @@ export class PurchaseOrderComponent  implements OnInit {
 
 
   ngOnInit(): void {
+    this.PurchaseOrderForm.disable();
     this.getAllSysBooks();
     this.getAllVendor();
     this.GetAllCurrency();
     this.GetAllSysAnalyticalCodes();
-
-
-    this.dataSource = new MatTableDataSource<any>(this.Table_DATA);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;  }
+    this.GetAllPurchaseOrder();
+ }
 
 
   PurchaseOrderForm = this.fb.group({
   purOrderReqId:[],
    bookId:[],
-   vendorId:[],
+   vendorId:[,Validators.required],
    currencyId:[],
    trDate:[],
    invoiceType:[],
@@ -77,28 +76,20 @@ export class PurchaseOrderComponent  implements OnInit {
    expiryDate:[],
    deliveryPeriodDays:[],
    payPeriodDays:[],
+   storeId:[],
+   trno:[],
+   
   })
 
-  
-Table_DATA: any[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-
+ 
   GetAllPurchaseOrder(){
-
+    this.purchasesServicesService.GetAllMsPurchasOrderRequest().subscribe(res=>{
+      this.AllPurchaseOrder = res;
+    })
   }
 
   onSumbit(){
-
+    this.purchasesServicesService.AddMsPurchasOrderRequest(this.PurchaseOrderForm.value).subscribe()
   }
 
   updatePurchaseOrder(){
@@ -107,24 +98,193 @@ Table_DATA: any[] = [
 
 
   New(){
+    this.PurchaseOrderForm.enable();
+    this.readonlyTable = true;
+    this.newDisable = true;
+
+    this.undoIndex = this.AllPurchaseOrder.findIndex(
+      (p) => p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId
+    );
+    this.PurchaseOrderForm.setValue({
+      purOrderReqId: null,
+      bookId: null,
+      vendorId: null,
+      currencyId: null,
+      trDate: null,
+      invoiceType: null,
+      manualTrNo: null,
+      aid: null,
+      arrivalDate: null,
+      expiryDate: null,
+      deliveryPeriodDays: null,
+      payPeriodDays: null,
+      storeId: null,
+      trno: null
+    });
+
+    this.DisabledNextButton = true;
+    this.DisabledPrevButton = true;
+    this.lastRow = true;
+    this.firstRow = true;
+    this.UpdateDisable = true;
+    this.SaveDisable = false;
+    this.EditReadonly = false;
+    this.reloadDisabled = true;
+    this.DeleteDisable = true;
+    this.UndoDisabled = false;
 
   }
 
 
   getLastRowData(){
+    const LastItem = this.AllPurchaseOrder[this.AllPurchaseOrder.length - 1];
+    if (LastItem) {
+      this.PurchaseOrderForm.setValue({
+        purOrderReqId: LastItem.purOrderReqId,
+        bookId: LastItem.bookId,
+        vendorId: LastItem.vendorId,
+        currencyId: LastItem.currencyId,
+        trDate: LastItem.trDate,
+        invoiceType: LastItem.invoiceType,
+        manualTrNo: LastItem.manualTrNo,
+        aid: LastItem.aid,
+        arrivalDate: LastItem.arrivalDate,
+        expiryDate: LastItem.expiryDate,
+        deliveryPeriodDays: LastItem.deliveryPeriodDays,
+        payPeriodDays: LastItem.payPeriodDays,
+        storeId: LastItem.storeId ?? null,
+        trno: null
+      });
 
+      this.firstRow = false;
+      this.lastRow = true;
+      this.DisabledPrevButton = false;
+      this.DisabledNextButton = true;
+      this.UpdateDisable = false;
+      this.DeleteDisable = false;
+    }
   }
 
   getNextRowData(){
+    const index = this.AllPurchaseOrder.findIndex(
+      (p) => p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId
+    );
+
+    const nextItem = this.AllPurchaseOrder[index + 1];
+
+    if (nextItem) {
+      this.PurchaseOrderForm.setValue({
+        purOrderReqId: nextItem.purOrderReqId,
+        bookId: nextItem.bookId,
+        vendorId: nextItem.vendorId,
+        currencyId: nextItem.currencyId,
+        trDate: nextItem.trDate,
+        invoiceType: nextItem.invoiceType,
+        manualTrNo: nextItem.manualTrNo,
+        aid: nextItem.aid,
+        arrivalDate: nextItem.arrivalDate,
+        expiryDate: nextItem.expiryDate,
+        deliveryPeriodDays: nextItem.deliveryPeriodDays,
+        payPeriodDays: nextItem.payPeriodDays,
+        storeId: nextItem.storeId ?? null,
+        trno: null
+      });
+
+
+      this.firstRow = false;
+      this.UpdateDisable = false;
+      this.DeleteDisable = false;
+
+      const LastItem = this.AllPurchaseOrder.findIndex(
+        (p) => p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId
+      );
+
+      if (this.AllPurchaseOrder.length - 1 === LastItem) {
+        this.DisabledNextButton = true;
+        this.lastRow = true;
+      }
+
+      this.DisabledPrevButton = false;
+    }
 
   }
 
   getPrevRowData(){
+    const index = this.AllPurchaseOrder.findIndex(
+      (p) => p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId
+    );
 
+    if (index === 0 || index === -1) {
+      this.DisabledPrevButton = true;
+      this.firstRow = true;
+    }
+
+    const PrevItem = this.AllPurchaseOrder[index - 1];
+
+    if (PrevItem) {
+      this.PurchaseOrderForm.setValue({
+        purOrderReqId: PrevItem.purOrderReqId,
+        bookId: PrevItem.bookId,
+        vendorId: PrevItem.vendorId,
+        currencyId: PrevItem.currencyId,
+        trDate: PrevItem.trDate,
+        invoiceType: PrevItem.invoiceType,
+        manualTrNo: PrevItem.manualTrNo,
+        aid: PrevItem.aid,
+        arrivalDate: PrevItem.arrivalDate,
+        expiryDate: PrevItem.expiryDate,
+        deliveryPeriodDays: PrevItem.deliveryPeriodDays,
+        payPeriodDays: PrevItem.payPeriodDays,
+        storeId: PrevItem.storeId ?? null,
+        trno: null
+      });
+
+
+      this.firstRow = false;
+      this.lastRow = false;
+      this.UpdateDisable = false;
+      this.DeleteDisable = false;
+
+      const firstItem = this.AllPurchaseOrder.findIndex(
+        (p) => p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId
+      );
+
+      if (firstItem === 0) {
+        this.DisabledPrevButton = true;
+        this.firstRow = true;
+      }
+
+      this.DisabledNextButton = false;
+    }
   }
 
   getFirstRowData(){
+    const FirstItem = this.AllPurchaseOrder[0];
+    if (FirstItem) {
+      this.PurchaseOrderForm.setValue({
+        purOrderReqId: FirstItem.purOrderReqId,
+        bookId: FirstItem.bookId,
+        vendorId: FirstItem.vendorId,
+        currencyId: FirstItem.currencyId,
+        trDate: FirstItem.trDate,
+        invoiceType: FirstItem.invoiceType,
+        manualTrNo: FirstItem.manualTrNo,
+        aid: FirstItem.aid,
+        arrivalDate: FirstItem.arrivalDate,
+        expiryDate: FirstItem.expiryDate,
+        deliveryPeriodDays: FirstItem.deliveryPeriodDays,
+        payPeriodDays: FirstItem.payPeriodDays,
+        storeId: FirstItem.storeId ?? null,
+        trno: null
+      });
 
+      this.firstRow = true;
+      this.lastRow = false;
+      this.DisabledPrevButton = true;
+      this.DisabledNextButton = false;
+      this.UpdateDisable = false;
+      this.DeleteDisable = false;
+    }
   }
 
   Open_delete_confirm(){
@@ -132,18 +292,48 @@ Table_DATA: any[] = [
   }
 
   undo(){
+    this.PurchaseOrderForm.disable();
+    this.readonlyTable = true;
+    this.newDisable = false;
 
-  }
+    this.DisabledNextButton = false;
+    this.DisabledPrevButton = false;
+    this.lastRow = false;
+    this.firstRow = false;
+    this.reloadDisabled = false;
+    this.DeleteDisable = true;
+    this.UpdateDisable = true;
+    this.SaveDisable = true;
+    this.UndoDisabled = true;
 
-  Filterchange(data: Event) {
-    const value = (data.target as HTMLInputElement).value;
-    this.dataSource.filter = value;
+    if (this.undoIndex != -1) {
+      const undoItem = this.AllPurchaseOrder[this.undoIndex];
+
+      if (undoItem.purOrderReqId != null) {
+        this.DeleteDisable = false;
+        this.UpdateDisable = false;
+
+        this.PurchaseOrderForm.setValue({
+          purOrderReqId: undoItem.purOrderReqId,
+          bookId: undoItem.bookId,
+          vendorId: undoItem.vendorId,
+          currencyId: undoItem.currencyId,
+          trDate: undoItem.trDate,
+          invoiceType: undoItem.invoiceType,
+          manualTrNo: undoItem.manualTrNo,
+          aid: undoItem.aid,
+          arrivalDate: undoItem.arrivalDate,
+          expiryDate: undoItem.expiryDate,
+          deliveryPeriodDays: undoItem.deliveryPeriodDays,
+          payPeriodDays: undoItem.payPeriodDays,
+          storeId: undoItem.storeId ?? null,
+          trno: null
+        });
+      }
+    }
   }
 
   
-  fillForm(row:any){
-
-  }
 
   getAllSysBooks(){
     this.purchasesServicesService.getAllBooks().subscribe(res=>{
@@ -276,6 +466,7 @@ DeleteItemCollection(itemCardId:any){
 }
 
 updateItemCollection(itemCollection:any){
+  // console.log('itemCollection',itemCollection)
   var _popup = this.dialog.open(UpdateItemComponent, {
     width: '90%',
     enterAnimationDuration: '1000ms',

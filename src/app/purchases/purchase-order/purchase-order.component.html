@@ -132,7 +132,7 @@
                        
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label> <i style="color: blue;"   class="fas fa-search"></i> رقم المستند</mat-label>
-                            <input matInput type="text"  [readonly]="EditReadonly" >
+                            <input matInput type="text"  formControlName="trno" >
                         </mat-form-field>
 
                         <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
@@ -151,7 +151,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-12 "
                         style="display: flex; align-items: center;">
                          <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
-                            <mat-label>ابحث <i class="fas fa-search"></i></mat-label>
+                            <mat-label><i class="fas fa-search"></i> ابحث </mat-label>
                             <input matInput type="text" (input)="onSearch($event)">
                         </mat-form-field>
 
@@ -239,7 +239,7 @@
                         </mat-form-field>
 
                         
-                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                        <!-- <div class="col-lg-3 col-md-6 col-sm-12 ">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>بناء على</mat-label>
                                 <mat-select >
@@ -247,7 +247,7 @@
                                     <mat-option value="1">عمله 2</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                        </div>
+                        </div> -->
 
                     </div>
 
@@ -414,18 +414,35 @@
               </mat-card> -->
               
               <div class="row p-3">
-                <table style="margin-bottom: auto;" class="table table-hover mt-3">
+                <table style="margin-bottom: auto;" class="table table-hover table-bordered mt-3">
                     <thead>
                         <tr>
                             <th scope="col">حذف</th>
                             <th scope="col">تعديل</th>
-                            <th scope="col">الكود</th>
+                            <th scope="col">الباركود</th>
+                            <th scope="col">كود الصنف</th>
                             <th scope="col">الإسم بالعربى</th>
                             <th scope="col">الإسم بالإنجليزى</th>
-                            <th scope="col">اسم الوحده</th>
-                            <th scope="col">طبيعة الصنف</th>
+                            <th scope="col">الوحده</th>
+                            <th scope="col">رقم الشحنه</th>
                             <th scope="col">الكمية</th>
+                            <th scope="col">سعر</th>
+                            <th scope="col">اجمالى</th>
+                            <th scope="col">الكميه المنفذه</th>
+                            <th scope="col">%خصم</th>
+                            <th scope="col">خصم قيمه</th>
+                            <th scope="col">خ.المستند</th>
+                            <th scope="col">خ.المستند</th>
+                            <th scope="col">%ض-1</th>
+                            <th scope="col">ض-1-قيمه</th>
+                            <th scope="col">%ض-2</th>
+                            <th scope="col">ض-2-قيمه</th>
+                            <th scope="col">صافى</th>
+                            <th scope="col">الفرع</th>
+                            <th scope="col">المخزن</th>
                             <th scope="col">ملاحظات</th>
+                            <th scope="col">ملاحظات-2</th>
+                            <th scope="col">ملاحظات-3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -437,22 +454,10 @@
                                 (click)="DeleteItemCollectionFromDataBase(itemCollection.itemCollectId)"
                                 style="color: red;cursor: pointer;"></i></td>
                             <td class="tableTdForCollection">{{itemCollection.itemCode}}</td>
+                            <td class="tableTdForCollection">{{itemCollection.barCode}}</td>
                             <td class="tableTdForCollection">{{itemCollection.itemDescA}}</td>
                             <td class="tableTdForCollection">{{itemCollection.itemDescE}}</td>
                             <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
-                            <td class="tableTdForCollection">
-                                <ng-container *ngIf="itemCollection.itemType === 1">منتج
-                                    تام</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 2">خامه</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 3">خدمه</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 4">صنف
-                                    تصنيع</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 5">مركبه</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 6">منتج نصف
-                                    مصنع</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 7">ثروه
-                                    حيوانيه</ng-container>
-                            </td>
                             <td class="tableTdForCollection">{{itemCollection.quantity}}</td>
                             <td class="tableTdForCollection">{{itemCollection.remarks}}</td>
                         </tr>
@@ -465,25 +470,16 @@
                             <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
                                     (click)="updateItemCollection(itemCollection)"></i></td>
 
-                            <td class="tableTdForCollection">{{itemCollection.itemCode}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.itemDescA}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.itemDescE}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
-                            <td class="tableTdForCollection">
-                                <ng-container *ngIf="itemCollection.itemType === 1">منتج
-                                    تام</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 2">خامه</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 3">خدمه</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 4">صنف
-                                    تصنيع</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 5">مركبه</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 6">منتج نصف
-                                    مصنع</ng-container>
-                                <ng-container *ngIf="itemCollection.itemType === 7">ثروه
-                                    حيوانيه</ng-container>
-                            </td>
-                            <td class="tableTdForCollection">{{itemCollection.quantity}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.remarks}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.barCode}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCode}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemDescA}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemDescE}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.unitNam}}</td>
+                            <td class="tableTdForCollection" style="width:5%"></td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.quantity}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.price}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.price * itemCollection.quantity}} </td>
+                         
                         </tr>
                     </tbody>
                 </table>

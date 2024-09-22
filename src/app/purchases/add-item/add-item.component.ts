@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { DefinitionService } from 'src/app/definition/definition.service';
+import { PurchasesServicesService } from '../purchases-services.service';
 
 @Component({
   selector: 'app-add-item',
@@ -26,6 +27,7 @@ export class AddItemComponent {
    constructor(
      @Inject(MAT_DIALOG_DATA) public data: any,
      private ref: MatDialogRef<AddItemComponent>,
+     private PurchasesServices: PurchasesServicesService,
      private definitionService: DefinitionService,
      public toastr: ToastrService
    ) {}
@@ -36,7 +38,7 @@ export class AddItemComponent {
  
  
    GetAllItems(){
-     this.definitionService.GetAllItemForItemCollections().subscribe(res=>{
+     this.PurchasesServices.GetAllItemForPurchasOrderRequest().subscribe(res=>{
        this.allItem = res; 
        this.dataSource = new MatTableDataSource<any>(this.allItem);
        this.dataSource.paginator = this.paginator;

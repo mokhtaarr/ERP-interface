@@ -10,23 +10,34 @@
             </div>
 
 
-            <p style="color: #2dd3f4;">Select Company</p>
+            <!-- <p style="color: #2dd3f4;">Select Company</p> -->
             <div class="mt-2">
-              <select *ngIf="!disableBranches" class="form-select" formControlName="DataBaseId"
+              <!-- <select *ngIf="!disableBranches" class="form-select" formControlName="DataBaseId"
                aria-label="Default select example" style="height: 50px; color: #2c698d;">
                 <option *ngFor="let Company of allCompanies" [value]="Company.dataBaseId">
                   {{Company.dataBaseName}}
                 </option>
-              </select>
+              </select> -->
 
-              <button  *ngIf="disableBranches" class="w-100 btn btn-lg" type="button"
+              <div *ngIf="!disableBranches" class="col-lg-12 col-md-6 col-sm-12 mt-3">
+                <mat-form-field class="ang-maturial-select" appearance="fill" style="width: 100%;">
+                  <mat-label style="padding: 10px;">select DataBase</mat-label>
+                  <mat-select formControlName="DataBaseId" >
+                    <mat-option *ngFor="let Company of allCompanies" [value]="Company.dataBaseId">
+                      {{Company.dataBaseName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <button  *ngIf="disableBranches" class="w-100 btn mb-2 btn-lg" type="button"
                style="background-color: white;" fdprocessedid="infldq">
                <img  src="../../../assets/images/loading2.gif" width="50" height="50" />
              </button>
 
             </div>
 
-            <button  *ngIf="!disableSumbit" class="w-100 btn btn-lg btn-primary mt-5" type="submit" [disabled]="branchForm.invalid"
+            <button  *ngIf="!disableSumbit" class="w-100 btn btn-lg btn-primary " type="submit" [disabled]="branchForm.invalid"
               style="background-color: #19b8e1;" fdprocessedid="infldq">Confirm</button>
               <button  *ngIf="disableSumbit" class="w-100 btn btn-lg  mt-5" type="submit"
                [disabled]="true" style="background-color: white;" fdprocessedid="infldq">

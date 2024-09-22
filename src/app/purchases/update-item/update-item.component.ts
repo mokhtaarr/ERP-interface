@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PurchasesServicesService } from '../purchases-services.service';
 import { DefinitionService } from 'src/app/definition/definition.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-update-item',
@@ -41,6 +42,8 @@ export class UpdateItemComponent {
     unitNam:[''],
     quantity:[],
     remarks:[''],
+    barCode:[''],
+    price:[],
   });
 
 
@@ -58,7 +61,9 @@ export class UpdateItemComponent {
         unitRate: this.itemCollectionDataForm.unitRate ?? null,
         unitNam: this.itemCollectionDataForm.unitNam ?? null,
         quantity: this.itemCollectionDataForm.quantity ?? null,
-        remarks: this.itemCollectionDataForm.remarks ?? null
+        remarks: this.itemCollectionDataForm.remarks ?? null,
+        price: this.itemCollectionDataForm.price ?? null,
+        barCode: this.itemCollectionDataForm.barCode ?? '',
       });
       this.ReadonlyCode = true
       this.GetItemUnitsForItemCollection();
@@ -82,4 +87,15 @@ export class UpdateItemComponent {
   closepopup(){
     this.ref.close(this.AddItemCollection_Response);
   }
+
+  onUnitChange(event: MatSelectChange){
+    const selectedUnit = this.itemUnits.find(
+      (unit) => unit.unitId === event.value
+    );
+
+    this.purchasesServices.getBarCode(selectedUnit.unitId).subscribe(res=>{
+      this.itemCollectionForm.get('barCode')?.setValue(res.barCode)
+    })
+  }
+
 }
