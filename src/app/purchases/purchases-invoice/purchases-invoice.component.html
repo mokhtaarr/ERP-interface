@@ -46,16 +46,15 @@
                       
     
                       <button mat-fab extended color="primary" type="button" 
-                      (click)="getAllPurchaseInvoice()" [disabled]="reloadDisabled" style="flex-direction: column;">
+                      (click)="GetAllPurchaseInvoice()" [disabled]="reloadDisabled" style="flex-direction: column;">
                         <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
                         <mat-icon style="margin-right: 10px;margin-left: 10px;">
                           <i class="fas fa-sync"></i>
                         </mat-icon>
                       </button>
 
-                      <!-- [disabled]="PurchaseInvoiceForm.invalid || SaveDisable" -->
     
-                      <button mat-fab extended color="primary" type="submit" 
+                      <button mat-fab extended color="primary" type="submit" [disabled]="PurchaseInvoiceForm.invalid || SaveDisable"
                        style="flex-direction:column;">
                         <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
                         <mat-icon style="margin-right: 10px;margin-left: 10px;">
@@ -72,13 +71,6 @@
                         </mat-icon>
                       </button>
             
-                      <!-- <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-undo"></i>
-                        </button>
-                      </div> -->
-    
                       
                      <button mat-fab extended color="primary" type="button" 
                      (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
@@ -135,11 +127,11 @@
                        
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label> <i style="color: blue;"   class="fas fa-search"></i> رقم المستند</mat-label>
-                            <input matInput type="text"  formControlName="trno" >
+                            <input matInput type="number"  formControlName="trNo" [readonly]="trnoReadonly2" >
                         </mat-form-field>
 
                         <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
-                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                            <mat-form-field class="ang-maturial-select mdc-text-field--invalid" appearance="outline">
                                 <mat-label>اسم المستند</mat-label>
                                 <mat-select formControlName="bookId" (selectionChange)="onBookChange($event)" >
                                     <mat-option *ngFor="let book of AllSysBooks"
@@ -286,7 +278,7 @@
                             <input matInput type="text" (input)="onSearch($event)">
                         </mat-form-field>
 
-                        <mat-form-field style="flex: 1; margin-right: 10px;" class="ang-maturial-select " appearance="outline">
+                        <mat-form-field style="flex: 1; margin-right: 10px;" class="ang-maturial-select mdc-text-field--invalid" appearance="outline">
                             <mat-label>المورد</mat-label>
                             <mat-select formControlName="vendorId" (selectionChange)="onAccountSelect($event)" >
                               <mat-option *ngFor="let source of FilteredAllRectSourceType" [value]="source.id">
@@ -473,58 +465,21 @@
                 </h1>
             </ng-template>
          
-            <!-- [disabled]=" PurchaseInvoiceForm.get('purOrderReqId')?.value != null || AddItemDisable == true"
-            (click)="OpenItemCollectionList()" -->
-
-            <button mat-fab extended color="primary" 
+           
+            <button mat-fab extended color="primary"  
+            (click)="AddItemToPurchaseInvoice()"
+            [disabled]="PurchaseInvoiceForm.invalid || AddItemsDisable"
             type="button"
-               style="width: 200px;margin: 10px;">
+            style="width: 200px;margin: 10px;">
                اختر الاصناف 
            </button>
 
-            <!-- <mat-card>
-                <mat-card-header class="justify-content-center">
-                  <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
-                    <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-                    <input matInput  (keyup)="Filterchange($event)"  />
-                  </mat-form-field>
-                </mat-card-header> <mat-card-content>
-            
-                  <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
-                    <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef> No. </th>
-                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-                      </ng-container>
-                    
-                      <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                      </ng-container>
-                    
-                      <ng-container matColumnDef="weight">
-                        <th mat-header-cell *matHeaderCellDef> Weight </th>
-                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-                      </ng-container>
-                    
-                      <ng-container matColumnDef="symbol">
-                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-                      </ng-container>
-                    
-            
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
-                  </table>
-            
-                </mat-card-content>
-                <mat-card-footer>
-                  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-                  </mat-paginator>
-                </mat-card-footer>
-              </mat-card> -->
               
               <div class="row p-3">
-                <!-- <table style="margin-bottom: auto;" class="table table-hover table-bordered mt-3">
+                <table style="margin-bottom: auto;" 
+                class="table table-hover table-bordered mt-3"
+                [class.readonly-table]="readonlyTable"
+                >
                     <thead>
                         <tr>
                             <th scope="col">حذف</th>
@@ -538,6 +493,8 @@
                             <th scope="col">الكمية</th>
                             <th scope="col">سعر</th>
                             <th scope="col">اجمالى</th>
+                            <th scope="col">الفرع</th>
+                            <th scope="col">المخزن</th>
                             <th scope="col">الكميه المنفذه</th>
                             <th scope="col">%خصم</th>
                             <th scope="col">خصم قيمه</th>
@@ -548,15 +505,13 @@
                             <th scope="col">%ض-2</th>
                             <th scope="col">ض-2-قيمه</th>
                             <th scope="col">صافى</th>
-                            <th scope="col">الفرع</th>
-                            <th scope="col">المخزن</th>
                             <th scope="col">ملاحظات</th>
                             <th scope="col">ملاحظات-2</th>
                             <th scope="col">ملاحظات-3</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let itemCollection of itemCollectionFromDataBase">
+                        <!-- <tr *ngFor="let itemCollection of itemCollectionFromDataBase">
                             <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
                                 (click)="updateItemCollectionFromDataBase(itemCollection)"></i></td>
 
@@ -570,6 +525,28 @@
                             <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
                             <td class="tableTdForCollection">{{itemCollection.quantity}}</td>
                             <td class="tableTdForCollection">{{itemCollection.remarks}}</td>
+                        </tr> -->
+
+                        <tr *ngFor="let itemCollection of itemCollectionFromDataBase">
+                            <td><i class="fas fa-trash-alt"
+                                    (click)="DeleteItemCollectionFromDataBase(itemCollection.invItemCardId)"
+                                    style="color: red;cursor: pointer;"></i></td>
+
+                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                    (click)="updateItemCollectionFromDataBase(itemCollection)"></i></td>
+
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.barCode}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCode}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCardDesc}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCardDescE}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.unitNam}}</td>
+                            <td class="tableTdForCollection" style="width:5%"></td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.quantity}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.price}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.price * itemCollection.quantity}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.storeCode}} - {{itemCollection.storeDescA}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.partCode}} - {{itemCollection.partDescA}} </td>
+                         
                         </tr>
 
                         <tr *ngFor="let itemCollection of itemCollections">
@@ -589,10 +566,12 @@
                             <td class="tableTdForCollection" style="width:5%">{{itemCollection.quantity}}</td>
                             <td class="tableTdForCollection" style="width:5%">{{itemCollection.price}}</td>
                             <td class="tableTdForCollection" style="width:5%">{{itemCollection.price * itemCollection.quantity}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.storeCode}} - {{itemCollection.storeDescA}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.partCode}} - {{itemCollection.partDescA}} </td>
                          
                         </tr>
                     </tbody>
-                </table> -->
+                </table>
             </div>
 
             <div class="row p-3">

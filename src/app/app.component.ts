@@ -40,10 +40,9 @@ export class AppComponent implements OnInit {
     const token = localStorage.getItem('token');
     if(token)
       this.accountService.loadCurrentUser(token).subscribe();
-    
-    // else{
-    // this.router.navigateByUrl('/branch')
-    // }
+    else{
+    this.router.navigateByUrl('/branch')
+    }
   }
   
 // toggleCollapse() {

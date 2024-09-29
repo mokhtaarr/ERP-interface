@@ -150,19 +150,18 @@
                     </mat-form-field>
 
                       
-                 
                     <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
                         <mat-label> ملاحظات</mat-label>
                         <input matInput type="text" formControlName="remarks">
                     </mat-form-field>
 
                     <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
-                        <mat-label>2ملاحظات</mat-label>
+                        <mat-label>2 ملاحظات</mat-label>
                         <input matInput type="text"  formControlName="remarks2">
                     </mat-form-field>
 
                     <mat-form-field  class="col-lg-6 col-md-6 col-sm-12" appearance="outline" >
-                        <mat-label>3ملاحظات</mat-label>
+                        <mat-label>3 ملاحظات</mat-label>
                         <input matInput type="text" formControlName="remarks3" >
                     </mat-form-field>
  
@@ -187,7 +186,7 @@
     </mat-tab-group>
 
     <div mat-dialog-actions>
-        <a (click)="closepopup()" mat-raised-button color="warn">إغلاق</a>
+        <a (click)="cansel()" mat-raised-button color="warn">إغلاق</a>
 
         <button mat-raised-button type="submit" color="primary" [disabled]="itemCollectionForm.invalid" >حفظ</button>
 

@@ -13,11 +13,13 @@ import { MainComponent } from './component/main/main.component';
 import { RouterModule } from '@angular/router';
 import { ImportModule } from './import/import.module';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { UpdateOrderPurchaseDetailComponent } from './update-order-purchase-detail/update-order-purchase-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
+    UpdateOrderPurchaseDetailComponent,
   ],
   imports: [
     BrowserModule,

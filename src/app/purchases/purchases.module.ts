@@ -10,6 +10,10 @@ import { PurchaseCommanderComponent } from './purchase-commander/purchase-comman
 import { InvoiceComponent } from './invoice/invoice.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { UpdateItemComponent } from './update-item/update-item.component';
+import { AddItemToPurchaseInvoiceComponent } from './add-item-to-purchase-invoice/add-item-to-purchase-invoice.component';
+import { UpdatePurchaseInvoiceComponent } from './update-purchase-invoice/update-purchase-invoice.component';
+import { UpdateOrderDetailComponent } from './update-order-detail/update-order-detail.component';
+import { UpdateMsPurchOrderDetailsComponent } from './update-ms-purch-order-details/update-ms-purch-order-details.component';
 
 
 @NgModule({
@@ -20,7 +24,11 @@ import { UpdateItemComponent } from './update-item/update-item.component';
     PurchaseCommanderComponent,
     InvoiceComponent,
     AddItemComponent,
-    UpdateItemComponent
+    UpdateItemComponent,
+    AddItemToPurchaseInvoiceComponent,
+    UpdatePurchaseInvoiceComponent,
+    UpdateOrderDetailComponent,
+    UpdateMsPurchOrderDetailsComponent
   ],
   imports: [
     CommonModule,

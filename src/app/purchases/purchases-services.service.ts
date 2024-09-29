@@ -14,6 +14,55 @@ export class PurchasesServicesService {
     
   }
 
+  // السيرفسيس الخاصه ب امر شراء
+
+  getAllBooksForPurchaseOrder() {
+    return this.http.get<any>(environment.apiUrl + 'MsPurchasOrder/GetAllSysBooks');
+  }
+
+  GetAllMsPurchasOrder(){
+    return this.http.get<any>(environment.apiUrl+'MsPurchasOrder/GetAllMsPurchasOrder')
+  }
+
+  AddMsPurchasOrder(values:any){
+    return this.http.post<any>(environment.apiUrl+'MsPurchasOrder/AddMsPurchasOrder',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+  
+  getMsPurchOrderDetail(purOrderId:any){
+    return this.http.get<any>(`${environment.apiUrl}MsPurchasOrder/getMsPurchOrderDetail?PurOrderId=${purOrderId}`)
+  }
+
+
+  updatePurchasOrderDetail(values:any){
+    return this.http.post<any>(environment.apiUrl+'MsPurchasOrder/updateOrderDetail',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+  getPurchasOrder(trno:any , bookId:any){
+    return this.http.get<any>(`${environment.apiUrl}MsPurchasOrder/getPurchasOrder?trno=${trno}&bookId=${bookId}`)
+  }
+
   // السيرفسيس الخاصه بطلب الشراء 
   getAllBooks() {
     return this.http.get<any>(environment.apiUrl + 'MsPurchasOrderRequest/GetAllSysBooks');
@@ -33,6 +82,19 @@ export class PurchasesServicesService {
     return this.http.get<any>(environment.apiUrl+'MsPurchasOrderRequest/GetAllMsPurchasOrderRequest')
   }
 
+  GetAllStores(){
+    return this.http.get<any>(environment.apiUrl+'MsPurchasInvoice/getAllStores')
+  }
+
+  GetAllVendorForPurchaseInvoice(){
+    return this.http.get<any>(environment.apiUrl+'MsPurchasOrderRequest/getAllVendors')
+  }
+
+  GetAllPartition(){
+    return this.http.get<any>(environment.apiUrl+'MsPurchasInvoice/getAllMsPartitions')
+  }
+
+  
   GetAllItemForPurchasOrderRequest(){
     return this.http.get<any>(environment.apiUrl+'MsPurchasOrderRequest/GetAllItemForPurchasOrderRequest')
    }
@@ -59,6 +121,31 @@ export class PurchasesServicesService {
     }))
   }
 
+  getUnitPrice(unitId:any){
+    return this.http.get<any>(`${environment.apiUrl}MsPurchasOrderRequest/getUnitPrice?unitId=${unitId}`)
+    .pipe(map((res)=>{
+      return res;
+    }))
+  }
+
+  getMsPurchOrderReqDetail(PurOrderReqId:any){
+    return this.http.get<any>(`${environment.apiUrl}MsPurchasOrderRequest/getMsPurchOrderReqDetail?PurOrderReqId=${PurOrderReqId}`)
+  }
+
+  updateOrderDetail(values:any){
+    return this.http.post<any>(environment.apiUrl+'MsPurchasOrderRequest/updateOrderDetail',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
 
   // السيرفسيس الخاصه بفاتوره المشتريات
   getAllBooksForPurchaseInvoice() {
@@ -122,7 +209,7 @@ export class PurchasesServicesService {
   }
 
   AddMsPurchasInvoice(values:any){
-    return this.http.post<any>(environment.apiUrl+'MsPurchasInvoice/AddMsPurchasOrderRequest',values).pipe(
+    return this.http.post<any>(environment.apiUrl+'MsPurchasInvoice/AddMsPurchasInvoice',values).pipe(
       map((res) => {
         var message = res.message;
         var messageEn = res.messageEn;
@@ -136,6 +223,27 @@ export class PurchasesServicesService {
     );
   }
   
+  GetAllPurchaseInvoice(){
+    return this.http.get<any>(environment.apiUrl+'MsPurchasInvoice/GetAllPurchaseInvoice')
+  }
    
+  getPurchaseInvoiceItemCard(PurInvId:any){
+    return this.http.get<any>(`${environment.apiUrl}MsPurchasInvoice/MsPurchaseInvoiceItemCard?PurInvId=${PurInvId}`)
+  }
+
+  updateMsPurchaseInvoice(values:any){
+    return this.http.post<any>(environment.apiUrl+'MsPurchasInvoice/updateMsPurchaseInvoiceItemCard',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
 
 }

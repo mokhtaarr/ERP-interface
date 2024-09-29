@@ -9,6 +9,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AddItemComponent } from '../add-item/add-item.component';
 import { MatSelectChange } from '@angular/material/select';
 import { UpdateItemComponent } from '../update-item/update-item.component';
+import { DeleteConfirmComponent } from 'src/app/definition/delete-confirm/delete-confirm.component';
+import { UpdateOrderDetailComponent } from '../update-order-detail/update-order-detail.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -40,16 +43,22 @@ export class PurchaseOrderComponent  implements OnInit {
 
   itemCollections : any[] = [];
   itemCollectionFromDataBase : any[] = [];
-  AddItemDisable : boolean = false;
+  AddItemDisable : boolean = true;
 
   AllPurchaseOrder:any[] = [];
   
   readonlyTable: boolean = true;
   newDisable: boolean = false;
 
+  purchaseOrderItemsData : any;
+
+  trnoReadonly : boolean = false;
+  trnoReadonly2 : boolean = true;
+  addItemDisable : boolean = true;
+
 
   constructor(private purchasesServicesService: PurchasesServicesService , private fb:FormBuilder,private dialog: MatDialog,
-    public toastr: ToastrService ){
+    public toastr: ToastrService,private accountService : AccountService ){
   }
 
 
@@ -64,7 +73,7 @@ export class PurchaseOrderComponent  implements OnInit {
 
 
   PurchaseOrderForm = this.fb.group({
-  purOrderReqId:[],
+   purOrderReqId:[],
    bookId:[],
    vendorId:[,Validators.required],
    currencyId:[],
@@ -76,9 +85,10 @@ export class PurchaseOrderComponent  implements OnInit {
    expiryDate:[],
    deliveryPeriodDays:[],
    payPeriodDays:[],
-   storeId:[],
    trno:[],
-   
+   purchaseOrderItems :[[]],
+   storeId:[''],
+   CreatedBy:[''],
   })
 
  
@@ -89,19 +99,68 @@ export class PurchaseOrderComponent  implements OnInit {
   }
 
   onSumbit(){
-    this.purchasesServicesService.AddMsPurchasOrderRequest(this.PurchaseOrderForm.value).subscribe()
+    this.purchaseOrderItemsData = this.itemCollections;
+    if(this.purchaseOrderItemsData != null){
+      this.PurchaseOrderForm.get("purchaseOrderItems")?.setValue(this.purchaseOrderItemsData)
+    }
+
+
+    this.purchasesServicesService.AddMsPurchasOrderRequest(this.PurchaseOrderForm.value).subscribe(res=>{
+      if(res.status){
+        this.GetAllPurchaseOrder();
+        this.PurchaseOrderForm.disable();
+        this.PurchaseOrderForm.get('purOrderReqId')?.setValue(res.id);
+        this.DisabledNextButton = false;
+        this.DisabledPrevButton = false;
+        this.lastRow = false;
+        this.firstRow = false;
+        this.SaveDisable=true;
+        this.UpdateDisable = false;
+        this.UndoDisabled = true;
+        this.DeleteDisable=false;
+        this.readonlyTable = true;
+        this.AddItemDisable = true;
+      }}
+    )
   }
+
 
   updatePurchaseOrder(){
-
+    this.getUserInfo();
+    this.trnoReadonly = true;
+    this.PurchaseOrderForm.enable();
+    this.DeleteDisable = true;
+    this.DisabledNextButton = true;
+    this.DisabledPrevButton = true;
+    this.lastRow = true;
+    this.firstRow = true;
+    this.SaveDisable = false;
+    this.EditReadonly = true;
+    this.reloadDisabled = false;
+    this.UpdateDisable = true;
+    this.UndoDisabled = false;
+    this.undoIndex = this.AllPurchaseOrder.findIndex(p=>p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId);
+    this.readonlyTable = false;
+    this.AddItemDisable = false;
   }
-
+ 
+  getOrderDetails(){
+    
+    this.itemCollectionFromDataBase = []
+    this.itemCollections = [];
+    
+    this.purchasesServicesService.getMsPurchOrderReqDetail(this.PurchaseOrderForm.value.purOrderReqId).subscribe(res=>{
+      this.itemCollectionFromDataBase = res
+    })
+  }
 
   New(){
     this.PurchaseOrderForm.enable();
-    this.readonlyTable = true;
+    this.readonlyTable = false;
     this.newDisable = true;
-
+    this.AddItemDisable = false;
+    this.itemCollections = [];
+    this.itemCollectionFromDataBase = [];
     this.undoIndex = this.AllPurchaseOrder.findIndex(
       (p) => p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId
     );
@@ -119,9 +178,14 @@ export class PurchaseOrderComponent  implements OnInit {
       deliveryPeriodDays: null,
       payPeriodDays: null,
       storeId: null,
-      trno: null
+      trno: null,
+      purchaseOrderItems: null,
+      CreatedBy: null
     });
 
+    this.getUserInfo();
+
+    this.PurchaseOrderForm.get('bookId')?.setValue(this.AllSysBooks[0].bookId)
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
     this.lastRow = true;
@@ -153,15 +217,24 @@ export class PurchaseOrderComponent  implements OnInit {
         deliveryPeriodDays: LastItem.deliveryPeriodDays,
         payPeriodDays: LastItem.payPeriodDays,
         storeId: LastItem.storeId ?? null,
-        trno: null
+        trno: LastItem.trNo ?? null,
+        purchaseOrderItems: null,
+        CreatedBy: null
       });
 
+      this.itemCollectionFromDataBase = []
+      this.itemCollections = [];
+
+      this.getOrderDetails();
+      
       this.firstRow = false;
       this.lastRow = true;
       this.DisabledPrevButton = false;
       this.DisabledNextButton = true;
       this.UpdateDisable = false;
       this.DeleteDisable = false;
+      this.trnoReadonly = false;
+
     }
   }
 
@@ -187,13 +260,22 @@ export class PurchaseOrderComponent  implements OnInit {
         deliveryPeriodDays: nextItem.deliveryPeriodDays,
         payPeriodDays: nextItem.payPeriodDays,
         storeId: nextItem.storeId ?? null,
-        trno: null
+        trno: nextItem.trNo ?? null,
+        purchaseOrderItems: null,
+        CreatedBy: null
       });
 
+      
+      this.itemCollectionFromDataBase = []
+      this.itemCollections = [];
+      
+      this.getOrderDetails();
 
       this.firstRow = false;
       this.UpdateDisable = false;
       this.DeleteDisable = false;
+      this.trnoReadonly = false;
+
 
       const LastItem = this.AllPurchaseOrder.findIndex(
         (p) => p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId
@@ -236,14 +318,24 @@ export class PurchaseOrderComponent  implements OnInit {
         deliveryPeriodDays: PrevItem.deliveryPeriodDays,
         payPeriodDays: PrevItem.payPeriodDays,
         storeId: PrevItem.storeId ?? null,
-        trno: null
+        trno: PrevItem.trNo ?? null,
+        purchaseOrderItems: null,
+        CreatedBy: null
       });
 
+      
+      this.itemCollectionFromDataBase = []
+      this.itemCollections = [];
+      
+
+      this.getOrderDetails();
 
       this.firstRow = false;
       this.lastRow = false;
       this.UpdateDisable = false;
       this.DeleteDisable = false;
+      this.trnoReadonly = false;
+
 
       const firstItem = this.AllPurchaseOrder.findIndex(
         (p) => p.purOrderReqId == this.PurchaseOrderForm.value.purOrderReqId
@@ -275,8 +367,17 @@ export class PurchaseOrderComponent  implements OnInit {
         deliveryPeriodDays: FirstItem.deliveryPeriodDays,
         payPeriodDays: FirstItem.payPeriodDays,
         storeId: FirstItem.storeId ?? null,
-        trno: null
+        trno: FirstItem.trNo ?? null,
+        purchaseOrderItems: null,
+        CreatedBy: null
       });
+
+      
+      this.itemCollectionFromDataBase = []
+      this.itemCollections = [];
+      
+
+      this.getOrderDetails();
 
       this.firstRow = true;
       this.lastRow = false;
@@ -284,6 +385,8 @@ export class PurchaseOrderComponent  implements OnInit {
       this.DisabledNextButton = false;
       this.UpdateDisable = false;
       this.DeleteDisable = false;
+      this.trnoReadonly = false;
+
     }
   }
 
@@ -305,6 +408,9 @@ export class PurchaseOrderComponent  implements OnInit {
     this.UpdateDisable = true;
     this.SaveDisable = true;
     this.UndoDisabled = true;
+    this.trnoReadonly = false;
+
+    this.AddItemDisable = true;
 
     if (this.undoIndex != -1) {
       const undoItem = this.AllPurchaseOrder[this.undoIndex];
@@ -327,8 +433,17 @@ export class PurchaseOrderComponent  implements OnInit {
           deliveryPeriodDays: undoItem.deliveryPeriodDays,
           payPeriodDays: undoItem.payPeriodDays,
           storeId: undoItem.storeId ?? null,
-          trno: null
+          trno: undoItem.trNo ?? null,
+          purchaseOrderItems: null,
+          CreatedBy: null
         });
+
+        
+        this.itemCollectionFromDataBase = []
+        this.itemCollections = [];
+      
+        this.getOrderDetails();
+
       }
     }
   }
@@ -342,7 +457,7 @@ export class PurchaseOrderComponent  implements OnInit {
   }
 
   getAllVendor(){
-    this.purchasesServicesService.getAllVendor().subscribe(res=>{
+    this.purchasesServicesService.GetAllVendorForPurchaseInvoice().subscribe(res=>{
       this.AllVendor = res;
       this.FilteredAllVendors = res;
     })
@@ -416,7 +531,6 @@ export class PurchaseOrderComponent  implements OnInit {
   
             if(this.itemCollectionFromDataBase.length != 0){
               existsInDataBase = this.itemCollectionFromDataBase.some(i=>i.subItemId === item.itemCardId)
-              this.AddItemDisable = true;
             }
             
             if (!exists && !existsInDataBase) {
@@ -434,39 +548,38 @@ export class PurchaseOrderComponent  implements OnInit {
 
   
 updateItemCollectionFromDataBase(itemCollection:any){
-  // var _popup = this.dialog.open(UpdateItemCollectionFromDataBaseComponent, {
-  //   width: '90%',
-  //   enterAnimationDuration: '1000ms',
-  //   exitAnimationDuration: '1000ms',
-  //   data: {
-  //     Title: 'تعديل صنف مجمع',
-  //     itemCollectionData : itemCollection,
-  //   },
-  // });
-  // _popup.afterClosed().subscribe((response) => {
-  //   if(response){
-  //    this.GetItemCollectionFromDataBase();
-  //   }
-  // });
+  var _popup = this.dialog.open(UpdateOrderDetailComponent, {
+    width: '90%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+    data: {
+      Title: 'تعديل  ',
+      itemCollectionData : itemCollection,
+    },
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if(response){
+      this.getOrderDetails();
+    }
+  });
 }
 
 
 DeleteItemCollection(itemCardId:any){
-  // var _popup = this.dialog.open(DeleteConfirmComponent, {
-  //   width: '30%',
-  //   enterAnimationDuration: '1000ms',
-  //   exitAnimationDuration: '1000ms',
-  // });
-  // _popup.afterClosed().subscribe((response) => {
-  //   if (response) {
-  //     this.itemCollections = this.itemCollections.filter(item => item.itemCardId !== itemCardId);
-  //     this.toastr.success("تم المسح بنجاح")
-  //   }
-  // });
+  var _popup = this.dialog.open(DeleteConfirmComponent, {
+    width: '30%',
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration: '1000ms',
+  });
+  _popup.afterClosed().subscribe((response) => {
+    if (response) {
+      this.itemCollections = this.itemCollections.filter(item => item.itemCardId !== itemCardId);
+      this.toastr.success("تم المسح بنجاح")
+    }
+  });
 }
 
 updateItemCollection(itemCollection:any){
-  // console.log('itemCollection',itemCollection)
   var _popup = this.dialog.open(UpdateItemComponent, {
     width: '90%',
     enterAnimationDuration: '1000ms',
@@ -502,6 +615,14 @@ DeleteItemCollectionFromDataBase(itemCollectId:any){
   //    })
   //   }
   // });
+}
+
+
+getUserInfo(){
+  this.accountService.currentUser$.subscribe(res =>{
+    this.PurchaseOrderForm.get('CreatedBy')?.setValue(res!.userId)
+    this.PurchaseOrderForm.get('storeId')?.setValue(res!.storeId)
+    })
 }
 
 

@@ -1,16 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PurchasesServicesService } from '../purchases-services.service';
-import { DefinitionService } from 'src/app/definition/definition.service';
+import { DefinitionService } from '../definition/definition.service';
+import { PurchasesServicesService } from '../purchases/purchases-services.service';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
-  selector: 'app-update-item',
-  templateUrl: './update-item.component.html',
-  styleUrls: ['./update-item.component.scss']
+  selector: 'app-update-order-purchase-detail',
+  templateUrl: './update-order-purchase-detail.component.html',
+  styleUrls: ['./update-order-purchase-detail.component.scss']
 })
-export class UpdateItemComponent {
+export class UpdateOrderPurchaseDetailComponent {
   ItemData: any;
   itemCollectionDataForm: any;
   AddItemCollection_Response: any;
@@ -21,12 +21,11 @@ export class UpdateItemComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private ref: MatDialogRef<UpdateItemComponent>,
+    private ref: MatDialogRef<UpdateOrderPurchaseDetailComponent>,
     private purchasesServices: PurchasesServicesService,
     private fb: FormBuilder,
     private definitionService:DefinitionService
   ) {}
-
 
   ngOnInit(): void {
     this.itemCollectionDataForm = this.data.itemCollectionData;
@@ -35,8 +34,8 @@ export class UpdateItemComponent {
     this.getAllStores();
   }
 
-
   itemCollectionForm = this.fb.group({
+    orderDetailItemReqId:[],
     itemCardId:[],
     itemCode:[''],
     itemDescA:[''],
@@ -60,11 +59,10 @@ export class UpdateItemComponent {
 
 
   
-
-
   fillForm(){
     if(this.itemCollectionDataForm){
       this.itemCollectionForm.setValue({
+        orderDetailItemReqId : this.itemCollectionDataForm.orderDetailItemReqId ?? null,
         itemCardId: this.itemCollectionDataForm.itemCardId ?? null,
         itemCode: this.itemCollectionDataForm.itemCode ?? null,
         itemDescA: this.itemCollectionDataForm.itemDescA ?? null,
@@ -143,5 +141,8 @@ export class UpdateItemComponent {
      this.AllPartitions = res;
     })
    }
+
+
+
 
 }

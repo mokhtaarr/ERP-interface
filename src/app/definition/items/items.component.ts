@@ -692,7 +692,7 @@ undo(){
   this.SaveDisable = true;
   this.UndoDisabled = true;
   this.unitsDisable = false;
-  this.readonlyTable = false;
+  this.readonlyTable = true;
   this.newDisable = false;
 
     if(this.undoIndex != -1){

@@ -132,7 +132,7 @@
                        
                         <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
                             <mat-label> <i style="color: blue;"   class="fas fa-search"></i> رقم المستند</mat-label>
-                            <input matInput type="text"  formControlName="trno" >
+                            <input matInput type="text" [readonly]="trnoReadonly2" formControlName="trno" >
                         </mat-form-field>
 
                         <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
@@ -366,7 +366,7 @@
                 </h1>
             </ng-template>
             <button mat-fab extended color="primary" 
-            [disabled]=" PurchaseOrderForm.get('purOrderReqId')?.value != null || AddItemDisable == true"
+            [disabled]=" PurchaseOrderForm.invalid|| AddItemDisable == true"
             type="button"
                (click)="OpenItemCollectionList()" style="width: 200px;margin: 10px;">
                اختر الاصناف 
@@ -414,7 +414,9 @@
               </mat-card> -->
               
               <div class="row p-3">
-                <table style="margin-bottom: auto;" class="table table-hover table-bordered mt-3">
+                <table style="margin-bottom: auto;" class="table table-hover table-bordered mt-3"
+                [class.readonly-table]="readonlyTable"
+                >
                     <thead>
                         <tr>
                             <th scope="col">حذف</th>
@@ -428,6 +430,8 @@
                             <th scope="col">الكمية</th>
                             <th scope="col">سعر</th>
                             <th scope="col">اجمالى</th>
+                            <th scope="col">الفرع</th>
+                            <th scope="col">المخزن</th>
                             <th scope="col">الكميه المنفذه</th>
                             <th scope="col">%خصم</th>
                             <th scope="col">خصم قيمه</th>
@@ -438,8 +442,6 @@
                             <th scope="col">%ض-2</th>
                             <th scope="col">ض-2-قيمه</th>
                             <th scope="col">صافى</th>
-                            <th scope="col">الفرع</th>
-                            <th scope="col">المخزن</th>
                             <th scope="col">ملاحظات</th>
                             <th scope="col">ملاحظات-2</th>
                             <th scope="col">ملاحظات-3</th>
@@ -447,19 +449,39 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let itemCollection of itemCollectionFromDataBase">
-                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
-                                (click)="updateItemCollectionFromDataBase(itemCollection)"></i></td>
-
+                          
                         <td><i class="fas fa-trash-alt"
                                 (click)="DeleteItemCollectionFromDataBase(itemCollection.itemCollectId)"
                                 style="color: red;cursor: pointer;"></i></td>
-                            <td class="tableTdForCollection">{{itemCollection.itemCode}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.barCode}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.itemDescA}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.itemDescE}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.quantity}}</td>
-                            <td class="tableTdForCollection">{{itemCollection.remarks}}</td>
+
+                       <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                    (click)="updateItemCollectionFromDataBase(itemCollection)"></i></td>
+    
+
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.barCode}}</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCode}}</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCardDesc}}</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCardDescE}}</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.unitNam}}</td>
+                                <td class="tableTdForCollection" style="width:5%"></td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.quantity}}</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.price}}</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.price * itemCollection.quantity}} </td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.storeCode}} - {{itemCollection.storeDescA}} </td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.partCode}} - {{itemCollection.partDescA}} </td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">-</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks}}</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks2}}</td>
+                                <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks3}}</td>
                         </tr>
 
                         <tr *ngFor="let itemCollection of itemCollections">
@@ -479,7 +501,22 @@
                             <td class="tableTdForCollection" style="width:5%">{{itemCollection.quantity}}</td>
                             <td class="tableTdForCollection" style="width:5%">{{itemCollection.price}}</td>
                             <td class="tableTdForCollection" style="width:5%">{{itemCollection.price * itemCollection.quantity}} </td>
-                         
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.storeCode}} - {{itemCollection.storeDescA}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.partCode}} - {{itemCollection.partDescA}} </td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks2}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks3}}</td>
+
                         </tr>
                     </tbody>
                 </table>

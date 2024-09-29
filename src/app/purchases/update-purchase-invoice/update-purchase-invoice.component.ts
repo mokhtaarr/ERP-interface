@@ -1,16 +1,18 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PurchasesServicesService } from '../purchases-services.service';
-import { DefinitionService } from 'src/app/definition/definition.service';
 import { MatSelectChange } from '@angular/material/select';
+import { DefinitionService } from 'src/app/definition/definition.service';
 
 @Component({
-  selector: 'app-update-item',
-  templateUrl: './update-item.component.html',
-  styleUrls: ['./update-item.component.scss']
+  selector: 'app-update-purchase-invoice',
+  templateUrl: './update-purchase-invoice.component.html',
+  styleUrls: ['./update-purchase-invoice.component.scss']
 })
-export class UpdateItemComponent {
+export class UpdatePurchaseInvoiceComponent implements OnInit{
+
+
   ItemData: any;
   itemCollectionDataForm: any;
   AddItemCollection_Response: any;
@@ -21,12 +23,11 @@ export class UpdateItemComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private ref: MatDialogRef<UpdateItemComponent>,
+    private ref: MatDialogRef<UpdatePurchaseInvoiceComponent>,
     private purchasesServices: PurchasesServicesService,
     private fb: FormBuilder,
     private definitionService:DefinitionService
   ) {}
-
 
   ngOnInit(): void {
     this.itemCollectionDataForm = this.data.itemCollectionData;
@@ -37,6 +38,7 @@ export class UpdateItemComponent {
 
 
   itemCollectionForm = this.fb.group({
+    invItemCardId:[],
     itemCardId:[],
     itemCode:[''],
     itemDescA:[''],
@@ -59,16 +61,14 @@ export class UpdateItemComponent {
   });
 
 
-  
-
 
   fillForm(){
     if(this.itemCollectionDataForm){
       this.itemCollectionForm.setValue({
         itemCardId: this.itemCollectionDataForm.itemCardId ?? null,
         itemCode: this.itemCollectionDataForm.itemCode ?? null,
-        itemDescA: this.itemCollectionDataForm.itemDescA ?? null,
-        itemDescE: this.itemCollectionDataForm.itemDescE ?? null,
+        itemDescA: this.itemCollectionDataForm.itemCardDesc ?? null,
+        itemDescE: this.itemCollectionDataForm.itemCardDescE ?? null,
         unitId: this.itemCollectionDataForm.unitId ?? null,
         unitRate: this.itemCollectionDataForm.unitRate ?? null,
         unitNam: this.itemCollectionDataForm.unitNam ?? null,
@@ -83,7 +83,8 @@ export class UpdateItemComponent {
         storeCode: this.itemCollectionDataForm.storeCode ?? null,
         storeDescA: this.itemCollectionDataForm.storeDescA ?? null,
         partCode: this.itemCollectionDataForm.partCode ?? null,
-        partDescA: this.itemCollectionDataForm.partDescA ?? null
+        partDescA: this.itemCollectionDataForm.partDescA ?? null,
+        invItemCardId: this.itemCollectionDataForm.invItemCardId ?? null,
       });
       this.ReadonlyCode = true
       this.GetItemUnitsForItemCollection();
@@ -97,27 +98,7 @@ export class UpdateItemComponent {
   }
 
 
-  onSumbit(){
-    this.itemUnits = this.itemUnits.filter(u=>u.unitId == this.itemCollectionForm.value.unitId)
-    this.itemCollectionForm.get('unitNam')?.setValue(this.itemUnits[0].unitNam)
-
-    this.AllStores = this.AllStores.filter(s=>s.storeId == this.itemCollectionForm.value.storeId)
-    this.itemCollectionForm.get('storeCode')?.setValue(this.AllStores[0].storeCode)
-    this.itemCollectionForm.get('storeDescA')?.setValue(this.AllStores[0].storeDescA)
-
-    this.AllPartitions = this.AllPartitions.filter(p=>p.storePartId == this.itemCollectionForm.value.storePartId)
-    this.itemCollectionForm.get('partCode')?.setValue(this.AllPartitions[0]?.partCode)
-    this.itemCollectionForm.get('partDescA')?.setValue(this.AllPartitions[0]?.partDescA)
-
-
-    this.AddItemCollection_Response = this.itemCollectionForm.value;
-    this.closepopup();
-  }
-
-  closepopup(){
-    this.ref.close(this.AddItemCollection_Response);
-  }
-
+  
   onUnitChange(event: MatSelectChange){
     const selectedUnit = this.itemUnits.find(
       (unit) => unit.unitId === event.value
@@ -142,6 +123,24 @@ export class UpdateItemComponent {
     this.purchasesServices.GetAllPartition().subscribe(res=>{
      this.AllPartitions = res;
     })
+   }
+
+
+   onSumbit(){
+    this.purchasesServices.updateMsPurchaseInvoice(this.itemCollectionForm.value).subscribe(res=>{
+      if(res){
+        this.closepopup();
+      }
+    })
+   }
+
+   closepopup(){
+    this.ref.close(true);
+   }
+
+
+   cansel(){
+    this.ref.close();
    }
 
 }

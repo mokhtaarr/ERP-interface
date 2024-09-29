@@ -1,16 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PurchasesServicesService } from '../purchases-services.service';
-import { DefinitionService } from 'src/app/definition/definition.service';
 import { MatSelectChange } from '@angular/material/select';
+import { DefinitionService } from 'src/app/definition/definition.service';
+import { PurchasesServicesService } from '../purchases-services.service';
+import { UpdateOrderDetailComponent } from '../update-order-detail/update-order-detail.component';
 
 @Component({
-  selector: 'app-update-item',
-  templateUrl: './update-item.component.html',
-  styleUrls: ['./update-item.component.scss']
+  selector: 'app-update-ms-purch-order-details',
+  templateUrl: './update-ms-purch-order-details.component.html',
+  styleUrls: ['./update-ms-purch-order-details.component.scss']
 })
-export class UpdateItemComponent {
+export class UpdateMsPurchOrderDetailsComponent {
   ItemData: any;
   itemCollectionDataForm: any;
   AddItemCollection_Response: any;
@@ -21,12 +22,11 @@ export class UpdateItemComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private ref: MatDialogRef<UpdateItemComponent>,
+    private ref: MatDialogRef<UpdateOrderDetailComponent>,
     private purchasesServices: PurchasesServicesService,
     private fb: FormBuilder,
     private definitionService:DefinitionService
   ) {}
-
 
   ngOnInit(): void {
     this.itemCollectionDataForm = this.data.itemCollectionData;
@@ -35,8 +35,8 @@ export class UpdateItemComponent {
     this.getAllStores();
   }
 
-
   itemCollectionForm = this.fb.group({
+    orderDetailItemCardId:[],
     itemCardId:[],
     itemCode:[''],
     itemDescA:[''],
@@ -60,15 +60,14 @@ export class UpdateItemComponent {
 
 
   
-
-
   fillForm(){
     if(this.itemCollectionDataForm){
       this.itemCollectionForm.setValue({
+        orderDetailItemCardId : this.itemCollectionDataForm.orderDetailItemCardId ?? null,
         itemCardId: this.itemCollectionDataForm.itemCardId ?? null,
         itemCode: this.itemCollectionDataForm.itemCode ?? null,
-        itemDescA: this.itemCollectionDataForm.itemDescA ?? null,
-        itemDescE: this.itemCollectionDataForm.itemDescE ?? null,
+        itemDescA: this.itemCollectionDataForm.itemCardDesc ?? null,
+        itemDescE: this.itemCollectionDataForm.itemCardDescE ?? null,
         unitId: this.itemCollectionDataForm.unitId ?? null,
         unitRate: this.itemCollectionDataForm.unitRate ?? null,
         unitNam: this.itemCollectionDataForm.unitNam ?? null,
@@ -98,24 +97,15 @@ export class UpdateItemComponent {
 
 
   onSumbit(){
-    this.itemUnits = this.itemUnits.filter(u=>u.unitId == this.itemCollectionForm.value.unitId)
-    this.itemCollectionForm.get('unitNam')?.setValue(this.itemUnits[0].unitNam)
-
-    this.AllStores = this.AllStores.filter(s=>s.storeId == this.itemCollectionForm.value.storeId)
-    this.itemCollectionForm.get('storeCode')?.setValue(this.AllStores[0].storeCode)
-    this.itemCollectionForm.get('storeDescA')?.setValue(this.AllStores[0].storeDescA)
-
-    this.AllPartitions = this.AllPartitions.filter(p=>p.storePartId == this.itemCollectionForm.value.storePartId)
-    this.itemCollectionForm.get('partCode')?.setValue(this.AllPartitions[0]?.partCode)
-    this.itemCollectionForm.get('partDescA')?.setValue(this.AllPartitions[0]?.partDescA)
-
-
-    this.AddItemCollection_Response = this.itemCollectionForm.value;
-    this.closepopup();
+    this.purchasesServices.updatePurchasOrderDetail(this.itemCollectionForm.value).subscribe(res=>{
+      if(res){
+        this.closepopup();
+      }
+    })
   }
 
   closepopup(){
-    this.ref.close(this.AddItemCollection_Response);
+    this.ref.close(true);
   }
 
   onUnitChange(event: MatSelectChange){
@@ -143,5 +133,11 @@ export class UpdateItemComponent {
      this.AllPartitions = res;
     })
    }
+
+
+   cancel(){
+    this.ref.close();
+   }
+
 
 }
