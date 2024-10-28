@@ -1,260 +1,210 @@
 <div class="container-fluid">
 
-    <div style="margin-bottom: 50px;">
-        <form [formGroup]="CityForm" (ngSubmit)="onSumbit()">
-            <div class="example-button-row">
-                <div class="example-flex-container">
-        
-<!--         
-                  <div class="example-button-container">
-                    <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
-                      aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-step-backward"></i>
-                    </button>
-                  </div> -->
+  <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
+    <form [formGroup]="CityForm" (ngSubmit)="onSumbit()">
+      <div class="example-button-row">
+        <div class="example-flex-container">
 
-                  <button mat-fab extended color="primary" type="button" 
-                    (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
-                      <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
-                      <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                        <i class="fas fa-step-backward"></i>
-                      </mat-icon>
-                    </button>
-        
-                  <!-- <div class="example-button-container">
-                    <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
-                      [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-caret-left"></i>
-                    </button>
-                  </div> -->
-
-                  <button mat-fab extended color="primary" type="button" 
-                   (click)="getNextRowData()" [disabled]="DisabledNextButton" style="flex-direction:column;">
-                     <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
-                     <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                       <i class="fas fa-caret-left"></i>
-                     </mat-icon>
-                   </button>
-      
-                  <!-- <div class="example-button-container">
-                    <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
-                      [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-caret-right"></i>
-      
-                    </button>
-                  </div> -->
-
-                  <button mat-fab extended color="primary" type="button" 
-                   (click)="getPrevRowData()" [disabled]="DisabledPrevButton" style="flex-direction:column;">
-                    <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
-                    <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                      <i class="fas fa-caret-right"></i>
-                    </mat-icon>
-                  </button>
-        
-                  <!-- <div class="example-button-container">
-                    <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
-                      aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-step-forward"></i>
-                    </button>
-                  </div> -->
-
-                  <button mat-fab extended color="primary" type="button" 
-                   (click)="getFirstRowData()" [disabled]="firstRow" style="flex-direction:column;">
-                     <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
-                     <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                       <i class="fas fa-step-forward"></i>
-                     </mat-icon>
-                   </button>
-        
-                  <!-- <div class="example-button-container">
-                    <button type="button" mat-mini-fab color="primary"  (click)="GetAllCities()"
-                      [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-sync"></i>
-                    </button>
-                  </div> -->
-
-                  <button mat-fab extended color="primary" type="button" 
-                  (click)="GetAllCities()" [disabled]="reloadDisabled" style="flex-direction: column;">
-                    <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
-                    <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                      <i class="fas fa-sync"></i>
-                    </mat-icon>
-                  </button>
+          <button mat-fab extended color="primary" type="button" (click)="getLastRowData()" [disabled]="lastRow"
+            style="flex-direction:column;">
+            <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-step-backward"></i>
+            </mat-icon>
+          </button>
 
 
-        
-                  <!-- <div class="example-button-container">
-                    <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || CityForm.invalid" 
-                      aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-save"></i>
-                    </button>
-                  </div> -->
+          <button mat-fab extended color="primary" type="button" (click)="getNextRowData()"
+            [disabled]="DisabledNextButton" style="flex-direction:column;">
+            <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-caret-left"></i>
+            </mat-icon>
+          </button>
 
-                  <button mat-fab extended color="primary" type="submit" 
-                  [disabled]="CityForm.invalid || SaveDisable" style="flex-direction:column;">
-                    <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
-                    <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                      <i class="fas fa-save"></i>
-                    </mat-icon>
-                  </button>
-        
-                  <!-- <div class="example-button-container">
-                    <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || CityForm.invalid" (click)="Open_delete_confirm()"
-                      
-                       aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-trash-alt"></i>
-                    </button>
-                  </div> -->
+          <button mat-fab extended color="primary" type="button" (click)="getPrevRowData()"
+            [disabled]="DisabledPrevButton" style="flex-direction:column;">
+            <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-caret-right"></i>
+            </mat-icon>
+          </button>
 
+          <button mat-fab extended color="primary" type="button" (click)="getFirstRowData()" [disabled]="firstRow"
+            style="flex-direction:column;">
+            <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-step-forward"></i>
+            </mat-icon>
+          </button>
 
-                  <button mat-fab extended color="warn" type="button" 
-                   (click)="Open_delete_confirm()" [disabled]="CityForm.invalid || DeleteDisable" style="flex-direction: column;">
-                    <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
-                    <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                      <i class="fas fa-trash-alt"></i>
-                    </mat-icon>
-                  </button>
-        
-                  <!-- <div class="example-button-container">
-                    <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
-                      aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-undo"></i>
-                    </button>
-                  </div> -->
-
-                  
-                 <button mat-fab extended color="primary" type="button" 
-                 (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
-                   <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
-                   <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                     <i class="fas fa-undo"></i>
-                   </mat-icon>
-                 </button>
-         
-        
-                  <!-- <div class="example-button-container">
-                    <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateCity()" color="primary"
-                      aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-edit"></i>
-                    </button>
-                  </div> -->
-        
-                  <button mat-fab extended color="primary" type="button" 
-                  [disabled]="UpdateDisable" (click)="updateCity()" style="flex-direction: column;">
-                    <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
-                    <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                      <i class="fas fa-edit"></i>
-                    </mat-icon>
-                  </button>
-        
-                  <!-- <div class="example-button-container">
-                    <button type="button" (click)="New()" mat-mini-fab color="primary"
-                      aria-label="Example icon button with a menu icon">
-                      <i class="fas fa-plus"></i>
-                    </button>
-                  </div> -->
-
-                  <button mat-fab extended color="primary" type="button" [disabled]="newDisable" (click)="New()" style="flex-direction:column;">
-                    <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
-                    <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                      <i class="fas fa-plus"></i>
-                    </mat-icon>
-                  </button>
-        
-                </div>
-              </div>
-    
-
-            <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;">
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <h1 style="margin-bottom: auto;">
-                            <i class="fa-solid fa-building-user custom-icon"></i>
-
-                            المدن
-                        </h1>
-                    </ng-template>
+          <button mat-fab extended color="primary" type="button" (click)="GetAllCities()" [disabled]="reloadDisabled"
+            style="flex-direction: column;">
+            <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-sync"></i>
+            </mat-icon>
+          </button>
 
 
-                    <div class="row p-3">
-                        <mat-form-field appearance="outline" style="display: none;" class="col-lg-3 col-md-6 col-sm-12">
-                            <mat-label>id</mat-label>
-                            <input matInput type="number" formControlName="cityId">
-                        </mat-form-field>
+          <button mat-fab extended color="primary" type="submit" [disabled]="CityForm.invalid || SaveDisable"
+            style="flex-direction:column;">
+            <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-save"></i>
+            </mat-icon>
+          </button>
 
-                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12 mdc-text-field--invalid">
-                            <mat-label>الكود</mat-label>
-                            <input matInput type="text"  formControlName="cityCode" [readonly]="EditReadonly" >
-                        </mat-form-field>
 
-                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12 mdc-text-field--invalid">
-                            <mat-label>أسم المدينة بالعربى</mat-label>
-                            <input matInput type="text"  formControlName="cityName" >
-                        </mat-form-field>
+          <button mat-fab extended color="warn" type="button" (click)="Open_delete_confirm()"
+            [disabled]="CityForm.invalid || DeleteDisable || !userInfo.canDelete_City" style="flex-direction: column;">
+            <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-trash-alt"></i>
+            </mat-icon>
+          </button>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
-                        </div>
+          <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+            [disabled]="!userInfo.canPrint_City">
+            <span style="margin-right: 10px;margin-left: 10px;">طباعه</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+              <i class="fas fa-print"></i>
+            </mat-icon>
+          </button>
 
-                        <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
-                            <mat-label>الملاحظات</mat-label>
-                            <textarea matInput formControlName="remarks" ></textarea>
-                        </mat-form-field>
+
+          <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+            [disabled]="!userInfo.canPreView_City">
+            <span style="margin-right: 10px;margin-left: 10px;">استعراض</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+              <i class="fas fa-eye"></i>
+            </mat-icon>
+          </button>
 
 
 
-                    </div>
+          <button mat-fab extended color="primary" type="button" (click)="undo()" [disabled]="UndoDisabled"
+            style="flex-direction: column;">
+            <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-undo"></i>
+            </mat-icon>
+          </button>
 
-                </mat-tab>
+          <button mat-fab extended color="primary" type="button" 
+            [disabled]="UpdateDisable || !userInfo.canEdit_City"
+            (click)="updateCity()"
+            style="flex-direction: column;">
+            <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-edit"></i>
+            </mat-icon>
+          </button>
 
-            </mat-tab-group>
-        </form>
-    </div>
+          <button mat-fab extended color="primary" type="button"
+           [disabled]="newDisable || !userInfo.canCreate_City"
+            (click)="New()"
+            style="flex-direction:column;">
+            <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-plus"></i>
+            </mat-icon>
+          </button>
 
-    <mat-card style="margin-bottom: 100px;">
-        <mat-card-header class="justify-content-center">
-          <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
-            <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-            <input matInput [readonly]="readonlyTable" (keyup)="Filterchange($event)"  />
-          </mat-form-field>
-        </mat-card-header> <mat-card-content>
-    
-          <table matSort mat-table [class.readonly-table]="readonlyTable" [dataSource]="dataSource" class="mat-elevation-z8" dir="rtl">
-    
-            <ng-container matColumnDef="cityCode">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>الكود</th>
-              <td mat-cell *matCellDef="let element"> {{element.cityCode}} </td>
+        </div>
+      </div>
+
+
+      <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <h1 style="margin-bottom: auto;">
+              <i class="fa-solid fa-building-user custom-icon"></i>
+
+              المدن
+            </h1>
+          </ng-template>
+
+
+          <div class="row p-3">
+            <mat-form-field appearance="outline" style="display: none;" class="col-lg-3 col-md-6 col-sm-12">
+              <mat-label>id</mat-label>
+              <input matInput type="number" formControlName="cityId">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12 mdc-text-field--invalid">
+              <mat-label>الكود</mat-label>
+              <input matInput type="text" formControlName="cityCode" [readonly]="EditReadonly">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12 mdc-text-field--invalid">
+              <mat-label>أسم المدينة بالعربى</mat-label>
+              <input matInput type="text" formControlName="cityName">
+            </mat-form-field>
+
+            <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+            </div>
+
+            <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+              <mat-label>الملاحظات</mat-label>
+              <textarea matInput formControlName="remarks"></textarea>
+            </mat-form-field>
+
+
+
+          </div>
+
+        </mat-tab>
+
+      </mat-tab-group>
+    </form>
+  </div>
+
+  <mat-card style="margin-bottom: 100px;">
+    <mat-card-header class="justify-content-center">
+      <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+        <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+        <input matInput [readonly]="readonlyTable" (keyup)="Filterchange($event)" />
+      </mat-form-field>
+    </mat-card-header> <mat-card-content>
+
+      <table matSort mat-table [class.readonly-table]="readonlyTable" [dataSource]="dataSource" class="mat-elevation-z8"
+        dir="rtl">
+
+        <ng-container matColumnDef="cityCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>الكود</th>
+          <td mat-cell *matCellDef="let element"> {{element.cityCode}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cityName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>الإسم</th>
+          <td mat-cell *matCellDef="let element"> {{element.cityName}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="remarks">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element.remarks else noData">
+              {{element.remarks}}
             </ng-container>
-    
-            <ng-container matColumnDef="cityName">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>الإسم</th>
-              <td mat-cell *matCellDef="let element"> {{element.cityName}} </td>
-            </ng-container>
+            <ng-template #noData>
+              لايوجد ملاحظات
+            </ng-template>
+          </td>
+        </ng-container>
 
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
+      </table>
 
-            <ng-container matColumnDef="remarks">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> ملاحظات </th>
-                <td mat-cell *matCellDef="let element"> 
-                  <ng-container *ngIf="element.remarks else noData">
-                      {{element.remarks}} 
-                  </ng-container>
-                  <ng-template #noData>
-                      لايوجد ملاحظات
-                  </ng-template>
-              </td>
-              </ng-container>
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
-          </table>
-    
-        </mat-card-content>
-        <mat-card-footer>
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-          </mat-paginator>
-        </mat-card-footer>
-      </mat-card>
-    
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </mat-card-footer>
+  </mat-card>
+
 
 
 </div>

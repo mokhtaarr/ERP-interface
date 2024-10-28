@@ -12,9 +12,13 @@ import { CurrenciesComponent } from './currencies/currencies.component';
 import { FinancialYearComponent } from './financial-year/financial-year.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { CheckboxRendererComponent } from './checkbox-renderer/checkbox-renderer.component';
-import { ExchangeDocumentComponent } from './exchange-document/exchange-document.component';
-import { ReceiptDocumentComponent } from './receipt-document/receipt-document.component';
 import { SettlementsComponent } from './settlements/settlements.component';
+import { JournalEntryComponent } from './journal-entry/journal-entry.component';
+import { ReceiptVoucherComponent } from './MsReceiptNote/receipt-voucher.component';
+import { ExchangeVoucherComponent } from './MsPaymentNote/exchange-voucher.component';
+import { AllSearchAccountsComponent } from './all-search-accounts/all-search-accounts.component';
+import { UpdateAccountComponent } from './update-account/update-account.component';
+import { UpdateAccountFromDataBaseComponent } from './update-account-from-data-base/update-account-from-data-base.component';
 
 
 @NgModule({
@@ -27,9 +31,13 @@ import { SettlementsComponent } from './settlements/settlements.component';
     CurrenciesComponent,
     FinancialYearComponent,
     CheckboxRendererComponent,
-    ExchangeDocumentComponent,
-    ReceiptDocumentComponent,
     SettlementsComponent,
+    JournalEntryComponent,
+    ReceiptVoucherComponent,
+    ExchangeVoucherComponent,
+    AllSearchAccountsComponent,
+    UpdateAccountComponent,
+    UpdateAccountFromDataBaseComponent,
   ],
   imports: [
     CommonModule,

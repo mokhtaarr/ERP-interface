@@ -378,4 +378,177 @@ export class AccountsModuleServicesService {
       return res.status;
     }))
   }
+
+  // سيرفسيس مستند القبض
+
+  getAllBooksForMsReceiptNote() {
+    return this.http.get<any>(environment.apiUrl + 'MsReceiptNote/GetAllSysBooks');
+  }
+
+  getAllReceiptNote() {
+    return this.http.get<any>(environment.apiUrl + 'MsReceiptNote/GetAllMsReceiptNote')
+  }
+   
+  GetAllBoxBank() {
+    return this.http.get<any>(environment.apiUrl + 'MsReceiptNote/GetAllBoxBank');
+  }
+
+  AddMsReturnPurchase(values:any){
+    return this.http.post<any>(environment.apiUrl+'MS_ReturnPurchase/AddMsReturnPurchase',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+  GetAccountBalance(accountId:any){
+    return this.http.get<any>(`${environment.apiUrl}MsReceiptNote/GetAccountBalance?accountId=${accountId}`)
+  }
+
+  
+  AddMsReceiptNote(values:any){
+    return this.http.post<any>(environment.apiUrl+'MsReceiptNote/AddMsReceiptNote',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+  
+
+  DeleteReceiptNote(RectId:any,deletedBy:any){
+    return this.http.delete<any>(`${environment.apiUrl}MsReceiptNote/DeleteReceiptNote?RectId=${RectId}&deletedBy=${deletedBy}`)
+    .pipe(map((res)=>{
+      var message = res.message;
+      var messageEn = res.messageEn;
+  
+      if (res.status == true) this.toastr.success(message);
+  
+      if (res.status == false) this.toastr.error(message);
+  
+      return res.status;
+    }))
+  }
+
+
+  // سيرفسيس مستند القبض
+
+  getAllBooksForMsPaymentNote() {
+    return this.http.get<any>(environment.apiUrl + 'MsPaymentNote/GetAllSysBooks');
+  }
+
+  getAllPaymentNote() {
+    return this.http.get<any>(environment.apiUrl + 'MsPaymentNote/GetAllMsPaymentNote')
+  }
+    
+  AddMsPaymentNote(values:any){
+    return this.http.post<any>(environment.apiUrl+'MsPaymentNote/AddMsPaymentNote',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+  
+  DeletePaymenttNote(payId:any,deletedBy:any){
+    return this.http.delete<any>(`${environment.apiUrl}MsPaymentNote/DeletePaymentNote?payId=${payId}&deletedBy=${deletedBy}`)
+    .pipe(map((res)=>{
+      var message = res.message;
+      var messageEn = res.messageEn;
+  
+      if (res.status == true) this.toastr.success(message);
+  
+      if (res.status == false) this.toastr.error(message);
+  
+      return res.status;
+    }))
+  }
+
+
+  // السيرفسيس الخاصه بقيد اليوميه
+  GetAllCalJurnalEntry() {
+    return this.http.get<any>(environment.apiUrl + 'CalJurnalEntry/GetAllCalJurnalEntry')
+  }
+   
+  getAllBooksForJurnalEntry() {
+    return this.http.get<any>(environment.apiUrl + 'CalJurnalEntry/GetAllSysBooks');
+  }
+
+  
+  AddCalJurnalEntry(values:any){
+    return this.http.post<any>(environment.apiUrl+'CalJurnalEntry/AddCalJurnalEntry',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+  GetAllSearchAccounts(){
+    return this.http.get<any>(environment.apiUrl+'CalJurnalEntry/GetAllAccounts')
+   }
+  
+   updateCalJurnalDetail(values:any){
+    return this.http.post<any>(environment.apiUrl+'CalJurnalEntry/updateCalJurnalDetail',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+  getCalJurnalDetails(JurnalId:any){
+    return this.http.get<any>(`${environment.apiUrl}CalJurnalEntry/getCalJurnalDetails?JurnalId=${JurnalId}`)
+  }
+
+  DeleteJournalDetail(jurnalDetailId: number) {
+    return this.http
+      .delete<any>(`${environment.apiUrl}CalJurnalEntry/DeleteJournalDetail?jurnalDetailId=${jurnalDetailId}`)
+      .pipe(
+        map((res) => {
+          var message = res.message;
+          var messageEn = res.messageEn;
+  
+          if (res.status == true) {
+            this.toastr.success(message);
+          }
+  
+          if (res.status == false) this.toastr.error(message);
+  
+          return res;
+        })
+      );
+  }
+
 }

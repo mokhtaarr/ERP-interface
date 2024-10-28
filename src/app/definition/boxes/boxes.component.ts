@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { DefinitionService } from '../definition.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-boxes',
@@ -48,7 +49,8 @@ export class BoxesComponent implements OnInit {
   constructor(
     private definitionService: DefinitionService,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public accountService : AccountService
   ) {}
 
   ngOnInit(): void {
@@ -324,7 +326,6 @@ undo(){
 updateBoxBank(){
   this.boxForm.enable();
   this.readonlyTable = true;
-  this.newDisable = true;
   this.newDisable = true;
   this.DeleteDisable = true;
   this.DisabledNextButton = true;

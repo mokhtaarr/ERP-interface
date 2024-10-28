@@ -7,9 +7,10 @@ import { SysAnalyticalCodeComponent } from './sys-analytical-code/sys-analytical
 import { ActivitiesComponent } from './activities/activities.component';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { FinancialYearComponent } from './financial-year/financial-year.component';
-import { ExchangeDocumentComponent } from './exchange-document/exchange-document.component';
-import { ReceiptDocumentComponent } from './receipt-document/receipt-document.component';
 import { SettlementsComponent } from './settlements/settlements.component';
+import { JournalEntryComponent } from './journal-entry/journal-entry.component';
+import { ReceiptVoucherComponent } from './MsReceiptNote/receipt-voucher.component';
+import { ExchangeVoucherComponent } from './MsPaymentNote/exchange-voucher.component';
 
 const routes: Routes = [
   {path:'',component:AllComponent},
@@ -19,9 +20,10 @@ const routes: Routes = [
   {path:'activities',component:ActivitiesComponent},
   {path:'currencies' , component:CurrenciesComponent},
   {path:'Financial-Year',component:FinancialYearComponent},
-  {path:'exchange-document',component:ExchangeDocumentComponent},
-  {path:'receipt-document',component:ReceiptDocumentComponent},
-  {path:'settlements',component:SettlementsComponent}
+  {path:'settlements',component:SettlementsComponent},
+  {path:'journal-entry',component:JournalEntryComponent},
+  {path:'receipt-voucher',component:ReceiptVoucherComponent},
+  {path:'exchange-voucher',component:ExchangeVoucherComponent}
 ];
 
 @NgModule({

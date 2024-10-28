@@ -10,6 +10,7 @@ import { CustomerBranchesComponent } from '../customer-branches/customer-branche
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { CustomerContactComponent } from '../customer-contact/customer-contact.component';
 import { MatSelectChange } from '@angular/material/select';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-customers',
@@ -83,7 +84,8 @@ export class CustomersComponent implements OnInit{
   IsPrimaryAccountChangedForm: any;
 
 
-  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog,
+    public accountService : AccountService){
   }
 
   ngOnInit(): void {

@@ -79,4 +79,11 @@
   line-height: normal;
   }
   
+  .tableTdForCollection{
+    min-width: 300px;
+  }
   
+  .readonly-table {
+    pointer-events: none;
+    opacity: 0.6; 
+  }

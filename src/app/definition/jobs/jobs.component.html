@@ -1,119 +1,45 @@
 <div class="container-fluid">
 
-  <div style="margin-bottom: 150px;">
+  <div style="margin-bottom: 150px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
     <form [formGroup]="HrJobsForm" (ngSubmit)="onSumbit()">
 
       <div class="example-button-row">
         <div class="example-flex-container">
 
-
-          <!-- <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
-              aria-label="Example icon button with a menu icon">
-              <i class="fas fa-step-backward"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
-              [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-caret-left"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
-              [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-caret-right"></i>
-
-            </button>
-          </div>
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
-              aria-label="Example icon button with a menu icon">
-              <i class="fas fa-step-forward"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary"  (click)="GetAllHrJobs()"
-              [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-sync"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || HrJobsForm.invalid" 
-              aria-label="Example icon button with a menu icon">
-              <i class="fas fa-save"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || HrJobsForm.invalid" (click)="Open_delete_confirm()"
-              
-               aria-label="Example icon button with a menu icon">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
-              aria-label="Example icon button with a menu icon">
-              <i class="fas fa-undo"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateHrJob()" color="primary"
-              aria-label="Example icon button with a menu icon">
-              <i class="fas fa-edit"></i>
-            </button>
-          </div>
-
-
-          <div class="example-button-container">
-            <button type="button" (click)="New()" mat-mini-fab color="primary"
-              aria-label="Example icon button with a menu icon">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div> -->
-
-
-          <button mat-fab extended color="primary" type="button" 
-          (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
+          <button mat-fab extended color="primary" type="button" (click)="getLastRowData()" [disabled]="lastRow"
+            style="flex-direction:column;">
             <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;">
               <i class="fas fa-step-backward"></i>
             </mat-icon>
           </button>
-     
-          <button mat-fab extended color="primary" type="button" 
-          (click)="getNextRowData()" [disabled]="DisabledNextButton" style="flex-direction:column;">
+
+          <button mat-fab extended color="primary" type="button" (click)="getNextRowData()"
+            [disabled]="DisabledNextButton" style="flex-direction:column;">
             <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;">
               <i class="fas fa-caret-left"></i>
             </mat-icon>
           </button>
 
-          <button mat-fab extended color="primary" type="button" 
-          (click)="getPrevRowData()" [disabled]="DisabledPrevButton" style="flex-direction:column;">
-           <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
-           <mat-icon style="margin-right: 10px;margin-left: 10px;">
-             <i class="fas fa-caret-right"></i>
-           </mat-icon>
-         </button>
-
-          <button mat-fab extended color="primary" type="button" 
-            (click)="getFirstRowData()" [disabled]="firstRow" style="flex-direction:column;">
-              <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
-              <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                <i class="fas fa-step-forward"></i>
-              </mat-icon>
+          <button mat-fab extended color="primary" type="button" (click)="getPrevRowData()"
+            [disabled]="DisabledPrevButton" style="flex-direction:column;">
+            <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-caret-right"></i>
+            </mat-icon>
           </button>
 
-          <button mat-fab extended color="primary" type="button" 
-          (click)="GetAllHrJobs()" [disabled]="reloadDisabled" style="flex-direction: column;">
+          <button mat-fab extended color="primary" type="button" (click)="getFirstRowData()" [disabled]="firstRow"
+            style="flex-direction:column;">
+            <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-step-forward"></i>
+            </mat-icon>
+          </button>
+
+          <button mat-fab extended color="primary" type="button" (click)="GetAllHrJobs()" [disabled]="reloadDisabled"
+            style="flex-direction: column;">
             <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;">
               <i class="fas fa-sync"></i>
@@ -121,25 +47,44 @@
           </button>
 
 
-          <button mat-fab extended color="primary" type="submit" 
-          [disabled]="HrJobsForm.invalid || SaveDisable" style="flex-direction:column;">
+          <button mat-fab extended color="primary" type="submit" [disabled]="HrJobsForm.invalid || SaveDisable"
+            style="flex-direction:column;">
             <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;">
               <i class="fas fa-save"></i>
             </mat-icon>
           </button>
 
-          <button mat-fab extended color="warn" type="button" 
-          (click)="Open_delete_confirm()" [disabled]="HrJobsForm.invalid || DeleteDisable" style="flex-direction: column;">
-           <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
-           <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-             <i class="fas fa-trash-alt"></i>
-           </mat-icon>
-         </button>
+          <button mat-fab extended color="warn" type="button" (click)="Open_delete_confirm()"
+            [disabled]="HrJobsForm.invalid || DeleteDisable || !userInfo.canDelete_frmJobs"
+            style="flex-direction: column;">
+            <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+              <i class="fas fa-trash-alt"></i>
+            </mat-icon>
+          </button>
+
+          <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+            [disabled]="!userInfo.canPrint_frmJobs">
+            <span style="margin-right: 10px;margin-left: 10px;">طباعه</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+              <i class="fas fa-print"></i>
+            </mat-icon>
+          </button>
 
 
-          <button mat-fab extended color="primary" type="button" 
-          (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
+          <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+            [disabled]="!userInfo.canPreView_frmJobs">
+            <span style="margin-right: 10px;margin-left: 10px;">استعراض</span>
+            <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+              <i class="fas fa-eye"></i>
+            </mat-icon>
+          </button>
+
+
+
+          <button mat-fab extended color="primary" type="button" (click)="undo()" [disabled]="UndoDisabled"
+            style="flex-direction: column;">
             <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;">
               <i class="fas fa-undo"></i>
@@ -148,16 +93,20 @@
 
 
           <button mat-fab extended color="primary" type="button" 
-          [disabled]="UpdateDisable" (click)="updateHrJob()" style="flex-direction: column;">
+            [disabled]="UpdateDisable || !userInfo.canEdit_frmJobs"
+            (click)="updateHrJob()"
+            style="flex-direction: column;">
             <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
-            <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
               <i class="fas fa-edit"></i>
             </mat-icon>
           </button>
 
-          <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+          <button mat-fab extended color="primary" type="button" 
+          [disabled]="newDisable || !userInfo.canCreate_frmJobs"
+            (click)="New()" style="flex-direction:column;">
             <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
-            <mat-icon style="margin-right: 10px;margin-left: 10px;" >
+            <mat-icon style="margin-right: 10px;margin-left: 10px;">
               <i class="fas fa-plus"></i>
             </mat-icon>
           </button>
@@ -177,26 +126,30 @@
 
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-12 tree-container" style="background-color: white;">
-            
+
               <mat-form-field style="width: 100%;margin-top: 15px;" appearance="outline" dir="rtl">
                 <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث
                 </mat-label>
                 <input matInput (keyup)="Filterchange($event)" />
-             </mat-form-field>
-             
-             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button mat-mini-fab color="primary" type="button" (click)="tree.treeControl.expandAll()"><i class="fas fa-eye"></i></button>
-                <button mat-mini-fab color="primary" type="button" (click)="tree.treeControl.collapseAll()" ><i class="fas fa-eye-slash"></i></button>
+              </mat-form-field>
+
+              <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <button mat-mini-fab color="primary" type="button" (click)="tree.treeControl.expandAll()"><i
+                    class="fas fa-eye"></i></button>
+                <button mat-mini-fab color="primary" type="button" (click)="tree.treeControl.collapseAll()"><i
+                    class="fas fa-eye-slash"></i></button>
               </div>
 
 
-              <mat-tree dir="rtl" #tree  [dataSource]="dataSource" [treeControl]="treeControl">
+              <mat-tree dir="rtl" #tree [dataSource]="dataSource" [treeControl]="treeControl">
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="handleNodeClick(node)">
-                  <button mat-icon-button disabled><i class="far fa-folder-open" style="font-size: 20px;color: #ecd9a6;"></i></button>
+                  <button mat-icon-button disabled><i class="far fa-folder-open"
+                      style="font-size: 20px;color: #ecd9a6;"></i></button>
                   {{node.jname1}}
                 </mat-tree-node>
-              
-                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="handleNodeClick(node)">
+
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
+                  (click)="handleNodeClick(node)">
                   <button type="button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
                     <mat-icon class="mat-icon-rtl-mirror">
                       {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
@@ -205,8 +158,8 @@
                   {{node.jname1}}
                 </mat-tree-node>
               </mat-tree>
-              
-              
+
+
             </div>
             <div class="col-lg-9 col-md-6 col-sm-12">
               <div class="row p-3">
@@ -224,18 +177,18 @@
                   <mat-label>الإسم بالعربى</mat-label>
                   <input matInput type="text" formControlName="jname1">
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                   <mat-label>الإسم بالإنجليزى</mat-label>
-                  <input matInput type="text"  formControlName="jname2">
+                  <input matInput type="text" formControlName="jname2">
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                   <mat-label>الوظيفه الرئيسية</mat-label>
                   <mat-select formControlName="parentId">
                     <mat-option [value]="null">لا يوجد</mat-option>
-                    <mat-option [value]="job.jobId" *ngFor="let job of allHrJobsForSelect" 
-                    [style.display]="job.jobId === HrJobsForm.get('jobId')!.value ? 'none' : ''">
+                    <mat-option [value]="job.jobId" *ngFor="let job of allHrJobsForSelect"
+                      [style.display]="job.jobId === HrJobsForm.get('jobId')!.value ? 'none' : ''">
                       {{job.jname1}}
                     </mat-option>
                   </mat-select>
@@ -247,74 +200,74 @@
                     <mat-option [value]="depart.departMentId" *ngFor="let depart of AllHrDepartment">
                       {{depart.name}}
                     </mat-option>
-                </mat-select>
+                  </mat-select>
                 </mat-form-field>
-  
+
                 <div>
 
                 </div>
-  
+
                 <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
                   <mat-label>واجبات الوظيفة</mat-label>
                   <textarea matInput formControlName="jduties"></textarea>
                 </mat-form-field>
-  
-  
+
+
                 <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
                   <mat-label>مؤهلات الوظيفة</mat-label>
                   <textarea matInput formControlName="jqualifications"></textarea>
                 </mat-form-field>
-  
-  
+
+
                 <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
                   <mat-label>مسئوليات الوظيفة</mat-label>
-                  <textarea matInput  formControlName="jresponsibilities"></textarea>
+                  <textarea matInput formControlName="jresponsibilities"></textarea>
                 </mat-form-field>
-  
+
                 <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
                   <mat-label>الوصف</mat-label>
-                  <textarea matInput formControlName="jdesc"  ></textarea>
+                  <textarea matInput formControlName="jdesc"></textarea>
                 </mat-form-field>
-  
+
                 <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
                   <mat-label>الملاحظات</mat-label>
-                  <textarea matInput formControlName="remarks" ></textarea>
+                  <textarea matInput formControlName="remarks"></textarea>
                 </mat-form-field>
-  
+
                 <hr>
-  
-  
-  
+
+
+
                 <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                   <mat-label>متوسط الاجر الشهري</mat-label>
-                  <input matInput type="number" formControlName="standardMonthlyWage" >
+                  <input matInput type="number" formControlName="standardMonthlyWage">
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                   <mat-label>متوسط الاجر اليومي</mat-label>
-                  <input matInput type="number" formControlName="standardDailyWage" >
+                  <input matInput type="number" formControlName="standardDailyWage">
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                   <mat-label>متوسط اجر الساعة</mat-label>
-                  <input matInput type="number" formControlName="standardHourlyWage" >
+                  <input matInput type="number" formControlName="standardHourlyWage">
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                   <mat-label>عدد ايام الاجازات الشهرية</mat-label>
                   <input matInput type="number" formControlName="standardHolyDays">
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                   <mat-label>متوسط عدد ساعات العمل اليومي</mat-label>
-                  <input matInput type="number" formControlName="standardDailyWorkHours" >
+                  <input matInput type="number" formControlName="standardDailyWorkHours">
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
                   <mat-label>العدد المتاح</mat-label>
-                  <input matInput type="number" formControlName="numberAvailable" >
+                  <input matInput type="number" formControlName="numberAvailable">
                 </mat-form-field>
-  
+
               </div>
             </div>
           </div>

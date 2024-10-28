@@ -14,6 +14,8 @@ import { AddItemToPurchaseInvoiceComponent } from './add-item-to-purchase-invoic
 import { UpdatePurchaseInvoiceComponent } from './update-purchase-invoice/update-purchase-invoice.component';
 import { UpdateOrderDetailComponent } from './update-order-detail/update-order-detail.component';
 import { UpdateMsPurchOrderDetailsComponent } from './update-ms-purch-order-details/update-ms-purch-order-details.component';
+import { MsReturnPurchaseInvoiceComponent } from './ms-return-purchase-invoice/ms-return-purchase-invoice.component';
+import { UpdateMsReturnPurchaseItemsComponent } from './update-ms-return-purchase-items/update-ms-return-purchase-items.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { UpdateMsPurchOrderDetailsComponent } from './update-ms-purch-order-deta
     AddItemToPurchaseInvoiceComponent,
     UpdatePurchaseInvoiceComponent,
     UpdateOrderDetailComponent,
-    UpdateMsPurchOrderDetailsComponent
+    UpdateMsPurchOrderDetailsComponent,
+    MsReturnPurchaseInvoiceComponent,
+    UpdateMsReturnPurchaseItemsComponent
   ],
   imports: [
     CommonModule,

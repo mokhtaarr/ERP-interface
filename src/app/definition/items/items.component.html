@@ -3,7 +3,7 @@
         <h1 style="margin: inherit;">الإصناف <i class="fab fa-product-hunt custom-icon"></i></h1>
     </div>
 
-    <div style="margin-bottom: 50px;">
+    <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
         <form [formGroup]="itemForm" (ngSubmit)="onSumbit()">
 
             <div style="display: flex;justify-content: space-between;">
@@ -124,7 +124,9 @@
                             </button>
                         </div> -->
 
-                        <button mat-fab extended color="warn" type="button" (click)="Open_delete_confirm()"
+                        <button mat-fab extended color="warn" type="button" 
+                            *ngIf="userInfo.canDelete_frmItemCard"
+                            (click)="Open_delete_confirm()"
                             [disabled]="itemForm.invalid || DeleteDisable" style="flex-direction: column;">
                             <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
                             <mat-icon style="margin-right: 10px;margin-left: 10px;">
@@ -155,7 +157,9 @@
                             </button>
                         </div> -->
 
-                        <button mat-fab extended color="primary" type="button" [disabled]="UpdateDisable"
+                        <button mat-fab extended color="primary"
+                         *ngIf="userInfo.canEdit_frmItemCard"
+                          type="button" [disabled]="UpdateDisable"
                             (click)="updateItem()" style="flex-direction: column;">
                             <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
                             <mat-icon style="margin-right: 10px;margin-left: 10px;">
@@ -171,7 +175,9 @@
                             </button>
                         </div> -->
 
-                        <button mat-fab extended color="primary" [disabled]="newDisable" type="button" (click)="New()"
+                        <button mat-fab extended color="primary"
+                         *ngIf="userInfo.canCreate_frmItemCard"
+                          [disabled]="newDisable" type="button" (click)="New()"
                             style="flex-direction:column;">
                             <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
                             <mat-icon style="margin-right: 10px;margin-left: 10px;">

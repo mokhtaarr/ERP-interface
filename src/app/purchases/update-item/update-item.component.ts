@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PurchasesServicesService } from '../purchases-services.service';
 import { DefinitionService } from 'src/app/definition/definition.service';
 import { MatSelectChange } from '@angular/material/select';
+import { AccountService } from 'src/app/account/account.service';
+import { SalesService } from 'src/app/sales/sales.service';
 
 @Component({
   selector: 'app-update-item',
@@ -18,21 +20,24 @@ export class UpdateItemComponent {
   itemUnits:any[] = [];
   AllStores : any[] = [];
   AllPartitions : any[] = [];
+  userStoreId : any;
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ref: MatDialogRef<UpdateItemComponent>,
     private purchasesServices: PurchasesServicesService,
     private fb: FormBuilder,
-    private definitionService:DefinitionService
+    private definitionService:DefinitionService,
+    private accountService : AccountService,
+    private salesService : SalesService
   ) {}
 
 
   ngOnInit(): void {
     this.itemCollectionDataForm = this.data.itemCollectionData;
     this.fillForm();
-    this.getAllPartitions();
-    this.getAllStores();
+    this.getUserInfo();
   }
 
 
@@ -132,16 +137,21 @@ export class UpdateItemComponent {
     })
   }
 
-  getAllStores(){
-   this.purchasesServices.GetAllStores().subscribe(res=>{
-    this.AllStores = res;
-   })
-  }
+ 
 
-  getAllPartitions(){
-    this.purchasesServices.GetAllPartition().subscribe(res=>{
-     this.AllPartitions = res;
-    })
-   }
+   getUserInfo(){
+    this.accountService.currentUser$.subscribe(res =>{
+      this.userStoreId = res?.storeId;
+
+      this.salesService.GetUserStores(this.userStoreId).subscribe((res : any)=>{
+        this.AllStores = res
+        this.itemCollectionForm.get('storeId')?.setValue(this.AllStores[0].storeId)
+      });
+
+      this.salesService.GetUserPartition(this.userStoreId).subscribe(res=>{
+        this.AllPartitions = res
+      })
+      })
+  }
 
 }

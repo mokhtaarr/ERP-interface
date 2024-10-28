@@ -9,6 +9,7 @@ import { MatTree, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/mater
 import { ExampleFlatNode, JobTree} from 'src/app/shared/models/tree';
 import { DefinitionService } from '../definition.service';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-jobs',
@@ -77,12 +78,14 @@ export class JobsComponent implements OnInit {
   undoIndex!: number;
   HrDepartmentsForm: any;
   DataFilter :any;
+  newDisable:boolean = false;
 
  
   @ViewChild('tree') tree !: MatTree<any>;
 
 
-  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog,
+    public accountService : AccountService){
 }
   ngOnInit(): void {
     this.HrJobsForm.disable();
@@ -394,6 +397,7 @@ undo(){
   this.HrJobsForm.disable();
   this.DisabledNextButton = false;
   this.DisabledPrevButton = false;
+  this.newDisable = false;
   this.lastRow = false;
   this.firstRow = false;
   this.reloadDisabled = false;
@@ -432,6 +436,7 @@ undo(){
 updateHrJob(){
   this.HrJobsForm.enable();
   this.DeleteDisable = true;
+  this.newDisable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
   this.lastRow = true;
@@ -468,6 +473,7 @@ New(){
     numberAvailable: null
   })
 
+  this.newDisable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
   this.lastRow = true;

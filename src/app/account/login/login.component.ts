@@ -26,23 +26,26 @@ export class LoginComponent {
 
 
   getStores(){
-    this.disableStoresButton = true;
-    this.accountService.getAllStores(this.accountForm.value).subscribe({
-      next: (res) => {
-        this.AllStores = res?.data;
-        if(this.AllStores?.length > 0){
-          this.accountForm.get('storeId')?.setValue(this.AllStores[0].storeId)
-        }
-        this.disableStoresButton = false;
-      },
-      error: (err) => {
-        this.disableStoresButton = false;
-      },
-      complete: () => {
-        this.disableSumbitButton = false;
-        this.disableStoresButton = false;
+    if(this.accountForm.get('userName')?.value && this.accountForm.get('password')?.value) 
+      {
+        this.disableStoresButton = true;
+        this.accountService.getAllStores(this.accountForm.value).subscribe({
+          next: (res) => {
+            this.AllStores = res?.data;
+            if(this.AllStores?.length > 0){
+              this.accountForm.get('storeId')?.setValue(this.AllStores[0].storeId)
+            }
+            this.disableStoresButton = false;
+          },
+          error: (err) => {
+            this.disableStoresButton = false;
+          },
+          complete: () => {
+            this.disableSumbitButton = false;
+            this.disableStoresButton = false;
+          }
+        });
       }
-    });
   }
 
   onSubmit(){

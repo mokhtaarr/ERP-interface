@@ -1,77 +1,9 @@
 <div class="container-fluid">
-
-
-
-
-  <div style="margin-bottom: 50px;">
+  <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
     <form [formGroup]="itemCategoryForm" (ngSubmit)="onSumbit()">
 
       <div class="example-button-row">
         <div class="example-flex-container">
-
-<!-- 
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()"  [disabled]="lastRow" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-step-backward"></i>
-            </button>
-          </div>
-
-         
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()" [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-caret-left"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary"  (click)="getPrevRowData()"  [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-caret-right"></i>
-            </button>
-          </div>
-
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-step-forward"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary" (click)="getAllItemCategory()" [disabled]="reloadDisabled"  aria-label="Example icon button with a menu icon">
-              <i class="fas fa-sync"></i>
-            </button>
-          </div>
-        
-          <div class="example-button-container">
-            <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || itemCategoryForm.invalid" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-save"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="warn" (click)="Open_delete_confirm()" [disabled]="DeleteDisable || itemCategoryForm.invalid" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container">
-            <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"  aria-label="Example icon button with a menu icon">
-              <i class="fas fa-undo"></i>
-            </button>
-          </div>
-
-          <div class="example-button-container" >
-            <button type="button" mat-mini-fab (click)="updateItemCategory()" [disabled]="UpdateDisable" color="primary" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-edit"></i>
-            </button>
-          </div>
-
-
-          <div class="example-button-container">
-            <button type="button" (click)="New()" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div> -->
 
           <button mat-fab extended color="primary" type="button" 
           (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
@@ -123,12 +55,29 @@
           </button>
 
           <button mat-fab extended color="warn" type="button" 
-          (click)="Open_delete_confirm()" [disabled]="itemCategoryForm.invalid || DeleteDisable" style="flex-direction: column;">
+          (click)="Open_delete_confirm()" [disabled]="itemCategoryForm.invalid || DeleteDisable || !userInfo.canDelete_frmItemCategory" style="flex-direction: column;">
            <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
            <mat-icon style="margin-right: 10px;margin-left: 10px;" >
              <i class="fas fa-trash-alt"></i>
            </mat-icon>
          </button>
+
+         <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+         [disabled]="!userInfo.canPrint_frmItemCategory">
+         <span style="margin-right: 10px;margin-left: 10px;">طباعه</span>
+         <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+           <i class="fas fa-print"></i>
+         </mat-icon>
+       </button>
+
+
+       <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+         [disabled]="!userInfo.canPreView_frmItemCategory">
+         <span style="margin-right: 10px;margin-left: 10px;">استعراض</span>
+         <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+           <i class="fas fa-eye"></i>
+         </mat-icon>
+       </button>
 
 
           <button mat-fab extended color="primary" type="button" 
@@ -141,14 +90,16 @@
 
 
           <button mat-fab extended color="primary" type="button" 
-          [disabled]="UpdateDisable" (click)="updateItemCategory()" style="flex-direction: column;">
+          [disabled]="UpdateDisable || !userInfo.canEdit_frmItemCategory" (click)="updateItemCategory()" style="flex-direction: column;">
             <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;" >
               <i class="fas fa-edit"></i>
             </mat-icon>
           </button>
 
-          <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+          <button mat-fab extended color="primary" type="button" 
+          [disabled]="newDisable || !userInfo.canCreate_frmItemCategory"
+           (click)="New()" style="flex-direction:column;">
             <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;" >
               <i class="fas fa-plus"></i>

@@ -8,6 +8,7 @@ import { DefinitionService } from '../definition.service';
 import { MatSelectChange } from '@angular/material/select';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-employees',
@@ -70,10 +71,14 @@ export class EmployeesComponent implements OnInit{
   AllHrDepartment:any;
   AllHrJobs:any;
   AllStores:any;
+
+  newDisable:boolean = false;
+
   
   readonlyField : boolean = true;
 
-  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog,
+    public accountService : AccountService){
   }
 
   ngOnInit(): void {
@@ -324,12 +329,16 @@ export class EmployeesComponent implements OnInit{
     this.reloadDisabled = true;
     this.DeleteDisable = true;
     this.UndoDisabled = false; 
+    this.newDisable = true;
+
+
    }
   
    
  updateHrEmployee(){
   this.HrEmployeesForm.enable();
   this.DeleteDisable = true;
+  this.newDisable = true;
   this.DisabledNextButton = true;
   this.DisabledPrevButton = true;
   this.lastRow = true;
@@ -348,6 +357,7 @@ export class EmployeesComponent implements OnInit{
   this.HrEmployeesForm.disable();
   this.DisabledNextButton = false;
   this.DisabledPrevButton = false;
+  this.newDisable = false;
   this.lastRow = false;
   this.firstRow = false;
   this.reloadDisabled = false;

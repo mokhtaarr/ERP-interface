@@ -4,186 +4,137 @@
         </h1>
     </div>
 
-    <div style="margin-bottom: 50px;">
-        <form [formGroup]="HrEmployeesForm" (ngSubmit)="onSumbit()" >
+    <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
+        <form [formGroup]="HrEmployeesForm" (ngSubmit)="onSumbit()">
 
             <div style="display: flex;justify-content: space-between;">
                 <div class="example-button-row">
                     <div class="example-flex-container">
-            
-            
-                      <!-- <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-step-backward"></i>
-                        </button> 
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
-                          [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-caret-left"></i>
-                        </button>
-                      </div>
-          
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
-                          [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-caret-right"></i>
-          
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-step-forward"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary"  (click)="GetAllHrEmployees()"
-                          [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-sync"></i>
-                        </button>
-                      </div>
-            
-    
-                      <div class="example-button-container">
-                        <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || HrEmployeesForm.invalid" 
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-save"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || HrEmployeesForm.invalid"
-                         (click)="Open_delete_confirm()"
-                          
-                           aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-trash-alt"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-undo"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateHrEmployee()" color="primary"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                      </div>
-            
-            
-                      <div class="example-button-container">
-                        <button type="button" (click)="New()" mat-mini-fab color="primary"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-plus"></i>
-                        </button>
-                      </div> -->
 
-                      <button mat-fab extended color="primary" type="button" 
-                      (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
-                        <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
-                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                          <i class="fas fa-step-backward"></i>
-                        </mat-icon>
-                      </button>
-                 
-                      <button mat-fab extended color="primary" type="button" 
-                      (click)="getNextRowData()" [disabled]="DisabledNextButton" style="flex-direction:column;">
-                        <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
-                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                          <i class="fas fa-caret-left"></i>
-                        </mat-icon>
-                      </button>
-            
-                      <button mat-fab extended color="primary" type="button" 
-                      (click)="getPrevRowData()" [disabled]="DisabledPrevButton" style="flex-direction:column;">
-                       <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
-                       <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                         <i class="fas fa-caret-right"></i>
-                       </mat-icon>
-                     </button>
-            
-                      <button mat-fab extended color="primary" type="button" 
-                        (click)="getFirstRowData()" [disabled]="firstRow" style="flex-direction:column;">
-                          <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
-                          <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                            <i class="fas fa-step-forward"></i>
-                          </mat-icon>
-                      </button>
-            
-                      <button mat-fab extended color="primary" type="button" 
-                      (click)="GetAllHrEmployees()" [disabled]="reloadDisabled" style="flex-direction: column;">
-                        <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
-                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                          <i class="fas fa-sync"></i>
-                        </mat-icon>
-                      </button>
-            
-            
-                      <button mat-fab extended color="primary" type="submit" 
-                      [disabled]="HrEmployeesForm.invalid || SaveDisable" style="flex-direction:column;">
-                        <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
-                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                          <i class="fas fa-save"></i>
-                        </mat-icon>
-                      </button>
-            
-                      <button mat-fab extended color="warn" type="button" 
-                      (click)="Open_delete_confirm()" [disabled]="HrEmployeesForm.invalid || DeleteDisable" style="flex-direction: column;">
-                       <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
-                       <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                         <i class="fas fa-trash-alt"></i>
-                       </mat-icon>
-                     </button>
-            
-            
-                      <button mat-fab extended color="primary" type="button" 
-                      (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
-                        <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
-                        <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                          <i class="fas fa-undo"></i>
-                        </mat-icon>
-                      </button>
-            
-            
-                      <button mat-fab extended color="primary" type="button" 
-                      [disabled]="UpdateDisable" (click)="updateHrEmployee()" style="flex-direction: column;">
-                        <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
-                        <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                          <i class="fas fa-edit"></i>
-                        </mat-icon>
-                      </button>
-            
-                      <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
-                        <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
-                        <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                          <i class="fas fa-plus"></i>
-                        </mat-icon>
-                      </button>
-            
-            
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="getLastRowData()"
+                            [disabled]="lastRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-step-backward"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getNextRowData()"
+                            [disabled]="DisabledNextButton" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-caret-left"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getPrevRowData()"
+                            [disabled]="DisabledPrevButton" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-caret-right"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getFirstRowData()"
+                            [disabled]="firstRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-step-forward"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="GetAllHrEmployees()"
+                            [disabled]="reloadDisabled" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-sync"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="submit"
+                            [disabled]="HrEmployeesForm.invalid || SaveDisable" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-save"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="warn" type="button" (click)="Open_delete_confirm()"
+                            [disabled]="HrEmployeesForm.invalid || DeleteDisable || !userInfo.canDelete_frmEmployees"
+                            style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-trash-alt"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+                            [disabled]="!userInfo.canPrint_frmEmployees">
+                            <span style="margin-right: 10px;margin-left: 10px;">طباعه</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+                                <i class="fas fa-print"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+                            [disabled]="!userInfo.canPreView_frmEmployees">
+                            <span style="margin-right: 10px;margin-left: 10px;">استعراض</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+                                <i class="fas fa-eye"></i>
+                            </mat-icon>
+                        </button>
+
+
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="undo()"
+                            [disabled]="UndoDisabled" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-undo"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" 
+                            [disabled]="UpdateDisable || !userInfo.canEdit_frmEmployees"
+                            (click)="updateHrEmployee()" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-edit"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="New()"
+                           [disabled]="newDisable || !userInfo.canCreate_frmEmployees"
+                           style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-plus"></i>
+                            </mat-icon>
+                        </button>
+
+
                     </div>
-                  </div>
-    
-                  <div class="mt-2">
-                    <h1 style="color: #3f51b5;" *ngIf="HrEmployeesForm.value.name1"> 
+                </div>
+
+                <div class="mt-2">
+                    <h1 style="color: #3f51b5;" *ngIf="HrEmployeesForm.value.name1">
                         {{HrEmployeesForm.value.name1}}
                         <img height="50" width="50" src="../../../assets/images/arrow.gif">
-    
+
                     </h1>
                 </div>
-               </div> 
-        
-               
-            <mat-tab-group (selectedTabChange)="onTabChanged($event)" dir="rtl" style="background-color: white;font-family: system-ui;">
+            </div>
+
+
+            <mat-tab-group (selectedTabChange)="onTabChanged($event)" dir="rtl"
+                style="background-color: white;font-family: system-ui;">
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-database custom-icon"></i>
@@ -203,15 +154,17 @@
 
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
+                        <div
+                            class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الكود </mat-label>
-                                <input matInput type="text" formControlName="empCode" [readonly]="EditReadonly" >
+                                <input matInput type="text" formControlName="empCode" [readonly]="EditReadonly">
                             </mat-form-field>
                         </div>
 
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
+                        <div
+                            class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الإسم بالعربى </mat-label>
                                 <input matInput type="text" formControlName="name1">
@@ -292,7 +245,8 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
+                        <div
+                            class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>العملة</mat-label>
                                 <mat-select formControlName="currencyId">
@@ -435,156 +389,168 @@
                     </ng-template>
                     <div class="row p-3" style="margin-bottom: -30px;">
                         <div class="col-lg-3 col-md-6 col-sm-12">
-                            <mat-form-field  appearance="outline" class="ang-maturial-select" >
+                            <mat-form-field appearance="outline" class="ang-maturial-select">
                                 <mat-label>أختر الحساب</mat-label>
                                 <mat-select>
                                     <mat-option value="1" (click)="GetEmpMainAccount()">حساب الأستاذ</mat-option>
-                                    <mat-option value="2"  (click)="GetAdditionalaccount1()" >حساب أضافى 1</mat-option>
-                                    <mat-option value="3"  (click)="GetAdditionalaccount2()" >حساب أضافى 2</mat-option>
-                                    <mat-option value="4"  (click)="GetAdditionalaccount3()" >حساب أضافى 3</mat-option>
-                                    <mat-option value="5"  (click)="GetAdditionalaccount4()" >حساب أضافى 4</mat-option>
-                                    <mat-option value="6"  (click)="GetAdditionalaccount5()" >حساب أضافى 5</mat-option>
-                                    <mat-option value="7"  (click)="GetAdditionalaccount6()" >حساب أضافى 6</mat-option>
-                                    <mat-option value="8"  (click)="GetAdditionalaccount7()" >حساب أضافى 7</mat-option>
-                                    <mat-option value="9"  (click)="GetAdditionalaccount8()" >حساب أضافى 8</mat-option>
-                                    <mat-option value="10"  (click)="GetAdditionalaccount9()" >حساب أضافى 9</mat-option>
-                                    <mat-option value="11"  (click)="GetAdditionalaccount10()" >حساب أضافى 10</mat-option>
+                                    <mat-option value="2" (click)="GetAdditionalaccount1()">حساب أضافى 1</mat-option>
+                                    <mat-option value="3" (click)="GetAdditionalaccount2()">حساب أضافى 2</mat-option>
+                                    <mat-option value="4" (click)="GetAdditionalaccount3()">حساب أضافى 3</mat-option>
+                                    <mat-option value="5" (click)="GetAdditionalaccount4()">حساب أضافى 4</mat-option>
+                                    <mat-option value="6" (click)="GetAdditionalaccount5()">حساب أضافى 5</mat-option>
+                                    <mat-option value="7" (click)="GetAdditionalaccount6()">حساب أضافى 6</mat-option>
+                                    <mat-option value="8" (click)="GetAdditionalaccount7()">حساب أضافى 7</mat-option>
+                                    <mat-option value="9" (click)="GetAdditionalaccount8()">حساب أضافى 8</mat-option>
+                                    <mat-option value="10" (click)="GetAdditionalaccount9()">حساب أضافى 9</mat-option>
+                                    <mat-option value="11" (click)="GetAdditionalaccount10()">حساب أضافى 10</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                        </div> 
+                        </div>
                         <div class="row p-3">
-                            <hr/>
+                            <hr />
                             <h1>محلى</h1>
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الرصيد الإفتتاحى مدين</mat-label>
-                                    <input matInput type="number" formControlName="openningBalanceDepit" [readonly]="true">
+                                    <input matInput type="number" formControlName="openningBalanceDepit"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الرصيد الإفتتاحى دائن</mat-label>
-                                    <input matInput type="number" formControlName="openningBalanceCredit" [readonly]="true">
+                                    <input matInput type="number" formControlName="openningBalanceCredit"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                           
-    
+
+
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الحركه الحالية مدين</mat-label>
                                     <input matInput type="number" formControlName="accCurrTrancDepit" [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الحركه الحالية دائن</mat-label>
-                                    <input matInput type="number" formControlName="accCurrTrancCredit" [readonly]="true">
+                                    <input matInput type="number" formControlName="accCurrTrancCredit"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإجمالى مدين</mat-label>
                                     <input matInput type="number" formControlName="accTotalDebit" [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإجمالى دائن</mat-label>
                                     <input matInput type="number" formControlName="accTotaCredit" [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                            
+
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإرصدة مدين</mat-label>
                                     <input matInput type="number" formControlName="balanceDebitLocal" [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإرصدة دائن</mat-label>
-                                    <input matInput type="number" formControlName="balanceCreditLocal" [readonly]="true">
+                                    <input matInput type="number" formControlName="balanceCreditLocal"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                            <hr/>
+
+                            <hr />
                             <h1>العمله</h1>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الرصيد الإفتتاحى مدين</mat-label>
-                                    <input matInput type="number" formControlName="openningBalanceDepitCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="openningBalanceDepitCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الرصيد الإفتتاحى دائن</mat-label>
-                                    <input matInput type="number" formControlName="openningBalanceCreditCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="openningBalanceCreditCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                           
-    
+
+
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الحركه الحالية مدين</mat-label>
-                                    <input matInput type="number" formControlName="accCurrTrancDepitCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="accCurrTrancDepitCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الحركه الحالية دائن</mat-label>
-                                    <input matInput type="number" formControlName="accCurrTrancCreditCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="accCurrTrancCreditCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإجمالى مدين</mat-label>
-                                    <input matInput type="number" formControlName="accTotalDebitCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="accTotalDebitCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإجمالى دائن</mat-label>
-                                    <input matInput type="number" formControlName="accTotaCreditCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="accTotaCreditCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                            
+
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإرصدة مدين</mat-label>
-                                    <input matInput type="number" formControlName="balanceDebitCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="balanceDebitCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإرصدة دائن</mat-label>
-                                    <input matInput type="number" formControlName="balanceCreditCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="balanceCreditCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-    
+
+
                         </div>
-    
-                    </div>    
+
+                    </div>
 
 
                 </mat-tab>
 
-<!-- 
+                <!-- 
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-plus-circle custom-icon"></i>
@@ -677,27 +643,27 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 ">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>رقم تأمينات إجتماعية</mat-label>
-                                <input matInput type="number" [readonly]="readonlyField" >
+                                <input matInput type="number" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>نقابة</mat-label>
-                                <input matInput type="text" [readonly]="readonlyField" >
+                                <input matInput type="text" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>رقم النقابة</mat-label>
-                                <input matInput type="number" [readonly]="readonlyField" >
+                                <input matInput type="number" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>رقم تأمينات أجتماعية</mat-label>
-                                <input matInput type="number" [readonly]="readonlyField" >
+                                <input matInput type="number" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
@@ -705,48 +671,54 @@
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>رقم التأمين الصحى</mat-label>
-                                <input matInput type="number" [readonly]="readonlyField" >
+                                <input matInput type="number" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-floating">
-                                <input type="date" [readonly]="readonlyField" class="form-control" placeholder="name@example.com">
+                                <input type="date" [readonly]="readonlyField" class="form-control"
+                                    placeholder="name@example.com">
                                 <label for="floatingInput">تاريخ التعاقد</label>
                             </div>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-floating">
-                                <input type="date" [readonly]="readonlyField" class="form-control" placeholder="name@example.com">
+                                <input type="date" [readonly]="readonlyField" class="form-control"
+                                    placeholder="name@example.com">
                                 <label for="floatingInput">تاريخ نهاية العقد</label>
                             </div>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-floating">
-                                <input type="date" [readonly]="readonlyField" class="form-control" placeholder="name@example.com">
+                                <input type="date" [readonly]="readonlyField" class="form-control"
+                                    placeholder="name@example.com">
                                 <label for="floatingInput">أخر تحديث للاجازات</label>
                             </div>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-floating">
-                                <input type="date" [readonly]="readonlyField" class="form-control" placeholder="name@example.com">
+                                <input type="date" [readonly]="readonlyField" class="form-control"
+                                    placeholder="name@example.com">
                                 <label for="floatingInput">تاريخ بدء العمل </label>
                             </div>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="form-floating">
-                                <input type="date" [readonly]="readonlyField" class="form-control" placeholder="name@example.com">
+                                <input type="date" [readonly]="readonlyField" class="form-control"
+                                    placeholder="name@example.com">
                                 <label for="floatingInput">تاريخ تجديد ت.الصحى</label>
                             </div>
                         </div>
 
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
-                            <mat-slide-toggle color="primary" [disabled]="readonlyField">عمولة بعد الخصم</mat-slide-toggle>
+                            <mat-slide-toggle color="primary" [disabled]="readonlyField">عمولة بعد
+                                الخصم</mat-slide-toggle>
                         </div>
                     </div>
 
@@ -764,7 +736,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 1</mat-label>
-                                <mat-select formControlName="addAccount1" (selectionChange)="onAddAccount1Change($event)" >
+                                <mat-select formControlName="addAccount1"
+                                    (selectionChange)="onAddAccount1Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -773,11 +746,12 @@
                             </mat-form-field>
                         </div>
 
-                        
+
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 2</mat-label>
-                                <mat-select formControlName="addAccount2" (selectionChange)="onAddAccount2Change($event)" >
+                                <mat-select formControlName="addAccount2"
+                                    (selectionChange)="onAddAccount2Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -789,7 +763,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 3</mat-label>
-                                <mat-select formControlName="addAccount3" (selectionChange)="onAddAccount3Change($event)">
+                                <mat-select formControlName="addAccount3"
+                                    (selectionChange)="onAddAccount3Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -801,7 +776,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 4</mat-label>
-                                <mat-select formControlName="addAccount4" (selectionChange)="onAddAccount4Change($event)">
+                                <mat-select formControlName="addAccount4"
+                                    (selectionChange)="onAddAccount4Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -814,7 +790,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 5</mat-label>
-                                <mat-select formControlName="addAccount5" (selectionChange)="onAddAccount5Change($event)" >
+                                <mat-select formControlName="addAccount5"
+                                    (selectionChange)="onAddAccount5Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -827,7 +804,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 6</mat-label>
-                                <mat-select formControlName="addAccount6"  (selectionChange)="onAddAccount6Change($event)" >
+                                <mat-select formControlName="addAccount6"
+                                    (selectionChange)="onAddAccount6Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -839,7 +817,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 7</mat-label>
-                                <mat-select formControlName="addAccount7" (selectionChange)="onAddAccount7Change($event)" >
+                                <mat-select formControlName="addAccount7"
+                                    (selectionChange)="onAddAccount7Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -851,7 +830,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 8</mat-label>
-                                <mat-select formControlName="addAccount8" (selectionChange)="onAddAccount8Change($event)" >
+                                <mat-select formControlName="addAccount8"
+                                    (selectionChange)="onAddAccount8Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -864,7 +844,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 9</mat-label>
-                                <mat-select formControlName="addAccount9" (selectionChange)="onAddAccount9Change($event)" >
+                                <mat-select formControlName="addAccount9"
+                                    (selectionChange)="onAddAccount9Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -876,7 +857,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 10</mat-label>
-                                <mat-select formControlName="addAccount10" (selectionChange)="onAddAccount10Change($event)" >
+                                <mat-select formControlName="addAccount10"
+                                    (selectionChange)="onAddAccount10Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -884,7 +866,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                       
+
                     </div>
 
                 </mat-tab>
@@ -900,7 +882,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>فترة الراتب</mat-label>
-                                <mat-select [disabled]="readonlyField" >
+                                <mat-select [disabled]="readonlyField">
                                     <mat-option value="one">First option</mat-option>
                                     <mat-option value="two">Second option</mat-option>
                                 </mat-select>
@@ -910,7 +892,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>جدول المواعيد</mat-label>
-                                <mat-select [disabled]="readonlyField" >
+                                <mat-select [disabled]="readonlyField">
                                     <mat-option value="one">First option</mat-option>
                                     <mat-option value="two">Second option</mat-option>
                                 </mat-select>
@@ -920,7 +902,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 ">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>اسم البنك</mat-label>
-                                <input matInput type="text" [readonly]="readonlyField" >
+                                <input matInput type="text" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
@@ -934,7 +916,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 ">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>الإجر اليوم</mat-label>
-                                <input matInput type="number" [readonly]="readonlyField" >
+                                <input matInput type="number" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
@@ -942,7 +924,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 ">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>إجمالي الإجر يوم</mat-label>
-                                <input matInput type="number" [readonly]="readonlyField" >
+                                <input matInput type="number" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
@@ -950,27 +932,28 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 ">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الإجر ساعة</mat-label>
-                                <input matInput type="number" [readonly]="readonlyField" >
+                                <input matInput type="number" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12 ">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> إجمالى الإجر ساعة </mat-label>
-                                <input matInput type="number" [readonly]="readonlyField" >
+                                <input matInput type="number" [readonly]="readonlyField">
                             </mat-form-field>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top mt-2">
-                            <mat-slide-toggle color="primary" [disabled]="readonlyField" >أصدار الراتب</mat-slide-toggle>
+                            <mat-slide-toggle color="primary" [disabled]="readonlyField">أصدار الراتب</mat-slide-toggle>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top mt-2">
-                            <mat-slide-toggle color="primary" [disabled]="readonlyField" >حساب الإجر تلقائياً</mat-slide-toggle>
+                            <mat-slide-toggle color="primary" [disabled]="readonlyField">حساب الإجر
+                                تلقائياً</mat-slide-toggle>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top mt-2">
-                            <mat-slide-toggle color="primary" [disabled]="readonlyField" >توزيع الراتب</mat-slide-toggle>
+                            <mat-slide-toggle color="primary" [disabled]="readonlyField">توزيع الراتب</mat-slide-toggle>
                         </div>
                     </div>
 

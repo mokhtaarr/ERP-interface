@@ -10,13 +10,13 @@
             </div>
 
             <div class="form-floating mt-2">
-              <input type="text" class="form-control" id="floatingInput" formControlName="userName"
+              <input type="text" (change)="getStores()" class="form-control" id="floatingInput" formControlName="userName"
                 placeholder="name@.com" fdprocessedid="lm2lwq">
               <label for="floatingInput">User Name</label>
             </div>
 
             <div class="form-floating mt-2">
-              <input type="password" class="form-control" id="floatingPassword" formControlName="password"
+              <input type="password" (change)="getStores()" class="form-control" id="floatingPassword" formControlName="password"
                 placeholder="Password" fdprocessedid="9oxjsj">
               <label for="floatingPassword">Password</label>
             </div>
@@ -42,24 +42,25 @@
               </mat-form-field>
             </div>
 
-            <div style="display:flex;justify-content: space-between;">
+            <div style="display:flex;justify-content:center;">
 
-              <button *ngIf="!disableStoresButton" (click)="getStores()" class="btn btn-lg btn btn-secondary mt-5"
+              <!-- <button *ngIf="!disableStoresButton" (click)="getStores()" class="btn btn-lg btn btn-secondary mt-5"
                 type="button" [disabled]="accountForm.invalid" 
                 fdprocessedid="infldq">Select the branch</button>
 
               <button *ngIf="disableStoresButton" class=" btn btn-lg  mt-5" type="button" [disabled]="true"
                   style="background-color: white;" fdprocessedid="infldq">
                   <img src="../../../assets/images/loading2.gif" width="30" height="30" />
-                </button>
+                </button> -->
 
 
                 <button *ngIf="!disableSumbit" class="btn btn-lg btn-primary mt-5" type="submit"
-                  [disabled]="accountForm.get('storeId')?.value == null || accountForm.invalid  || disableSumbitButton" style="background-color: #19b8e1;"
+                  [disabled]="accountForm.get('storeId')?.value == null || accountForm.invalid  || disableSumbitButton"
+                   style="background-color: #19b8e1;width:200px"
                   fdprocessedid="infldq">Submit</button>
                
                   <button *ngIf="disableSumbit" class=" btn btn-lg  mt-5" type="button" [disabled]="true"
-                  style="background-color: white;" fdprocessedid="infldq">
+                  style="background-color: white;width:200px" fdprocessedid="infldq">
                   <img src="../../../assets/images/loading2.gif" width="30" height="30" />
                 </button>
 

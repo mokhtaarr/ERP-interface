@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { AccountService } from 'src/app/account/account.service';
 
 
 @Component({
@@ -8,5 +9,9 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
   styleUrls: ['./definition.component.scss']
 })
 export class DefinitionComponent {
+
+  constructor(public accountService:AccountService){
+
+  }
 
 }

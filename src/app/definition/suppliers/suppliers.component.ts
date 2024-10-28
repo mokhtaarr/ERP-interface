@@ -10,6 +10,7 @@ import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { AddVendorBranchComponent } from '../add-vendor-branch/add-vendor-branch.component';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 import { VendorContactComponent } from '../vendor-contact/vendor-contact.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-suppliers',
@@ -80,7 +81,8 @@ export class SuppliersComponent implements OnInit {
 
   selectedAccount: number | null = null;
 
-  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog,
+    public accountService : AccountService){
   }
 
 

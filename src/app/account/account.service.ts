@@ -25,7 +25,6 @@ export class AccountService {
         if (res.status == true) {
           this.toastr.success(message);
           localStorage.setItem('token',res.token);
-          console.log(res)
           this.currentUserSource.next(res);
         }
 

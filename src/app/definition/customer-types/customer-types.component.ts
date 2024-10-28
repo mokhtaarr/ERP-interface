@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DefinitionService } from '../definition.service';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-customer-types',
@@ -40,7 +41,10 @@ export class CustomerTypesComponent implements OnInit{
   UndoDisabled : boolean = true;
   undoIndex!: number;
 
-  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog,
+    public accountService : AccountService)
+  {
+    
   }
    
 

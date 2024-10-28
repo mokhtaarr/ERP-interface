@@ -6,6 +6,7 @@ import { DefinitionService } from '../definition.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-item-categories',
@@ -36,7 +37,12 @@ export class ItemCategoriesComponent implements OnInit{
   UndoDisabled : boolean = true;
   undoIndex !: number
 
-  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  newDisable:boolean = false;
+
+
+
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog,
+    public accountService : AccountService){
 
   }
 
@@ -116,6 +122,8 @@ export class ItemCategoriesComponent implements OnInit{
     this.reloadDisabled = true;
     this.DeleteDisable = true;
     this.UndoDisabled = false;
+    this.newDisable = true;
+
   }
 
   Filterchange(data: Event) {
@@ -257,10 +265,12 @@ export class ItemCategoriesComponent implements OnInit{
     this.reloadDisabled = false;
     this.UpdateDisable = true;
     this.UndoDisabled = false;
+    this.newDisable = true;
     this.AllItemCategory = this.dataSource.filteredData;
     this.undoIndex = this.AllItemCategory.findIndex(p=>p.itemCategoryId == this.itemCategoryForm.value.itemCategoryId);
   }
  
+
   onSumbit(){
     this.definitionService.AddItemCategory(this.itemCategoryForm.value).subscribe(res=>{
       if(res){
@@ -322,6 +332,8 @@ export class ItemCategoriesComponent implements OnInit{
     this.reloadDisabled = false;
     this.SaveDisable = true;
     this.UndoDisabled = true;
+    this.newDisable = false;
+
     
     if(this.undoIndex != -1){
       const undoItem = this.AllItemCategory[this.undoIndex]

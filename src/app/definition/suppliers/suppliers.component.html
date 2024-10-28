@@ -6,175 +6,122 @@
         </h1>
     </div>
 
-    <div style="margin-bottom: 50px;">
-        <form [formGroup]="VendorForm" (ngSubmit)="onSumbit()" >
+    <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
+        <form [formGroup]="VendorForm" (ngSubmit)="onSumbit()">
             <div style="display: flex;justify-content: space-between;">
                 <div class="example-button-row">
                     <div class="example-flex-container">
-            
-            
-                      <!-- <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="getLastRowData()" [disabled]="lastRow"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-step-backward"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="getNextRowData()"
-                          [disabled]="DisabledNextButton" aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-caret-left"></i>
-                        </button>
-                      </div>
-          
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="getPrevRowData()"
-                          [disabled]="DisabledPrevButton" aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-caret-right"></i>
-          
-                        </button>
-                      </div>
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab (click)="getFirstRowData()" [disabled]="firstRow" color="primary"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-step-forward"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary"  (click)="GetAllVendors()"
-                          [disabled]="reloadDisabled" aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-sync"></i>
-                        </button>
-                      </div>
-            
-    
-                      <div class="example-button-container">
-                        <button type="submit" mat-mini-fab color="primary" [disabled]=" SaveDisable || VendorForm.invalid" 
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-save"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="warn" [disabled]=" DeleteDisable || VendorForm.invalid" (click)="Open_delete_confirm()"
-                          
-                           aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-trash-alt"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab color="primary" (click)="undo()" [disabled]="UndoDisabled"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-undo"></i>
-                        </button>
-                      </div>
-            
-                      <div class="example-button-container">
-                        <button type="button" mat-mini-fab  [disabled]="UpdateDisable" (click)="updateVendor()" color="primary"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                      </div>
-            
-            
-                      <div class="example-button-container">
-                        <button type="button" (click)="New()" mat-mini-fab color="primary"
-                          aria-label="Example icon button with a menu icon">
-                          <i class="fas fa-plus"></i>
-                        </button>
-                      </div>
-             -->
 
-             <button mat-fab extended color="primary" type="button" 
-             (click)="getLastRowData()" [disabled]="lastRow" style="flex-direction:column;">
-               <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
-               <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                 <i class="fas fa-step-backward"></i>
-               </mat-icon>
-             </button>
-        
-             <button mat-fab extended color="primary" type="button" 
-             (click)="getNextRowData()" [disabled]="DisabledNextButton" style="flex-direction:column;">
-               <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
-               <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                 <i class="fas fa-caret-left"></i>
-               </mat-icon>
-             </button>
-   
-             <button mat-fab extended color="primary" type="button" 
-             (click)="getPrevRowData()" [disabled]="DisabledPrevButton" style="flex-direction:column;">
-              <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
-              <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                <i class="fas fa-caret-right"></i>
-              </mat-icon>
-            </button>
-   
-             <button mat-fab extended color="primary" type="button" 
-               (click)="getFirstRowData()" [disabled]="firstRow" style="flex-direction:column;">
-                 <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
-                 <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                   <i class="fas fa-step-forward"></i>
-                 </mat-icon>
-             </button>
-   
-             <button mat-fab extended color="primary" type="button" 
-             (click)="GetAllVendors()" [disabled]="reloadDisabled" style="flex-direction: column;">
-               <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
-               <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                 <i class="fas fa-sync"></i>
-               </mat-icon>
-             </button>
-   
-   
-             <button mat-fab extended color="primary" type="submit" 
-             [disabled]="VendorForm.invalid || SaveDisable" style="flex-direction:column;">
-               <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
-               <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                 <i class="fas fa-save"></i>
-               </mat-icon>
-             </button>
-   
-             <button mat-fab extended color="warn" type="button" 
-             (click)="Open_delete_confirm()" [disabled]="VendorForm.invalid || DeleteDisable" style="flex-direction: column;">
-              <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
-              <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                <i class="fas fa-trash-alt"></i>
-              </mat-icon>
-            </button>
-   
-   
-             <button mat-fab extended color="primary" type="button" 
-             (click)="undo()" [disabled]="UndoDisabled" style="flex-direction: column;">
-               <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
-               <mat-icon style="margin-right: 10px;margin-left: 10px;">
-                 <i class="fas fa-undo"></i>
-               </mat-icon>
-             </button>
-   
-   
-             <button mat-fab extended color="primary" type="button" 
-             [disabled]="UpdateDisable" (click)="updateVendor()" style="flex-direction: column;">
-               <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
-               <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                 <i class="fas fa-edit"></i>
-               </mat-icon>
-             </button>
-   
-             <button mat-fab extended color="primary" type="button" [disabled]="newDisable" (click)="New()" style="flex-direction:column;">
-               <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
-               <mat-icon style="margin-right: 10px;margin-left: 10px;" >
-                 <i class="fas fa-plus"></i>
-               </mat-icon>
-             </button>
-   
-   
+
+                        <button mat-fab extended color="primary" type="button" (click)="getLastRowData()"
+                            [disabled]="lastRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-step-backward"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getNextRowData()"
+                            [disabled]="DisabledNextButton" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-caret-left"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getPrevRowData()"
+                            [disabled]="DisabledPrevButton" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-caret-right"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getFirstRowData()"
+                            [disabled]="firstRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-step-forward"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="GetAllVendors()"
+                            [disabled]="reloadDisabled" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-sync"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="submit"
+                            [disabled]="VendorForm.invalid || SaveDisable" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-save"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="warn" type="button" (click)="Open_delete_confirm()"
+                            [disabled]="VendorForm.invalid || DeleteDisable || !userInfo.canDelete_frmVendor"
+                            style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-trash-alt"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+                            [disabled]="!userInfo.canPrint_frmVendor">
+                            <span style="margin-right: 10px;margin-left: 10px;">طباعه</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+                                <i class="fas fa-print"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+                            [disabled]="!userInfo.canPreView_frmVendor">
+                            <span style="margin-right: 10px;margin-left: 10px;">استعراض</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+                                <i class="fas fa-eye"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="undo()"
+                            [disabled]="UndoDisabled" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-undo"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button"
+                            [disabled]="UpdateDisable || !userInfo.canEdit_frmVendor" (click)="updateVendor()"
+                            style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-edit"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button"
+                            [disabled]="newDisable || !userInfo.canCreate_frmVendor" (click)="New()"
+                            style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-plus"></i>
+                            </mat-icon>
+                        </button>
+
+
 
                     </div>
-                  </div>
-    
-                  <!-- <div class="mt-2">
+                </div>
+
+                <!-- <div class="mt-2">
                     <h1 style="color: #3f51b5;" *ngIf="VendorForm.value.vendorDescA"> 
                         {{VendorForm.value.vendorDescA}}
                         <img height="50" width="50" src="../../../assets/images/arrow.gif">
@@ -182,44 +129,46 @@
                     </h1>
                 </div> -->
 
-                <div class="mt-2" *ngIf="VendorForm.value.vendorDescA" style="display:flex;" >
-                    <h1 style="color: #3f51b5;" class="mt-2"> {{VendorForm.value.vendorDescA}}</h1> 
-                    <h1 style="color: #3f51b5;" class="mt-2">  -  </h1> 
-                    <h1 style="color: #3f51b5;" class="mt-2"> {{VendorForm.value.vendorCode}}</h1> 
+                <div class="mt-2" *ngIf="VendorForm.value.vendorDescA" style="display:flex;">
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{VendorForm.value.vendorDescA}}</h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> - </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{VendorForm.value.vendorCode}}</h1>
                     <img height="50" width="50" src="../../../assets/images/arrow.gif">
 
                 </div>
-               </div> 
-            
-            <mat-tab-group #tabGroup (selectedTabChange)="onTabChanged($event)" dir="rtl" style="background-color: white;font-family: system-ui;">
+            </div>
+
+            <mat-tab-group #tabGroup (selectedTabChange)="onTabChanged($event)" dir="rtl"
+                style="background-color: white;font-family: system-ui;">
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-database custom-icon"></i>
-                        
+
                         بيانات اساسية
                     </ng-template>
 
                     <div class="row p-3">
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom"
-                        style="display: none;">
+                            style="display: none;">
 
-                        <mat-form-field class="ang-maturial-select" appearance="outline">
-                            <mat-label>Id</mat-label>
-                            <input matInput type="number" formControlName="vendorId">
-                        </mat-form-field>
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>Id</mat-label>
+                                <input matInput type="number" formControlName="vendorId">
+                            </mat-form-field>
 
-                    </div>
+                        </div>
 
-                   
-                    <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid ">
 
-                        <mat-form-field class="ang-maturial-select" appearance="outline">
-                            <mat-label> الكود </mat-label>
-                            <input matInput type="text" formControlName="vendorCode" [readonly]="EditReadonly" >
-                        </mat-form-field>
+                        <div
+                            class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid ">
 
-                    </div>
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label> الكود </mat-label>
+                                <input matInput type="text" formControlName="vendorCode" [readonly]="EditReadonly">
+                            </mat-form-field>
+
+                        </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
@@ -261,7 +210,8 @@
                         </div>
 
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
+                        <div
+                            class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
 
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> الإسم بالعربى </mat-label>
@@ -279,10 +229,12 @@
 
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
+                        <div
+                            class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب </mat-label>
-                                <mat-select formControlName="accountId" (selectionChange)="onPrimaryAccountChange($event)">
+                                <mat-select formControlName="accountId"
+                                    (selectionChange)="onPrimaryAccountChange($event)">
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
                                     </mat-option>
@@ -293,7 +245,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>الفئة</mat-label>
-                                <mat-select formControlName="vendorCatId" >
+                                <mat-select formControlName="vendorCatId">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let cat of AllVendorCategory" [value]="cat.vendorCatId">
                                         {{cat.catCode}} - {{cat.catDescA}}
@@ -305,11 +257,11 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>نوع ضريبى</mat-label>
-                                <mat-select formControlName="etaxCustType" >
+                                <mat-select formControlName="etaxCustType">
                                     <mat-option value="Person">Person</mat-option>
                                     <mat-option value="Business">Business</mat-option>
                                     <mat-option value="Foreigner">Foreigner</mat-option>
-                                  
+
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -333,10 +285,11 @@
                         </div>
 
 
-                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
+                        <div
+                            class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom mdc-text-field--invalid">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>العملة</mat-label>
-                                <mat-select formControlName="currencyId" >
+                                <mat-select formControlName="currencyId">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let currency of AllCurrency" [value]="currency.currencyId">
                                         {{currency.currencyCode}} - {{currency.currencyDescA}}
@@ -348,7 +301,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>الدوله</mat-label>
-                                <mat-select  formControlName="countryId" >
+                                <mat-select formControlName="countryId">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let country of AllCountries" [value]="country.countryId">
                                         {{country.countryCode}} - {{country.countryName}}
@@ -360,7 +313,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>المحافظة</mat-label>
-                                <mat-select  formControlName="cityId" >
+                                <mat-select formControlName="cityId">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let city of AllCities" [value]="city.cityId">
                                         {{city.cityCode}} - {{city.cityName}}
@@ -387,15 +340,15 @@
 
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label> فتره الإئتمان </mat-label>
-                                <input matInput type="number" formControlName="creditPeriod"  >
+                                <input matInput type="number" formControlName="creditPeriod">
                             </mat-form-field>
-    
+
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حدود العاملات الأجلة</mat-label>
-                                <input matInput type="number" formControlName="creditLimit" >
+                                <input matInput type="number" formControlName="creditLimit">
                             </mat-form-field>
                         </div>
 
@@ -429,7 +382,7 @@
                             </mat-form-field>
                         </div>
 
-                     
+
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select input-mrg-top" appearance="outline">
                                 <mat-label>اسم الشارع</mat-label>
@@ -444,7 +397,7 @@
                             </mat-form-field>
                         </div>
 
-                        
+
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>رقم المبني</mat-label>
@@ -465,38 +418,39 @@
                                 <input matInput type="string" formControlName="zipCode">
                             </mat-form-field>
                         </div>
-                        
+
 
                         <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
-                         <mat-slide-toggle color="primary" formControlName="isActive">نشط</mat-slide-toggle>
+                            <mat-slide-toggle color="primary" formControlName="isActive">نشط</mat-slide-toggle>
                         </div>
 
                         <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
-                          <mat-slide-toggle color="primary" formControlName="forAdjustOnly">للتسوية فقط</mat-slide-toggle>
+                            <mat-slide-toggle color="primary" formControlName="forAdjustOnly">للتسوية
+                                فقط</mat-slide-toggle>
                         </div>
 
                         <div></div>
-                       
+
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>الإيميل 1</mat-label>
-                                <input matInput  formControlName="email">
+                                <input matInput formControlName="email">
                             </mat-form-field>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>الإيميل 2</mat-label>
-                                <input matInput  formControlName="email2">
+                                <input matInput formControlName="email2">
                             </mat-form-field>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>الإيميل 3</mat-label>
-                                <input matInput  formControlName="email3">
+                                <input matInput formControlName="email3">
                             </mat-form-field>
                         </div>
 
-                      
+
                     </div>
 
                 </mat-tab>
@@ -511,157 +465,180 @@
 
                         <div class="row p-3" style="margin-bottom: -30px;">
                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                <mat-form-field  appearance="outline" class="ang-maturial-select" >
+                                <mat-form-field appearance="outline" class="ang-maturial-select">
                                     <mat-label>أختر الحساب</mat-label>
-                                    <mat-select  [(value)]="selectedAccount" >
-                                        <mat-option [value]="1"  (click)="GetVendorMainAccount()">حساب الأستاذ</mat-option>
-                                        <mat-option value="2"  (click)="GetAdditionalaccount1()" >حساب أضافى 1</mat-option>
-                                        <mat-option value="3"  (click)="GetAdditionalaccount2()" >حساب أضافى 2</mat-option>
-                                        <mat-option value="4"  (click)="GetAdditionalaccount3()" >حساب أضافى 3</mat-option>
-                                        <mat-option value="5"  (click)="GetAdditionalaccount4()" >حساب أضافى 4</mat-option>
-                                        <mat-option value="6"  (click)="GetAdditionalaccount5()" >حساب أضافى 5</mat-option>
-                                        <mat-option value="7"  (click)="GetAdditionalaccount6()" >حساب أضافى 6</mat-option>
-                                        <mat-option value="8"  (click)="GetAdditionalaccount7()" >حساب أضافى 7</mat-option>
-                                        <mat-option value="9"  (click)="GetAdditionalaccount8()" >حساب أضافى 8</mat-option>
-                                        <mat-option value="10"  (click)="GetAdditionalaccount9()" >حساب أضافى 9</mat-option>
-                                        <mat-option value="11"  (click)="GetAdditionalaccount10()" >حساب أضافى 10</mat-option>
+                                    <mat-select [(value)]="selectedAccount">
+                                        <mat-option [value]="1" (click)="GetVendorMainAccount()">حساب
+                                            الأستاذ</mat-option>
+                                        <mat-option value="2" (click)="GetAdditionalaccount1()">حساب أضافى
+                                            1</mat-option>
+                                        <mat-option value="3" (click)="GetAdditionalaccount2()">حساب أضافى
+                                            2</mat-option>
+                                        <mat-option value="4" (click)="GetAdditionalaccount3()">حساب أضافى
+                                            3</mat-option>
+                                        <mat-option value="5" (click)="GetAdditionalaccount4()">حساب أضافى
+                                            4</mat-option>
+                                        <mat-option value="6" (click)="GetAdditionalaccount5()">حساب أضافى
+                                            5</mat-option>
+                                        <mat-option value="7" (click)="GetAdditionalaccount6()">حساب أضافى
+                                            6</mat-option>
+                                        <mat-option value="8" (click)="GetAdditionalaccount7()">حساب أضافى
+                                            7</mat-option>
+                                        <mat-option value="9" (click)="GetAdditionalaccount8()">حساب أضافى
+                                            8</mat-option>
+                                        <mat-option value="10" (click)="GetAdditionalaccount9()">حساب أضافى
+                                            9</mat-option>
+                                        <mat-option value="11" (click)="GetAdditionalaccount10()">حساب أضافى
+                                            10</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </div> 
-                        </div>    
-    
+                            </div>
+                        </div>
+
                         <div class="row p-3">
-                            <hr/>
+                            <hr />
                             <h1>محلى</h1>
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الرصيد الإفتتاحى مدين</mat-label>
-                                    <input matInput type="number" formControlName="openningBalanceDepit" [readonly]="true">
+                                    <input matInput type="number" formControlName="openningBalanceDepit"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الرصيد الإفتتاحى دائن</mat-label>
-                                    <input matInput type="number" formControlName="openningBalanceCredit" [readonly]="true">
+                                    <input matInput type="number" formControlName="openningBalanceCredit"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                           
-    
+
+
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الحركه الحالية مدين</mat-label>
                                     <input matInput type="number" formControlName="accCurrTrancDepit" [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الحركه الحالية دائن</mat-label>
-                                    <input matInput type="number" formControlName="accCurrTrancCredit" [readonly]="true">
+                                    <input matInput type="number" formControlName="accCurrTrancCredit"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإجمالى مدين</mat-label>
                                     <input matInput type="number" formControlName="accTotalDebit" [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإجمالى دائن</mat-label>
                                     <input matInput type="number" formControlName="accTotaCredit" [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                            
+
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإرصدة مدين</mat-label>
                                     <input matInput type="number" formControlName="balanceDebitLocal" [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإرصدة دائن</mat-label>
-                                    <input matInput type="number" formControlName="balanceCreditLocal" [readonly]="true">
+                                    <input matInput type="number" formControlName="balanceCreditLocal"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                            <hr/>
+
+                            <hr />
                             <h1>العمله</h1>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الرصيد الإفتتاحى مدين</mat-label>
-                                    <input matInput type="number" formControlName="openningBalanceDepitCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="openningBalanceDepitCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الرصيد الإفتتاحى دائن</mat-label>
-                                    <input matInput type="number" formControlName="openningBalanceCreditCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="openningBalanceCreditCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                           
-    
+
+
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الحركه الحالية مدين</mat-label>
-                                    <input matInput type="number" formControlName="accCurrTrancDepitCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="accCurrTrancDepitCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الحركه الحالية دائن</mat-label>
-                                    <input matInput type="number" formControlName="accCurrTrancCreditCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="accCurrTrancCreditCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإجمالى مدين</mat-label>
-                                    <input matInput type="number" formControlName="accTotalDebitCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="accTotalDebitCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإجمالى دائن</mat-label>
-                                    <input matInput type="number" formControlName="accTotaCreditCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="accTotaCreditCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-                            
+
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإرصدة مدين</mat-label>
-                                    <input matInput type="number" formControlName="balanceDebitCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="balanceDebitCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
+
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <mat-form-field class="ang-maturial-select" appearance="outline">
                                     <mat-label>الإرصدة دائن</mat-label>
-                                    <input matInput type="number" formControlName="balanceCreditCurncy" [readonly]="true">
+                                    <input matInput type="number" formControlName="balanceCreditCurncy"
+                                        [readonly]="true">
                                 </mat-form-field>
                             </div>
-    
-    
+
+
                         </div>
-    
+
                     </div>
 
                 </mat-tab>
 
-<!-- 
+                <!-- 
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-plus-circle custom-icon"></i>
@@ -795,8 +772,8 @@
 
                 </mat-tab> -->
 
-                
-                <mat-tab label="الفروع" >
+
+                <mat-tab label="الفروع">
                     <ng-template mat-tab-label>
                         <i class="fas fa-sitemap custom-icon"></i>
 
@@ -805,43 +782,44 @@
 
                     <div class="row p-3">
                         <div class="col-lg-3 col-md-6 col-sm-12">
-                            <button mat-raised-button color="primary" [disabled]="VendorForm.value.vendorId == null" type="button" 
-                            (click)="AddVendorBranch()" >(+) أضافة فرع</button>
+                            <button mat-raised-button color="primary" [disabled]="VendorForm.value.vendorId == null"
+                                type="button" (click)="AddVendorBranch()">(+) أضافة فرع</button>
                         </div>
-                        
+
                         <table class="table table-hover mt-3" *ngIf="AllVendorBranches.length != 0 ">
                             <thead>
-                              <tr>
-                                <th scope="col">كود الفرع</th>
-                                <th scope="col">الإسم 1</th>
-                                <th scope="col">الإسم 2</th>
-                                <th scope="col">عنوان</th>
-                                <th scope="col">ملاحظات</th>
-                                <th scope="col">تعديل</th>
-                                <th scope="col">حذف</th>
-                              </tr>
+                                <tr>
+                                    <th scope="col">كود الفرع</th>
+                                    <th scope="col">الإسم 1</th>
+                                    <th scope="col">الإسم 2</th>
+                                    <th scope="col">عنوان</th>
+                                    <th scope="col">ملاحظات</th>
+                                    <th scope="col">تعديل</th>
+                                    <th scope="col">حذف</th>
+                                </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let VendorBranch of AllVendorBranches" >
-                                <th>{{VendorBranch.vendBranchCode}}</th>
-                                <td>{{VendorBranch.vendBranchName1}}</td>
-                                <td>{{VendorBranch.vendBranchName2}}</td>
-                                <td>{{VendorBranch.address}}</td>
-                                <td>{{VendorBranch.remarks}}</td>
+                                <tr *ngFor="let VendorBranch of AllVendorBranches">
+                                    <th>{{VendorBranch.vendBranchCode}}</th>
+                                    <td>{{VendorBranch.vendBranchName1}}</td>
+                                    <td>{{VendorBranch.vendBranchName2}}</td>
+                                    <td>{{VendorBranch.address}}</td>
+                                    <td>{{VendorBranch.remarks}}</td>
 
-                                <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
-                                     (click)="updateVendorBranch(VendorBranch)"></i></td>
+                                    <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                            (click)="updateVendorBranch(VendorBranch)"></i></td>
 
-                                <td><i class="fas fa-trash-alt" (click)="DeleteVendorBranch(VendorBranch.vendBranchId)"
-                                    style="color: red;cursor: pointer;"></i></td>
+                                    <td><i class="fas fa-trash-alt"
+                                            (click)="DeleteVendorBranch(VendorBranch.vendBranchId)"
+                                            style="color: red;cursor: pointer;"></i></td>
 
-                              </tr>
+                                </tr>
                             </tbody>
-                          </table>
+                        </table>
                     </div>
 
                 </mat-tab>
-<!-- 
+                <!-- 
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-dollar-sign custom-icon"></i>
@@ -902,7 +880,7 @@
 
                 </mat-tab> -->
 
-<!-- 
+                <!-- 
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <i class="fas fa-users custom-icon"></i>
@@ -946,60 +924,63 @@
                     <div class="row p-3">
 
                         <div class="col-lg-3 col-md-6 col-sm-12">
-                            <button mat-raised-button color="primary" [disabled]="VendorForm.value.vendorId == null" type="button" 
-                            (click)="AddVendorContact()" >(+) أضافة جهة أتصال</button>
+                            <button mat-raised-button color="primary" [disabled]="VendorForm.value.vendorId == null"
+                                type="button" (click)="AddVendorContact()">(+) أضافة جهة أتصال</button>
                         </div>
 
 
                         <table class="table table-hover mt-3" *ngIf="AllVendorContacts.length != 0">
                             <thead>
-                              <tr>
-                                <th scope="col">جهة أساسية</th>
-                                <th scope="col">كود الجهة</th>
-                                <th scope="col">إسم جهة 1</th>
-                                <th scope="col">إسم جهة 2</th>
-                                <th scope="col">رقم البطاقة الشخصية</th>
-                                <th scope="col">جواز السفر</th>
-                                <th scope="col">تليفون 1</th>
-                                <th scope="col">تعديل</th>
-                                <th scope="col">حذف</th>
-                              </tr>
+                                <tr>
+                                    <th scope="col">جهة أساسية</th>
+                                    <th scope="col">كود الجهة</th>
+                                    <th scope="col">إسم جهة 1</th>
+                                    <th scope="col">إسم جهة 2</th>
+                                    <th scope="col">رقم البطاقة الشخصية</th>
+                                    <th scope="col">جواز السفر</th>
+                                    <th scope="col">تليفون 1</th>
+                                    <th scope="col">تعديل</th>
+                                    <th scope="col">حذف</th>
+                                </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let vendorContact of AllVendorContacts" >
-                                <th><mat-slide-toggle color="primary" [checked]="vendorContact.isprimary" ></mat-slide-toggle></th>
-                                <th>{{vendorContact.contactCode}}</th>
-                                <td>{{vendorContact.contactName1}}</td>
-                                <td>{{vendorContact.contactName2}}</td>
-                                <td>{{vendorContact.idno}}</td>
-                                <td>{{vendorContact.passPortNo}}</td>
-                                <td>{{vendorContact.contactPhone1}}</td>
-                              
+                                <tr *ngFor="let vendorContact of AllVendorContacts">
+                                    <th><mat-slide-toggle color="primary"
+                                            [checked]="vendorContact.isprimary"></mat-slide-toggle></th>
+                                    <th>{{vendorContact.contactCode}}</th>
+                                    <td>{{vendorContact.contactName1}}</td>
+                                    <td>{{vendorContact.contactName2}}</td>
+                                    <td>{{vendorContact.idno}}</td>
+                                    <td>{{vendorContact.passPortNo}}</td>
+                                    <td>{{vendorContact.contactPhone1}}</td>
 
-                                <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
-                                     (click)="updateVendorContact(vendorContact)"></i></td>
 
-                                <td><i class="fas fa-trash-alt" (click)="DeleteVendorContact(vendorContact.vendContactId)"
-                                    style="color: red;cursor: pointer;"></i></td>
-                              </tr>
+                                    <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                            (click)="updateVendorContact(vendorContact)"></i></td>
+
+                                    <td><i class="fas fa-trash-alt"
+                                            (click)="DeleteVendorContact(vendorContact.vendContactId)"
+                                            style="color: red;cursor: pointer;"></i></td>
+                                </tr>
                             </tbody>
-                          </table>
+                        </table>
                     </div>
 
                 </mat-tab>
 
-                <mat-tab label="حسابات"  >
+                <mat-tab label="حسابات">
                     <ng-template mat-tab-label>
                         <i class="fas fa-file-invoice custom-icon"></i>
                         حسابات
                     </ng-template>
-                    
+
                     <div class="row p-3">
 
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 1</mat-label>
-                                <mat-select formControlName="addAccount1" (selectionChange)="onAddAccount1Change($event)" >
+                                <mat-select formControlName="addAccount1"
+                                    (selectionChange)="onAddAccount1Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1011,7 +992,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 2</mat-label>
-                                <mat-select formControlName="addAccount2" (selectionChange)="onAddAccount2Change($event)" >
+                                <mat-select formControlName="addAccount2"
+                                    (selectionChange)="onAddAccount2Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1023,7 +1005,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 3</mat-label>
-                                <mat-select formControlName="addAccount3" (selectionChange)="onAddAccount3Change($event)">
+                                <mat-select formControlName="addAccount3"
+                                    (selectionChange)="onAddAccount3Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1035,7 +1018,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 4</mat-label>
-                                <mat-select formControlName="addAccount4" (selectionChange)="onAddAccount4Change($event)">
+                                <mat-select formControlName="addAccount4"
+                                    (selectionChange)="onAddAccount4Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1048,7 +1032,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 5</mat-label>
-                                <mat-select formControlName="addAccount5" (selectionChange)="onAddAccount5Change($event)" >
+                                <mat-select formControlName="addAccount5"
+                                    (selectionChange)="onAddAccount5Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1061,7 +1046,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 6</mat-label>
-                                <mat-select formControlName="addAccount6"  (selectionChange)="onAddAccount6Change($event)" >
+                                <mat-select formControlName="addAccount6"
+                                    (selectionChange)="onAddAccount6Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1073,7 +1059,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 7</mat-label>
-                                <mat-select formControlName="addAccount7" (selectionChange)="onAddAccount7Change($event)" >
+                                <mat-select formControlName="addAccount7"
+                                    (selectionChange)="onAddAccount7Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1085,7 +1072,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top select-margin-bottom">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 8</mat-label>
-                                <mat-select formControlName="addAccount8" (selectionChange)="onAddAccount8Change($event)" >
+                                <mat-select formControlName="addAccount8"
+                                    (selectionChange)="onAddAccount8Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1098,7 +1086,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 9</mat-label>
-                                <mat-select formControlName="addAccount9" (selectionChange)="onAddAccount9Change($event)" >
+                                <mat-select formControlName="addAccount9"
+                                    (selectionChange)="onAddAccount9Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1110,7 +1099,8 @@
                         <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
                             <mat-form-field class="ang-maturial-select" appearance="outline">
                                 <mat-label>حساب إضافى 10</mat-label>
-                                <mat-select formControlName="addAccount10" (selectionChange)="onAddAccount10Change($event)" >
+                                <mat-select formControlName="addAccount10"
+                                    (selectionChange)="onAddAccount10Change($event)">
                                     <mat-option [value]="null">لا يوجد</mat-option>
                                     <mat-option *ngFor="let account of AllCalAccountChart" [value]="account.accountId">
                                         {{account.accountCode}} - {{account.accountNameA}}
@@ -1167,25 +1157,25 @@
 
     <mat-card style="margin-bottom: 100px;">
         <mat-card-header class="justify-content-center">
-          <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
-            <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
-            <input matInput [readonly]="readonlyTable" (keyup)="Filterchange($event)" />
-          </mat-form-field>
+            <mat-form-field style="width: 100%;" appearance="outline" dir="rtl">
+                <mat-label style="text-align: right;padding: 3px;"> <i class="fas fa-search"></i> ابحث </mat-label>
+                <input matInput [readonly]="readonlyTable" (keyup)="Filterchange($event)" />
+            </mat-form-field>
         </mat-card-header> <mat-card-content>
-    
-          <table matSort mat-table [dataSource]="dataSource"
-          [class.readonly-table]="readonlyTable"
-          class="mat-elevation-z8" dir="rtl">
-    
-            <ng-container matColumnDef="isActive">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>نشط</th>
-                <td mat-cell *matCellDef="let element">
-                    <p><mat-slide-toggle color="primary" [disabled]="true" [checked]="element.isActive"></mat-slide-toggle></p>
 
-                </td>
-            </ng-container>
+            <table matSort mat-table [dataSource]="dataSource" [class.readonly-table]="readonlyTable"
+                class="mat-elevation-z8" dir="rtl">
 
-           <ng-container matColumnDef="vendorCode">
+                <ng-container matColumnDef="isActive">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>نشط</th>
+                    <td mat-cell *matCellDef="let element">
+                        <p><mat-slide-toggle color="primary" [disabled]="true"
+                                [checked]="element.isActive"></mat-slide-toggle></p>
+
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="vendorCode">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>الكود</th>
                     <td mat-cell *matCellDef="let element"> {{element.vendorCode}} </td>
                 </ng-container>
@@ -1200,16 +1190,16 @@
                     <td mat-cell *matCellDef="let element"> {{element.vendorDescE}} </td>
                 </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
-          </table>
-    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="fillForm(row)"></tr>
+            </table>
+
         </mat-card-content>
         <mat-card-footer>
             <mat-paginator [pageSizeOptions]="[20,50,100,200]" showFirstLastButtons
-            aria-label="Select page of periodic elements">
-          </mat-paginator>
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
         </mat-card-footer>
-      </mat-card>
-    
+    </mat-card>
+
 </div>

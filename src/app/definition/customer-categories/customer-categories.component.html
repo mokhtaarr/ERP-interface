@@ -1,9 +1,6 @@
 <div class="container-fluid">
 
-
-
-
-  <div style="margin-bottom: 50px;">
+  <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
     <form [formGroup]="CustomerCategoryForm" (ngSubmit)="onSmbit()">
 
       <div class="example-button-row">
@@ -59,12 +56,30 @@
           </button>
 
           <button mat-fab extended color="warn" type="button" 
-          (click)="Open_delete_confirm()" [disabled]="CustomerCategoryForm.invalid || DeleteDisable" style="flex-direction: column;">
+          (click)="Open_delete_confirm()" [disabled]="CustomerCategoryForm.invalid || DeleteDisable || !userInfo.canDelete_frmCustomerCategory" style="flex-direction: column;">
            <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
            <mat-icon style="margin-right: 10px;margin-left: 10px;" >
              <i class="fas fa-trash-alt"></i>
            </mat-icon>
          </button>
+
+
+         <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+         [disabled]="!userInfo.canPrint_frmCustomerCategory">
+         <span style="margin-right: 10px;margin-left: 10px;">طباعه</span>
+         <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+           <i class="fas fa-print"></i>
+         </mat-icon>
+       </button>
+
+
+       <button mat-fab extended color="primary" type="button" style="flex-direction: column;"
+         [disabled]="!userInfo.canPreView_frmCustomerCategory">
+         <span style="margin-right: 10px;margin-left: 10px;">استعراض</span>
+         <mat-icon style="margin-right: 10px;margin-left: 10px;font-size: 20px;">
+           <i class="fas fa-eye"></i>
+         </mat-icon>
+       </button>
 
 
           <button mat-fab extended color="primary" type="button" 
@@ -77,14 +92,14 @@
 
 
           <button mat-fab extended color="primary" type="button" 
-          [disabled]="UpdateDisable" (click)="updateCustomerCategory()" style="flex-direction: column;">
+          [disabled]="UpdateDisable || !userInfo.canEdit_frmCustomerCategory" (click)="updateCustomerCategory()" style="flex-direction: column;">
             <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;" >
               <i class="fas fa-edit"></i>
             </mat-icon>
           </button>
 
-          <button mat-fab extended color="primary" type="button" [disabled]="newDisable"
+          <button mat-fab extended color="primary" type="button" [disabled]="newDisable || !userInfo.canCreate_frmCustomerCategory"
            (click)="New()" style="flex-direction:column;">
             <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
             <mat-icon style="margin-right: 10px;margin-left: 10px;" >

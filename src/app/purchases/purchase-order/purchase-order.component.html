@@ -3,7 +3,7 @@
         <h1 style="margin: inherit;">طلب شراء <i class="fas fa-file-alt custom-icon"></i></h1>
     </div>
 
-    <div style="margin-bottom: 50px;">
+    <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
         <form [formGroup]="PurchaseOrderForm" (ngSubmit)="onSumbit()">
             <div style="display: flex;justify-content: space-between;">
             
@@ -62,6 +62,7 @@
                       </button>
     
                       <button mat-fab extended color="warn" type="button" 
+                      *ngIf="userInfo.canDelete_frmPurchaseRequest"
                        (click)="Open_delete_confirm()" [disabled]="PurchaseOrderForm.invalid || DeleteDisable" style="flex-direction: column;">
                         <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
                         <mat-icon style="margin-right: 10px;margin-left: 10px;" >
@@ -86,6 +87,7 @@
                      </button>
             
                       <button mat-fab extended color="primary" type="button" 
+                      *ngIf="userInfo.canEdit_frmPurchaseRequest"
                       [disabled]="UpdateDisable" (click)="updatePurchaseOrder()" style="flex-direction: column;">
                         <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
                         <mat-icon style="margin-right: 10px;margin-left: 10px;" >
@@ -93,7 +95,9 @@
                         </mat-icon>
                       </button>
             
-                      <button mat-fab extended color="primary" type="button" (click)="New()" style="flex-direction:column;">
+                      <button mat-fab extended color="primary"
+                      *ngIf="userInfo.canCreate_frmPurchaseRequest"
+                      type="button" (click)="New()" style="flex-direction:column;">
                         <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
                         <mat-icon style="margin-right: 10px;margin-left: 10px;" >
                           <i class="fas fa-plus"></i>

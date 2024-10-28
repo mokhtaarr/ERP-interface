@@ -8,6 +8,7 @@ import { DefinitionService } from '../definition.service';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 import { UpdateUnitComponent } from '../update-unit/update-unit.component';
 import { AddUnitComponent } from '../add-unit/add-unit.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-item-units',
@@ -38,8 +39,10 @@ export class ItemUnitsComponent implements OnInit{
   undoIndex!: number;
 
   disableAddUnit:boolean = true;
+  newDisable:boolean = false;
 
-  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog,
+    public accountService : AccountService){
   }
    
 
@@ -279,6 +282,7 @@ export class ItemUnitsComponent implements OnInit{
     this.reloadDisabled = false;
     this.SaveDisable = true;
     this.UndoDisabled = true;
+    this.newDisable = false;
 
     if(this.undoIndex != -1){
       const undoItem = this.AllBasicsUnit[this.undoIndex]
@@ -306,6 +310,7 @@ export class ItemUnitsComponent implements OnInit{
   updateBasicUint(){
     this.BasicsUnitForm.enable();
     this.DeleteDisable = true;
+    this.newDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
     this.lastRow = true;
@@ -333,7 +338,7 @@ export class ItemUnitsComponent implements OnInit{
      remarks: null,
      autoDesc: null
    })
-  
+    this.newDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
     this.lastRow = true;

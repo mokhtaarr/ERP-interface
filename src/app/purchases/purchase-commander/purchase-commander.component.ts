@@ -62,7 +62,7 @@ export class PurchaseCommanderComponent implements OnInit {
 
  
   constructor(private purchasesServicesService: PurchasesServicesService , private fb:FormBuilder,private dialog: MatDialog,
-    public toastr: ToastrService,private accountService : AccountService ){
+    public toastr: ToastrService,public accountService : AccountService ){
   }
 
 

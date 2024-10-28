@@ -20,6 +20,7 @@ import { UpdateItemCollectionFromDataBaseComponent } from '../update-item-collec
 import { UpdateItemAlternativeComponent } from '../update-item-alternative/update-item-alternative.component';
 import { UpdateItemAlternativeFromDatabaseComponent } from '../update-item-alternative-from-database/update-item-alternative-from-database.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { AccountService } from 'src/app/account/account.service';
 
 
 @Component({
@@ -97,7 +98,7 @@ export class ItemsComponent implements OnInit {
   newDisable:boolean = false;
 
   constructor(private definitionService:DefinitionService,private fb:FormBuilder,private dialog: MatDialog,
-    public toastr: ToastrService){
+    public toastr: ToastrService,public accountService:AccountService){
     
   }
 

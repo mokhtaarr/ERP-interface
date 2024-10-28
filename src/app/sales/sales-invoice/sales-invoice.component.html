@@ -1,0 +1,760 @@
+<div class="container-fluid">
+    <div class="d-flex p-3 rounded shadow-sm" style="background-color: white; justify-content: center;">
+        <h1 style="margin: inherit;"> فاتوره مبيعات <i class="fas fa-file-alt custom-icon"></i></h1>
+    </div>
+
+    <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
+
+        <form [formGroup]="salesInvoiceForm" (ngSubmit)="onSumbit()">
+            <div style="display: flex;justify-content: space-between;">
+
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+
+                        <button mat-fab extended color="primary" type="button" (click)="getLastRowData()"
+                            [disabled]="lastRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-step-backward"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="getNextRowData()"
+                            [disabled]="DisabledNextButton" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-caret-left"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getPrevRowData()"
+                            [disabled]="DisabledPrevButton" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-caret-right"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getFirstRowData()"
+                            [disabled]="firstRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-step-forward"></i>
+                            </mat-icon>
+                        </button>
+
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="GetAllSalesInvoice()"
+                            [disabled]="reloadDisabled" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-sync"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="submit"
+                            [disabled]="salesInvoiceForm.invalid || SaveDisable" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-save"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="warn" type="button"
+                            *ngIf="userInfo.canDelete_frmPurchaseInvoice" (click)="Open_delete_confirm()"
+                            [disabled]="salesInvoiceForm.invalid || DeleteDisable" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-trash-alt"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="undo()"
+                            [disabled]="UndoDisabled" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-undo"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button"
+                            *ngIf="userInfo.canEdit_frmPurchaseInvoice" [disabled]="UpdateDisable"
+                            (click)="updatePurchaseInvoice()" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-edit"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" *ngIf="userInfo.canCreate_frmPurchaseInvoice"
+                            type="button" (click)="New()" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-plus"></i>
+                            </mat-icon>
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- <div class="mt-2" *ngIf="itemForm.value.itemDescA" style="display:flex;">
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{itemForm.value.itemDescA}} </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> - </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{itemForm.value.ItemCode}} </h1>
+                    <img height="50" width="50" src="../../../assets/images/arrow.gif">
+    
+                      </div> -->
+            </div>
+
+
+
+            <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user custom-icon"></i>
+
+                            بيانات الفاتوره
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select mdc-text-field--invalid" appearance="outline">
+                                <mat-label>اسم المستند</mat-label>
+                                <mat-select formControlName="bookId" (selectionChange)="onBookChange($event)">
+                                    <mat-option *ngFor="let book of AllSysBooks" [value]="book.bookId">
+                                        {{book.prefixCode}} - {{book.bookNameAr}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label> <i style="color: blue;" class="fas fa-search"></i> رقم المستند</mat-label>
+                            <input matInput type="number" formControlName="trNo" [readonly]="trnoReadonly2">
+                        </mat-form-field>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-floating">
+                                <input type="datetime-local" formControlName="trDate" class="form-control">
+                                <label for="floatingInput"> <i class="fas fa-clock"></i> تاريخ التحرير</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>نوع المستند</mat-label>
+                                <mat-select formControlName="termId">
+                                    <mat-option *ngFor="let term of AllTerms" [value]="term.termId">
+                                        {{term.termCode}} - {{term.termName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>نوع المورد</mat-label>
+                                <mat-select formControlName="rectSourceType"
+                                    (selectionChange)="onRectSourceTypeChange($event)">
+                                    <mat-option [value]="1">عميل / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="2">مورد / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="3">أخرى / نوع المستند</mat-option>
+                                    <mat-option [value]="4">موظف / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="36">أمر شغل انتاجى / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="48">أمر شغل مركبه / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="51">خ.ضمان / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="61">أمر صيانة مركبات / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="64">أمر صيانة معدات / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="38">مركبه / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="67">أصل ثابت / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="78">مشروعات / ح.الاستاذ</mat-option>
+                                    <mat-option [value]="34">حساب فرعى من الدليل</mat-option>
+                                    <mat-option [value]="5">عميل / ح.اضافى 1</mat-option>
+                                    <mat-option [value]="6">عميل / ح.اضافى 2</mat-option>
+                                    <mat-option [value]="7">عميل / ح.اضافى 3</mat-option>
+                                    <mat-option [value]="8">عميل / ح.اضافى 4</mat-option>
+                                    <mat-option [value]="9">عميل / ح.اضافى 5</mat-option>
+                                    <mat-option [value]="10">عميل / ح.اضافى 6</mat-option>
+                                    <mat-option [value]="11">عميل / ح.اضافى 7</mat-option>
+                                    <mat-option [value]="12">عميل / ح.اضافى 8</mat-option>
+                                    <mat-option [value]="13">عميل / ح.اضافى 9</mat-option>
+                                    <mat-option [value]="14">عميل / ح.اضافى 10</mat-option>
+
+                                    <mat-option [value]="15">مورد / ح.اضافى 1</mat-option>
+                                    <mat-option [value]="16">مورد / ح.اضافى 2</mat-option>
+                                    <mat-option [value]="17">مورد / ح.اضافى 3</mat-option>
+                                    <mat-option [value]="18">مورد / ح.اضافى 4</mat-option>
+                                    <mat-option [value]="19">مورد / ح.اضافى 5</mat-option>
+                                    <mat-option [value]="20">مورد / ح.اضافى 6</mat-option>
+                                    <mat-option [value]="21">مورد / ح.اضافى 7</mat-option>
+                                    <mat-option [value]="22">مورد / ح.اضافى 8</mat-option>
+                                    <mat-option [value]="23">مورد / ح.اضافى 9</mat-option>
+                                    <mat-option [value]="24">مورد / ح.اضافى 10</mat-option>
+
+                                    <mat-option [value]="35">موظف / ح.عمولة بيع</mat-option>
+                                    <mat-option [value]="25">موظف / ح.سلف</mat-option>
+                                    <mat-option [value]="26">موظف / ح.عهده</mat-option>
+                                    <mat-option [value]="27">موظف / ح.مخصص اجازات</mat-option>
+                                    <mat-option [value]="28">موظف / ح.مخصص نهاية الخدمه</mat-option>
+                                    <mat-option [value]="29">موظف / ح.ذمـــه</mat-option>
+                                    <mat-option [value]="30">موظف / ح.وقت ضائع</mat-option>
+                                    <mat-option [value]="31">موظف / ح.مخصص تذاكر</mat-option>
+                                    <mat-option [value]="32">موظف / ح.اضافى 8</mat-option>
+                                    <mat-option [value]="33">موظف / ح.اضافى 9</mat-option>
+
+                                    <mat-option [value]="37">ح.مصروفات صناعيه</mat-option>
+
+                                    <mat-option [value]="39">مركبه / ح.مصروفات</mat-option>
+                                    <mat-option [value]="40">مركبه / ح.ايرادات</mat-option>
+                                    <mat-option [value]="41">مركبه / ح.مصروف صيانه</mat-option>
+                                    <mat-option [value]="42">مركبه / ح.اضافى 4</mat-option>
+                                    <mat-option [value]="43">مركبه / ح.اضافى 5</mat-option>
+                                    <mat-option [value]="44">مركبه / ح.اضافى 6</mat-option>
+                                    <mat-option [value]="45">مركبه / ح.اضافى 7</mat-option>
+                                    <mat-option [value]="46">مركبه / ح.اضافى 8</mat-option>
+                                    <mat-option [value]="47">مركبه / ح.اضافى 9</mat-option>
+
+
+                                    <mat-option [value]="49">أمر شغل مركبه / ح.اضافى1</mat-option>
+                                    <mat-option [value]="50">أمر شغل مركبه / ح.اضافى2</mat-option>
+
+
+                                    <mat-option [value]="52">خ.ضمان / ح.مصروفات</mat-option>
+                                    <mat-option [value]="53">خ.ضمان / ح.عموله بنكيه</mat-option>
+                                    <mat-option [value]="54">خ.ضمان / ح.هامش نقدى</mat-option>
+                                    <mat-option [value]="55">خ.ضمان / ح.اضافى 4</mat-option>
+                                    <mat-option [value]="56">خ.ضمان / ح.اضافى 5</mat-option>
+                                    <mat-option [value]="57">خ.ضمان / ح.اضافى 6</mat-option>
+                                    <mat-option [value]="58">خ.ضمان / ح.اضافى 7</mat-option>
+                                    <mat-option [value]="59">خ.ضمان / ح.اضافى 8</mat-option>
+                                    <mat-option [value]="60">خ.ضمان / ح.اضافى 9</mat-option>
+
+
+                                    <mat-option [value]="62">أمر صيانة مركبات / ح.اضافى 1</mat-option>
+                                    <mat-option [value]="63">أمر صيانة مركبات / ح.اضافى 2</mat-option>
+
+                                    <mat-option [value]="65">أمر صيانة معدات / ح.اضافى 1</mat-option>
+                                    <mat-option [value]="66">أمر صيانة معدات / ح.اضافى 2</mat-option>
+
+                                    <mat-option [value]="68">أصل ثابت / ح.الإستهلاك</mat-option>
+                                    <mat-option [value]="69">أصل ثابت / ح.مجمع الإهلاك</mat-option>
+                                    <mat-option [value]="70">أصل ثابت / ح.المصاريف</mat-option>
+                                    <mat-option [value]="71">أصل ثابت / ح.أرباح رأسماليه</mat-option>
+                                    <mat-option [value]="72">أصل ثابت / ح.خسائر رأسماليه</mat-option>
+                                    <mat-option [value]="73">أصل ثابت / ح.فائض اعادة تقييم</mat-option>
+                                    <mat-option [value]="74">أصل ثابت / ح.عجز اعادة تقييم</mat-option>
+                                    <mat-option [value]="75">أصل ثابت / ح.اضافى 8</mat-option>
+                                    <mat-option [value]="76">أصل ثابت / ح.اضافى 9</mat-option>
+                                    <mat-option [value]="77">أصل ثابت / ح.اضافى 10</mat-option>
+
+                                    <mat-option [value]="79">مشروعات / ح.اضافى 1</mat-option>
+                                    <mat-option [value]="80">مشروعات / ح.اضافى 2</mat-option>
+                                    <mat-option [value]="81">مشروعات / ح.اضافى 3</mat-option>
+                                    <mat-option [value]="82">مشروعات / ح.اضافى 4</mat-option>
+                                    <mat-option [value]="83">مشروعات / ح.اضافى 5</mat-option>
+                                    <mat-option [value]="84">مشروعات / ح.اضافى 6</mat-option>
+                                    <mat-option [value]="85">مشروعات / ح.اضافى 7</mat-option>
+                                    <mat-option [value]="86">مشروعات / ح.اضافى 8</mat-option>
+                                    <mat-option [value]="87">مشروعات / ح.اضافى 9</mat-option>
+                                    <mat-option [value]="88">مشروعات / ح.اضافى 10</mat-option>
+
+
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 " style="display: flex; align-items: center;">
+                            <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
+                                <mat-label><i class="fas fa-search"></i> ابحث </mat-label>
+                                <input matInput type="text" (input)="onSearch($event)">
+                            </mat-form-field>
+
+                            <mat-form-field style="flex: 1; margin-right: 10px;"
+                                class="ang-maturial-select mdc-text-field--invalid" appearance="outline">
+                                <mat-label>المورد</mat-label>
+                                <mat-select formControlName="customerId" (selectionChange)="onAccountSelect($event)">
+                                    <mat-option *ngFor="let source of FilteredAllRectSourceType" [value]="source.id">
+                                        {{source.code}} - {{source.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>العملة</mat-label>
+                                <mat-select formControlName="currencyId" (selectionChange)="onCurrencyChange($event)">
+                                    <mat-option *ngFor="let currency of AllCurrency" [value]="currency.currencyId">
+                                        {{currency.currencyCode}} - {{currency.currencyDescA}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>معامل التحويل</mat-label>
+                            <input matInput type="number" formControlName="rate">
+                        </mat-form-field>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 " style="display: flex; align-items: center;">
+                            <mat-form-field appearance="outline" class="col-lg-4 col-md-6 col-sm-12">
+                                <mat-label><i class="fas fa-search"></i> ابحث </mat-label>
+                                <input matInput type="text" (input)="Sales_HrEmployess_Searching($event)">
+                            </mat-form-field>
+
+                            <mat-form-field style="flex: 1; margin-right: 10px;" class="ang-maturial-select"
+                                appearance="outline">
+                                <mat-label>بائع</mat-label>
+                                <mat-select formControlName="empId">
+                                    <mat-option *ngFor="let emp of FilteredAllSalesEmployess" [value]="emp.empId">
+                                        {{emp.empCode}} - {{emp.name1}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>مرجع</mat-label>
+                            <input matInput type="text" formControlName="manualTrNo">
+                        </mat-form-field>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>نوع السداد</mat-label>
+                                <mat-select formControlName="invoiceType">
+                                    <mat-option [value]="1">اجل</mat-option>
+                                    <mat-option [value]="0">نقدى</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>كود تحليلى</mat-label>
+                                <mat-select formControlName="aid">
+                                    <mat-option *ngFor="let analytic of AllAnalyticalCode" [value]="analytic.aid">
+                                        {{analytic.code}} - {{analytic.descA}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-floating">
+                                <input type="datetime-local" formControlName="invDueDate" class="form-control">
+                                <label for="floatingInput"> <i class="fas fa-clock"></i> تاريخ الاستحقاق</label>
+                            </div>
+                        </div>
+
+
+
+                        <!-- <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بناء على</mat-label>
+                                <mat-select >
+                                    <mat-option value="1">عمله 1</mat-option>
+                                    <mat-option value="1">عمله 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user custom-icon"></i>
+                            بيانات أضافيه
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 1</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 2</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 3</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 4</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 5</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 6</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 7</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 8</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 9</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 10</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user custom-icon"></i>
+                            مرفقات
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>الكود</mat-label>
+                            <input matInput type="text" [readonly]="EditReadonly">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>أسم </mat-label>
+                            <input matInput type="text">
+                        </mat-form-field>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                        </div>
+
+                        <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+                            <mat-label>الملاحظات</mat-label>
+                            <textarea matInput></textarea>
+                        </mat-form-field>
+
+
+
+                    </div>
+
+                </mat-tab>
+
+            </mat-tab-group>
+        </form>
+    </div>
+
+
+    <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;margin-bottom: 100px;">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <h1 style="margin-bottom: auto;">
+                    <i class="fa-solid fa-building-user custom-icon"></i>
+                    أصناف
+                </h1>
+            </ng-template>
+
+
+            <button mat-fab extended color="primary" (click)="AddItemToPurchaseInvoice()"
+                [disabled]="salesInvoiceForm.invalid || AddItemsDisable" type="button"
+                style="width: 200px;margin: 10px;">
+                اختر الاصناف
+            </button>
+
+
+            <div class="row p-3">
+                <table style="margin-bottom: auto;" class="table table-hover table-bordered mt-3"
+                    [class.readonly-table]="readonlyTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">حذف</th>
+                            <th scope="col">تعديل</th>
+                            <th scope="col">الباركود</th>
+                            <th scope="col">كود الصنف</th>
+                            <th scope="col">الإسم بالعربى</th>
+                            <th scope="col">الإسم بالإنجليزى</th>
+                            <th scope="col">الوحده</th>
+                            <th scope="col">رقم الشحنه</th>
+                            <th scope="col">الكمية</th>
+                            <th scope="col">سعر</th>
+                            <th scope="col">اجمالى</th>
+                            <th scope="col">الفرع</th>
+                            <th scope="col">المخزن</th>
+                            <th scope="col">الكميه المنفذه</th>
+                            <th scope="col">%خصم</th>
+                            <th scope="col">خصم قيمه</th>
+                            <th scope="col">خ.المستند</th>
+                            <th scope="col">خ.المستند</th>
+                            <th scope="col">%ض-1</th>
+                            <th scope="col">ض-1-قيمه</th>
+                            <th scope="col">%ض-2</th>
+                            <th scope="col">ض-2-قيمه</th>
+                            <th scope="col">صافى</th>
+                            <th scope="col">ملاحظات</th>
+                            <th scope="col">ملاحظات-2</th>
+                            <th scope="col">ملاحظات-3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor="let itemCollection of itemCollectionFromDataBase">
+                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                (click)="updateItemCollectionFromDataBase(itemCollection)"></i></td>
+
+                        <td><i class="fas fa-trash-alt"
+                                (click)="DeleteItemCollectionFromDataBase(itemCollection.itemCollectId)"
+                                style="color: red;cursor: pointer;"></i></td>
+                            <td class="tableTdForCollection">{{itemCollection.itemCode}}</td>
+                            <td class="tableTdForCollection">{{itemCollection.barCode}}</td>
+                            <td class="tableTdForCollection">{{itemCollection.itemDescA}}</td>
+                            <td class="tableTdForCollection">{{itemCollection.itemDescE}}</td>
+                            <td class="tableTdForCollection">{{itemCollection.unitNam}}</td>
+                            <td class="tableTdForCollection">{{itemCollection.quantity}}</td>
+                            <td class="tableTdForCollection">{{itemCollection.remarks}}</td>
+                        </tr> -->
+
+                        <tr *ngFor="let itemCollection of itemCollectionFromDataBase">
+                            <td><i class="fas fa-trash-alt"
+                                    (click)="DeleteItemCollectionFromDataBase(itemCollection.invItemCardId)"
+                                    style="color: red;cursor: pointer;"></i></td>
+
+                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                    (click)="updateItemCollectionFromDataBase(itemCollection)"></i></td>
+
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.barCode}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCode}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCardDesc}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCardDescE}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.unitNam}}</td>
+                            <td class="tableTdForCollection" style="width:5%"></td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.quantity}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.price}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.price *
+                                itemCollection.quantity}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.storeCode}} -
+                                {{itemCollection.storeDescA}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.partCode}} -
+                                {{itemCollection.partDescA}} </td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks2}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks3}}</td>
+                        </tr>
+
+                        <tr *ngFor="let itemCollection of itemCollections">
+                            <td><i class="fas fa-trash-alt" (click)="DeleteItemCollection(itemCollection.itemCardId)"
+                                    style="color: red;cursor: pointer;"></i></td>
+
+                            <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                    (click)="updateItemCollection(itemCollection)"></i></td>
+
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.barCode}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemCode}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemDescA}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.itemDescE}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.unitNam}}</td>
+                            <td class="tableTdForCollection" style="width:5%"></td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.quantity}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.price}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.price *
+                                itemCollection.quantity}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.storeCode}} -
+                                {{itemCollection.storeDescA}} </td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.partCode}} -
+                                {{itemCollection.partDescA}} </td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">-</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks2}}</td>
+                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.remarks3}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row p-3">
+
+            </div>
+
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <h1 style="margin-bottom: auto;">
+                    <i class="fa-solid fa-building-user custom-icon"></i>
+                    نقديه
+                </h1>
+            </ng-template>
+
+
+            <div class="row p-3">
+
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>أجمالى</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>ضريبة أصناف 1</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>ضريبة أصناف 2</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>ضريبة أصناف 3</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+
+
+                <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                    <mat-form-field class="ang-maturial-select" appearance="outline">
+                        <mat-label>ضريبه</mat-label>
+                        <mat-select>
+                            <mat-option value="1">المورد 1</mat-option>
+                            <mat-option value="1">المورد 2</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>نوع الضريبه</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label> % قيمه الضريبه</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>السعر بعد الضريبه</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                    <mat-form-field class="ang-maturial-select" appearance="outline">
+                        <mat-label>المصروفات</mat-label>
+                        <mat-select>
+                            <mat-option value="1">المورد 1</mat-option>
+                            <mat-option value="1">المورد 2</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>قيمه المصروف</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label> % نسبه الخصم</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>قيمه الخصم</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>الصافى</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-form-field class="ang-maturial-select" appearance="outline">
+                        <mat-label>الصافى / العمله</mat-label>
+                        <mat-select>
+                            <mat-option value="1">عمله 1</mat-option>
+                            <mat-option value="1">عمله 2</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+
+                <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                    <mat-label>المبلغ بالعربى</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+
+
+                <div class="col-lg-3 col-md-6 col-sm-12 ">
+                    <mat-form-field class="ang-maturial-select" appearance="outline">
+                        <mat-label>اللغه</mat-label>
+                        <mat-select>
+                            <mat-option value="1">عربى</mat-option>
+                            <mat-option value="1">انجليزى</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </mat-tab>
+    </mat-tab-group>
+
+</div>

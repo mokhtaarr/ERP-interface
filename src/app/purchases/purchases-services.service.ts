@@ -177,6 +177,8 @@ export class PurchasesServicesService {
   }
 
   
+
+  
   getAllMsLetterOfGuarantees(){
     return this.http.get<any>(environment.apiUrl + 'MsPurchasInvoice/getAllMsLetterOfGuarantees');
   }
@@ -233,6 +235,71 @@ export class PurchasesServicesService {
 
   updateMsPurchaseInvoice(values:any){
     return this.http.post<any>(environment.apiUrl+'MsPurchasInvoice/updateMsPurchaseInvoiceItemCard',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+
+
+  // السيرفسيس الخاصه بمرتجع المشتريات
+  getAllBooksForMsPurchasReturn() {
+    return this.http.get<any>(environment.apiUrl + 'MS_ReturnPurchase/GetAllSysBooks');
+  }
+  getAllReturnedPurchaseInvoice() {
+    return this.http.get<any>(environment.apiUrl + 'MS_ReturnPurchase/GetAllReturnedPurchases')
+  }
+  
+
+  AddMsReturnPurchase(values:any){
+    return this.http.post<any>(environment.apiUrl+'MS_ReturnPurchase/AddMsReturnPurchase',values).pipe(
+      map((res) => {
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true) this.toastr.success(message);
+        
+        if (res.status == false) this.toastr.error(message);
+  
+        return res;
+      })
+    );
+  }
+  
+
+  GetPurchaseInvoiceItems(trno:any,bookId:any){
+    return this.http.get<any>(`${environment.apiUrl}MS_ReturnPurchase/GetPurchaseInvoiceItems?trno=${trno}&bookId=${bookId}`)
+    .pipe(
+      map((res) => {
+        console.log('res',res)
+        var message = res.message;
+        var messageEn = res.messageEn;
+  
+        if (res.status == true){
+          this.toastr.success(message);
+          return res;
+        } 
+        
+        if (res.status == false) this.toastr.error(message);
+  
+      })
+    );
+  }
+
+
+  getMsReturnedPurchaseItems(retPurchId:any){
+    return this.http.get<any>(`${environment.apiUrl}MS_ReturnPurchase/getMsReturnedPurchaseItems?retPurchId=${retPurchId}`)
+  }
+
+  updateMsReturnPurchaseItems(values:any){
+    return this.http.post<any>(environment.apiUrl+'MS_ReturnPurchase/updateMsReturnPurchaseItems',values).pipe(
       map((res) => {
         var message = res.message;
         var messageEn = res.messageEn;

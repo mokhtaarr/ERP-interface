@@ -56,7 +56,7 @@ export class PurchasesInvoiceComponent implements OnInit  {
 
 
   constructor(private purchasesServicesService: PurchasesServicesService , private fb:FormBuilder,private dialog: MatDialog,
-    public toastr: ToastrService, private accountService : AccountService ){
+    public toastr: ToastrService, public accountService : AccountService ){
   }
 
   PurchaseInvoiceForm = this.fb.group({
@@ -136,6 +136,7 @@ export class PurchasesInvoiceComponent implements OnInit  {
       this.DeleteDisable=false;
       this.readonlyTable = true;
       this.AddItemDisable = true;
+      this.AddItemsDisable = true;
     }
    })
   }

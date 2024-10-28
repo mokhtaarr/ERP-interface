@@ -10,6 +10,7 @@ import { noop } from 'rxjs';
 import { ExampleFlatNode, ExampleFlatNode2, FoodNode } from 'src/app/shared/models/tree';
 import { DefinitionService } from '../definition.service';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-structure-administrative',
@@ -59,6 +60,7 @@ export class StructureAdministrativeComponent implements OnInit {
   DeleteDisable :boolean = true;
   SaveDisable : boolean = true;
   UpdateDisable : boolean = true;
+  newDisable:boolean = false;
 
   EditReadonly : boolean = false;
   reloadDisabled : boolean = false;
@@ -68,7 +70,9 @@ export class StructureAdministrativeComponent implements OnInit {
 
    @ViewChild('tree') tree !: MatTree<any>;
 
-  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog){
+  constructor(private definitionService: DefinitionService , private fb:FormBuilder,private dialog: MatDialog ,
+    public accountService : AccountService
+  ){
    
   }
   ngOnInit(): void {
@@ -299,6 +303,7 @@ export class StructureAdministrativeComponent implements OnInit {
     this.HrDepartmentsForm.disable();
     this.DisabledNextButton = false;
     this.DisabledPrevButton = false;
+    this.newDisable = false;
     this.lastRow = false;
     this.firstRow = false;
     this.reloadDisabled = false;
@@ -331,6 +336,7 @@ export class StructureAdministrativeComponent implements OnInit {
     this.DeleteDisable = true;
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
+    this.newDisable = true;
     this.lastRow = true;
     this.firstRow = true;
     this.SaveDisable = false;
@@ -357,6 +363,7 @@ export class StructureAdministrativeComponent implements OnInit {
   
     this.DisabledNextButton = true;
     this.DisabledPrevButton = true;
+    this.newDisable = true;
     this.lastRow = true;
     this.firstRow = true;
     this.UpdateDisable = true;

@@ -1,0 +1,377 @@
+<div class="container-fluid">
+    <div class="d-flex p-3 rounded shadow-sm" style="background-color: white; justify-content: center;">
+        <h1 style="margin: inherit;"> قيد يوميه <i class="fas fa-file-alt custom-icon"></i></h1>
+    </div>
+
+    <div style="margin-bottom: 50px;" *ngIf="(accountService.currentUser$ | async) as userInfo">
+
+        <form [formGroup]="CalJurnalEntryForm" (ngSubmit)="onSumbit()">
+            <div style="display: flex;justify-content: space-between;">
+
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+
+                        <button mat-fab extended color="primary" type="button" (click)="getLastRowData()"
+                            [disabled]="lastRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأخير</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-step-backward"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="getNextRowData()"
+                            [disabled]="DisabledNextButton" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">التالى</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-caret-left"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getPrevRowData()"
+                            [disabled]="DisabledPrevButton" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">السابق</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-caret-right"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button" (click)="getFirstRowData()"
+                            [disabled]="firstRow" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">الأول</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-step-forward"></i>
+                            </mat-icon>
+                        </button>
+
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="GetAllCalJurnalEntry()"
+                            [disabled]="reloadDisabled" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تهيئه</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-sync"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="submit"
+                            [disabled]="CalJurnalEntryForm.invalid || SaveDisable"
+                            style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">حفظ</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-save"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="warn" type="button"
+                            *ngIf="userInfo.canDelete_frmPurchaseInvoice" (click)="Open_delete_confirm()"
+                            [disabled]="CalJurnalEntryForm.invalid || DeleteDisable"
+                            style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">حذف</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-trash-alt"></i>
+                            </mat-icon>
+                        </button>
+
+
+                        <button mat-fab extended color="primary" type="button" (click)="undo()"
+                            [disabled]="UndoDisabled" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تراجع</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-undo"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" type="button"
+                            *ngIf="userInfo.canEdit_frmPurchaseInvoice" [disabled]="UpdateDisable"
+                            (click)="updatePurchaseInvoice()" style="flex-direction: column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">تعديل</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-edit"></i>
+                            </mat-icon>
+                        </button>
+
+                        <button mat-fab extended color="primary" *ngIf="userInfo.canCreate_frmPurchaseInvoice"
+                            type="button" (click)="New()" style="flex-direction:column;">
+                            <span style="margin-right: 10px;margin-left: 10px;">جديد</span>
+                            <mat-icon style="margin-right: 10px;margin-left: 10px;">
+                                <i class="fas fa-plus"></i>
+                            </mat-icon>
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- <div class="mt-2" *ngIf="itemForm.value.itemDescA" style="display:flex;">
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{itemForm.value.itemDescA}} </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> - </h1>
+                    <h1 style="color: #3f51b5;" class="mt-2"> {{itemForm.value.ItemCode}} </h1>
+                    <img height="50" width="50" src="../../../assets/images/arrow.gif">
+    
+                      </div> -->
+            </div>
+
+
+
+            <mat-tab-group dir="rtl" style="background-color: white;font-family: system-ui;margin-bottom: 200px;">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user custom-icon"></i>
+
+                            مستند القيد
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select mdc-text-field--invalid" appearance="outline">
+                                <mat-label>اسم الدفتر</mat-label>
+                                <mat-select formControlName="bookId" (selectionChange)="onBookChange($event)">
+                                    <mat-option *ngFor="let book of AllSysBooks" [value]="book.bookId">
+                                        {{book.prefixCode}} - {{book.bookNameAr}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label> <i style="color: blue;" class="fas fa-search"></i> رقم المستند</mat-label>
+                            <input matInput type="number" formControlName="trNo" [readonly]="trnoReadonly2">
+                        </mat-form-field>
+
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-floating">
+                                <input type="datetime-local" formControlName="trDate" class="form-control">
+                                <label for="floatingInput"> <i class="fas fa-clock"></i> تاريخ التحرير</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12  select-margin-bottom">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>نوع المستند</mat-label>
+                                <mat-select formControlName="termId">
+                                    <mat-option *ngFor="let term of AllTerms" [value]="term.termId">
+                                        {{term.termCode}} - {{term.termName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>شرح القيد</mat-label>
+                            <textarea matInput formControlName="jurnalDesc"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>مرجع</mat-label>
+                            <input matInput type="text" formControlName="manualTrNo">
+                        </mat-form-field>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>كود تحليلى</mat-label>
+                                <mat-select formControlName="aid">
+                                    <mat-option *ngFor="let analytic of AllAnalyticalCode" [value]="analytic.aid">
+                                        {{analytic.code}} - {{analytic.descA}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <!-- <div class="col-lg-3 col-md-6 col-sm-12 ">
+                            <mat-form-field class="ang-maturial-select" appearance="outline">
+                                <mat-label>بناء على</mat-label>
+                                <mat-select>
+                                    <mat-option value="1">عمله 1</mat-option>
+                                    <mat-option value="1">عمله 2</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-slide-toggle color="primary" formControlName="isOpenning">قيد افتتاحى</mat-slide-toggle>
+                        </div>
+
+                       
+
+
+                    </div>
+
+                    <div class="row">
+                        <button mat-fab extended color="primary" *ngIf="CalJurnalEntryForm.get('returnType')?.value != 0"
+                        (click)="AddAccount()" [disabled]="CalJurnalEntryForm.invalid || AddItemsDisable"
+                        type="button" style="width: 200px;margin: 10px;">
+                        اختر الحساب
+                    </button>
+        
+        
+                    <div class="row p-3">
+                        <table style="margin-bottom: auto;" class="table table-hover table-bordered mt-3"
+                            [class.readonly-table]="readonlyTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">حذف</th>
+                                    <th scope="col">تعديل</th>
+                                    <th scope="col">كود الحساب</th>
+                                    <th scope="col">اسم الحساب</th>
+                                    <th scope="col">وصف الحساب</th>
+                                    <th scope="col">كود العمله</th>
+                                    <th scope="col">العمله</th>
+                                    <th scope="col">م.التحويل</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let itemCollection of itemCollectionFromDataBase">
+                                    <td><i class="fas fa-trash-alt"
+                                            (click)="DeleteItemCollectionFromDataBase(itemCollection.jurnalDetailId)"
+                                            style="color: red;cursor: pointer;"></i></td>
+        
+                                    <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                            (click)="updateItemCollectionFromDataBase(itemCollection)"></i></td>
+        
+                                    <td class="tableTdForCollection" style="width:5%">{{itemCollection.accountCode}}</td>
+                                    <td class="tableTdForCollection" style="width:5%">{{itemCollection.accountNameA}}</td>
+                                    <td class="tableTdForCollection" style="width:5%">{{itemCollection.accDesc}}</td>
+                                    <td class="tableTdForCollection" style="width:5%">{{itemCollection.currencyCode}}</td>
+                                    <td class="tableTdForCollection" style="width:5%">{{itemCollection.currencyDescA}}</td>
+                                    <td class="tableTdForCollection" style="width:5%">{{itemCollection.rate}}</td>
+                                </tr>
+        
+                                <tr *ngFor="let itemCollection of itemCollections">
+                                    <td><i class="fas fa-trash-alt" (click)="DeleteItemCollection(itemCollection.accountId)"
+                                            style="color: red;cursor: pointer;"></i></td>
+        
+                                    <td><i class="fas fa-edit" style="color: blue;cursor: pointer;"
+                                            (click)="updateItemCollection(itemCollection)"></i></td>
+        
+                                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.accountCode}}</td>
+                                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.accountNameA}}</td>
+                                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.accDesc}}</td>
+                                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.currencyCode}}</td>
+                                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.currencyDescA}}</td>
+                                            <td class="tableTdForCollection" style="width:5%">{{itemCollection.rate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user custom-icon"></i>
+                            المرفقات
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 1</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 2</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 3</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 4</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 5</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 6</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 7</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 8</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 9</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>حقل أضافى 10</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <h1 style="margin-bottom: auto;">
+                            <i class="fa-solid fa-building-user custom-icon"></i>
+                            استيراد من اكسل
+                        </h1>
+                    </ng-template>
+
+
+                    <div class="row p-3">
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>الكود</mat-label>
+                            <input matInput type="text" [readonly]="EditReadonly">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col-lg-3 col-md-6 col-sm-12">
+                            <mat-label>أسم </mat-label>
+                            <input matInput type="text">
+                        </mat-form-field>
+
+                        <div class="col-lg-3 col-md-6 col-sm-12 input-mrg-top">
+                        </div>
+
+                        <mat-form-field class="col-lg-4 col-md-6 col-sm-12 mt-2" appearance="outline">
+                            <mat-label>الملاحظات</mat-label>
+                            <textarea matInput></textarea>
+                        </mat-form-field>
+
+
+
+                    </div>
+
+                </mat-tab>
+
+            </mat-tab-group>
+        </form>
+    </div>
+
+
+</div>
